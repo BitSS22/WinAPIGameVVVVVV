@@ -45,7 +45,7 @@ void UEngineFile::Read(void* _Ptr, size_t _Size)
     }
     else if (File == nullptr)
     {
-        MSGASSERT("열지 않은 파일에 내용을 쓸 수 없습니다");
+        MSGASSERT("열지 않은 파일에 내용을 쓸 수 없습니다.");
         return;
     }
 
@@ -57,7 +57,7 @@ void UEngineFile::FileOpen(const char* _Mode)
     fopen_s(&File, Path, _Mode);
 
     if (File == nullptr)
-        MSGASSERT(Path);
+        MSGASSERT("유효하지 않은 Path입니다.");
 }
 
 bool UEngineFile::IsExits()
