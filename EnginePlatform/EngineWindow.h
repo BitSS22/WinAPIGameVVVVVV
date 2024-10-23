@@ -14,7 +14,7 @@ public:
 
 private:
 	static HINSTANCE hInstance;
-	static std::map<std::string, WNDCLASSEXA> WindowClasss;
+	static map<string, WNDCLASSEXA> WindowClasss;
 	HWND WindowHandle = nullptr;
 
 public:
@@ -22,8 +22,8 @@ public:
 	static void CreateWindowClass(const WNDCLASSEXA& _Class);
 	static int WindowMessageLoop(const EngineDelegate& _FrameFunction);
 
-	void Create(std::string_view _TitleName, std::string_view _ClassName = "Default");
-	void Open(std::string_view _TitleName = "Window");
+	void Create(string_view _TitleName, string_view _ClassName = "Default");
+	void Open(string_view _TitleName = "Window");
 
 private:
 

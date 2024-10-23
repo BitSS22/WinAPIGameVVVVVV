@@ -5,14 +5,14 @@ class EngineDelegate
 {
 public:
 	EngineDelegate();
-	EngineDelegate(std::function<void()> _Function)
+	EngineDelegate(function<void()> _Function)
 	{
 		Functions.push_back(_Function);
 	}
 	~EngineDelegate();
 
 private:
-	std::vector<std::function<void()>> Functions = {};
+	vector<function<void()>> Functions = {};
 
 public:
 	bool IsBind() const
@@ -20,7 +20,7 @@ public:
 		return Functions.empty() == false;
 	}
 
-	void operator= (std::function<void()> _Function)
+	void operator= (function<void()> _Function)
 	{
 		Functions.push_back(_Function);
 	}

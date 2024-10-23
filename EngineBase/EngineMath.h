@@ -1,5 +1,6 @@
 #pragma once
 #include "EngineDebug.h"
+#include "EngineBase/EngineDebug.h"
 
 class FIntPoint
 {

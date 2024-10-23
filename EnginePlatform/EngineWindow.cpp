@@ -4,7 +4,7 @@
 #include "EngineBase/EngineDebug.h"
 
 HINSTANCE UEngineWindow::hInstance = nullptr;
-std::map<std::string, WNDCLASSEXA> UEngineWindow::WindowClasss = {};
+map<string, WNDCLASSEXA> UEngineWindow::WindowClasss = {};
 int WindowCount = 0;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -44,11 +44,11 @@ void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
 void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
 {
     if (WindowClasss.contains(_Class.lpszClassName))
-        assert(nullptr, (std::string(_Class.lpszClassName) + ", 동일한 이름의 Window를 만들 수 없음.").c_str());
+        MSGASSERT(string(_Class.lpszClassName) + ", 동일한 이름의 Window를 만들 수 없음.");
 
     RegisterClassExA(&_Class);
 
-    WindowClasss.insert(std::make_pair(_Class.lpszClassName, _Class));
+    WindowClasss.insert(make_pair(_Class.lpszClassName, _Class));
 }
 
 int UEngineWindow::WindowMessageLoop(const EngineDelegate& _FrameFunction)
@@ -70,19 +70,19 @@ int UEngineWindow::WindowMessageLoop(const EngineDelegate& _FrameFunction)
     return static_cast<int>(msg.wParam);
 }
 
-void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassName)
+void UEngineWindow::Create(string_view _TitleName, string_view _ClassName)
 {
     if (WindowClasss.contains(_ClassName.data()) == false)
-        assert(nullptr, (std::string(_ClassName.data()) + ", 동일한 이름의 Window를 만들 수 없음.").c_str());
+        MSGASSERT(string(_ClassName) + ", 동일한 이름의 Window를 만들 수 없음.");
 
     WindowHandle = CreateWindowA(_ClassName.data(), _TitleName.data(), WS_OVERLAPPEDWINDOW
         , 0, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
     if (WindowHandle == nullptr)
-        assert(nullptr, (std::string(_TitleName.data()) + ", Window 생성에 실패 함.").c_str());
+        MSGASSERT(string(_TitleName) + ", Window 생성에 실패 함.");
 }
 
-void UEngineWindow::Open(std::string_view _TitleName)
+void UEngineWindow::Open(string_view _TitleName)
 {
     if (WindowHandle == nullptr)
         Create("Window");
