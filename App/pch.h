@@ -9,6 +9,8 @@
 #include <iostream>
 #include <functional>
 
+#include<EngineBase/EngineDebug.h>
+
 using std::vector;
 using std::list;
 using std::map;

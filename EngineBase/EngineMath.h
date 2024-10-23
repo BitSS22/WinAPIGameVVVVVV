@@ -1,6 +1,4 @@
 #pragma once
-#include "EngineDebug.h"
-#include "EngineBase/EngineDebug.h"
 
 class FIntPoint
 {
@@ -27,7 +25,7 @@ public:
 	FIntPoint operator/ (FIntPoint _Other) const
 	{
 		if (_Other.X == 0 || _Other.Y == 0)
-			MSGASSERT("0으로 나눌 수 없습니다.");
+			MSGASSERT(nullptr, "0으로 나눌 수 없습니다.");
 		return FIntPoint(X / _Other.X, Y / _Other.Y);
 	}
 	bool operator== (FIntPoint _Other) const

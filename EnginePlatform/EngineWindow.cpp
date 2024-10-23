@@ -44,7 +44,7 @@ void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
 void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
 {
     if (WindowClasss.contains(_Class.lpszClassName))
-        MSGASSERT(string(_Class.lpszClassName) + ", 동일한 이름의 Window를 만들 수 없음.");
+        MSGASSERT(nullptr, _Class.lpszClassName, ", 동일한 이름의 Window를 만들 수 없음.");
 
     RegisterClassExA(&_Class);
 
@@ -73,13 +73,13 @@ int UEngineWindow::WindowMessageLoop(const EngineDelegate& _FrameFunction)
 void UEngineWindow::Create(string_view _TitleName, string_view _ClassName)
 {
     if (WindowClasss.contains(_ClassName.data()) == false)
-        MSGASSERT(string(_ClassName) + ", 동일한 이름의 Window를 만들 수 없음.");
+        MSGASSERT(nullptr, _ClassName, ", 동일한 이름의 Window를 만들 수 없음.");
 
     WindowHandle = CreateWindowA(_ClassName.data(), _TitleName.data(), WS_OVERLAPPEDWINDOW
         , 0, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
     if (WindowHandle == nullptr)
-        MSGASSERT(string(_TitleName) + ", Window 생성에 실패 함.");
+        MSGASSERT(nullptr, _TitleName, ", Window 생성에 실패 함.");
 }
 
 void UEngineWindow::Open(string_view _TitleName)
