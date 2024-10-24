@@ -10,8 +10,12 @@
     <ClInclude Include="pch.h">
       <Filter>pch</Filter>
     </ClInclude>
-    <ClInclude Include="GameMode.h" />
-    <ClInclude Include="Level.h" />
+    <ClInclude Include="Level.h">
+      <Filter>Object\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMode.h">
+      <Filter>Object\Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp">
@@ -23,8 +27,12 @@
     <ClCompile Include="pch.cpp">
       <Filter>pch</Filter>
     </ClCompile>
-    <ClCompile Include="GameMode.cpp" />
-    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Level.cpp">
+      <Filter>Object\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMode.cpp">
+      <Filter>Object\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -35,6 +43,12 @@
     </Filter>
     <Filter Include="pch">
       <UniqueIdentifier>{a2d0eb28-3799-4f7f-8c16-fe2fd452fd74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Actor">
+      <UniqueIdentifier>{a9601c7c-dcf8-46f2-82ea-38107d86fb1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Level">
+      <UniqueIdentifier>{ceacbd30-4aa6-4c7e-9fe4-18f640d849e1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

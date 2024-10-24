@@ -7,7 +7,9 @@
     <ClInclude Include="pch.h">
       <Filter>pch</Filter>
     </ClInclude>
-    <ClInclude Include="V6ContentsCore.h" />
+    <ClInclude Include="V6ContentsCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp">
@@ -16,7 +18,9 @@
     <ClCompile Include="pch.cpp">
       <Filter>pch</Filter>
     </ClCompile>
-    <ClCompile Include="V6ContentsCore.cpp" />
+    <ClCompile Include="V6ContentsCore.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="pch">
@@ -24,6 +28,9 @@
     </Filter>
     <Filter Include="ContentsObject">
       <UniqueIdentifier>{69a87ecc-0b23-491c-8a04-1dde47fe153b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{f3a3a914-2c83-4125-a83c-2b478ad83ebe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
