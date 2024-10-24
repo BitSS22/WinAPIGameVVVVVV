@@ -14,6 +14,7 @@ public:
 	V6ContentsCore& operator=(V6ContentsCore&& _Other) noexcept = delete;
 
 private:
+	ULevel* TitleLevel = nullptr;
 
 public:
 

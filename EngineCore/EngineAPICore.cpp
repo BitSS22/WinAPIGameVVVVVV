@@ -9,7 +9,6 @@ UContentsCore* UEngineAPICore::UserCore = nullptr;
 
 UEngineAPICore::UEngineAPICore()
 {
-	MainCore = this;
 }
 
 UEngineAPICore::~UEngineAPICore()
@@ -27,6 +26,7 @@ int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 
 	UEngineAPICore Core = UEngineAPICore();
 	Core.EngineMainWindow.Open();
+	MainCore = &Core;
 
 	EngineDelegate Start = EngineDelegate(bind(EngineBeginPlay));
 	EngineDelegate FrameLoop = EngineDelegate(bind(EngineTick));
@@ -34,10 +34,16 @@ int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 	return UEngineWindow::WindowMessageLoop(Start, FrameLoop);
 }
 
-void UEngineAPICore::CreateLevel(string_view _LevelName)
+void UEngineAPICore::OpenLevel(string_view _LevelName)
 {
-	ULevel* NewLevel = new ULevel();
-	Levels.insert(make_pair(_LevelName, NewLevel));
+	string ChangeName = _LevelName.data();
+
+	auto iter = Levels.find(ChangeName);
+
+	if (iter == Levels.end())
+		MSGASSERT(nullptr, ChangeName, ", 레벨이 없음.");
+
+	CurLevel = iter->second;
 }
 
 void UEngineAPICore::EngineBeginPlay()
@@ -48,11 +54,15 @@ void UEngineAPICore::EngineBeginPlay()
 void UEngineAPICore::EngineTick()
 {
 	UserCore->Tick();
-
 	MainCore->Tick();
 }
 
 void UEngineAPICore::Tick()
 {
+	if (CurLevel == nullptr)
+		MSGASSERT(nullptr, "현재 Level이 지정 되지 않음.");
+
+	CurLevel->Tick();
+	CurLevel->Render();
 }
 

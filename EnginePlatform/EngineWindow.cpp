@@ -55,7 +55,10 @@ int UEngineWindow::WindowMessageLoop(const EngineDelegate& _StartFuncion, const 
 {
     MSG msg = {};
 
-    _StartFuncion;
+    if (_StartFuncion.IsBind() == true)
+    {
+        _StartFuncion;
+    }
 
     while (WindowCount)
     {

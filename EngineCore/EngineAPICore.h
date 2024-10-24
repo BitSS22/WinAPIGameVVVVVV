@@ -28,10 +28,21 @@ private:
 	static UContentsCore* UserCore;
 	UEngineWindow EngineMainWindow = {};
 	map<string, ULevel*> Levels = {};
+	ULevel* CurLevel = nullptr;
 
 public:
 	static int EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore);
-	void CreateLevel(string_view _LevelName);
+	void OpenLevel(string_view _LevelName);
+
+	template<typename GameModeType, typename MainPawnType>
+	ULevel* CreateLevel(string_view _LevelName)
+	{
+		ULevel* NewLevel = new ULevel();
+		NewLevel->CreateGameMode<GameModeType, MainPawnType>();
+		Levels.insert(make_pair(_LevelName, NewLevel));
+
+		return NewLevel;
+	}
 	
 private:
 	static void EngineBeginPlay();
