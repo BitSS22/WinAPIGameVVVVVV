@@ -1,9 +1,16 @@
 #pragma once
+#include <Windows.h>
+#include <map>
+#include <string>
 #include <EnginePlatform/EngineWindow.h>
 #include "Level.h"
 
 #pragma comment (lib, "EngineBase.lib")
 #pragma comment (lib, "EnginePlatform.lib")
+
+using std::string;
+using std::string_view;
+using std::map;
 
 class UContentsCore
 {

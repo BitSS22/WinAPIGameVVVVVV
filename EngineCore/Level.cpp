@@ -7,6 +7,14 @@ ULevel::ULevel()
 
 ULevel::~ULevel()
 {
+	auto iter = AllActors.begin();
+
+	while (iter != AllActors.end())
+	{
+		delete* iter;
+		++iter;
+	}
+
 	AllActors.clear();
 }
 

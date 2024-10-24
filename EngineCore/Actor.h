@@ -16,14 +16,15 @@ public:
 
 private:
 	ULevel* World = nullptr;
+	FVector2D Location = FVector2D::ZERO;
+	FVector2D Scale = FVector2D::ZERO;
 
 public:
 	virtual void BeginPlay()
 	{}
 	virtual void Tick()
 	{}
-	virtual void Render()
-	{}
+	virtual void Render();
 
 private:
 
@@ -32,6 +33,17 @@ public:
 	{
 		return World;
 	}
-
+	void SetActorLocation(FVector2D _Location)
+	{
+		Location = _Location;
+	}
+	void AddActorLocation(FVector2D _Location)
+	{
+		Location += _Location;
+	}
+	void SetActorScale(FVector2D _Scale)
+	{
+		Scale = _Scale;
+	}
 };
 

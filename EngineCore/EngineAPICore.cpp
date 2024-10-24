@@ -13,12 +13,20 @@ UEngineAPICore::UEngineAPICore()
 
 UEngineAPICore::~UEngineAPICore()
 {
+	auto iter = Levels.begin();
+
+	while (iter != Levels.end())
+	{
+		delete iter->second;
+		++iter;
+	}
 	Levels.clear();
 }
 
 int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	// _CrtSetBreakAlloc(231);
 
 	UserCore = _UserCore;
 

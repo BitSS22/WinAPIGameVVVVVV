@@ -55,9 +55,9 @@ int UEngineWindow::WindowMessageLoop(const EngineDelegate& _StartFuncion, const 
 {
     MSG msg = {};
 
-    if (_StartFuncion.IsBind() == true)
+    if (_StartFuncion.IsBind())
     {
-        _StartFuncion;
+        _StartFuncion();
     }
 
     while (WindowCount)
@@ -85,6 +85,8 @@ void UEngineWindow::Create(string_view _TitleName, string_view _ClassName)
 
     if (WindowHandle == nullptr)
         MSGASSERT(nullptr, _TitleName, ", Window 생성에 실패 함.");
+
+    BackBuffer = GetDC(WindowHandle);
 }
 
 void UEngineWindow::Open(string_view _TitleName)

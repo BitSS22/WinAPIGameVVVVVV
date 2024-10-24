@@ -16,6 +16,7 @@ private:
 	static HINSTANCE hInstance;
 	static map<string, WNDCLASSEXA> WindowClasss;
 	HWND WindowHandle = nullptr;
+	HDC BackBuffer = nullptr;
 
 public:
 	static void EngineWindowInit(HINSTANCE _Instance);
@@ -25,5 +26,11 @@ public:
 	void Open(string_view _TitleName = "Window");
 
 private:
+
+public:
+	HDC GetBackBuffer()
+	{
+		return BackBuffer;
+	}
 
 };

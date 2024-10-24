@@ -1,5 +1,6 @@
 #pragma once
 #include "GameMode.h"
+#include <list>
 
 // Ό³Έν :
 class ULevel
@@ -16,7 +17,7 @@ public:
 	ULevel& operator=(ULevel&& _Other) noexcept = delete;
 
 private:
-	list<AActor*> AllActors = {};
+	std::list<AActor*> AllActors = {};
 	AGameMode* GameMode = nullptr;
 	AActor* MainPawn = nullptr;
 
@@ -34,7 +35,7 @@ public:
 
 		NewActor->BeginPlay();
 		AllActors.push_back(NewActor);
-		return NewAcgtor;
+		return NewActor;
 	}
 
 private:
