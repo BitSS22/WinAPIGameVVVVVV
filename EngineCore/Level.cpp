@@ -11,7 +11,7 @@ ULevel::~ULevel()
 
 	while (iter != AllActors.end())
 	{
-		delete* iter;
+		delete *iter;
 		++iter;
 	}
 

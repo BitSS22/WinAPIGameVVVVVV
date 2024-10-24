@@ -60,7 +60,7 @@ int UEngineWindow::WindowMessageLoop(const EngineDelegate& _StartFuncion, const 
         _StartFuncion();
     }
 
-    while (WindowCount)
+    while (WindowCount > 0)
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
@@ -94,9 +94,14 @@ void UEngineWindow::Open(string_view _TitleName)
     if (WindowHandle == nullptr)
         Create("Window");
 
-    ShowWindow(WindowHandle, SW_SHOW);
-    UpdateWindow(WindowHandle);
-    ++WindowCount;
+    if (WindowHandle != nullptr)
+    {
+        ShowWindow(WindowHandle, SW_SHOW);
+        UpdateWindow(WindowHandle);
+        ++WindowCount;
+    }
+    else
+        MSGASSERT(nullptr, "WindowHandle이 nullptr입니다.");
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
