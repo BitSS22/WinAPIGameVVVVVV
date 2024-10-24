@@ -34,7 +34,7 @@ _CRT_BEGIN_C_HEADER
 
 #ifdef NDEBUG
 
-#define assert(expression) ((void)0)
+#define assert(expression, msg) ((void)0)
 
 #else
 
