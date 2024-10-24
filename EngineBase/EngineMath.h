@@ -9,15 +9,6 @@ public:
 		: X(_X)
 		, Y(_Y) {};
 
-	int X = 0;
-	int Y = 0;
-
-	static const FIntPoint LEFT;
-	static const FIntPoint RIGHT;
-	static const FIntPoint UP;
-	static const FIntPoint DOWN;
-
-public:
 	FIntPoint operator+ (FIntPoint _Other) const
 	{
 		return FIntPoint(X + _Other.X, Y + _Other.Y);
@@ -38,5 +29,16 @@ public:
 		Y += _Other.Y;
 		return *this;
 	}
+
+public:
+	static const FIntPoint LEFT;
+	static const FIntPoint RIGHT;
+	static const FIntPoint UP;
+	static const FIntPoint DOWN;	
+	int X = 0;
+	int Y = 0;
+
+public:
+	
 };
 

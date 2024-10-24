@@ -11,15 +11,6 @@ public:
 	}
 	~EngineDelegate();
 
-private:
-	vector<function<void()>> Functions = {};
-
-public:
-	bool IsBind() const
-	{
-		return Functions.empty() == false;
-	}
-
 	void operator+= (function<void()> _Function)
 	{
 		Functions.push_back(_Function);
@@ -32,6 +23,16 @@ public:
 	}
 
 private:
+	vector<function<void()>> Functions = {};
 
+public:
+	
+private:
+
+public:
+	bool IsBind() const
+	{
+		return Functions.empty() == false;
+	}
 };
 

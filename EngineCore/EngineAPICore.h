@@ -31,6 +31,15 @@ private:
 
 public:
 	static int EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore);
+	void CreateLevel(string_view _LevelName);
+	
+private:
+	static void EngineBeginPlay();
+	static void EngineTick();
+
+	void Tick();
+
+public:
 	static class UEngineAPICore* GetCore()
 	{
 		return MainCore;
@@ -39,17 +48,6 @@ public:
 	{
 		return EngineMainWindow;
 	}
-	void CreateLevel(string_view _LevelName)
-	{
-		ULevel* NewLevel = new ULevel();
-		Levels.insert(make_pair(_LevelName, NewLevel));
-	}
-
-private:
-	static void EngineBeginPlay();
-	static void EngineTick();
-
-	void Tick();
 
 };
 

@@ -34,6 +34,12 @@ int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 	return UEngineWindow::WindowMessageLoop(Start, FrameLoop);
 }
 
+void UEngineAPICore::CreateLevel(string_view _LevelName)
+{
+	ULevel* NewLevel = new ULevel();
+	Levels.insert(make_pair(_LevelName, NewLevel));
+}
+
 void UEngineAPICore::EngineBeginPlay()
 {
 	UserCore->BeginPlay();

@@ -1,18 +1,3 @@
-// #include <assert.h>
-//
-//#ifdef _DEBUG
-//#define MSGASSERT(VALUE) {string ErrorText = VALUE; MessageBoxA(nullptr, ErrorText.c_str(), "ERROR", MB_OK); assert(nullptr);}
-//#else
-//#define MSGASSERT(VALUE) (VALUE);
-//#endif // _DEBUG
-
-//
-// assert.h
-//
-//      Copyright (c) Microsoft Corporation. All rights reserved.
-//
-// Defines the assert macro and related functionality.
-//
 #if defined _VCRT_BUILD && !defined _ASSERT_OK
 #error assert.h not for CRT internal use
 #endif
