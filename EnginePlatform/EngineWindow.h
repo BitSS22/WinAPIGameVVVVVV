@@ -20,7 +20,7 @@ private:
 public:
 	static void EngineWindowInit(HINSTANCE _Instance);
 	static void CreateWindowClass(const WNDCLASSEXA& _Class);
-	static int WindowMessageLoop(const EngineDelegate& _FrameFunction);
+	static int WindowMessageLoop(const EngineDelegate& _StartFuncion, const EngineDelegate& _FrameFunction);
 
 	void Create(string_view _TitleName, string_view _ClassName = "Default");
 	void Open(string_view _TitleName = "Window");

@@ -20,7 +20,7 @@ public:
 		return Functions.empty() == false;
 	}
 
-	void operator= (function<void()> _Function)
+	void operator+= (function<void()> _Function)
 	{
 		Functions.push_back(_Function);
 	}

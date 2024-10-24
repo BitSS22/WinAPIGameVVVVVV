@@ -1,10 +1,17 @@
 #pragma once
 #include <EnginePlatform/EngineWindow.h>
+#include "Level.h"
 
 #pragma comment (lib, "EngineBase.lib")
 #pragma comment (lib, "EnginePlatform.lib")
 
-// Ό³Έν :
+class UContentsCore
+{
+public:
+	virtual void BeginPlay() = 0;
+	virtual void Tick() = 0;
+};
+
 class UEngineAPICore
 {
 public:
@@ -18,11 +25,13 @@ public:
 
 private:
 	static UEngineAPICore* MainCore;
+	static UContentsCore* UserCore;
 	UEngineWindow EngineMainWindow = {};
+	map<string, ULevel*> Levels = {};
 
 public:
-	static int EngineStart(HINSTANCE _Inst);
-	UEngineAPICore* GetCore()
+	static int EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore);
+	static class UEngineAPICore* GetCore()
 	{
 		return MainCore;
 	}
@@ -30,12 +39,17 @@ public:
 	{
 		return EngineMainWindow;
 	}
+	void CreateLevel(string_view _LevelName)
+	{
+		ULevel* NewLevel = new ULevel();
+		Levels.insert(make_pair(_LevelName, NewLevel));
+	}
 
 private:
-	static void EngineLoop();
+	static void EngineBeginPlay();
+	static void EngineTick();
 
 	void Tick();
-	void Render();
 
 };
 
