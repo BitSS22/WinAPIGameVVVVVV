@@ -11,6 +11,7 @@
 
 #include <EngineBase/EngineDebug.h>
 #include <EngineBase/EngineMath.h>
+#include "EngineTimer.h"
 
 using std::vector;
 using std::list;

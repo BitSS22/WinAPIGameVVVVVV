@@ -28,7 +28,7 @@ public:
 private:
 
 public:
-	HDC GetBackBuffer()
+	HDC GetBackBuffer() const
 	{
 		return BackBuffer;
 	}

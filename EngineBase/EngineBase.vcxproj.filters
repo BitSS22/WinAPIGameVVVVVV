@@ -16,6 +16,9 @@
     <Filter Include="Function">
       <UniqueIdentifier>{4c66dcf3-f15a-4239-a28d-c139e201ce66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{3135261c-2d24-429e-a518-12d26a36b5db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineDebug.cpp">
@@ -33,6 +36,9 @@
     <ClCompile Include="pch.cpp">
       <Filter>pch</Filter>
     </ClCompile>
+    <ClCompile Include="EngineTimer.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineDebug.h">
@@ -49,6 +55,9 @@
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>pch</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTimer.h">
+      <Filter>Time</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -22,8 +22,8 @@ private:
 	AActor* MainPawn = nullptr;
 
 public:
-	void Tick();
-	void Render();
+	void Tick(float _DeltaTime) const;
+	void Render() const;
 
 	template<typename ActorType>
 	ActorType* SpawnActor()

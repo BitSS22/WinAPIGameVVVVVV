@@ -36,6 +36,7 @@ private:
 	UEngineWindow EngineMainWindow = {};
 	map<string, ULevel*> Levels = {};
 	ULevel* CurLevel = nullptr;
+	UEngineTimer DeltaTimer = {};
 
 public:
 	static int EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore);
@@ -62,7 +63,7 @@ public:
 	{
 		return MainCore;
 	}
-	UEngineWindow& GetMainWindow()
+	UEngineWindow& GetMainWindow() const
 	{
 		return EngineMainWindow;
 	}

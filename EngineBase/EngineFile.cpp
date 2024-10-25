@@ -12,7 +12,7 @@ UEngineFile::~UEngineFile()
     Close();
 }
 
-void UEngineFile::Write(const void* _Ptr, size_t _Size)
+void UEngineFile::Write(const void* _Ptr, size_t _Size) const
 {
     if (_Size == 0)
     {
@@ -33,7 +33,7 @@ void UEngineFile::Write(const void* _Ptr, size_t _Size)
     fwrite(_Ptr, _Size, 1, File);
 }
 
-void UEngineFile::Read(void* _Ptr, size_t _Size)
+void UEngineFile::Read(void* _Ptr, size_t _Size) const
 {
     if (_Size == 0)
     {
@@ -60,11 +60,6 @@ void UEngineFile::FileOpen(const char* _Mode)
 
     if (File == nullptr)
         MSGASSERT(nullptr, "유효하지 않은 Path입니다.");
-}
-
-bool UEngineFile::IsExits()
-{
-    return _access(Path, 00) == 0;
 }
 
 void UEngineFile::Close()

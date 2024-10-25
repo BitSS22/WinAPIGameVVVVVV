@@ -58,16 +58,20 @@ void UEngineAPICore::EngineBeginPlay()
 
 void UEngineAPICore::EngineTick()
 {
-	UserCore->Tick();
+	// UNUSED 현재 사용 하지 않는 함수
+	// UserCore->Tick();
 	MainCore->Tick();
 }
 
 void UEngineAPICore::Tick()
 {
+	DeltaTimer.TimeCheck();
+	float DT = DeltaTimer.GetDeltaTime();
+
 	if (CurLevel == nullptr)
 		MSGASSERT(nullptr, "현재 Level이 지정 되지 않음.");
 
-	CurLevel->Tick();
+	CurLevel->Tick(DT);
 	CurLevel->Render();
 }
 

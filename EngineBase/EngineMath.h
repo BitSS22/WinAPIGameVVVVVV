@@ -38,7 +38,7 @@ public:
 			MSGASSERT(nullptr, "0으로 나눌 수 없습니다.");
 		return FVector2D(X / _Value, Y / _Value);
 	}
-	bool operator== (FVector2D _Other)
+	bool operator== (FVector2D _Other) const
 	{
 		return X == _Other.X && Y == _Other.Y;
 	}
@@ -60,15 +60,15 @@ public:
 	float Y = 0.f;
 
 public:
-	int iX()
+	int iX() const
 	{
 		return static_cast<int>(X);
 	}
-	int iY()
+	int iY() const
 	{
 		return static_cast<int>(Y);
 	}
-	FVector2D Half()
+	FVector2D Half() const
 	{
 		return FVector2D(X * 0.5f, Y * 0.5f);
 	}

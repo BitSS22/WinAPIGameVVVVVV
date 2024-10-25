@@ -75,7 +75,7 @@ int UEngineWindow::WindowMessageLoop(const EngineDelegate& _StartFuncion, const 
     return static_cast<int>(msg.wParam);
 }
 
-void UEngineWindow::Create(string_view _TitleName, string_view _ClassName)
+void UEngineWindow::Create(string_view _TitleName, string_view _ClassName) 
 {
     if (WindowClasss.contains(_ClassName.data()) == false)
         MSGASSERT(nullptr, _ClassName, ", 동일한 이름의 Window를 만들 수 없음.");

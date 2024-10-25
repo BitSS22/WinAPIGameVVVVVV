@@ -9,7 +9,7 @@ AActor::~AActor()
 {
 }
 
-void AActor::Render()
+void AActor::Render() const
 {
 	FVector2D LeftTop = Location - Scale.Half();
 	FVector2D RightBottom = Location + Scale.Half();

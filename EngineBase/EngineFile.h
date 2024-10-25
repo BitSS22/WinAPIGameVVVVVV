@@ -13,10 +13,9 @@ private:
 	FILE* File = nullptr;
 
 public:
-	void Write(const void* _Ptr, size_t _Size);
-	void Read(void* _Ptr, size_t _Size);
+	void Write(const void* _Ptr, size_t _Size) const;
+	void Read(void* _Ptr, size_t _Size) const;
 	void FileOpen(const char* _Mode);
-	bool IsExits();
 	void Close();
 
 private:
@@ -26,6 +25,13 @@ public:
 	{
 		strcpy_s(Path, _Path);
 	}
+
+public:
+	bool IsExits() const
+	{
+		return _access(Path, 00) == 0;
+	}
+
 
 };
 

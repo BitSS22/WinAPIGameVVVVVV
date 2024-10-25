@@ -24,5 +24,6 @@ void V6ContentsCore::BeginPlay()
 
 void V6ContentsCore::Tick()
 {
+	// UNUSED 현재 사용 하지 않는 함수
 }
 

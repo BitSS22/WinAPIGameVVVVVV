@@ -13,10 +13,11 @@ public:
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
 private:
+	float Speed = 100.f;
 
 public:
 	void BeginPlay() override;
-	void Tick() override;
+	void Tick(float _DeltaTime) override;
 
 private:
 

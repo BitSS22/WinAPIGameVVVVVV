@@ -1,6 +1,9 @@
 #pragma once
 
-// Ό³Έν :
+#include <EngineBase/EngineMath.h>
+
+class ULevel;
+
 class AActor
 {
 public:
@@ -22,14 +25,14 @@ private:
 public:
 	virtual void BeginPlay()
 	{}
-	virtual void Tick()
+	virtual void Tick(float _DeltaTime)
 	{}
-	virtual void Render();
+	virtual void Render() const;
 
 private:
 
 public:
-	ULevel* GetWorld()
+	ULevel* GetWorld() const
 	{
 		return World;
 	}

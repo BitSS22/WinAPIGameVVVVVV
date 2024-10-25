@@ -18,13 +18,13 @@ ULevel::~ULevel()
 	AllActors.clear();
 }
 
-void ULevel::Tick()
+void ULevel::Tick(float _DeltaTime) const
 {
 	for (const auto& i : AllActors)
-		i->Tick();
+		i->Tick(_DeltaTime);
 }
 
-void ULevel::Render()
+void ULevel::Render() const
 {
 	for (const auto& i : AllActors)
 		i->Render();
