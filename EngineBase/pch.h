@@ -13,6 +13,8 @@
 #include <EngineBase/EngineMath.h>
 #include "EngineTimer.h"
 
+#define INNER_CLASS
+
 using std::vector;
 using std::list;
 using std::map;

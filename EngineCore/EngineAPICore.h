@@ -4,6 +4,7 @@
 #include <string>
 #include <EnginePlatform/EngineWindow.h>
 #include "Level.h"
+#include <EngineBase/EngineTimer.h>
 
 #pragma comment (lib, "EngineBase.lib")
 #pragma comment (lib, "EnginePlatform.lib")
@@ -63,7 +64,7 @@ public:
 	{
 		return MainCore;
 	}
-	UEngineWindow& GetMainWindow() const
+	UEngineWindow& GetMainWindow()
 	{
 		return EngineMainWindow;
 	}

@@ -28,6 +28,10 @@ public:
 private:
 
 public:
+	void SetWindowTitle(string_view Text)
+	{
+		SetWindowTextA(WindowHandle, Text.data());
+	}
 	HDC GetBackBuffer() const
 	{
 		return BackBuffer;

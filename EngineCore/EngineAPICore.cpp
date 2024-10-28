@@ -66,12 +66,15 @@ void UEngineAPICore::EngineTick()
 void UEngineAPICore::Tick()
 {
 	DeltaTimer.TimeCheck();
-	float DT = DeltaTimer.GetDeltaTime();
+	float Delta = DeltaTimer.GetDeltaTime();
+
+	UEngineInput::GetInst().KeyCheck(Delta);
 
 	if (CurLevel == nullptr)
 		MSGASSERT(nullptr, "현재 Level이 지정 되지 않음.");
 
-	CurLevel->Tick(DT);
+	UEngineInput::GetInst().EventCheck(Delta);
+	CurLevel->Tick(Delta);
 	CurLevel->Render();
 }
 
