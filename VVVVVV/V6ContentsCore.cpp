@@ -17,6 +17,8 @@ void V6ContentsCore::BeginPlay()
 {
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("VVVVVV");
 
+	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosScale({ 0, 0 }, { 1280, 720 });
+
 	// UEngineAPICore::GetCore()->CreateLevel("Title");
 	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
 	// UEngineAPICore::GetCore()->CreateLevel("End");

@@ -15,6 +15,11 @@ UEngineWindow::UEngineWindow()
 
 UEngineWindow::~UEngineWindow()
 {
+    if (WindowImage != nullptr)
+    {
+        delete WindowImage;
+        WindowImage = nullptr;
+    }
 }
 
 
@@ -86,7 +91,9 @@ void UEngineWindow::Create(string_view _TitleName, string_view _ClassName)
     if (WindowHandle == nullptr)
         MSGASSERT(nullptr, _TitleName, ", Window 생성에 실패 함.");
 
-    BackBuffer = GetDC(WindowHandle);
+    WindowImage = new UEngineWindowImage();
+    HDC WindowMainDC = GetDC(WindowHandle);
+    WindowImage->Create(WindowMainDC);
 }
 
 void UEngineWindow::Open(string_view _TitleName)
@@ -102,6 +109,15 @@ void UEngineWindow::Open(string_view _TitleName)
     }
     else
         MSGASSERT(nullptr, "WindowHandle이 nullptr입니다.");
+}
+
+void UEngineWindow::SetWindowPosScale(FVector2D _Pos, FVector2D _Scale)
+{
+    RECT rc = { 0, 0, _Scale.iX(), _Scale.iY() };
+
+    AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
+
+    SetWindowPos(WindowHandle, nullptr, _Pos.iX(), _Pos.iY(), rc.right - rc.left, rc.bottom - rc.top, SWP_NOZORDER);
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

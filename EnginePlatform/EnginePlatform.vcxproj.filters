@@ -8,6 +8,7 @@
       <Filter>pch</Filter>
     </ClInclude>
     <ClInclude Include="EngineInput.h" />
+    <ClInclude Include="EngineWindowImage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineWindow.cpp">
@@ -17,6 +18,7 @@
       <Filter>pch</Filter>
     </ClCompile>
     <ClCompile Include="EngineInput.cpp" />
+    <ClCompile Include="EngineWindowImage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Window">

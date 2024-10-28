@@ -27,10 +27,10 @@ private:
 
 public:
 	void BindAction(int _KeyIndex, KeyEvent _EventType, function<void()> _Function);
-
-private:
 	void KeyCheck(float _Delta);
 	void EventCheck();
+
+private:
 	void KeyIndexInvalidCheck(int _KeyIndex)
 	{
 		if (_KeyIndex < 0 || _KeyIndex >= Keys.size())

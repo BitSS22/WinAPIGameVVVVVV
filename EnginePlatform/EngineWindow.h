@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineBase/EngineDelegate.h>
+#include "EngineWindowImage.h"
 
 class UEngineWindow
 {
@@ -16,7 +17,8 @@ private:
 	static HINSTANCE hInstance;
 	static map<string, WNDCLASSEXA> WindowClasss;
 	HWND WindowHandle = nullptr;
-	HDC BackBuffer = nullptr;
+	UEngineWindowImage* BackBufferImage = nullptr;
+	UEngineWindowImage* WindowImage = nullptr;
 
 public:
 	static void EngineWindowInit(HINSTANCE _Instance);
@@ -24,6 +26,7 @@ public:
 	static int WindowMessageLoop(const EngineDelegate& _StartFuncion, const EngineDelegate& _FrameFunction);
 	void Create(string_view _TitleName, string_view _ClassName = "Default");
 	void Open(string_view _TitleName = "Window");
+	void SetWindowPosScale(FVector2D _Pos, FVector2D _Scale);
 
 private:
 
@@ -32,9 +35,9 @@ public:
 	{
 		SetWindowTextA(WindowHandle, Text.data());
 	}
-	HDC GetBackBuffer() const
+	HDC GetWindowMainDC() const
 	{
-		return BackBuffer;
+		return WindowImage->GetDC();
 	}
 
 };

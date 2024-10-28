@@ -18,12 +18,12 @@ void APlayer::BeginPlay()
 void APlayer::Tick()
 {
 	if (UEngineInput::GetInst().IsPress('A'))
-		AddActorLocation(FVector2D::LEFT * GETDT * Speed);
+		AddActorLocation(FVector2D::LEFT * GET_DT * Speed);
 	if (UEngineInput::GetInst().IsPress('D'))
-		AddActorLocation(FVector2D::RIGHT * GETDT * Speed);
+		AddActorLocation(FVector2D::RIGHT * GET_DT * Speed);
 	if (UEngineInput::GetInst().IsPress('W'))
-		AddActorLocation(FVector2D::UP * GETDT * Speed);
+		AddActorLocation(FVector2D::UP * GET_DT * Speed);
 	if (UEngineInput::GetInst().IsPress('S'))
-		AddActorLocation(FVector2D::DOWN * GETDT * Speed);
+		AddActorLocation(FVector2D::DOWN * GET_DT * Speed);
 }
 
