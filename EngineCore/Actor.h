@@ -25,7 +25,7 @@ private:
 public:
 	virtual void BeginPlay()
 	{}
-	virtual void Tick(float _DeltaTime)
+	virtual void Tick()
 	{}
 	virtual void Render() const;
 
@@ -35,6 +35,10 @@ public:
 	ULevel* GetWorld() const
 	{
 		return World;
+	}
+	FVector2D GetActorLocation() const
+	{
+		return Location;
 	}
 	void SetActorLocation(FVector2D _Location)
 	{

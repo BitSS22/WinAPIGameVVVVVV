@@ -68,6 +68,10 @@ public:
 	{
 		return EngineMainWindow;
 	}
+	float GetDeltaTime()
+	{
+		return DeltaTimer.GetDeltaTime();
+	}
 
 };
 

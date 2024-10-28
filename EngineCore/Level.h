@@ -22,7 +22,7 @@ private:
 	AActor* MainPawn = nullptr;
 
 public:
-	void Tick(float _DeltaTime) const;
+	void Tick() const;
 	void Render() const;
 
 	template<typename ActorType>
