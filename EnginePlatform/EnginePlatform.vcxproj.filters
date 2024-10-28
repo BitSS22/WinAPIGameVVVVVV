@@ -7,8 +7,10 @@
     <ClInclude Include="pch.h">
       <Filter>pch</Filter>
     </ClInclude>
-    <ClInclude Include="EngineInput.h" />
     <ClInclude Include="EngineWindowImage.h" />
+    <ClInclude Include="EngineInput.h">
+      <Filter>Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineWindow.cpp">
@@ -17,8 +19,10 @@
     <ClCompile Include="pch.cpp">
       <Filter>pch</Filter>
     </ClCompile>
-    <ClCompile Include="EngineInput.cpp" />
     <ClCompile Include="EngineWindowImage.cpp" />
+    <ClCompile Include="EngineInput.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Window">
@@ -26,6 +30,9 @@
     </Filter>
     <Filter Include="pch">
       <UniqueIdentifier>{90bded39-753f-405e-9cfa-5f13b8593fb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{5880de73-47c5-4c94-a3f0-34760c6e90ae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
