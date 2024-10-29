@@ -10,7 +10,7 @@ enum class KeyEvent
 
 class UEngineInput
 {
-public:
+private:
 	INNER_CLASS class UEngineKey;
 private:
 	UEngineInput();
