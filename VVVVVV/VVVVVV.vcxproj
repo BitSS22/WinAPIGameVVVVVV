@@ -151,6 +151,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="PlayMap.h">
       <SubType>
       </SubType>
@@ -170,6 +171,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="PlayMap.cpp">
       <SubType>
       </SubType>

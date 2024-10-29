@@ -13,7 +13,7 @@ public:
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
 private:
-	float Speed = 100.f;
+	float Speed = 300.f;
 
 public:
 	void BeginPlay() override;

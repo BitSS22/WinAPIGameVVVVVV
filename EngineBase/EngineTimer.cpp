@@ -22,6 +22,17 @@ void UEngineTimer::TimeCheck()
 	DeltaTime = Tick / TimeCounter;
 	fDeltaTime = static_cast<float>(DeltaTime);
 	PrevTime.QuadPart = CurTime.QuadPart;
+
+	// 프레임 체크
+	AccumulateDT += fDeltaTime;
+	++FrameCount;
+
+	if (AccumulateDT >= 1.f)
+	{
+		Frame = FrameCount;
+		AccumulateDT -= 1.f;
+		FrameCount = 0;
+	}
 }
 
 void UEngineTimer::TimeStart()

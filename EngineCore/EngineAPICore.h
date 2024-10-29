@@ -72,6 +72,10 @@ public:
 	{
 		return DeltaTimer.GetDeltaTime();
 	}
+	UINT GetFrame()
+	{
+		return DeltaTimer.GetFrame();
+	}
 
 };
 

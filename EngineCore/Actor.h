@@ -6,8 +6,8 @@ class ULevel;
 
 class AActor
 {
-	using Super = AActor;
 public:
+	using Super = AActor;
 	friend class ULevel;
 public:
 	AActor();

@@ -21,6 +21,9 @@ private:
 	double TimeCounter = 0.f;
 	double DeltaTime = 0.;
 	float fDeltaTime = 0.f;
+	float AccumulateDT = 0.f;
+	UINT Frame = 0;
+	UINT FrameCount = 0;
 
 public:
 	void TimeCheck();
@@ -38,6 +41,10 @@ public:
 	double GetDoubleDeltaTime() const
 	{
 		return DeltaTime;
+	}
+	UINT GetFrame() const
+	{
+		return Frame;
 	}
 
 };

@@ -2,6 +2,8 @@
 
 #include <EngineCore/pch.h>
 
+#include <EngineCore/Actor.h>
+
 #define GET_DELTA UEngineAPICore::GetCore()->GetDeltaTime()
 
 #define KEY_DOWN(key) UEngineInput::GetInst().IsDown(key)

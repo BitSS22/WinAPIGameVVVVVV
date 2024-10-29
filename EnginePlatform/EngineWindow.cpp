@@ -102,7 +102,7 @@ void UEngineWindow::Create(string_view _TitleName, string_view _ClassName)
 void UEngineWindow::Open(string_view _TitleName)
 {
     if (WindowHandle == nullptr)
-        Create("_TitleName");
+        Create(_TitleName);
 
     if (WindowHandle != nullptr)
     {

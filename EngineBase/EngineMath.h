@@ -7,10 +7,10 @@ public:
 	{}
 	~FVector2D()
 	{}
-	FVector2D(float _X, float _Y)
+	explicit FVector2D(float _X, float _Y)
 		: X(_X)
 		, Y(_Y) {}
-	FVector2D(int _X, int _Y)
+	explicit FVector2D(int _X, int _Y)
 		: X(static_cast<float>(_X))
 		, Y(static_cast<float>(_Y)) {}
 
