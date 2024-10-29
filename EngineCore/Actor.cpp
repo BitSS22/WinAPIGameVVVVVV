@@ -11,11 +11,11 @@ AActor::~AActor()
 
 void AActor::Render() const
 {
-	FVector2D LeftTop = Location - Scale.Half();
-	FVector2D RightBottom = Location + Scale.Half();
+	FVector2D LeftTop = Transfrom.Location - Transfrom.Scale.Half();
+	FVector2D RightBottom = Transfrom.Location + Transfrom.Scale.Half();
 
-	HDC WindowDC = UEngineAPICore::GetCore()->GetMainWindow().GetWindowMainDC();
+	HDC BackDC = UEngineAPICore::GetCore()->GetMainWindow().GetBackBufferImageDC();
 
-	Rectangle(WindowDC, LeftTop.iX(), LeftTop.iY(), RightBottom.iX(), RightBottom.iY());
+	Rectangle(BackDC, LeftTop.iX(), LeftTop.iY(), RightBottom.iX(), RightBottom.iY());
 }
 

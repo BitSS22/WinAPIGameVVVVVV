@@ -20,6 +20,11 @@ UEngineWindow::~UEngineWindow()
         delete WindowImage;
         WindowImage = nullptr;
     }
+    if (BackBufferImage != nullptr)
+    {
+        delete BackBufferImage;
+        BackBufferImage = nullptr;
+    }
 }
 
 
@@ -61,9 +66,7 @@ int UEngineWindow::WindowMessageLoop(const EngineDelegate& _StartFuncion, const 
     MSG msg = {};
 
     if (_StartFuncion.IsBind())
-    {
         _StartFuncion();
-    }
 
     while (WindowCount > 0)
     {
@@ -113,6 +116,19 @@ void UEngineWindow::Open(string_view _TitleName)
 
 void UEngineWindow::SetWindowPosScale(FVector2D _Pos, FVector2D _Scale)
 {
+    if (WindowSize.EqualInt(_Scale) == false)
+    {
+        if (BackBufferImage != nullptr)
+        {
+            delete BackBufferImage;
+            BackBufferImage = nullptr;
+        }
+
+        BackBufferImage = new UEngineWindowImage();
+        BackBufferImage->Create(WindowImage, _Scale);
+    }
+    WindowSize = _Scale;
+
     RECT rc = { 0, 0, _Scale.iX(), _Scale.iY() };
 
     AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);

@@ -2,7 +2,7 @@
 
 #include <EngineCore/pch.h>
 
-#define GET_DT UEngineAPICore::GetCore()->GetDeltaTime()
+#define GET_DELTA UEngineAPICore::GetCore()->GetDeltaTime()
 
 #define KEY_DOWN(key) UEngineInput::GetInst().IsDown(key)
 #define KEY_UP(key) UEngineInput::GetInst().IsUp(key)

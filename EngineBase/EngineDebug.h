@@ -3,6 +3,7 @@
 #endif
 
 #include <corecrt.h>
+#include <string>
 
 #pragma warning(push)
 #pragma warning(disable: _UCRT_DISABLED_WARNINGS)
@@ -42,4 +43,12 @@ _CRT_END_C_HEADER
 _UCRT_RESTORE_CLANG_WARNINGS
 #pragma warning(pop) // _UCRT_DISABLED_WARNINGS
 
+void OutputString(const std::string& Text);
+
+#ifdef _DEBUG
 #define MSGASSERT(expression, msg, ...) assert(expression, std::string(std::string(msg) + std::string(__VA_ARGS__)).c_str())
+#define OUTPUT_STRING(Text) OutputString(Text)
+#else
+#define MSGASSERT(expression, msg, ...) ((void)0)
+#define OUTPUT_STRING(Text) OutputString(Text) ((void)0)
+#endif // _DEBUG

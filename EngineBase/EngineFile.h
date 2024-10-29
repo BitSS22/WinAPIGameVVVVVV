@@ -1,11 +1,15 @@
 #pragma once
+#include "EnginePath.h"
+#include <io.h>
 
 const int MAXPATH = 256;
 
-class UEngineFile
+class UEngineFile : public UEnginePath
 {
 public:
 	UEngineFile();
+	UEngineFile(string_view _Path);
+	UEngineFile(std::filesystem::path _Path);
 	~UEngineFile();
 
 private:
@@ -25,8 +29,6 @@ public:
 	{
 		strcpy_s(Path, _Path);
 	}
-
-public:
 	bool IsExits() const
 	{
 		return _access(Path, 00) == 0;

@@ -6,6 +6,7 @@ class ULevel;
 
 class AActor
 {
+	using Super = AActor;
 public:
 	friend class ULevel;
 public:
@@ -19,8 +20,7 @@ public:
 
 private:
 	ULevel* World = nullptr;
-	FVector2D Location = FVector2D::ZERO;
-	FVector2D Scale = FVector2D::ZERO;
+	FTransform Transfrom = {};
 
 public:
 	virtual void BeginPlay()
@@ -38,19 +38,19 @@ public:
 	}
 	FVector2D GetActorLocation() const
 	{
-		return Location;
+		return Transfrom.Location;
 	}
 	void SetActorLocation(FVector2D _Location)
 	{
-		Location = _Location;
+		Transfrom.Location = _Location;
 	}
 	void AddActorLocation(FVector2D _Location)
 	{
-		Location += _Location;
+		Transfrom.Location += _Location;
 	}
 	void SetActorScale(FVector2D _Scale)
 	{
-		Scale = _Scale;
+		Transfrom.Scale = _Scale;
 	}
 };
 

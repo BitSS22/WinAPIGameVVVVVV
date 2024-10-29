@@ -22,8 +22,8 @@ private:
 	AActor* MainPawn = nullptr;
 
 public:
-	void Tick() const;
-	void Render() const;
+	void Tick();
+	void Render();
 
 	template<typename ActorType>
 	ActorType* SpawnActor()
@@ -54,6 +54,9 @@ private:
 		AllActors.push_back(GameMode);
 		AllActors.push_back(MainPawn);
 	}
+
+	void DoubleBuffering();
+	void ScreenClear();
 
 };
 

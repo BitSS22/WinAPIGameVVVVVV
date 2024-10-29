@@ -15,12 +15,17 @@ public:
 
 private:
 	HDC ImageDC = nullptr;
-	HBITMAP BitMap = nullptr;
+	HBITMAP hBitMap = nullptr;
+	BITMAP Info = {};
 
 public:
-	void Create(HDC _hdc)
-	{}
-	void Create(FVector2D _Scale);
+	void Create(HDC _hDC)
+	{
+		ImageDC = _hDC;
+	}
+	void Create(UEngineWindowImage* _TargetImage, FVector2D _Scale);
+	void CopyBit(UEngineWindowImage* _Destination, const FTransform& _transform);
+	void CopyToBit(UEngineWindowImage* _TargetImage, const FTransform& _transform);
 
 private:
 

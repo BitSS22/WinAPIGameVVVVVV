@@ -19,6 +19,7 @@ private:
 	HWND WindowHandle = nullptr;
 	UEngineWindowImage* BackBufferImage = nullptr;
 	UEngineWindowImage* WindowImage = nullptr;
+	FVector2D WindowSize = {};
 
 public:
 	static void EngineWindowInit(HINSTANCE _Instance);
@@ -35,9 +36,25 @@ public:
 	{
 		SetWindowTextA(WindowHandle, Text.data());
 	}
-	HDC GetWindowMainDC() const
+	UEngineWindowImage* GetWindowMainImage() const
+	{
+		return WindowImage;
+	}
+	HDC GetWindowMainImageDC() const
 	{
 		return WindowImage->GetDC();
+	}
+	UEngineWindowImage* GetBackBufferImage() const
+	{
+		return BackBufferImage;
+	}
+	HDC GetBackBufferImageDC() const
+	{
+		return BackBufferImage->GetDC();
+	}
+	FVector2D GetWindowSize() const
+	{
+		return WindowSize;
 	}
 
 };

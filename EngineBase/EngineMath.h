@@ -1,6 +1,6 @@
 #pragma once
 
-class FVector2D
+struct FVector2D
 {
 public:
 	FVector2D()
@@ -60,6 +60,10 @@ public:
 	float Y = 0.f;
 
 public:
+	bool EqualInt(FVector2D _Other) const
+	{
+		return iX() == _Other.iX() && iY() == _Other.iY();
+	}
 	int iX() const
 	{
 		return static_cast<int>(X);
@@ -71,6 +75,24 @@ public:
 	FVector2D Half() const
 	{
 		return FVector2D(X * 0.5f, Y * 0.5f);
+	}
+
+};
+
+struct FTransform
+{
+public:
+	FVector2D Location = {};
+	FVector2D Scale = {};
+
+public:
+	FVector2D CenterLeftTop() const
+	{
+		return Location - Scale.Half();
+	}
+	FVector2D CenterRightBottom() const
+	{
+		return Location + Scale.Half();
 	}
 
 };
