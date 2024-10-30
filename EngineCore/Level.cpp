@@ -55,6 +55,6 @@ void ULevel::ScreenClear()
 	UEngineWindowImage* BackBufferImage = MainWindow.GetBackBufferImage();
 	FVector2D size = MainWindow.GetWindowSize();
 
-	Rectangle(BackBufferImage->GetDC(), 0, 0, size.iX(), size.iY());
+	Rectangle(BackBufferImage->GetDC(), -1, -1, size.iX() + 1, size.iY() + 1);
 }
 

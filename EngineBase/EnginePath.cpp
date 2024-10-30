@@ -28,16 +28,24 @@ bool UEnginePath::MoveParentToDirectory(string_view _Path)
 		MSGASSERT(nullptr, Path.string(), "는 Directory Path가 아닙니다.");
 
 	std::filesystem::path CurPath = TempPath.Path;
-	
-	while (CurPath != CurPath.root_path())
+
+	std::filesystem::path Root = CurPath.root_path();
+
+	while (true)
 	{
 		CurPath = TempPath.Path;
+
+		if (CurPath == Root)
+			break;
+
 		CurPath.append(_Path);
+
 		if (std::filesystem::exists(CurPath) == true)
 		{
 			Path = CurPath;
 			return true;
 		}
+
 		TempPath.MoveParent();
 	}
 

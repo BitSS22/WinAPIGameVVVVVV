@@ -25,6 +25,11 @@ UEngineWindow::~UEngineWindow()
         delete BackBufferImage;
         BackBufferImage = nullptr;
     }
+    if (WindowHandle!= nullptr)
+    {
+        DestroyWindow(WindowHandle);
+        WindowHandle = nullptr;
+    }
 }
 
 

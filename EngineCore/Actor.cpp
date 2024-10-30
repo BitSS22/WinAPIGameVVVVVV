@@ -11,11 +11,13 @@ AActor::~AActor()
 
 void AActor::Render() const
 {
-	FVector2D LeftTop = Transfrom.Location - Transfrom.Scale.Half();
-	FVector2D RightBottom = Transfrom.Location + Transfrom.Scale.Half();
+	if (Sprite == nullptr)
+		MSGASSERT(nullptr, "Sprite가 없어 렌더링 할 수 없습니다.");
 
-	HDC BackDC = UEngineAPICore::GetCore()->GetMainWindow().GetBackBufferImageDC();
+	UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
+	UEngineWindowImage* BackBufferImage = MainWindow.GetBackBufferImage();
 
-	Rectangle(BackDC, LeftTop.iX(), LeftTop.iY(), RightBottom.iX(), RightBottom.iY());
+	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
+	CurData.Image->CopyToTrans(BackBufferImage, Transfrom, CurData.Transform);
 }
 

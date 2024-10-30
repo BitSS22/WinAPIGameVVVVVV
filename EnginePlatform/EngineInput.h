@@ -8,9 +8,10 @@ enum class KeyEvent
 	Free
 };
 
+
 class UEngineInput
 {
-private:
+public:
 	INNER_CLASS class UEngineKey;
 private:
 	UEngineInput();
@@ -70,8 +71,7 @@ public:
 	}
 
 private:
-	INNER_CLASS
-	class UEngineKey
+	INNER_CLASS	class UEngineKey
 	{
 	public:
 		UEngineKey(int _Key)

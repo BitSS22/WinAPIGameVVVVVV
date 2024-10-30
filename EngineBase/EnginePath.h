@@ -35,6 +35,14 @@ public:
 	{
 		return std::filesystem::is_directory(Path);
 	}
+	string GetFileName()
+	{
+		return Path.filename().string();
+	}
+	string GetExtension()
+	{
+		return Path.extension().string();
+	}
 
 };
 

@@ -16,6 +16,9 @@ public:
 	FVector2D(POINT _Value)
 		: X(static_cast<float>(_Value.x))
 		, Y(static_cast<float>(_Value.y)) {}
+	FVector2D(long _X, long _Y)
+		: X(static_cast<float>(_X))
+		, Y(static_cast<float>(_Y)) {}
 
 	FVector2D operator+ (FVector2D _Value) const
 	{
@@ -100,6 +103,16 @@ public:
 		return FVector2D(X / Scalar, Y / Scalar);
 	}
 
+public:
+	bool IsZeroOr() const
+	{
+		return X == 0.f || Y == 0.f;
+	}
+	bool IsZeroAnd() const
+	{
+		return X == 0.f && Y == 0.f;
+	}
+
 };
 
 struct FTransform
@@ -120,45 +133,25 @@ public:
 
 };
 
-class FIntPoint
+struct UColor
 {
 public:
-	FIntPoint()
+	UColor(UCHAR _r, UCHAR _g, UCHAR _b, UCHAR _a)
+		: R(_r)
+		, G(_g)
+		, B(_b)
+		, A(_a)
 	{}
-	FIntPoint(int _X, int _Y)
-		: X(_X)
-		, Y(_Y) {};
-
-	FIntPoint operator+ (FIntPoint _Other) const
-	{
-		return FIntPoint(X + _Other.X, Y + _Other.Y);
-	}
-	FIntPoint operator/ (FIntPoint _Other) const
-	{
-		if (_Other.X == 0 || _Other.Y == 0)
-			MSGASSERT(nullptr, "0으로 나눌 수 없습니다.");
-		return FIntPoint(X / _Other.X, Y / _Other.Y);
-	}
-	bool operator== (FIntPoint _Other) const
-	{
-		return X == _Other.X && Y == _Other.Y;
-	}
-	FIntPoint& operator+= (FIntPoint _Other)
-	{
-		X += _Other.X;
-		Y += _Other.Y;
-		return *this;
-	}
-
 public:
-	static const FIntPoint LEFT;
-	static const FIntPoint RIGHT;
-	static const FIntPoint UP;
-	static const FIntPoint DOWN;	
-	int X = 0;
-	int Y = 0;
-
-public:
-	
+	union
+	{
+		int Color = {};
+		struct
+		{
+			UCHAR R;
+			UCHAR G;
+			UCHAR B;
+			UCHAR A;
+		};
+	};
 };
-

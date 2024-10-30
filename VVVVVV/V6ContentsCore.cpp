@@ -29,6 +29,13 @@ void V6ContentsCore::BeginPlay()
 		string FilePath = ImageFiles[i].GetPathToString();
 		UImageManager::GetInst().Load(FilePath);
 	}
+
+	UImageManager::GetInst().CutSprite("player.png", FVector2D(12, 24));
+
+
+	///////////////////////////////////////////////////////////////////////
+
+
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("VVVVVV");
 
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosScale(FVector2D(0.f, 0.f), FVector2D(1280.f, 720.f));

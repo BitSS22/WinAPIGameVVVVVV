@@ -2,4 +2,6 @@
 
 #include <EnginePlatform/pch.h>
 
-#include <EngineCore/EngineAPICore.h>
+#include "EngineAPICore.h"
+#include "ImageManager.h"
+#include "EngineSprite.h"

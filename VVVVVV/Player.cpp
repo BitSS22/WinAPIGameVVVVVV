@@ -6,6 +6,8 @@ APlayer::APlayer()
 {
 	SetActorLocation(FVector2D(100.f, 100.f));
 	SetActorScale(FVector2D(50.f, 50.f));
+
+	SetSprite("player.png", 0);
 }
 
 APlayer::~APlayer()
@@ -37,7 +39,7 @@ void APlayer::Tick()
 	{
 		AddActorLocation(FVector2D::DOWN * GET_DELTA * Speed);
 	}
-	if (KEY_PRESS(VK_LBUTTON))
+	if (false)// KEY_PRESS(VK_LBUTTON))
 	{
 		POINT CursorPos = {};
 		GetCursorPos(&CursorPos);

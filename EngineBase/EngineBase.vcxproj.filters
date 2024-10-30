@@ -45,6 +45,8 @@
     <ClCompile Include="EnginePath.cpp">
       <Filter>IO</Filter>
     </ClCompile>
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="EngineString.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineDebug.h">
@@ -71,5 +73,7 @@
     <ClInclude Include="EngineDirectory.h">
       <Filter>IO</Filter>
     </ClInclude>
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="EngineString.h" />
   </ItemGroup>
 </Project>

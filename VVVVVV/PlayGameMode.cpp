@@ -15,13 +15,13 @@ APlayGameMode::~APlayGameMode()
 void APlayGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-	APlayMap* temp = GetWorld()->SpawnActor<APlayMap>();
+
+	APlayMap* map = GetWorld()->SpawnActor<APlayMap>();
 }
 
 void APlayGameMode::Tick()
 {
 	Super::Tick();
-
 
 	UINT frame = UEngineAPICore::GetCore()->GetFrame();
 

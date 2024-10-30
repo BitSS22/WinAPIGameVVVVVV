@@ -9,9 +9,10 @@
 #include <string>
 #include <functional>
 
-#include <EngineBase/EngineDebug.h>
-#include <EngineBase/EngineMath.h>
+#include "EngineDebug.h"
+#include "EngineMath.h"
 #include "EngineTimer.h"
+#include "Object.h"
 
 #define INNER_CLASS
 
