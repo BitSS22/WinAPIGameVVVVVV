@@ -52,8 +52,8 @@ void UEngineWindowImage::CopyBit(UEngineWindowImage* _origin, const FTransform& 
 		MSGASSERT(nullptr, "원본 이미지가 nullptr입니다.");
 	else
 	{
-		FVector2D LT = _transform.CenterLeftTop();
-		BitBlt(ImageDC, LT.iX(), LT.iY(), _transform.Scale.iX(), _transform.Scale.iY(), _origin->ImageDC, 0, 0, SRCCOPY);
+		FVector2D LeftTop = _transform.CenterLeftTop();
+		BitBlt(ImageDC, LeftTop.iX(), LeftTop.iY(), _transform.Scale.iX(), _transform.Scale.iY(), _origin->ImageDC, 0, 0, SRCCOPY);
 	}
 }
 
@@ -83,9 +83,9 @@ void UEngineWindowImage::CopyToTrans(UEngineWindowImage* _TargetImage, const FTr
 		HDC CopyDC = ImageDC;
 		HDC TargetDC = _TargetImage->ImageDC;
 
-		FVector2D LT = _RenderTrans.CenterLeftTop();
+		FVector2D LeftTop = _RenderTrans.CenterLeftTop();
 
-		TransparentBlt(TargetDC, LT.iX(), LT.iY(), _RenderTrans.Scale.iX(), _RenderTrans.Scale.iY(), CopyDC
+		TransparentBlt(TargetDC, LeftTop.iX(), LeftTop.iY(), _RenderTrans.Scale.iX(), _RenderTrans.Scale.iY(), CopyDC
 			, _LTImageTrans.Location.iX(), _LTImageTrans.Location.iY(), _LTImageTrans.Scale.iX(), _LTImageTrans.Scale.iY(), _Color.Color);
 	}
 }

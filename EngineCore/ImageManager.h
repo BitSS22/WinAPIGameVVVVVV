@@ -24,7 +24,7 @@ public:
 	void Load(string_view _Path);
 	UEngineSprite* FindSprite(string_view _KeyName);
 	void CutSprite(string_view _KeyName, FVector2D _CuttingSize);
-	void CutSprite(string_view _KeyName, FVector2D _StartPos, FVector2D _CuttingSize, FVector2D _XYOffSet, UINT _Xcount, UINT _ImageCount);
+	void CreateCutSprite(string_view _SearchKeyName, string_view _NewSpriteKeyName, FVector2D _StartPos, FVector2D _CuttingSize, FVector2D _XYOffSet, UINT _Xcount, UINT _ImageCount);
 
 private:
 

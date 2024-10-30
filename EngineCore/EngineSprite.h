@@ -27,7 +27,7 @@ public:
 private:
 
 public:
-	USpriteData GetSpriteData(int _Index = 0)
+	USpriteData GetSpriteData(int _Index)
 	{
 		return Data[_Index];
 	}

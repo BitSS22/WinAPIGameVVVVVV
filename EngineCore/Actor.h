@@ -65,6 +65,18 @@ public:
 
 		CurIndex = _CurIndex;
 	}
+	void SetSpriteIndex(int _Index)
+	{
+		CurIndex = _Index;
+	}
+	int GetSpriteIndex() const
+	{
+		return CurIndex;
+	}
+	void AddSpriteIndex(int _Index)
+	{
+		CurIndex += _Index;
+	}
 
 };
 

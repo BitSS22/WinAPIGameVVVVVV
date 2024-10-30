@@ -5,9 +5,9 @@
 APlayer::APlayer()
 {
 	SetActorLocation(FVector2D(100.f, 100.f));
-	SetActorScale(FVector2D(50.f, 50.f));
+	SetActorScale(FVector2D(96.f, 96.f));
 
-	SetSprite("player.png", 0);
+	SetSprite("player2.png", 0);
 }
 
 APlayer::~APlayer()
@@ -51,4 +51,11 @@ void APlayer::Tick()
 		NewBullet->SetDir(VectorCursor.SetNomalize());
 	}
 	
+	if (KEY_DOWN(VK_LBUTTON))
+	{
+		AddSpriteIndex(1);
+		
+		if (GetSpriteIndex() > 15)
+			SetSpriteIndex(0);
+	}
 }
