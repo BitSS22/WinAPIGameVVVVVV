@@ -82,13 +82,13 @@ public:
 	{
 		return FVector2D(X * 0.5f, Y * 0.5f);
 	}
-	float Getscalar() const
+	float Length() const
 	{
 		return sqrt(X * X + Y * Y);
 	}
 	FVector2D& SetNomalize()
 	{
-		float Scalar = Getscalar();
+		float Scalar = Length();
 		if (Scalar == 0.f)
 			MSGASSERT(nullptr, "Scalar 값이 0인 Vector를 Nomalize 할 수 없습니다.");
 		X /= Scalar;
@@ -97,7 +97,7 @@ public:
 	}
 	FVector2D GetNomalize()
 	{
-		float Scalar = Getscalar();
+		float Scalar = Length();
 		if (Scalar == 0.f)
 			MSGASSERT(nullptr, "Scalar 값이 0인 Vector를 Nomalize 할 수 없습니다.");
 		return FVector2D(X / Scalar, Y / Scalar);

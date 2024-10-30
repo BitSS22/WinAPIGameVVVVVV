@@ -18,7 +18,7 @@ void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SetSpriteIndex(4);
+	SetSpriteIndex(0);
 }
 
 void APlayer::Tick()
@@ -62,6 +62,6 @@ void APlayer::Tick()
 		AddSpriteIndex(1);
 
 		if (GetSpriteIndex() > 7)
-			SetSpriteIndex(4);
+			SetSpriteIndex(0);
 	}
 }

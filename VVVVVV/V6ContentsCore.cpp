@@ -31,6 +31,7 @@ void V6ContentsCore::BeginPlay()
 	}
 
 	UImageManager::GetInst().CreateCutSprite("PC Computer - VVVVVV - Objects & Menu Sprites.png", "player2.png", FVector2D(471.f, 209.f), FVector2D(96.f, 96.f), FVector2D(6.f, 10.f), 4, 8);
+	
 	// UImageManager::GetInst().CutSprite("player.png", FVector2D(12, 24));
 
 
