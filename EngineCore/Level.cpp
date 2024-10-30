@@ -39,7 +39,7 @@ void ULevel::DoubleBuffering()
 {
 	UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
 
-	UEngineWindowImage* WindowImage = MainWindow.GetWindowMainImage();
+	UEngineWindowImage* WindowImage = MainWindow.GetWindowImage();
 	UEngineWindowImage* BackBufferImage = MainWindow.GetBackBufferImage();
 
 	FTransform size = {};

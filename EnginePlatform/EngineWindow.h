@@ -36,11 +36,11 @@ public:
 	{
 		SetWindowTextA(WindowHandle, Text.data());
 	}
-	UEngineWindowImage* GetWindowMainImage() const
+	UEngineWindowImage* GetWindowImage() const
 	{
 		return WindowImage;
 	}
-	HDC GetWindowMainImageDC() const
+	HDC GetWindowImageDC() const
 	{
 		return WindowImage->GetDC();
 	}

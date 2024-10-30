@@ -5,7 +5,7 @@
 APlayer::APlayer()
 {
 	SetActorLocation(FVector2D(100.f, 100.f));
-	SetActorScale(FVector2D(96.f, 96.f));
+	SetActorScale(FVector2D(96.f * 4, 96.f * 4));
 
 	SetSprite("player2.png", 0);
 }
@@ -17,6 +17,8 @@ APlayer::~APlayer()
 void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
+
+	SetSpriteIndex(4);
 }
 
 void APlayer::Tick()
@@ -51,11 +53,15 @@ void APlayer::Tick()
 		NewBullet->SetDir(VectorCursor.SetNomalize());
 	}
 	
-	if (KEY_DOWN(VK_LBUTTON))
+	AccTime += GET_DELTA;
+
+	if (AccTime >= 0.15f)
 	{
+		AccTime -= 0.15f;
+
 		AddSpriteIndex(1);
-		
-		if (GetSpriteIndex() > 15)
-			SetSpriteIndex(0);
+
+		if (GetSpriteIndex() > 7)
+			SetSpriteIndex(4);
 	}
 }

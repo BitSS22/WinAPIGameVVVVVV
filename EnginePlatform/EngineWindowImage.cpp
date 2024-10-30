@@ -126,15 +126,17 @@ void UEngineWindowImage::Load(UEngineWindowImage* _TargetImage, string_view _Pat
 
 	if (NewBitmap == nullptr)
 		MSGASSERT(nullptr, "Bitmap 생성 실패.");
+	else
+	{
+		HDC NewDC = CreateCompatibleDC(_TargetImage->GetDC());
 
-	HDC NewDC = CreateCompatibleDC(_TargetImage->GetDC());
+		HBITMAP OldBitmap = static_cast<HBITMAP>(SelectObject(NewDC, NewBitmap));
+		DeleteObject(OldBitmap);
 
-	HBITMAP OldBitmap = static_cast<HBITMAP>(SelectObject(NewDC, NewBitmap));
-	DeleteObject(OldBitmap);
+		hBitMap = NewBitmap;
+		ImageDC = NewDC;
 
-	hBitMap = NewBitmap;
-	ImageDC = NewDC;
-
-	GetObject(hBitMap, sizeof(BITMAP), &Info);
+		GetObject(hBitMap, sizeof(BITMAP), &Info);
+	}
 }
 

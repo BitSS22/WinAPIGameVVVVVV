@@ -37,7 +37,7 @@ void UImageManager::Load(string_view _KeyName, string_view _Path)
 	if (path.IsExists() == false)
 		MSGASSERT(nullptr, _Path, "는 유효하지 않은 파일경로입니다.");
 
-	UEngineWindowImage* WindowImage = UEngineAPICore::GetCore()->GetMainWindow().GetWindowMainImage();
+	UEngineWindowImage* WindowImage = UEngineAPICore::GetCore()->GetMainWindow().GetWindowImage();
 
 	string UpperName = UEngineString::ToUpper(_KeyName);
 
@@ -150,7 +150,7 @@ void UImageManager::CreateCutSprite(string_view _SearchKeyName, string_view _New
 
 	UEngineWindowImage* NewImage = new UEngineWindowImage();
 	UEngineSprite* NewSprite = new UEngineSprite();
-	NewImage->Create(UEngineAPICore::GetCore()->GetMainWindow().GetWindowMainImage(), TotalSize);
+	NewImage->Create(UEngineAPICore::GetCore()->GetMainWindow().GetWindowImage(), TotalSize);
 
 	BitBlt(NewImage->GetDC(), 0, 0, static_cast<int>(TotalSizeX), static_cast<int>(TotalSizeY), Image->GetDC(), static_cast<int>(_StartPos.X), static_cast<int>(_StartPos.Y), SRCCOPY);
 
