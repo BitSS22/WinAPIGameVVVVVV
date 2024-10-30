@@ -3,7 +3,7 @@
 
 Bullet::Bullet()
 {
-	SetActorScale(FVector2D(50.f, 50.f));
+	SetActorScale(FVector2D(10.f, 10.f));
 }
 
 Bullet::~Bullet()
@@ -12,11 +12,13 @@ Bullet::~Bullet()
 
 void Bullet::BeginPlay()
 {
-	Dir = FVector2D(-1, 1);
+	Super::BeginPlay();
 }
 
 void Bullet::Tick()
 {
+	Super::Tick();
+
 	AddActorLocation(Dir * GET_DELTA * 500.f);
 
 	FVector2D ActorLocation = GetActorLocation();

@@ -1,15 +1,15 @@
 #pragma once
 
 // Ό³Έν :
-class EngineDelegate
+class UEngineDelegate
 {
 public:
-	EngineDelegate();
-	EngineDelegate(function<void()> _Function)
+	UEngineDelegate();
+	UEngineDelegate(function<void()> _Function)
 	{
 		Functions.push_back(_Function);
 	}
-	~EngineDelegate();
+	~UEngineDelegate();
 
 	void operator+= (function<void()> _Function)
 	{

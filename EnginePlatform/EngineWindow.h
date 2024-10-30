@@ -24,7 +24,7 @@ private:
 public:
 	static void EngineWindowInit(HINSTANCE _Instance);
 	static void CreateWindowClass(const WNDCLASSEXA& _Class);
-	static int WindowMessageLoop(const EngineDelegate& _StartFuncion, const EngineDelegate& _FrameFunction);
+	static int WindowMessageLoop(const UEngineDelegate& _StartFuncion, const UEngineDelegate& _FrameFunction);
 	void Create(string_view _TitleName, string_view _ClassName = "Default");
 	void Open(string_view _TitleName = "Window");
 	void SetWindowPosScale(FVector2D _Pos, FVector2D _Scale);
@@ -55,6 +55,10 @@ public:
 	FVector2D GetWindowSize() const
 	{
 		return WindowSize;
+	}
+	HWND GetWindowHandle() const
+	{
+		return WindowHandle;
 	}
 
 };

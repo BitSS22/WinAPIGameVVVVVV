@@ -61,7 +61,7 @@ void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
     WindowClasss.insert(make_pair(_Class.lpszClassName, _Class));
 }
 
-int UEngineWindow::WindowMessageLoop(const EngineDelegate& _StartFuncion, const EngineDelegate& _FrameFunction)
+int UEngineWindow::WindowMessageLoop(const UEngineDelegate& _StartFuncion, const UEngineDelegate& _FrameFunction)
 {
     MSG msg = {};
 

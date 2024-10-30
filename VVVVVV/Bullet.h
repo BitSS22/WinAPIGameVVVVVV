@@ -16,6 +16,10 @@ public:
 private:
 
 public:
+	void SetDir(FVector2D _Dir)
+	{
+		Dir = _Dir;
+	}
 
 };
 

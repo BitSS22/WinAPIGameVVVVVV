@@ -16,7 +16,8 @@ public:
 private:
 
 public:
-	void BeginPlay();
+	virtual void BeginPlay() override;
+	virtual void Tick() override;
 
 private:
 

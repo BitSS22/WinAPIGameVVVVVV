@@ -33,8 +33,8 @@ int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 	Core.EngineMainWindow.Open();
 	MainCore = &Core;
 
-	EngineDelegate Start = EngineDelegate(bind(EngineBeginPlay));
-	EngineDelegate FrameLoop = EngineDelegate(bind(EngineTick));
+	UEngineDelegate Start = UEngineDelegate(bind(EngineBeginPlay));
+	UEngineDelegate FrameLoop = UEngineDelegate(bind(EngineTick));
 
 	return UEngineWindow::WindowMessageLoop(Start, FrameLoop);
 }

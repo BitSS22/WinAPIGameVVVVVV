@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "EngineDelegate.h"
 
-EngineDelegate::EngineDelegate()
+UEngineDelegate::UEngineDelegate()
 {
 }
 
-EngineDelegate::~EngineDelegate()
+UEngineDelegate::~UEngineDelegate()
 {
 }
 
