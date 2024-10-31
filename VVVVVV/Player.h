@@ -14,9 +14,7 @@ public:
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
 private:
-	float Speed = 300.f;
-	FVector2D Dir = FVector2D(0.f, 0.f);
-	float AccTime = 0.f;
+	float Speed = 800.f;
 	USpriteRenderer* SpriteRenderer = nullptr;
 
 public:

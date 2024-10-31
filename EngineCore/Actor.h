@@ -58,6 +58,10 @@ public:
 	{
 		return Transform.Location;
 	}
+	FVector2D GetActorScale() const
+	{
+		return Transform.Scale;
+	}
 	void SetActorLocation(FVector2D _Location)
 	{
 		Transform.Location = _Location;

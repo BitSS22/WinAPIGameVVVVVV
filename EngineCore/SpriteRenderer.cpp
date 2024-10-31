@@ -123,12 +123,11 @@ void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::stri
 		MSGASSERT(nullptr, _AnimationName, ", 프레임 Start보다 End가 큽니다.");
 
 	vector<int> Indexs = {};
-	vector<float> Times = {};
+	vector<float> Times(_End - _Start, _Time);
 
 	for (size_t i = _Start; i <= _End; ++i)
 	{
 		Indexs.push_back(_Start);
-		Times.push_back(_Time);
 		++_Start;
 	}
 
@@ -139,10 +138,11 @@ void USpriteRenderer::ChangeAnimation(std::string_view _AnimationName, bool _For
 {
 	string UpperName = UEngineString::ToUpper(_AnimationName);
 
-	if (FrameAnimations.contains(UpperName))
+	if (FrameAnimations.contains(UpperName) == false)
 		MSGASSERT(nullptr, _AnimationName, "이라는 Animation은 없습니다.");
 
 	FrameAnimation* ChangeAnimation = &FrameAnimations[UpperName];
+
 	if (CurAnimation == ChangeAnimation && _Force == false)
 		return;
 
@@ -154,12 +154,11 @@ void USpriteRenderer::SetAnimationEvent(std::string_view _AnimationName, int _An
 {
 	string UpperName = UEngineString::ToUpper(_AnimationName);
 
-	if (FrameAnimations.contains(UpperName))
+	if (FrameAnimations.contains(UpperName) == false)
 		MSGASSERT(nullptr, _AnimationName, "은 없는 Animation입니다.");
 
-	if (FrameAnimations.size() <= _AnimationFrame)
+	if (FrameAnimations[UpperName].FrameIndex.size() <= _AnimationFrame)
 		MSGASSERT(nullptr, _AnimationName, "은 없는 Animation Frame입니다.");
-
 
 	FrameAnimations[UpperName].Events[_AnimationFrame] += _Function;
 }

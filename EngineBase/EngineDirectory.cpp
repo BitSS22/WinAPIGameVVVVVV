@@ -57,7 +57,7 @@ vector<UEngineDirectory> UEngineDirectory::GetAllDirectory()
 	{
 		std::filesystem::path FilePath = *iter;
 
-		UEnginePath NewPath = UEnginePath(FilePath);
+		UEnginePath NewPath = FilePath;
 		if (NewPath.IsDirectory() == false)
 		{
 			++iter;

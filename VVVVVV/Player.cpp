@@ -5,15 +5,6 @@
 
 APlayer::APlayer()
 {
-	SetActorLocation(FVector2D(100.f, 100.f));
-	SetActorScale(FVector2D(96.f * 4, 96.f * 4));
-
-	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
-	SpriteRenderer->SetComponentScale(FVector2D(96.f * 4, 96.f * 4));
-	SpriteRenderer->SetComponentLocation(GetActorLocation());
-	SpriteRenderer->SetSprite("player2.png");
-	SpriteRenderer->SetOrder(1);
-
 }
 
 APlayer::~APlayer()
@@ -24,10 +15,30 @@ void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ULevel* world = GetWorld();
-	GetWorld()->SetCameraToMainPawn(true);
+	SetActorLocation(FVector2D(100.f, 100.f));
+	SetActorScale(FVector2D(96.f * 4, 96.f * 4));
+
+	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+	SpriteRenderer->SetComponentScale(GetActorScale());
+	SpriteRenderer->SetComponentLocation(GetActorLocation());
+	SpriteRenderer->SetSprite("player2.png");
+	SpriteRenderer->SetOrder(1);
+
+	GetWorld()->SetCameraToMainPawn(false);
 	
+	SpriteRenderer->CreateAnimation("Teleporter", "player2.png", { 4, 5, 6, 7 }, vector<float>(4, 1.f), true);
+	SpriteRenderer->ChangeAnimation("Teleporter", true);
+	SpriteRenderer->SetAnimationEvent("Teleporter", 0, bind(&OutputString, "x0 y1 \n"));
+	SpriteRenderer->SetAnimationEvent("Teleporter", 1, bind(&OutputString, "x1 y1 \n"));
+	SpriteRenderer->SetAnimationEvent("Teleporter", 2, bind(&OutputString, "x2 y1 \n"));
+	SpriteRenderer->SetAnimationEvent("Teleporter", 3, bind(&OutputString, "x3 y1 \n"));
 }
+
+enum class state
+{
+	up = 1,
+	down = -1
+};
 
 void APlayer::Tick()
 {
@@ -60,5 +71,10 @@ void APlayer::Tick()
 		NewBullet->SetActorLocation(GetActorLocation());
 		NewBullet->SetDir(VectorCursor.SetNomalize());
 	}
+
+	if (KEY_DOWN('Q'))
+		SpriteRenderer->SetOrder(state::up);
+	if (KEY_UP('Q'))
+		SpriteRenderer->SetOrder(state::down);
 	
 }
