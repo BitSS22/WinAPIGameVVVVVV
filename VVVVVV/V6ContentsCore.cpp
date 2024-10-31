@@ -37,9 +37,12 @@ void V6ContentsCore::BeginPlay()
 
 	// test code
 	
-	// UEngineDirectory dir = {};
-	// dir.MoveParentToDirectory("Resources");
-	// UImageManager::GetInst().LoadFolder("TESTPOLDER");
+	UEngineDirectory dir = {};
+	dir.MoveParentToDirectory("Resources");
+	dir.Append("testPOLDER");
+	UImageManager::GetInst().LoadFolder(dir.GetPathToString());
+
+	const auto& i = UImageManager::GetInst();
 
 	///////////////////////////////////////////////////////////////////////
 
