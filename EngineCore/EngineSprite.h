@@ -29,6 +29,8 @@ private:
 public:
 	USpriteData GetSpriteData(int _Index)
 	{
+		if (_Index >= Data.size())
+			MSGASSERT(nullptr, GetNameView(), " Sprite Index overflow.");
 		return Data[_Index];
 	}
 

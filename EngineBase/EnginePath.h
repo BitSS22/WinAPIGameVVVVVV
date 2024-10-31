@@ -14,6 +14,10 @@ protected:
 	std::filesystem::path Path = {};
 
 public:
+	void Append(string_view _AppendName)
+	{
+		Path.append(_AppendName);
+	}
 	void MoveParent()
 	{
 		Path = Path.parent_path();
@@ -35,13 +39,21 @@ public:
 	{
 		return std::filesystem::is_directory(Path);
 	}
-	string GetFileName()
-	{
-		return Path.filename().string();
-	}
 	string GetExtension()
 	{
 		return Path.extension().string();
+	}
+	string GetFileName()
+	{
+		if (IsDirectory() == true)
+			MSGASSERT(nullptr, Path.string(), "는 파일 경로가 아닙니다.");
+		return Path.filename().string();
+	}
+	string GetDirectoryName()
+	{
+		if (IsDirectory() == false)
+			MSGASSERT(nullptr, Path.string(), "는 디렉토리 경로가 아닙니다.");
+		return Path.filename().string();
 	}
 
 };

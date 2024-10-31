@@ -25,6 +25,14 @@ public:
 		Name.reserve(_Name.size());
 		Name = _Name.data();
 	}
+	string GetName() const
+	{
+		return Name;
+	}
+	string GetNameView() const
+	{
+		return Name.c_str();
+	}
 
 };
 

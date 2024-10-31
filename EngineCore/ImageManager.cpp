@@ -2,6 +2,8 @@
 #include "ImageManager.h"
 #include <EngineBase/EnginePath.h>
 #include "EngineSprite.h"
+#include <EngineBase/EngineDirectory.h>
+#include <EngineBase/EngineFile.h>
 
 UImageManager::UImageManager()
 {
@@ -41,11 +43,18 @@ void UImageManager::Load(string_view _KeyName, string_view _Path)
 
 	string UpperName = UEngineString::ToUpper(_KeyName);
 
+	if (Images.contains(UpperName) == true)
+		MSGASSERT(nullptr, _Path, "는 이미 로드 된 Image 입니다.");
+	if (Sprites.contains(UpperName) == true)
+		MSGASSERT(nullptr, _Path, "는 이미 로드 된 Sprite 입니다.");
+
 	UEngineWindowImage* NewImage = new UEngineWindowImage();
 	NewImage->Load(WindowImage, _Path);
+	NewImage->SetName(UpperName);
 	Images.insert(make_pair(UpperName, NewImage));
 
 	UEngineSprite* NewSprite = new UEngineSprite();
+	NewSprite->SetName(UpperName);
 
 	FTransform form = {};
 	form.Location = FVector2D(0.f, 0.f);
@@ -55,11 +64,50 @@ void UImageManager::Load(string_view _KeyName, string_view _Path)
 	Sprites.insert(make_pair(UpperName, NewSprite));
 }
 
-void UImageManager::Load(string_view _Path)
+void UImageManager::LoadFolder(string_view _KeyName, string_view _Path)
 {
-	UEnginePath path = _Path;
+	UEnginePath EnginePath = _Path;
 
-	Load(path.GetFileName(), _Path);
+	if (EnginePath.IsExists() == false)
+		MSGASSERT(nullptr, _Path, "는 유효하지 않은 파일 경로입니다.");
+
+	string UpperName = UEngineString::ToUpper(_KeyName);
+
+	if (Sprites.contains(UpperName))
+		MSGASSERT(nullptr, _KeyName, "은 이미 로드 된 Image입니다.");
+
+	UEngineSprite* NewSprite = new UEngineSprite();
+	NewSprite->SetName(UpperName);
+	Sprites.insert(make_pair(UpperName, NewSprite));
+
+	UEngineWindowImage* WindowImage = UEngineAPICore::GetCore()->GetMainWindow().GetWindowImage();
+
+	UEngineDirectory Dir = _Path;
+	vector<UEngineFile> ImageFiles = Dir.GetAllFile();
+
+	string FilePath = {};
+	string UpperFileName = {};
+
+	for (size_t i = 0; i < ImageFiles.size(); ++i)
+	{
+		FilePath = ImageFiles[i].GetPathToString();
+		UpperFileName = UEngineString::ToUpper(ImageFiles[i].GetFileName());
+
+		UEngineWindowImage* NewImage = FindImage(UpperFileName);
+		if (NewImage == nullptr)
+		{
+			NewImage = new UEngineWindowImage();
+			NewImage->SetName(UpperFileName);
+			NewImage->Load(WindowImage, FilePath);
+		}
+		Images.insert(make_pair(UpperFileName, NewImage));
+		
+		FTransform Transform = {};
+		Transform.Location = { 0.f, 0.f };
+		Transform.Scale = NewImage->GetImageScale();
+
+		NewSprite->PushData(NewImage, Transform);
+	}
 }
 
 UEngineSprite* UImageManager::FindSprite(string_view _KeyName)
@@ -68,6 +116,15 @@ UEngineSprite* UImageManager::FindSprite(string_view _KeyName)
 		MSGASSERT(nullptr, _KeyName, "는 Load 되지 않은 Sprite입니다.");
 
 	return Sprites[UEngineString::ToUpper(_KeyName)];
+}
+
+UEngineWindowImage* UImageManager::FindImage(string_view _KeyName)
+{
+	string UpperName = UEngineString::ToUpper(_KeyName);
+
+	if (Images.contains(UpperName) == false)
+		MSGASSERT(nullptr, _KeyName, "는 로드 되지 않은 Sprite입니다.");
+	return Images[UpperName];
 }
 
 void UImageManager::CutSprite(string_view _KeyName, FVector2D _CuttingSize)

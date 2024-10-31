@@ -121,7 +121,8 @@ void UEngineWindowImage::Load(UEngineWindowImage* _TargetImage, string_view _Pat
 	}
 	else if (".BMP" == UpperExtTxt)
 	{
-		// TODO. BMP load code
+		HANDLE NewHandle = LoadImageA(nullptr, _Path.data(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		NewBitmap = reinterpret_cast<HBITMAP>(NewHandle);
 	}
 
 	if (NewBitmap == nullptr)

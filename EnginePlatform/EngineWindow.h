@@ -60,5 +60,9 @@ public:
 	{
 		return WindowHandle;
 	}
+	HINSTANCE GetHInstance() const
+	{
+		return hInstance;
+	}
 
 };
