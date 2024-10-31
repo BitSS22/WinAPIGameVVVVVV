@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "Actor.h"
+#include "ActorComponent.h"
+
+list<UActorComponent*> AActor::ComponentBeginList = {};
 
 AActor::AActor()
 {
@@ -7,17 +10,19 @@ AActor::AActor()
 
 AActor::~AActor()
 {
+	for (const auto& i : Components)
+	{
+		if (i != nullptr)
+			delete i;
+	}
+
+	Components.clear();
 }
 
-void AActor::Render() const
+void AActor::ComponentBeginPlay()
 {
-	if (Sprite == nullptr)
-		MSGASSERT(nullptr, "Sprite가 없어 렌더링 할 수 없습니다.");
+	for (const auto& component : ComponentBeginList)
+		component->BeginPlay();
 
-	UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
-	UEngineWindowImage* BackBufferImage = MainWindow.GetBackBufferImage();
-
-	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
-	CurData.Image->CopyToTrans(BackBufferImage, Transfrom, CurData.Transform);
+	ComponentBeginList.clear();
 }
-

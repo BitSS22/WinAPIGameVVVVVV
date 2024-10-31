@@ -17,6 +17,7 @@
       <Filter>ContentsObject\Play</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Enums.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -35,6 +36,7 @@
       <Filter>ContentsObject\Play</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Enums.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="pch">

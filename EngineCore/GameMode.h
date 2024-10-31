@@ -16,8 +16,6 @@ public:
 private:
 
 public:
-	virtual void Render() const override
-	{}
 
 private:
 

@@ -5,6 +5,7 @@
 
 class ULevel;
 class UEngineSprite;
+class UActorComponent;
 
 class AActor : public UObject
 {
@@ -22,18 +23,31 @@ public:
 
 private:
 	ULevel* World = nullptr;
-	UEngineSprite* Sprite = nullptr;
-	FTransform Transfrom = {};
-	int CurIndex = 0;
+	FTransform Transform = {};
+	static std::list<UActorComponent*> ComponentBeginList;
+	std::list<UActorComponent*> Components = {};
 
 public:
 	virtual void BeginPlay()
 	{}
 	virtual void Tick()
 	{}
-	virtual void Render() const;
+	template<typename ComponentType>
+	ComponentType* CreateDefaultSubObject()
+	{
+		ComponentType* NewComponent = new ComponentType();
+
+		UActorComponent* ComponentPtr = dynamic_cast<UActorComponent*>(NewComponent);
+
+		ComponentPtr->ParentActor = this;
+
+		Components.push_back(NewComponent);
+		ComponentBeginList.push_back(NewComponent);
+		return NewComponent;
+	}
 
 private:
+	static void ComponentBeginPlay();
 
 public:
 	ULevel* GetWorld() const
@@ -42,41 +56,23 @@ public:
 	}
 	FVector2D GetActorLocation() const
 	{
-		return Transfrom.Location;
+		return Transform.Location;
 	}
 	void SetActorLocation(FVector2D _Location)
 	{
-		Transfrom.Location = _Location;
+		Transform.Location = _Location;
 	}
 	void AddActorLocation(FVector2D _Location)
 	{
-		Transfrom.Location += _Location;
+		Transform.Location += _Location;
 	}
 	void SetActorScale(FVector2D _Scale)
 	{
-		Transfrom.Scale = _Scale;
+		Transform.Scale = _Scale;
 	}
-	void SetSprite(string_view _Name, int _CurIndex = 0)
+	FTransform GetTransform() const
 	{
-		Sprite = UImageManager::GetInst().FindSprite(_Name);
-
-		if (Sprite == nullptr)
-			MSGASSERT(nullptr, _Name, "는 로드 되지 않은 스프라이트입니다");
-
-		CurIndex = _CurIndex;
+		return Transform;
 	}
-	void SetSpriteIndex(int _Index)
-	{
-		CurIndex = _Index;
-	}
-	int GetSpriteIndex() const
-	{
-		return CurIndex;
-	}
-	void AddSpriteIndex(int _Index)
-	{
-		CurIndex += _Index;
-	}
-
 };
 

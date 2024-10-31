@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Level.h"
 #include <EngineBase/EngineMath.h>
+#include <EngineCore/SpriteRenderer.h>
 
 ULevel::ULevel()
 {
@@ -21,16 +22,31 @@ ULevel::~ULevel()
 
 void ULevel::Tick()
 {
-	for (const auto& i : AllActors)
-		i->Tick();
+	for (const auto& CurActor : BeginPlayList)
+	{
+		CurActor->BeginPlay();
+		AllActors.push_back(CurActor);
+	}
+
+	BeginPlayList.clear();
+
+	AActor::ComponentBeginPlay();
+
+	for (const auto& CurActor : AllActors)
+		CurActor->Tick();
 }
 
 void ULevel::Render()
 {
 	ScreenClear();
 
-	for (const auto& i : AllActors)
-		i->Render();
+	for (const auto& FirstActor : Renderers)
+	{
+		for (const auto& SecondActor : FirstActor.second)
+		{
+			SecondActor->Render();
+		}
+	}
 
 	DoubleBuffering();
 }

@@ -1,13 +1,19 @@
 #include "pch.h"
 #include "Player.h"
 #include "Bullet.h"
+#include <EngineCore/SpriteRenderer.h>
 
 APlayer::APlayer()
 {
 	SetActorLocation(FVector2D(100.f, 100.f));
 	SetActorScale(FVector2D(96.f * 4, 96.f * 4));
 
-	SetSprite("player2.png", 0);
+	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+	SpriteRenderer->SetComponentScale(FVector2D(96.f * 4, 96.f * 4));
+	SpriteRenderer->SetComponentLocation(GetActorLocation());
+	SpriteRenderer->SetSprite("player2.png");
+	SpriteRenderer->SetOrder(1);
+
 }
 
 APlayer::~APlayer()
@@ -18,7 +24,7 @@ void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SetSpriteIndex(0);
+	
 }
 
 void APlayer::Tick()
@@ -53,15 +59,4 @@ void APlayer::Tick()
 		NewBullet->SetDir(VectorCursor.SetNomalize());
 	}
 	
-	AccTime += GET_DELTA;
-
-	if (AccTime >= 0.15f)
-	{
-		AccTime -= 0.15f;
-
-		AddSpriteIndex(1);
-
-		if (GetSpriteIndex() > 7)
-			SetSpriteIndex(0);
-	}
 }

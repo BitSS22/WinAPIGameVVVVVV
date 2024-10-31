@@ -1,12 +1,14 @@
 #pragma once
 #include "GameMode.h"
 #include <list>
+#include "SpriteRenderer.h"
 
 // Ό³Έν :
 class ULevel
 {
 public:
 	friend class UEngineAPICore;
+	friend class USpriteRenderer;
 public:
 	ULevel();
 	~ULevel();
@@ -18,6 +20,8 @@ public:
 
 private:
 	std::list<AActor*> AllActors = {};
+	std::list<AActor*> BeginPlayList = {};
+	std::map<int, std::list<USpriteRenderer*>> Renderers = {};
 	AGameMode* GameMode = nullptr;
 	AActor* MainPawn = nullptr;
 
@@ -33,8 +37,7 @@ public:
 		AActor* ActorPtr = dynamic_cast<AActor*>(NewActor);
 		ActorPtr->World = this;
 
-		NewActor->BeginPlay();
-		AllActors.push_back(NewActor);
+		BeginPlayList.push_back(ActorPtr);
 		return NewActor;
 	}
 
@@ -48,13 +51,19 @@ private:
 		MainPawn->World = this;
 		GameMode->World = this;
 
-		GameMode->BeginPlay();
-		MainPawn->BeginPlay();
-
-		AllActors.push_back(GameMode);
-		AllActors.push_back(MainPawn);
+		BeginPlayList.push_back(GameMode);
+		BeginPlayList.push_back(MainPawn);
+	}
+	void ChangeRenderOrder(USpriteRenderer* _Renderer, int _PrevOrder)
+	{
+		Renderers[_PrevOrder].remove(_Renderer);
+		Renderers[_Renderer->GetOrder()].push_back(_Renderer);
 	}
 
+	void PushRenderer(USpriteRenderer* _Renderer)
+	{
+		Renderers[_Renderer->GetOrder()].push_back(_Renderer);
+	}
 	void DoubleBuffering();
 	void ScreenClear();
 

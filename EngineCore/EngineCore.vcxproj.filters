@@ -20,6 +20,10 @@
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="EngineSprite.h" />
+    <ClInclude Include="ActorComponent.h" />
+    <ClInclude Include="SceneComponent.h" />
+    <ClInclude Include="SpriteRenderer.h" />
+    <ClInclude Include="2DCollision.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineAPICore.cpp">
@@ -41,6 +45,10 @@
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="EngineSprite.cpp" />
+    <ClCompile Include="ActorComponent.cpp" />
+    <ClCompile Include="SceneComponent.cpp" />
+    <ClCompile Include="SpriteRenderer.cpp" />
+    <ClCompile Include="2DCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">

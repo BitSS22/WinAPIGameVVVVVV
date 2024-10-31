@@ -14,6 +14,7 @@ public:
 	APlayMap& operator=(APlayMap&& _Other) noexcept = delete;
 
 private:
+	USpriteRenderer* SpriteRenderer = nullptr;
 
 public:
 

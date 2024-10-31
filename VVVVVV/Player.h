@@ -1,5 +1,6 @@
 #pragma once
 
+class USpriteRenderer;
 // Ό³Έν :
 class APlayer : public AActor
 {
@@ -16,6 +17,7 @@ private:
 	float Speed = 300.f;
 	FVector2D Dir = FVector2D(0.f, 0.f);
 	float AccTime = 0.f;
+	USpriteRenderer* SpriteRenderer = nullptr;
 
 public:
 	void BeginPlay() override;
