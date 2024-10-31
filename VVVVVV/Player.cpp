@@ -24,6 +24,8 @@ void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	ULevel* world = GetWorld();
+	GetWorld()->SetCameraToMainPawn(true);
 	
 }
 

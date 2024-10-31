@@ -40,6 +40,9 @@ void ULevel::Render()
 {
 	ScreenClear();
 
+	if (IsCameraToMainPawn == true)
+		CameraPos = MainPawn->GetTransform().Location + CameraPivot;
+
 	for (const auto& FirstActor : Renderers)
 	{
 		for (const auto& SecondActor : FirstActor.second)

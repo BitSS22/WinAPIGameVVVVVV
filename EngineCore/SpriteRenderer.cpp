@@ -12,6 +12,38 @@ USpriteRenderer::~USpriteRenderer()
 
 void USpriteRenderer::Render()
 {
+	if (CurAnimation != nullptr)
+	{
+		vector<int>& Indexs = CurAnimation->FrameIndex;
+		vector<float>& Times = CurAnimation->FrameTime;
+
+		Sprite = CurAnimation->Sprite;
+
+		CurAnimation->CurTime += UEngineTimer::GetInst()->GetDeltaTime();
+
+		float CurFrameTime = Times[CurAnimation->CurIndex];
+
+		if (CurAnimation->CurTime > CurFrameTime)
+		{
+			CurAnimation->CurTime -= CurFrameTime;
+			++CurAnimation->CurIndex;
+
+			if (CurAnimation->Events.contains(CurAnimation->CurIndex))
+				CurAnimation->Events[CurAnimation->CurIndex]();
+
+			if (CurAnimation->CurIndex >= Indexs.size())
+			{
+				if (CurAnimation->Loop == true)
+					CurAnimation->CurIndex = 0;
+				else
+					--CurAnimation->CurIndex;
+			}
+		}
+
+		CurIndex = Indexs[CurAnimation->CurIndex];
+	}
+
+
 	if (Sprite == nullptr)
 		MSGASSERT(nullptr, "Sprite가 없어 렌더링 할 수 없습니다.");
 
@@ -19,7 +51,12 @@ void USpriteRenderer::Render()
 	UEngineWindowImage* BackBufferImage = MainWindow.GetBackBufferImage();
 
 	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
-	CurData.Image->CopyToTrans(BackBufferImage, GetActorTransform(), CurData.Transform);
+
+	FTransform Trans = GetActorTransform();
+	ULevel* Level = GetActor()->GetWorld();
+	Trans.Location = Trans.Location - Level->CameraPos;
+
+	CurData.Image->CopyToTrans(BackBufferImage, Trans, CurData.Transform);
 }
 
 void USpriteRenderer::BeginPlay()
@@ -53,6 +90,78 @@ void USpriteRenderer::SetSpriteScale(float _Ratio, int _CurIndex)
 	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
 	FVector2D Scale = CurData.Transform.Scale * _Ratio;
 	SetComponentScale(Scale);
+}
+
+void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, std::vector<float> _Frame, bool _Loop)
+{
+	string UpperName = UEngineString::ToUpper(_AnimationName);
+
+	if (_Frame.size() != _Indexs.size())
+		MSGASSERT(nullptr, _AnimationName, "의 Frame과 Time 갯수가 상이합니다.");
+
+	if (FrameAnimations.contains(UpperName))
+		return;
+
+	UEngineSprite* FindSprite = UImageManager::GetInst().FindSprite(_SpriteName);
+
+	if (FindSprite == nullptr)
+		MSGASSERT(nullptr, _SpriteName, "는 로드 되지 않은 Sprite입니다.");
+
+	FrameAnimation NewAnimation = {};
+	NewAnimation.Sprite = FindSprite;
+	NewAnimation.FrameIndex = std::move(_Indexs);
+	NewAnimation.FrameTime = std::move(_Frame);
+	NewAnimation.Loop = _Loop;
+	NewAnimation.Reset();
+
+	FrameAnimations.insert(make_pair(UpperName, NewAnimation));
+}
+
+void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, int _Start, int _End, float _Time, bool _Loop)
+{
+	if (_Start > _End)
+		MSGASSERT(nullptr, _AnimationName, ", 프레임 Start보다 End가 큽니다.");
+
+	vector<int> Indexs = {};
+	vector<float> Times = {};
+
+	for (size_t i = _Start; i <= _End; ++i)
+	{
+		Indexs.push_back(_Start);
+		Times.push_back(_Time);
+		++_Start;
+	}
+
+	CreateAnimation(_AnimationName, _SpriteName, Indexs, Times, _Loop);
+}
+
+void USpriteRenderer::ChangeAnimation(std::string_view _AnimationName, bool _Force)
+{
+	string UpperName = UEngineString::ToUpper(_AnimationName);
+
+	if (FrameAnimations.contains(UpperName))
+		MSGASSERT(nullptr, _AnimationName, "이라는 Animation은 없습니다.");
+
+	FrameAnimation* ChangeAnimation = &FrameAnimations[UpperName];
+	if (CurAnimation == ChangeAnimation && _Force == false)
+		return;
+
+	CurAnimation = &FrameAnimations[UpperName];
+	CurAnimation->Reset();
+}
+
+void USpriteRenderer::SetAnimationEvent(std::string_view _AnimationName, int _AnimationFrame, std::function<void()> _Function)
+{
+	string UpperName = UEngineString::ToUpper(_AnimationName);
+
+	if (FrameAnimations.contains(UpperName))
+		MSGASSERT(nullptr, _AnimationName, "은 없는 Animation입니다.");
+
+	if (FrameAnimations.size() <= _AnimationFrame)
+		MSGASSERT(nullptr, _AnimationName, "은 없는 Animation Frame입니다.");
+
+
+	FrameAnimations[UpperName].Events[_AnimationFrame] += _Function;
 }
 
 void USpriteRenderer::SetOrder(int _Order)

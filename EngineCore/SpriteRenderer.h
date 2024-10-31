@@ -1,5 +1,7 @@
 #pragma once
 #include "SceneComponent.h"
+#include <EngineBase/EngineDelegate.h>
+#include <map>
 
 // Ό³Έν :
 class USpriteRenderer : public USceneComponent
@@ -19,6 +21,8 @@ private:
 	UEngineSprite* Sprite = nullptr;
 	int CurIndex = 0;
 	int Order = 0;
+	std::map<std::string, FrameAnimation> FrameAnimations = {};
+	FrameAnimation* CurAnimation = nullptr;
 
 public:
 	virtual void BeginPlay() override;
@@ -26,8 +30,10 @@ public:
 	void Render();
 	void SetSprite(std::string_view _Name, int _CurIndex = 0);
 	void SetSpriteScale(float _Ratio = 1.f, int _CurIndex = 0);
-	void CreateAnimation(std::string_view _SpriteName, std::vector<int> _Indexs, std::vector<float> _Frame)
-	{}
+	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, std::vector<float> _Frame, bool _Loop = true);
+	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, int _Start, int _End, float _Time, bool _Loop = true);
+	void ChangeAnimation(std::string_view _AnimationName, bool _Force = false);
+	void SetAnimationEvent(std::string_view _AnimationName, int _Frame, std::function<void()> _Function);
 
 private:
 
@@ -47,10 +53,22 @@ public:
 public:
 	INNER_CLASS struct FrameAnimation
 	{
-	private:
+	public:
+		UEngineSprite* Sprite = nullptr;
 		std::vector<int> FrameIndex = {};
 		std::vector<float> FrameTime = {};
-		float Inter = 0.f;
+		int CurIndex = 0;
+		float CurTime = 0.f;
+		bool Loop = true;
+		std::map<int, UEngineDelegate> Events = {};
+
+	public:
+		void Reset()
+		{
+			CurIndex = 0;
+			CurTime = 0.f;
+		}
+
 	};
 
 };

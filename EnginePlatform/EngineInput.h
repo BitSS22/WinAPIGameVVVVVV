@@ -28,7 +28,7 @@ private:
 
 public:
 	void BindAction(int _KeyIndex, KeyEvent _EventType, function<void()> _Function);
-	void KeyCheck(float _Delta);
+	void KeyCheck();
 	void EventCheck();
 
 private:
@@ -93,7 +93,7 @@ private:
 		vector<function<void()>> FreeEvents = {};
 
 	public:
-		void KeyCheck(float _Delta);
+		void KeyCheck();
 		void EventCheck();
 
 	};

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "EngineInput.h"
+#include <EngineBase/EngineTimer.h>
 
 UEngineInput::UEngineInput()
 {
@@ -13,10 +14,10 @@ UEngineInput::~UEngineInput()
 {
 }
 
-void UEngineInput::KeyCheck(float _Delta)
+void UEngineInput::KeyCheck()
 {
 	for (size_t i = 0; i < Keys.size(); ++i)
-		Keys[i].KeyCheck(_Delta);
+		Keys[i].KeyCheck();
 }
 
 void UEngineInput::EventCheck()
@@ -48,11 +49,11 @@ void UEngineInput::BindAction(int _KeyIndex, KeyEvent _EventType, function<void(
 	MSGASSERT(nullptr, "키 이벤트 타입이 존재하지 않음.");
 }
 
-void UEngineInput::UEngineKey::KeyCheck(float _Delta)
+void UEngineInput::UEngineKey::KeyCheck()
 {
 	if (GetAsyncKeyState(Key) & 0x8000) // 이번 프레임 키가 눌림
 	{
-		PressTime += _Delta;
+		PressTime += UEngineTimer::GetInst()->GetDeltaTime();
 
 		if (IsPress == true) // 이전 프레임 키가 눌림
 		{

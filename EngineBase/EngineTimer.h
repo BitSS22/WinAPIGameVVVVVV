@@ -14,6 +14,7 @@ public:
 	UEngineTimer& operator=(UEngineTimer&& _Other) noexcept = delete;
 
 private:
+	static UEngineTimer* Inst;
 	LARGE_INTEGER Count = {};
 	LARGE_INTEGER PrevTime = {};
 	LARGE_INTEGER CurTime = {};
@@ -34,6 +35,10 @@ public:
 private:
 
 public:
+	static UEngineTimer* GetInst()
+	{
+		return Inst;
+	}
 	float GetDeltaTime() const
 	{
 		return fDeltaTime;

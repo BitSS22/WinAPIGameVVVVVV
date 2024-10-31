@@ -67,7 +67,7 @@ void UEngineAPICore::Tick()
 {
 	DeltaTimer.TimeCheck();
 
-	UEngineInput::GetInst().KeyCheck(GetDeltaTime());
+	UEngineInput::GetInst().KeyCheck();
 	UEngineInput::GetInst().EventCheck();
 
 	if (CurLevel == nullptr)

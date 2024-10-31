@@ -1,8 +1,12 @@
 #include "pch.h"
 #include "EngineTimer.h"
 
+UEngineTimer* UEngineTimer::Inst = nullptr;
+
 UEngineTimer::UEngineTimer()
 {
+	Inst = this;
+
 	QueryPerformanceFrequency(&Count);
 	TimeCounter = static_cast<double>(Count.QuadPart);
 

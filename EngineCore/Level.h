@@ -22,8 +22,13 @@ private:
 	std::list<AActor*> AllActors = {};
 	std::list<AActor*> BeginPlayList = {};
 	std::map<int, std::list<USpriteRenderer*>> Renderers = {};
+
 	AGameMode* GameMode = nullptr;
 	AActor* MainPawn = nullptr;
+
+	bool IsCameraToMainPawn = false;
+	FVector2D CameraPos = {};
+	FVector2D CameraPivot = {};
 
 public:
 	void Tick();
@@ -66,6 +71,16 @@ private:
 	}
 	void DoubleBuffering();
 	void ScreenClear();
+
+public:
+	void SetCameraToMainPawn(bool _IsCameraToMainPawn)
+	{
+		IsCameraToMainPawn = _IsCameraToMainPawn;
+	}
+	void SetCameraPivot(FVector2D _Pivot)
+	{
+		CameraPivot = _Pivot;
+	}
 
 };
 
