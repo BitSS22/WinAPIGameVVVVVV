@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 // Ό³Έν :
 class UObject
@@ -25,11 +26,11 @@ public:
 		Name.reserve(_Name.size());
 		Name = _Name.data();
 	}
-	string GetName() const
+	std::string GetName() const
 	{
 		return Name;
 	}
-	string GetNameView() const
+	std::string_view GetNameView() const
 	{
 		return Name.c_str();
 	}

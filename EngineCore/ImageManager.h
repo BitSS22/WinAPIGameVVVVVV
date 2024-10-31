@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineBase/EngineString.h>
+#include <EngineBase/EnginePath.h>
 
 class UEngineSprite;
 
