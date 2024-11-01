@@ -69,6 +69,8 @@ void ATileMapEditorMode::Tick()
 				// TODO. 9개의 타일을 변경하는 함수
 				if (IsTile(x, y))
 				{
+					if (x < 0 || y < 0 || x >= TileCountX || y >= TileCountY)
+						continue;
 					USpriteRenderer* CurTile = Tiles[y][x];
 					CurTile->SetSprite("Tiles", AroundTileCheckSwap(x, y));
 				}
@@ -109,27 +111,38 @@ int ATileMapEditorMode::AroundTileCheckSwap(int _X, int _Y)
 		}
 	}
 
-	if ((Bools & 1 << 2)) // 위쪽 있니
+	if ((Bools & 1 << 1)) // 위쪽 있니
 	{
-		if ((Bools & 1 << 4) == false) // 왼쪽 있니
+		if ((Bools & 1 << 3) == false) // 왼쪽 있니
 		{
-			Bools &= ~(1 << 1);
+			Bools &= ~(1 << 0);
 		}
-		if ((Bools & 1 << 5) == false) // 오른쪽 있니
+		if ((Bools & 1 << 4) == false) // 오른쪽 있니
 		{
-			Bools &= ~(1 << 3);
+			Bools &= ~(1 << 2);
 		}
 	}
-	if ((Bools & 1 << 7)) // 아래쪽 있니
+	else
 	{
-		if ((Bools & 1 << 4) == false) // 왼쪽 있니
+		Bools &= ~(1 << 0);
+		Bools &= ~(1 << 2);
+	}
+
+	if ((Bools & 1 << 6)) // 아래쪽 있니
+	{
+		if ((Bools & 1 << 3) == false) // 왼쪽 있니
 		{
-			Bools &= ~(1 << 6);
+			Bools &= ~(1 << 5);
 		}
-		if ((Bools & 1 << 5) == false) // 오른쪽 있니
+		if ((Bools & 1 << 4) == false) // 오른쪽 있니
 		{
-			Bools &= ~(1 << 8);
+			Bools &= ~(1 << 7);
 		}
+	}
+	else
+	{
+		Bools &= ~(1 << 5);
+		Bools &= ~(1 << 7);
 	}
 
 	return FindIndex(Bools);
@@ -158,7 +171,6 @@ int ATileMapEditorMode::FindIndex(uint8_t _Bit)
 		Result = 3;
 		break;
 
-
 	case 0b0100'0010: // 위쪽 아래쪽만
 		Result = 9;
 		break;
@@ -166,7 +178,7 @@ int ATileMapEditorMode::FindIndex(uint8_t _Bit)
 		Result = 19;
 		break;
 
-	case 0b0000'1110:
+	case 0b0000'1011:
 	case 0b0000'1010: // 위쪽 왼쪽 + 사이
 		Result = 14;
 		break;
@@ -174,11 +186,11 @@ int ATileMapEditorMode::FindIndex(uint8_t _Bit)
 	case 0b0001'0010: // 위쪽 오른쪽 + 사이
 		Result = 12;
 		break;
-	case 0b1100'1000:
+	case 0b0110'1000:
 	case 0b0100'1000: // 아래쪽 왼쪽 + 사이
 		Result = 2;
 		break;
-	case 0b0111'0000:
+	case 0b1101'0000:
 	case 0b0101'0000: // 아래쪽 오른쪽 + 사이
 		Result = 0;
 		break;
