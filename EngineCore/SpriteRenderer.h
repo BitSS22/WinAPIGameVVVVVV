@@ -28,8 +28,8 @@ public:
 	virtual void BeginPlay() override;
 	virtual void ComponentTick() override;
 	void Render();
-	void SetSprite(std::string_view _Name, int _CurIndex = 0);
-	void SetSpriteScale(float _Ratio = 1.f, int _CurIndex = 0);
+	void SetSprite(std::string_view _Name, int _CurIndex);
+	void SetSpriteScale(float _Ratio, int _CurIndex);
 	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, std::vector<float> _Frame, bool _Loop = true);
 	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, int _Start, int _End, float _Time, bool _Loop = true);
 	void ChangeAnimation(std::string_view _AnimationName, bool _Force = false);

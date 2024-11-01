@@ -14,6 +14,11 @@ void ATileMapEditorMode::BeginPlay()
 {
 	Super::BeginPlay();
 
+	USpriteRenderer* NewSprite = CreateDefaultSubObject<USpriteRenderer>();
+	NewSprite->SetSprite("Tiles", 5);
+	NewSprite->SetComponentScale(FVector2D(TileSizeX, TileSizeY));
+	CursorImage = NewSprite;
+
 	Tiles.resize(TileCountY);
 
 	for (int y = 0; y < TileCountY; ++y)
@@ -56,9 +61,11 @@ void ATileMapEditorMode::Tick()
 {
 	Super::Tick();
 
-	POINT CursorPos = {};
 	GetCursorPos(&CursorPos);
 	ScreenToClient(UEngineAPICore::GetCore()->GetMainWindow().GetWindowHandle(), &CursorPos);
+
+	FVector2D TileCursorPos = FVector2D(CursorPos.x / TileSizeX * TileSizeX + TileSizeX / 2, CursorPos.y / TileSizeY * TileSizeY + TileSizeY / 2);
+	CursorImage->SetComponentLocation(TileCursorPos);
 
 	if (KEY_PRESS(VK_LBUTTON) == true)
 	{
@@ -69,28 +76,55 @@ void ATileMapEditorMode::Tick()
 		int XTileIndex = CursorPos.x / TileSizeX;
 		int YTileIndex = CursorPos.y / TileSizeY;
 
+		Tiles[YTileIndex][XTileIndex]->SetSprite("Tiles", 5);
+
+		// 주변 3X3 타일을 조사한다.
 		for (int y = YTileIndex - 1; y <= YTileIndex + 1; ++y)
 		{
 			for (int x = XTileIndex - 1; x <= XTileIndex + 1; ++x)
 			{
+				// TODO. 타일을 검사해서 변경한다.
 				if (IsTile(x, y) == true)
-				{
-					int a = 0;
-				}
+					AroundTileCheckSwap(x, y);
 			}
 		}
 
 
-		// Tiles[CursorPos.y / TileSizeY][CursorPos.x / TileSizeX]->SetSprite("Tiles", 5);
 	}
 }
 
-bool ATileMapEditorMode::IsTile(int x, int y)
+bool ATileMapEditorMode::IsTile(int _x, int _y)
 {
-	if (x < 0 || y < 0 || x >= TileCountX || y >= TileCountY)
+	if (_x < 0 || _y < 0 || _x >= TileCountX || _y >= TileCountY)
 		return true;
-	else if (Tiles[y][x]->GetName() == string("NoneTile"))
+	else if (Tiles[_y][_x]->GetName() == string("NoneTile"))
 		return false;
-	
+
 	return true;
+}
+
+void ATileMapEditorMode::AroundTileCheckSwap(int _XIndex, int _YIndex)
+{
+	vector<vector<bool>> Result = {};
+
+	Result.resize(3);
+
+	for (int y = _YIndex - 1; y <= _YIndex + 1; ++y)
+	{
+		Result[y].resize(3);
+		for (int x = _XIndex - 1; x <= _XIndex + 1; ++x)
+		{
+			if (IsTile(x, y) == true)
+				Result[y][x] = true;
+			else
+				Result[y][x] = false;
+		}
+	}
+	//TODO.
+	return;
+}
+
+void SwapTile(USpriteRenderer& _Tile)
+{
+
 }
