@@ -24,6 +24,9 @@
     <ClInclude Include="EndingGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
+    <ClInclude Include="TileMapEditorMode.h">
+      <Filter>ContentsObject\GameMode\MapEditor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -49,6 +52,9 @@
     <ClCompile Include="EndingGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
+    <ClCompile Include="TileMapEditorMode.cpp">
+      <Filter>ContentsObject\GameMode\MapEditor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="pch">
@@ -68,6 +74,9 @@
     </Filter>
     <Filter Include="ContentsObject\Play">
       <UniqueIdentifier>{69c0bcfb-ab48-4c33-a387-5e33c48b131c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\GameMode\MapEditor">
+      <UniqueIdentifier>{c74ca425-9334-4363-b47e-71edc5d3b195}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

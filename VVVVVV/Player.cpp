@@ -15,23 +15,23 @@ void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SetActorLocation(FVector2D(100.f, 100.f));
-	SetActorScale(FVector2D(96.f * 4, 96.f * 4));
+	SetActorLocation(FVector2D(8.f, 8.f));
+	SetActorScale(FVector2D(16, 16));
 
 	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 	SpriteRenderer->SetComponentScale(GetActorScale());
-	SpriteRenderer->SetComponentLocation(GetActorLocation());
-	SpriteRenderer->SetSprite("player2.png");
+	SpriteRenderer->SetComponentLocation(GetActorLocation() - GetActorScale().Half());
+	SpriteRenderer->SetSprite("Titles", 0);
 	SpriteRenderer->SetOrder(1);
 
 	GetWorld()->SetCameraToMainPawn(false);
 	
-	SpriteRenderer->CreateAnimation("Teleporter", "player2.png", { 4, 5, 6, 7 }, vector<float>(4, 1.f), true);
-	SpriteRenderer->ChangeAnimation("Teleporter", true);
-	SpriteRenderer->SetAnimationEvent("Teleporter", 0, bind(&UEngineDebug::OutputString, "x0 y1 \n"));
-	SpriteRenderer->SetAnimationEvent("Teleporter", 1, bind(&UEngineDebug::OutputString, "x1 y1 \n"));
-	SpriteRenderer->SetAnimationEvent("Teleporter", 2, bind(&UEngineDebug::OutputString, "x2 y1 \n"));
-	SpriteRenderer->SetAnimationEvent("Teleporter", 3, bind(&UEngineDebug::OutputString, "x3 y1 \n"));
+	// SpriteRenderer->CreateAnimation("Teleporter", "player2.png", { 4, 5, 6, 7 }, vector<float>(4, 1.f), true);
+	// SpriteRenderer->ChangeAnimation("Teleporter", true);
+	// SpriteRenderer->SetAnimationEvent("Teleporter", 0, bind(&UEngineDebug::OutputString, "x0 y1 \n"));
+	// SpriteRenderer->SetAnimationEvent("Teleporter", 1, bind(&UEngineDebug::OutputString, "x1 y1 \n"));
+	// SpriteRenderer->SetAnimationEvent("Teleporter", 2, bind(&UEngineDebug::OutputString, "x2 y1 \n"));
+	// SpriteRenderer->SetAnimationEvent("Teleporter", 3, bind(&UEngineDebug::OutputString, "x3 y1 \n"));
 }
 
 enum class state

@@ -8,6 +8,7 @@
 #include "TitleGameMode.h"
 #include "PlayGameMode.h"
 #include "EndingGameMode.h"
+#include "TileMapEditorMode.h"
 
 #include "Player.h"
 
@@ -34,21 +35,24 @@ void V6ContentsCore::BeginPlay()
 	
 	// Title Level
 	// Logo
-	UImageManager::GetInst().CreateCutSprite("Object & Menu.png", "Logo", FVector2D(318.f, 26.f), FVector2D(64.f, 64.f), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "Logo", FVector2D(318.f, 26.f), FVector2D(64.f, 64.f), FVector2D(0.f, 0.f), 1, 1);
 	// Backgroud Pattern
 	UImageManager::GetInst().CreateCutSprite("Main BackGround.png", "TitleBackGround", FVector2D(8.f, 130.f), FVector2D(640.f, 1920.f), FVector2D(0.f, 0.f), 1, 1);
 
 	// Play Level
+	// Tile
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "Titles", FVector2D(0.f, 0.f), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 6, 24);
+	
 	// Background Object
-	UImageManager::GetInst().CreateCutSprite("Object & Menu.png", "SadElephant", FVector2D(8.f, 182.f), FVector2D(928.f, 640.f), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("Object & Menu.png", "PlayTimeIcon", FVector2D(318.f, 126.f), FVector2D(34.f, 34.f), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("Object & Menu.png", "CommsRelayRadar", FVector2D(834.f, 26.f), FVector2D(128.f, 128.f), FVector2D(6.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "SadElephant", FVector2D(8.f, 182.f), FVector2D(928.f, 640.f), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "PlayTimeIcon", FVector2D(318.f, 126.f), FVector2D(34.f, 34.f), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "CommsRelayRadar", FVector2D(834.f, 26.f), FVector2D(128.f, 128.f), FVector2D(6.f, 0.f), 4, 4);
 
 	// Event Object
-	UImageManager::GetInst().CreateCutSprite("Object & Menu.png", "Terminal", FVector2D(8.f, 26.f), FVector2D(32.f, 32.f), FVector2D(6.f, 0.f), 2, 2);
-	UImageManager::GetInst().CreateCutSprite("Object & Menu.png", "WarpToken", FVector2D(8.f, 78.f), FVector2D(32.f, 32.f), FVector2D(6.f, 0.f), 2, 2);
-	UImageManager::GetInst().CreateCutSprite("Object & Menu.png", "CheckPoint", FVector2D(8.f, 130.f), FVector2D(32.f, 32.f), FVector2D(6.f, 0.f), 2, 2);
-	UImageManager::GetInst().CreateCutSprite("Object & Menu.png", "Trinket", FVector2D(162.f, 26.f), FVector2D(32.f, 32.f), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "Terminal", FVector2D(8.f, 26.f), FVector2D(32.f, 32.f), FVector2D(6.f, 0.f), 2, 2);
+	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "WarpToken", FVector2D(8.f, 78.f), FVector2D(32.f, 32.f), FVector2D(6.f, 0.f), 2, 2);
+	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "CheckPoint", FVector2D(8.f, 130.f), FVector2D(32.f, 32.f), FVector2D(6.f, 0.f), 2, 2);
+	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "Trinket", FVector2D(162.f, 26.f), FVector2D(32.f, 32.f), FVector2D(0.f, 0.f), 1, 1);
 
 	// Player
 	// HappyPlayer
@@ -84,10 +88,11 @@ void V6ContentsCore::BeginPlay()
 	UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title");
 	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
 	UEngineAPICore::GetCore()->CreateLevel<AEndingGameMode, AActor>("End");
+	UEngineAPICore::GetCore()->CreateLevel<ATileMapEditorMode, AActor>("TileMapEditor");
 
 
 	// Open Level
-	UEngineAPICore::GetCore()->OpenLevel("Title");
+	UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
 }
 
 void V6ContentsCore::Tick()
