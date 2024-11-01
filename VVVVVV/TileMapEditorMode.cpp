@@ -150,12 +150,12 @@ int ATileMapEditorMode::AroundTileCheckSwap(int _X, int _Y)
 
 int ATileMapEditorMode::FindIndex(uint8_t _Bit)
 {
-	int Result = 7;
+	int Result = -1;
 
 	switch (_Bit)
 	{
 	case 0b0000'0000: // 인접 없음
-		Result = 7;
+		Result = 21;
 		break;
 
 	case 0b0000'0010: // 위쪽만
@@ -194,9 +194,72 @@ int ATileMapEditorMode::FindIndex(uint8_t _Bit)
 	case 0b0101'0000: // 아래쪽 오른쪽 + 사이
 		Result = 0;
 		break;
+
+	case 0b0001'1011:
+	case 0b0001'1110:
+	case 0b0001'1111:
+	case 0b0001'1010: // 위쪽 왼쪽 오른쪽 + 사이
+		Result = 13;
+		break;
+	case 0b0100'1011:
+	case 0b0110'1010:
+	case 0b0110'1011:
+	case 0b0100'1010: // 위쪽 왼쪽 아래쪽 + 사이
+		Result = 8;
+		break;
+	case 0b0101'0110:
+	case 0b1101'0010:
+	case 0b1101'0110:
+	case 0b0101'0010: // 위쪽 오른쪽 아래쪽 + 사이
+		Result = 6;
+		break;
+	case 0b1101'1000:
+	case 0b0111'1000:
+	case 0b1111'1000:
+	case 0b0101'1000: // 왼쪽 오른쪽 아래쪽 + 사이
+		Result = 1;
+		break;
+
+		// 리소스 이미지 없음, 대체 이미지
+	case 0b0101'1011:
+	case 0b0101'1110:
+	case 0b0111'1010:
+	case 0b1101'1010:
+		Result = 7;
+		break;
+
+		// 리소스 이미지 없음, 대체 이미지
+	case 0b0101'1111:
+	case 0b0111'1011:
+	case 0b1101'1011:
+	case 0b0111'1110:
+	case 0b1101'1110:
+	case 0b1111'1010:
+		Result = 7;
+		break;
+
+	case 0b1111'1110:
+		Result = 23;
+		break;
+	case 0b1111'1011:
+		Result = 22;
+		break;
+	case 0b1101'1111:
+		Result = 17;
+		break;
+	case 0b0111'1111:
+		Result = 16;
+		break;
+
+	case 0b1111'1111:
+
+	case 0b0101'1010: // 네 방향 + 사이 없음
+		Result = 7;
+		break;
 	}
 
-
+	if (Result == -1)
+		MSGASSERT(nullptr, "타일 알고리즘이 이상합니다.");
 
 	return Result;
 }
