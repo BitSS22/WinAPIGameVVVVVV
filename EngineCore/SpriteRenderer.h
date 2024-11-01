@@ -50,6 +50,12 @@ public:
 		SetOrder(static_cast<int>(_Order));
 	}
 
+	int GetCurIndex() const
+	{
+		return CurIndex;
+	}
+
+
 public:
 	INNER_CLASS struct FrameAnimation
 	{

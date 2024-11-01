@@ -14,16 +14,14 @@ void ATileMapEditorMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CheckTiles.resize(5);
-	for (auto& vec : CheckTiles)
-		vec.resize(5);
-
+	// 커서 스프라이트
 	USpriteRenderer* NewSprite = CreateDefaultSubObject<USpriteRenderer>();
 	NewSprite->SetSprite("Tiles", 7);
 	NewSprite->SetComponentScale(FVector2D(TileSizeX, TileSizeY));
 	NewSprite->SetOrder(1);
-	CursorImage = NewSprite;
+	CurSelectSprite = NewSprite;
 
+	// 타일 스프라이트
 	Tiles.resize(TileCountY);
 	for (int y = 0; y < TileCountY; ++y)
 	{
@@ -31,6 +29,7 @@ void ATileMapEditorMode::BeginPlay()
 
 		for (int x = 0; x < TileCountX; ++x)
 		{
+			// TODO. 파일을 로드하는 내용으로 변경
 			USpriteRenderer* NewSprite = CreateDefaultSubObject<USpriteRenderer>();
 			NewSprite->SetComponentScale(FVector2D(TileSizeX, TileSizeY));
 			NewSprite->SetComponentLocation(FVector2D(TileSizeX * x + TileSizeX / 2, TileSizeY * y + TileSizeY / 2));
@@ -44,13 +43,15 @@ void ATileMapEditorMode::Tick()
 {
 	Super::Tick();
 
+	// 마우스 위치 추적
 	GetCursorPos(&CursorPos);
 	ScreenToClient(UEngineAPICore::GetCore()->GetMainWindow().GetWindowHandle(), &CursorPos);
 
+	// 마우스 타일 격자 표시
 	FVector2D TileCursorPos = FVector2D(CursorPos.x / TileSizeX * TileSizeX + TileSizeX / 2, CursorPos.y / TileSizeY * TileSizeY + TileSizeY / 2);
-	CursorImage->SetComponentLocation(TileCursorPos);
+	CurSelectSprite->SetComponentLocation(TileCursorPos);
 
-	if (KEY_PRESS(VK_LBUTTON) == true)
+	if (KEY_PRESS(VK_LBUTTON))
 	{
 		FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 		if (CursorPos.x < 0 || CursorPos.y < 0 || CursorPos.x >= WindowSize.X || CursorPos.y >= WindowSize.Y)
@@ -71,8 +72,8 @@ void ATileMapEditorMode::Tick()
 				{
 					if (x < 0 || y < 0 || x >= TileCountX || y >= TileCountY)
 						continue;
-					USpriteRenderer* CurTile = Tiles[y][x];
-					CurTile->SetSprite("Tiles", AroundTileCheckSwap(x, y));
+					Tiles[y][x]->SetName("Tile");
+					Tiles[y][x]->SetSprite("Tiles", AroundTileChange(x, y));
 				}
 			}
 		}
@@ -89,7 +90,7 @@ bool ATileMapEditorMode::IsTile(int _x, int _y)
 	return false;
 }
 
-int ATileMapEditorMode::AroundTileCheckSwap(int _X, int _Y)
+int ATileMapEditorMode::AroundTileChange(int _X, int _Y)
 {
 	uint8_t Bools = 0;
 
@@ -251,9 +252,9 @@ int ATileMapEditorMode::FindIndex(uint8_t _Bit)
 		Result = 16;
 		break;
 
-	case 0b1111'1111:
+	case 0b0101'1010:
 
-	case 0b0101'1010: // 네 방향 + 사이 없음
+	case 0b1111'1111: // 네 방향 + 사이 없음
 		Result = 7;
 		break;
 	}
