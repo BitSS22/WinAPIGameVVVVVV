@@ -34,7 +34,11 @@ void USpriteRenderer::Render()
 			if (CurAnimation->CurIndex >= Indexs.size())
 			{
 				if (CurAnimation->Loop == true)
+				{
 					CurAnimation->CurIndex = 0;
+					if (CurAnimation->Events.contains(CurAnimation->CurIndex))
+						CurAnimation->Events[CurAnimation->CurIndex]();
+				}
 				else
 					--CurAnimation->CurIndex;
 			}
@@ -148,6 +152,9 @@ void USpriteRenderer::ChangeAnimation(std::string_view _AnimationName, bool _For
 
 	CurAnimation = &FrameAnimations[UpperName];
 	CurAnimation->Reset();
+
+	if (CurAnimation->Events.contains(CurAnimation->CurIndex))
+		CurAnimation->Events[CurAnimation->CurIndex]();
 }
 
 void USpriteRenderer::SetAnimationEvent(std::string_view _AnimationName, int _AnimationFrame, std::function<void()> _Function)

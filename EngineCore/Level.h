@@ -34,6 +34,9 @@ public:
 	void Tick();
 	void Render();
 
+	void LevelChangeStart();
+	void LevelChangeEnd();
+
 	template<typename ActorType>
 	ActorType* SpawnActor()
 	{

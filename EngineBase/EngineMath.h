@@ -102,6 +102,17 @@ public:
 			MSGASSERT(nullptr, "Scalar 값이 0인 Vector를 Nomalize 할 수 없습니다.");
 		return FVector2D(X / Scalar, Y / Scalar);
 	}
+	std::string ToString()
+	{
+		std::string Stream = {};
+
+		Stream += "X : ";
+		Stream += std::to_string(X);
+		Stream += ", Y : ";
+		Stream += std::to_string(Y);
+
+		return Stream;
+	}
 
 public:
 	bool IsZeroOr() const

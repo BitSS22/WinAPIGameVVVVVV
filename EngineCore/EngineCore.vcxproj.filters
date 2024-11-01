@@ -19,11 +19,22 @@
     <ClInclude Include="ImageManager.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="EngineSprite.h" />
-    <ClInclude Include="ActorComponent.h" />
-    <ClInclude Include="SceneComponent.h" />
-    <ClInclude Include="SpriteRenderer.h" />
-    <ClInclude Include="2DCollision.h" />
+    <ClInclude Include="EngineSprite.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="2DCollision.h">
+      <Filter>Object\Actor\Component\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRenderer.h">
+      <Filter>Object\Actor\Component\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorComponent.h">
+      <Filter>Object\Actor\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneComponent.h">
+      <Filter>Object\Actor\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineCoreDubug.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineAPICore.cpp">
@@ -44,11 +55,22 @@
     <ClCompile Include="ImageManager.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
-    <ClCompile Include="EngineSprite.cpp" />
-    <ClCompile Include="ActorComponent.cpp" />
-    <ClCompile Include="SceneComponent.cpp" />
-    <ClCompile Include="SpriteRenderer.cpp" />
-    <ClCompile Include="2DCollision.cpp" />
+    <ClCompile Include="EngineSprite.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="2DCollision.cpp">
+      <Filter>Object\Actor\Component\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRenderer.cpp">
+      <Filter>Object\Actor\Component\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorComponent.cpp">
+      <Filter>Object\Actor\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneComponent.cpp">
+      <Filter>Object\Actor\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineCoreDubug.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -68,6 +90,15 @@
     </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{54684c3e-eae2-4d95-91e5-34be4dc2bc8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Actor\Component">
+      <UniqueIdentifier>{c312c364-08c6-4fc2-a291-8517a1bc792d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Actor\Component\Collision">
+      <UniqueIdentifier>{53582002-ad64-4926-92e7-0a325e6a4bb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Actor\Component\Rendering">
+      <UniqueIdentifier>{cbe2203a-fb66-4dd0-aab9-0f25a703ab61}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

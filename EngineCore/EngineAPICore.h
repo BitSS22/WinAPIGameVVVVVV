@@ -37,6 +37,7 @@ private:
 	UEngineWindow EngineMainWindow = {};
 	map<string, ULevel*> Levels = {};
 	ULevel* CurLevel = nullptr;
+	ULevel* NextLevel = nullptr;
 	UEngineTimer DeltaTimer = {};
 
 public:
@@ -56,6 +57,7 @@ public:
 private:
 	static void EngineBeginPlay();
 	static void EngineTick();
+	void LevelChange();
 
 	void Tick();
 

@@ -9,14 +9,12 @@ ULevel::ULevel()
 
 ULevel::~ULevel()
 {
-	auto iter = AllActors.begin();
+	for (const auto& actor : BeginPlayList)
+		delete actor;
 
-	while (iter != AllActors.end())
-	{
-		delete *iter;
-		++iter;
-	}
-
+	for (const auto& actor : AllActors)
+		delete actor;
+	
 	AllActors.clear();
 }
 
@@ -51,7 +49,21 @@ void ULevel::Render()
 		}
 	}
 
+	UEngineDebug::PrintEngineDebugText();
+
 	DoubleBuffering();
+}
+
+void ULevel::LevelChangeStart()
+{
+	for (const auto& actor : AllActors)
+		actor->LevelChangeStart();
+}
+
+void ULevel::LevelChangeEnd()
+{
+	for (const auto& actor : AllActors)
+		actor->LevelChangeEnd();
 }
 
 void ULevel::DoubleBuffering()

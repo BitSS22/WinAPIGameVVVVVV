@@ -48,7 +48,7 @@ void UEngineAPICore::OpenLevel(string_view _LevelName)
 	if (iter == Levels.end())
 		MSGASSERT(nullptr, ChangeName, ", 레벨이 없음.");
 
-	CurLevel = iter->second;
+	NextLevel = iter->second;
 }
 
 void UEngineAPICore::EngineBeginPlay()
@@ -63,8 +63,26 @@ void UEngineAPICore::EngineTick()
 	MainCore->Tick();
 }
 
+void UEngineAPICore::LevelChange()
+{
+	if (NextLevel != nullptr)
+	{
+		if (CurLevel != nullptr)
+			CurLevel->LevelChangeEnd();
+
+		CurLevel = NextLevel;
+
+		NextLevel->LevelChangeStart();
+		NextLevel = nullptr;
+
+		DeltaTimer.TimeStart();
+	}
+}
+
 void UEngineAPICore::Tick()
 {
+	LevelChange();
+
 	DeltaTimer.TimeCheck();
 
 	UEngineInput::GetInst().KeyCheck();

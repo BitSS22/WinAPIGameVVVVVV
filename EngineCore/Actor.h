@@ -32,6 +32,11 @@ public:
 	{}
 	virtual void Tick()
 	{}
+	virtual void LevelChangeStart()
+	{}
+	virtual void LevelChangeEnd()
+	{}
+
 	template<typename ComponentType>
 	ComponentType* CreateDefaultSubObject()
 	{

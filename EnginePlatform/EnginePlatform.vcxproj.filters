@@ -7,10 +7,13 @@
     <ClInclude Include="pch.h">
       <Filter>pch</Filter>
     </ClInclude>
-    <ClInclude Include="EngineWindowImage.h" />
     <ClInclude Include="EngineInput.h">
       <Filter>Input</Filter>
     </ClInclude>
+    <ClInclude Include="EngineWindowImage.h">
+      <Filter>ImageManager</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineWindowDebug.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineWindow.cpp">
@@ -19,10 +22,13 @@
     <ClCompile Include="pch.cpp">
       <Filter>pch</Filter>
     </ClCompile>
-    <ClCompile Include="EngineWindowImage.cpp" />
     <ClCompile Include="EngineInput.cpp">
       <Filter>Input</Filter>
     </ClCompile>
+    <ClCompile Include="EngineWindowImage.cpp">
+      <Filter>ImageManager</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineWindowDebug.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Window">
@@ -33,6 +39,9 @@
     </Filter>
     <Filter Include="Input">
       <UniqueIdentifier>{5880de73-47c5-4c94-a3f0-34760c6e90ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImageManager">
+      <UniqueIdentifier>{79cc7f42-6fb2-469a-8117-0dfda5546018}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

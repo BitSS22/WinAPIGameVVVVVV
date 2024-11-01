@@ -5,3 +5,4 @@
 #include "EngineAPICore.h"
 #include "ImageManager.h"
 #include "EngineSprite.h"
+#include "EngineCoreDubug.h"

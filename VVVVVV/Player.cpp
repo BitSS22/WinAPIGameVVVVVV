@@ -28,10 +28,10 @@ void APlayer::BeginPlay()
 	
 	SpriteRenderer->CreateAnimation("Teleporter", "player2.png", { 4, 5, 6, 7 }, vector<float>(4, 1.f), true);
 	SpriteRenderer->ChangeAnimation("Teleporter", true);
-	SpriteRenderer->SetAnimationEvent("Teleporter", 0, bind(&OutputString, "x0 y1 \n"));
-	SpriteRenderer->SetAnimationEvent("Teleporter", 1, bind(&OutputString, "x1 y1 \n"));
-	SpriteRenderer->SetAnimationEvent("Teleporter", 2, bind(&OutputString, "x2 y1 \n"));
-	SpriteRenderer->SetAnimationEvent("Teleporter", 3, bind(&OutputString, "x3 y1 \n"));
+	SpriteRenderer->SetAnimationEvent("Teleporter", 0, bind(&UEngineDebug::OutputString, "x0 y1 \n"));
+	SpriteRenderer->SetAnimationEvent("Teleporter", 1, bind(&UEngineDebug::OutputString, "x1 y1 \n"));
+	SpriteRenderer->SetAnimationEvent("Teleporter", 2, bind(&UEngineDebug::OutputString, "x2 y1 \n"));
+	SpriteRenderer->SetAnimationEvent("Teleporter", 3, bind(&UEngineDebug::OutputString, "x3 y1 \n"));
 }
 
 enum class state

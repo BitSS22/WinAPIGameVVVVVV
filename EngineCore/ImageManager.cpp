@@ -178,7 +178,7 @@ void UImageManager::CreateCutSprite(string_view _SearchKeyName, string_view _New
 	if (Sprites.contains(SearchName) == false)
 		MSGASSERT(nullptr, _SearchKeyName, "라는 이름의 Sprite는 로드할 수 없습니다.");
 	if (Images.contains(SearchName) == false)
-		MSGASSERT(nullptr, _SearchKeyName, "라는 이름의 Sprite는 로드할 수 없습니다.");
+		MSGASSERT(nullptr, _SearchKeyName, "라는 이름의 Image는 로드할 수 없습니다.");
 	if (Sprites.contains(NewSpriteName) == true)
 		MSGASSERT(nullptr, _NewSpriteKeyName, "라는 이름의 Sprite가 이미 존재합니다.");
 	if (Images.contains(NewSpriteName) == true)
@@ -204,29 +204,29 @@ void UImageManager::CreateCutSprite(string_view _SearchKeyName, string_view _New
 
 	FVector2D TotalSize = FVector2D(static_cast<int>(TotalSizeX), static_cast<int>(TotalSizeY));
 
-
-	UEngineWindowImage* NewImage = new UEngineWindowImage();
+	// 주석 : 새로운 이미지를 추가하는 코드입니다.
+	// UEngineWindowImage* NewImage = new UEngineWindowImage();
 	UEngineSprite* NewSprite = new UEngineSprite();
-	NewImage->Create(UEngineAPICore::GetCore()->GetMainWindow().GetWindowImage(), TotalSize);
+	// NewImage->Create(UEngineAPICore::GetCore()->GetMainWindow().GetWindowImage(), TotalSize);
 
-	BitBlt(NewImage->GetDC(), 0, 0, static_cast<int>(TotalSizeX), static_cast<int>(TotalSizeY), Image->GetDC(), static_cast<int>(_StartPos.X), static_cast<int>(_StartPos.Y), SRCCOPY);
+	// BitBlt(NewImage->GetDC(), 0, 0, static_cast<int>(TotalSizeX), static_cast<int>(TotalSizeY), Image->GetDC(), static_cast<int>(_StartPos.X), static_cast<int>(_StartPos.Y), SRCCOPY);
 
-	Images.insert(make_pair(NewSpriteName, NewImage));
+	// Images.insert(make_pair(NewSpriteName, NewImage));
 	Sprites.insert(make_pair(NewSpriteName, NewSprite));
 
 	FVector2D CuttingPos = {};
 
 	for (UINT y = 0; y < YCount; ++y)
 	{
-		CuttingPos.Y = _CuttingSize.Y * y + _XYOffSet.Y * y;
+		CuttingPos.Y = _StartPos.Y + _CuttingSize.Y * y + _XYOffSet.Y * y;
 
 		for (UINT x = 0; x < _Xcount; ++x)
 		{
-			CuttingPos.X = _CuttingSize.X * x + _XYOffSet.X * x;
+			CuttingPos.X = _StartPos.X + _CuttingSize.X * x + _XYOffSet.X * x;
 			FTransform insertInst = {};
 			insertInst.Scale = _CuttingSize;
 			insertInst.Location = CuttingPos;
-			NewSprite->PushData(NewImage, insertInst);
+			NewSprite->PushData(Image, insertInst);
 		}
 		CuttingPos.X = 0.f;
 	}
