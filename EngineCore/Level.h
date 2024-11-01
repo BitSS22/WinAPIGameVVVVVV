@@ -84,6 +84,18 @@ public:
 	{
 		CameraPivot = _Pivot;
 	}
+	void SetCameraPos(FVector2D _Pos)
+	{
+		CameraPos = _Pos;
+	}
+	void AddCameraPos(FVector2D _Pos)
+	{
+		CameraPos += _Pos;
+	}
+	FVector2D GetCameraPos()
+	{
+		return CameraPos;
+	}
 
 };
 

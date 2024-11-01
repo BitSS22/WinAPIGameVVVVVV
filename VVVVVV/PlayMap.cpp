@@ -8,7 +8,7 @@ APlayMap::APlayMap()
 	SetActorScale(size);
 	 
 	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
-	SpriteRenderer->SetSprite("VVVVVV_2.4_title_screen.png");
+	SpriteRenderer->SetSprite("TitleImage(TempImage).png");
 	SpriteRenderer->SetComponentLocation({0, 0});
 	SpriteRenderer->SetComponentScale(size);
 }

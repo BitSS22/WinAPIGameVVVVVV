@@ -95,14 +95,14 @@ public:
 		Y /= Scalar;
 		return *this;
 	}
-	FVector2D GetNomalize()
+	FVector2D GetNomalize() const
 	{
 		float Scalar = Length();
 		if (Scalar == 0.f)
 			MSGASSERT(nullptr, "Scalar 값이 0인 Vector를 Nomalize 할 수 없습니다.");
 		return FVector2D(X / Scalar, Y / Scalar);
 	}
-	std::string ToString()
+	std::string ToString() const
 	{
 		std::string Stream = {};
 
