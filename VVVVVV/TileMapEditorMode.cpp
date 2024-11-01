@@ -21,6 +21,7 @@ void ATileMapEditorMode::BeginPlay()
 	USpriteRenderer* NewSprite = CreateDefaultSubObject<USpriteRenderer>();
 	NewSprite->SetSprite("Tiles", 7);
 	NewSprite->SetComponentScale(FVector2D(TileSizeX, TileSizeY));
+	NewSprite->SetOrder(1);
 	CursorImage = NewSprite;
 
 	Tiles.resize(TileCountY);
@@ -66,7 +67,6 @@ void ATileMapEditorMode::Tick()
 		{
 			for (int x = XTileIndex - 1; x <= XTileIndex + 1; ++x)
 			{
-				// TODO. 9개의 타일을 변경하는 함수
 				if (IsTile(x, y))
 				{
 					if (x < 0 || y < 0 || x >= TileCountX || y >= TileCountY)
