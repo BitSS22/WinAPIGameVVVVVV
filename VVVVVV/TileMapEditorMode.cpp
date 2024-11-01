@@ -19,7 +19,7 @@ void ATileMapEditorMode::BeginPlay()
 		vec.resize(5);
 
 	USpriteRenderer* NewSprite = CreateDefaultSubObject<USpriteRenderer>();
-	NewSprite->SetSprite("Tiles", 5);
+	NewSprite->SetSprite("Tiles", 7);
 	NewSprite->SetComponentScale(FVector2D(TileSizeX, TileSizeY));
 	CursorImage = NewSprite;
 
@@ -38,34 +38,6 @@ void ATileMapEditorMode::BeginPlay()
 		}
 	}
 }
-enum class TILE_TYPE
-{
-	CLOSE_TOP_LEFT = 0,
-	CLOSE_TOP,
-	CLOSE_TOP_RIGHT,
-	OPEN_BOTTOM,
-	DIAGONAL_RIGHT_BOTTOM,
-	DIAGONAL_LEFT_BOTTOM,
-	CLOSE_LEFT,
-	OPEN,
-	CLOSE_RIGHT,
-	CLOSE_LEFT_RIGHT,
-	DIAGONAL_RIGHT_TOP,
-	DIAGONAL_LEFT_TOP,
-	CLOSE_LEFT_BOTTOM,
-	CLOSE_BOTTOM,
-	CLOSE_RIGHT_BOTTOM,
-	OPEN_TOP,
-	POINT_RIGHT_BOTTOM,
-	POINT_LEFT_BOTTOM,
-	OPEN_RIGHT,
-	CLOSE_TOP_BOTTOM,
-	OPEN_LEFT,
-	CLOSE,
-	POINT_RIGHT_TOP,
-	POINT_LEFT_TOP,
-	NONE_TILE
-};
 
 void ATileMapEditorMode::Tick()
 {
@@ -89,29 +61,19 @@ void ATileMapEditorMode::Tick()
 		Tiles[YTileIndex][XTileIndex]->SetSprite("Tiles", 5);
 		Tiles[YTileIndex][XTileIndex]->SetName("Tile");
 
-		for (int y = YTileIndex - 2, a = 0; y <= YTileIndex + 2; ++y, ++a)
-		{
-			for (int x = XTileIndex - 2, b = 0; x <= XTileIndex + 2; ++x, ++b)
-			{
-				if (IsTile(x, y) == true)
-					CheckTiles[a][b] = true;
-				else
-					CheckTiles[a][b] = false;
-			}
-		}
-
 		// 주변 3X3 타일을 조사한다.
-		for (int y = YTileIndex - 1, a = 1; y <= YTileIndex + 1; ++y, ++a)
+		for (int y = YTileIndex - 1; y <= YTileIndex + 1; ++y)
 		{
-			for (int x = XTileIndex - 1, b = 1; x <= XTileIndex + 1; ++x, ++b)
+			for (int x = XTileIndex - 1; x <= XTileIndex + 1; ++x)
 			{
 				// TODO. 9개의 타일을 변경하는 함수
 				if (IsTile(x, y))
-					AroundTileCheckSwap(x, y, a, b);
+				{
+					USpriteRenderer* CurTile = Tiles[y][x];
+					CurTile->SetSprite("Tiles", AroundTileCheckSwap(x, y));
+				}
 			}
 		}
-
-
 	}
 }
 
@@ -125,7 +87,104 @@ bool ATileMapEditorMode::IsTile(int _x, int _y)
 	return false;
 }
 
-void ATileMapEditorMode::AroundTileCheckSwap(int _X, int _Y, int _CA, int _CB)
+int ATileMapEditorMode::AroundTileCheckSwap(int _X, int _Y)
 {
+	uint8_t Bools = 0;
 
+	for (int y = -1; y <= 1; ++y)
+	{
+		for (int x = -1; x <= 1; ++x)
+		{
+			if (IsTile(_X + x, _Y + y) == true)
+			{
+				if (x == 0 && y == 0)
+					continue;
+
+				int Shift = (y + 1) * 3 + (x + 1);
+				if (Shift >= 4)
+					--Shift;
+
+				Bools |= 1 << Shift;
+			}
+		}
+	}
+
+	if ((Bools & 1 << 2)) // 위쪽 있니
+	{
+		if ((Bools & 1 << 4) == false) // 왼쪽 있니
+		{
+			Bools &= ~(1 << 1);
+		}
+		if ((Bools & 1 << 5) == false) // 오른쪽 있니
+		{
+			Bools &= ~(1 << 3);
+		}
+	}
+	if ((Bools & 1 << 7)) // 아래쪽 있니
+	{
+		if ((Bools & 1 << 4) == false) // 왼쪽 있니
+		{
+			Bools &= ~(1 << 6);
+		}
+		if ((Bools & 1 << 5) == false) // 오른쪽 있니
+		{
+			Bools &= ~(1 << 8);
+		}
+	}
+
+	return FindIndex(Bools);
+}
+
+int ATileMapEditorMode::FindIndex(uint8_t _Bit)
+{
+	int Result = 7;
+
+	switch (_Bit)
+	{
+	case 0b0000'0000: // 인접 없음
+		Result = 7;
+		break;
+
+	case 0b0000'0010: // 위쪽만
+		Result = 15;
+		break;
+	case 0b0000'1000: // 왼쪽만
+		Result = 20;
+		break;
+	case 0b0001'0000: // 오른쪽만
+		Result = 18;
+		break;
+	case 0b0100'0000: // 아래쪽만
+		Result = 3;
+		break;
+
+
+	case 0b0100'0010: // 위쪽 아래쪽만
+		Result = 9;
+		break;
+	case 0b0001'1000: // 왼쪽 오른쪽만
+		Result = 19;
+		break;
+
+	case 0b0000'1110:
+	case 0b0000'1010: // 위쪽 왼쪽 + 사이
+		Result = 14;
+		break;
+	case 0b0001'0110:
+	case 0b0001'0010: // 위쪽 오른쪽 + 사이
+		Result = 12;
+		break;
+	case 0b1100'1000:
+	case 0b0100'1000: // 아래쪽 왼쪽 + 사이
+		Result = 2;
+		break;
+	case 0b0111'0000:
+	case 0b0101'0000: // 아래쪽 오른쪽 + 사이
+		Result = 0;
+		break;
+	}
+
+
+
+	return Result;
 }
