@@ -41,7 +41,8 @@ void V6ContentsCore::BeginPlay()
 
 	// Play Level
 	// Tile
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "Titles", FVector2D(0.f, 0.f), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 6, 24);
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "Tiles", FVector2D(0.f, 0.f), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 16);
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "NoneTile", FVector2D(640.f, 480.f), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 1, 1);
 	
 	// Background Object
 	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "SadElephant", FVector2D(8.f, 182.f), FVector2D(928.f, 640.f), FVector2D(0.f, 0.f), 1, 1);

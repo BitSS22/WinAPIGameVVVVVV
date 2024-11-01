@@ -24,6 +24,7 @@ public:
 	virtual void Tick() override;
 
 private:
+	bool IsTile(int x, int y);
 
 };
 
