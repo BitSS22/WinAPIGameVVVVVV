@@ -39,7 +39,7 @@ void ULevel::Render()
 	ScreenClear();
 
 	if (IsCameraToMainPawn == true)
-		CameraPos = MainPawn->GetTransform().Location + CameraPivot;
+		CameraPos = MainPawn->GetActorLocation() + CameraPivot;
 
 	for (const auto& FirstActor : Renderers)
 	{

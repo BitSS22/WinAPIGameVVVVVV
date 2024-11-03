@@ -140,6 +140,8 @@ void UImageManager::CutSprite(string_view _KeyName, FVector2D _CuttingSize)
 	UEngineWindowImage* Image = Images[UpperName];
 
 	Sprite->ClearSpriteData();
+	Sprite->SetName(UpperName);
+	Image->SetName(UpperName);
 
 	if (Image->GetImageScale().iX() % _CuttingSize.iX() != 0)
 		MSGASSERT(nullptr, _KeyName, "의 사이즈가 정확하지 않습니다.");
@@ -185,10 +187,11 @@ void UImageManager::CreateCutSprite(string_view _SearchKeyName, string_view _New
 		MSGASSERT(nullptr, _NewSpriteKeyName, "라는 이름의 Image가 이미 존재합니다.");
 
 
-	UEngineSprite* Sprite = Sprites[SearchName];
+	// UEngineSprite* Sprite = Sprites[SearchName];
 	UEngineWindowImage* Image = Images[SearchName];
 
-	Sprite->ClearSpriteData();
+	// Sprite->ClearSpriteData();
+	// Sprite->SetName(NewSpriteName);
 
 	UINT YCount = _ImageCount / _Xcount;
 	if (_ImageCount % _Xcount > 0)
@@ -202,11 +205,14 @@ void UImageManager::CreateCutSprite(string_view _SearchKeyName, string_view _New
 	if (TotalSizeY > Image->GetImageScale().Y)
 		MSGASSERT(nullptr, "필요한 이미지 세로 사이즈가 원본 이미지 사이즈보다 큽니다.");
 
-	FVector2D TotalSize = FVector2D(static_cast<int>(TotalSizeX), static_cast<int>(TotalSizeY));
+	// FVector2D TotalSize = FVector2D(static_cast<int>(TotalSizeX), static_cast<int>(TotalSizeY));
 
-	// 주석 : 새로운 이미지를 추가하는 코드입니다.
+	// 주석 : 새로운 이미지를 추가하는 코드입니다. // 만들지 않습니다.
 	// UEngineWindowImage* NewImage = new UEngineWindowImage();
 	UEngineSprite* NewSprite = new UEngineSprite();
+	
+	NewSprite->ClearSpriteData();
+	NewSprite->SetName(NewSpriteName);
 	// NewImage->Create(UEngineAPICore::GetCore()->GetMainWindow().GetWindowImage(), TotalSize);
 
 	// BitBlt(NewImage->GetDC(), 0, 0, static_cast<int>(TotalSizeX), static_cast<int>(TotalSizeY), Image->GetDC(), static_cast<int>(_StartPos.X), static_cast<int>(_StartPos.Y), SRCCOPY);

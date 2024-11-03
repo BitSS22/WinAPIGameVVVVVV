@@ -24,6 +24,12 @@ public:
 	{
 		return FVector2D(X + _Value.X, Y + _Value.Y);
 	}
+	FVector2D& operator+= (FVector2D _Other)
+	{
+		X += _Other.X;
+		Y += _Other.Y;
+		return *this;
+	}
 	FVector2D operator- (FVector2D _Value) const
 	{
 		return FVector2D(X - _Value.X, Y - _Value.Y);
@@ -48,11 +54,9 @@ public:
 	{
 		return X == _Other.X && Y == _Other.Y;
 	}
-	FVector2D& operator+= (FVector2D _Other)
+	bool operator!= (FVector2D _Other) const
 	{
-		X += _Other.X;
-		Y += _Other.Y;
-		return *this;
+		return !(*this == _Other);
 	}
 
 public:
@@ -147,7 +151,7 @@ public:
 struct UColor
 {
 public:
-	UColor(UCHAR _r, UCHAR _g, UCHAR _b, UCHAR _a)
+	UColor(uint8_t _r, uint8_t _g, uint8_t _b, uint8_t _a)
 		: R(_r)
 		, G(_g)
 		, B(_b)
@@ -159,10 +163,10 @@ public:
 		int Color = {};
 		struct
 		{
-			UCHAR R;
-			UCHAR G;
-			UCHAR B;
-			UCHAR A;
+			uint8_t R;
+			uint8_t G;
+			uint8_t B;
+			uint8_t A;
 		};
 	};
 };

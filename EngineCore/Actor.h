@@ -79,9 +79,13 @@ public:
 	{
 		Transform.Scale = _Scale;
 	}
-	FTransform GetTransform() const
+	FTransform GetActorTransform() const
 	{
 		return Transform;
+	}
+	void SetActorTransform(const FTransform& _Transform)
+	{
+		Transform = _Transform;
 	}
 };
 

@@ -60,8 +60,7 @@ void ATileMapEditorMode::Tick()
 		int XTileIndex = CursorPos.x / TileSizeX;
 		int YTileIndex = CursorPos.y / TileSizeY;
 
-		Tiles[YTileIndex][XTileIndex]->SetSprite("Tiles", 5);
-		Tiles[YTileIndex][XTileIndex]->SetName("Tile");
+		Tiles[YTileIndex][XTileIndex]->SetSprite(CurSelectSprite->GetCurSpriteName(), 0);
 
 		// 주변 3X3 타일을 조사한다.
 		for (int y = YTileIndex - 1; y <= YTileIndex + 1; ++y)
@@ -72,8 +71,7 @@ void ATileMapEditorMode::Tick()
 				{
 					if (x < 0 || y < 0 || x >= TileCountX || y >= TileCountY)
 						continue;
-					Tiles[y][x]->SetName("Tile");
-					Tiles[y][x]->SetSprite("Tiles", AroundTileChange(x, y));
+					Tiles[y][x]->SetSprite(CurSelectSprite->GetCurSpriteName(), AroundTileChange(x, y));
 				}
 			}
 		}
@@ -84,7 +82,7 @@ bool ATileMapEditorMode::IsTile(int _x, int _y)
 {
 	if (_x < 0 || _y < 0 || _x >= TileCountX || _y >= TileCountY)
 		return true;
-	else if (Tiles[_y][_x]->GetName() == string("Tile"))
+	else if (Tiles[_y][_x]->GetCurSpriteName() == CurSelectSprite->GetCurSpriteName())
 		return true;
 
 	return false;

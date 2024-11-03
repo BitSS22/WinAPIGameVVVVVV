@@ -1,6 +1,7 @@
 #pragma once
 #include "SceneComponent.h"
 #include <EngineBase/EngineDelegate.h>
+#include "EngineSprite.h"
 #include <map>
 
 // Ό³Έν :
@@ -30,8 +31,9 @@ public:
 	void Render();
 	void SetSprite(std::string_view _Name, int _CurIndex);
 	void SetSpriteScale(float _Ratio, int _CurIndex);
-	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, std::vector<float> _Frame, bool _Loop = true);
-	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, int _Start, int _End, float _Time, bool _Loop = true);
+	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, std::vector<float> _Frame, bool _Loop);
+	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, int _Start, int _End, float _Time, bool _Loop);
+	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, float _Frame, bool _Loop);
 	void ChangeAnimation(std::string_view _AnimationName, bool _Force = false);
 	void SetAnimationEvent(std::string_view _AnimationName, int _Frame, std::function<void()> _Function);
 
@@ -53,6 +55,10 @@ public:
 	int GetCurIndex() const
 	{
 		return CurIndex;
+	}
+	std::string GetCurSpriteName() const
+	{
+		return Sprite->GetName();
 	}
 
 

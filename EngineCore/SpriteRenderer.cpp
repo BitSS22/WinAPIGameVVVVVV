@@ -56,7 +56,7 @@ void USpriteRenderer::Render()
 
 	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
 
-	FTransform Trans = GetActorTransform();
+	FTransform Trans = FTransform(GetComponentLocation(), GetComponentScale());
 	ULevel* Level = GetActor()->GetWorld();
 	Trans.Location = Trans.Location - Level->CameraPos;
 
@@ -138,6 +138,11 @@ void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::stri
 	CreateAnimation(_AnimationName, _SpriteName, Indexs, Times, _Loop);
 }
 
+void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, float _FrameTime, bool _Loop)
+{
+	CreateAnimation(_AnimationName, _SpriteName, _Indexs, vector<float>(_Indexs.size(), _FrameTime), _Loop);
+}
+
 void USpriteRenderer::ChangeAnimation(std::string_view _AnimationName, bool _Force)
 {
 	string UpperName = UEngineString::ToUpper(_AnimationName);
@@ -155,6 +160,8 @@ void USpriteRenderer::ChangeAnimation(std::string_view _AnimationName, bool _For
 
 	if (CurAnimation->Events.contains(CurAnimation->CurIndex))
 		CurAnimation->Events[CurAnimation->CurIndex]();
+
+	Sprite = CurAnimation->Sprite;
 }
 
 void USpriteRenderer::SetAnimationEvent(std::string_view _AnimationName, int _AnimationFrame, std::function<void()> _Function)
