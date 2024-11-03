@@ -106,6 +106,10 @@ public:
 			MSGASSERT(nullptr, "Scalar 값이 0인 Vector를 Nomalize 할 수 없습니다.");
 		return FVector2D(X / Scalar, Y / Scalar);
 	}
+	float Dot(FVector2D _Other) const
+	{
+		return X * _Other.X + Y * _Other.Y;
+	}
 	std::string ToString() const
 	{
 		std::string Stream = {};

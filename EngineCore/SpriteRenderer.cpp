@@ -91,7 +91,7 @@ void USpriteRenderer::SetSpriteScale(float _Ratio, int _CurIndex)
 	if (Sprite == nullptr)
 		MSGASSERT(nullptr, "Sprite가 nullptr입니다.");
 
-	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
+	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(_CurIndex);
 	FVector2D Scale = CurData.Transform.Scale * _Ratio;
 	SetComponentScale(Scale);
 }
