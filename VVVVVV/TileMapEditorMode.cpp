@@ -40,7 +40,7 @@ void ATileMapEditorMode::Tick()
 	FIntPoint TileCount = FIntPoint(TileMap->TileCount.X, TileMap->TileCount.Y);
 
 	// 마우스 타일 격자 표시
-	FIntPoint TileCursorPos = FIntPoint(CursorPos.X - (CursorPos.X % TileSize.X) + TileSize.X, CursorPos.Y - (CursorPos.Y % TileSize.Y) + TileSize.Y);
+	FIntPoint TileCursorPos = FIntPoint(CursorPos.X - (CursorPos.X % TileSize.X) + TileSize.X / 2, CursorPos.Y - (CursorPos.Y % TileSize.Y) + TileSize.Y / 2);
 	CurSelectSprite->SetComponentLocation(FVector2D(TileCursorPos.fX(), TileCursorPos.fY()));
 
 	if (KEY_PRESS(VK_LBUTTON))
