@@ -94,6 +94,7 @@ void UEngineAPICore::Tick()
 	{
 		CurLevel->Tick();
 		CurLevel->Render();
+		CurLevel->Realease();
 	}
 }
 

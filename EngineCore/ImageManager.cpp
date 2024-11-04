@@ -123,7 +123,7 @@ UEngineWindowImage* UImageManager::FindImage(string_view _KeyName)
 	string UpperName = UEngineString::ToUpper(_KeyName);
 
 	if (Images.contains(UpperName) == false)
-		MSGASSERT(nullptr, _KeyName, "는 로드 되지 않은 Sprite입니다.");
+		return nullptr;
 	return Images[UpperName];
 }
 

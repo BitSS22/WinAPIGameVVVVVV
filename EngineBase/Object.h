@@ -15,8 +15,15 @@ public:
 
 private:
 	std::string Name = {};
+	float DeathTime = 0.f;
+	float CurDeathTime = 0.f;
+	bool IsDestroyValue = false;
+	bool IsActiveValue = true;
+	bool IsDeathTimeCheck = false;
 
 public:
+	void Destroy(float _Time = 0.f);
+	virtual void ReleaseCheck();
 
 private:
 
@@ -33,6 +40,18 @@ public:
 	std::string_view GetNameView() const
 	{
 		return Name.c_str();
+	}
+	virtual bool IsActive() const
+	{
+		return IsActiveValue == true && IsDestroyValue == false;
+	}
+	virtual bool IsDestroy() const
+	{
+		return IsDestroyValue;
+	}
+	void SetActive(bool _IsActive)
+	{
+		IsActiveValue = _IsActive;
 	}
 
 };

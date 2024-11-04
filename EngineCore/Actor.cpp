@@ -26,3 +26,22 @@ void AActor::ComponentBeginPlay()
 
 	ComponentBeginList.clear();
 }
+
+void AActor::ReleaseCheck()
+{
+	UObject::ReleaseCheck();
+
+	auto iter = Components.begin();
+	while (iter != Components.end())
+	{
+		if ((*iter)->IsDestroy() == false)
+		{
+			(*iter)->ReleaseCheck();
+			++iter;
+			continue;
+		}
+
+		delete *iter;
+		iter = Components.erase(iter);
+	}
+}

@@ -30,7 +30,7 @@ public:
 	size_t GetFileSize()
 	{
 		if (IsFile() == false)
-			MSGASSERT(nullptr, Path, "는 파일이 아닙니다.");
+			MSGASSERT(nullptr, Path.string(), "는 파일이 아닙니다.");
 
 		return std::filesystem::file_size(Path);
 	}

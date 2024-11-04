@@ -37,3 +37,5 @@ using std::placeholders::_7;
 using std::placeholders::_8;
 using std::placeholders::_9;
 using std::placeholders::_10;
+
+#define GET_DELTA UEngineTimer::GetInst()->GetDeltaTime()

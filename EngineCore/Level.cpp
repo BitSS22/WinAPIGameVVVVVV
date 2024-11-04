@@ -31,7 +31,11 @@ void ULevel::Tick()
 	AActor::ComponentBeginPlay();
 
 	for (const auto& CurActor : AllActors)
+	{
+		if (CurActor->IsActive() == false)
+			continue;
 		CurActor->Tick();
+	}
 }
 
 void ULevel::Render()
@@ -45,6 +49,8 @@ void ULevel::Render()
 	{
 		for (const auto& SecondActor : FirstActor.second)
 		{
+			if (SecondActor->IsActive() == false)
+				continue;
 			SecondActor->Render();
 		}
 	}
@@ -52,6 +58,33 @@ void ULevel::Render()
 	UEngineDebug::PrintEngineDebugText();
 
 	DoubleBuffering();
+}
+
+void ULevel::Realease()
+{
+	for (auto iter = Renderers.begin(); iter != Renderers.end(); ++iter)
+	{
+		for (auto Seconditer = iter->second.begin(); Seconditer != iter->second.end();)
+		{
+			if ((*Seconditer)->IsDestroy() == false)
+				++Seconditer;
+			else
+				Seconditer = iter->second.erase(Seconditer);
+		}
+	}
+	for (auto iter = AllActors.begin(); iter != AllActors.end();)
+	{
+		if ((*iter)->IsDestroy() == false)
+		{
+			(*iter)->ReleaseCheck();
+			++iter;
+		}
+		else
+		{
+			delete *iter;
+			iter = AllActors.erase(iter);
+		}
+	}
 }
 
 void ULevel::LevelChangeStart()

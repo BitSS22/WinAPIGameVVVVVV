@@ -61,6 +61,14 @@ public:
 	{
 		return Sprite->GetName();
 	}
+	virtual bool IsActive() const override
+	{
+		return UObject::IsActive() == true && GetActor()->IsActive();
+	}
+	virtual bool IsDestroy() const override
+	{
+		return UObject::IsDestroy() || GetActor()->IsDestroy();
+	}
 
 
 public:

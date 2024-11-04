@@ -53,6 +53,7 @@ public:
 
 private:
 	static void ComponentBeginPlay();
+	virtual void ReleaseCheck() override;
 
 public:
 	ULevel* GetWorld() const

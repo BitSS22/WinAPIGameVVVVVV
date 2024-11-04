@@ -33,6 +33,7 @@ private:
 public:
 	void Tick();
 	void Render();
+	void Realease();
 
 	void LevelChangeStart();
 	void LevelChangeEnd();
@@ -95,6 +96,10 @@ public:
 	FVector2D GetCameraPos()
 	{
 		return CameraPos;
+	}
+	AActor* GetMainPawn()
+	{
+		return MainPawn;
 	}
 
 };
