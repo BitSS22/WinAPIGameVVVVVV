@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/SpriteRenderer.h>
+#include "TileMap.h"
 
 // Ό³Έν :
 class ATileMapEditorMode : public AGameMode
@@ -14,12 +15,10 @@ public:
 	ATileMapEditorMode& operator=(ATileMapEditorMode&& _Other) noexcept = delete;
 
 private:
-	static const int TileCountX = 40;
-	static const int TileCountY = 30;
-	static const int TileSizeX = 16;
-	static const int TileSizeY = 16;
-	std::vector<std::vector<AActor*>> CollisionTiles = {};
-	std::vector<std::vector<USpriteRenderer*>> BackGroundTiles = {};
+	FIntPoint WorldIndexSize = { 5, 5 };
+	FIntPoint CurSelectTileMap = { 0, 0 };
+	UTileMap* TileMap = nullptr;
+	std::vector<USpriteRenderer*> Sprites = {};
 	USpriteRenderer* CurSelectSprite = nullptr;
 
 public:
@@ -28,7 +27,7 @@ public:
 
 private:
 	int AroundTileChange(int _X, int _Y);
-	int FindIndex(uint8_t _Bit);
-	bool IsTile(int x, int y);
+	int FindAroundTile(uint8_t _Bit) const;
+	bool IsSameTileName(int x, int y) const;
 
 };

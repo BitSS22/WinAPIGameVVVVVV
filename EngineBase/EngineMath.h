@@ -20,9 +20,9 @@ public:
 		: X(static_cast<float>(_X))
 		, Y(static_cast<float>(_Y)) {}
 
-	FVector2D operator+ (FVector2D _Value) const
+	FVector2D operator+ (FVector2D _Other) const
 	{
-		return FVector2D(X + _Value.X, Y + _Value.Y);
+		return FVector2D(X + _Other.X, Y + _Other.Y);
 	}
 	FVector2D& operator+= (FVector2D _Other)
 	{
@@ -130,6 +130,115 @@ public:
 	bool IsZeroAnd() const
 	{
 		return X == 0.f && Y == 0.f;
+	}
+
+};
+
+struct FIntPoint
+{
+public:
+	FIntPoint()
+	{}
+	~FIntPoint()
+	{}
+	FIntPoint(float _X, float _Y)
+		: X(static_cast<int>(_X))
+		, Y(static_cast<int>(_Y)) {}
+	FIntPoint(int _X, int _Y)
+		: X(_X)
+		, Y(_Y) {}
+	FIntPoint(POINT _Value)
+		: X(_Value.x)
+		, Y(_Value.y) {}
+	FIntPoint(long _X, long _Y)
+		: X(_X)
+		, Y(_Y) {}
+	FIntPoint(FVector2D _Value)
+		: X(static_cast<int>(_Value.X))
+		, Y(static_cast<int>(_Value.Y)) {}
+
+	FIntPoint operator+ (FIntPoint _Other) const
+	{
+		return FIntPoint(X + _Other.X, Y + _Other.Y);
+	}
+	FIntPoint& operator+= (FIntPoint _Other)
+	{
+		X += _Other.X;
+		Y += _Other.Y;
+		return *this;
+	}
+	FIntPoint operator- (FIntPoint _Value) const
+	{
+		return FIntPoint(X - _Value.X, Y - _Value.Y);
+	}
+	FIntPoint& operator-= (FIntPoint _Value)
+	{
+		X -= _Value.X;
+		Y -= _Value.Y;
+		return *this;
+	}
+	FIntPoint operator* (int _Value) const
+	{
+		return FIntPoint(X * _Value, Y * _Value);
+	}
+	FIntPoint operator/ (int _Value) const
+	{
+		if (_Value == 0)
+			MSGASSERT(nullptr, "0으로 나눌 수 없습니다.");
+		return FIntPoint(X / _Value, Y / _Value);
+	}
+	bool operator== (FIntPoint _Other) const
+	{
+		return X == _Other.X && Y == _Other.Y;
+	}
+	bool operator!= (FIntPoint _Other) const
+	{
+		return !(*this == _Other);
+	}
+
+public:
+	static const FIntPoint ZERO;
+	static const FIntPoint LEFT;
+	static const FIntPoint RIGHT;
+	static const FIntPoint UP;
+	static const FIntPoint DOWN;
+
+	int X = 0;
+	int Y = 0;
+
+public:
+	float fX() const
+	{
+		return static_cast<float>(X);
+	}
+	float fY() const
+	{
+		return static_cast<float>(Y);
+	}
+	FIntPoint Half() const
+	{
+		return FIntPoint(X / 2, Y / 2);
+	}
+	std::string ToString() const
+	{
+		std::string Stream = {};
+
+		Stream += "X : ";
+		Stream += std::to_string(X);
+		Stream += ", Y : ";
+		Stream += std::to_string(Y);
+
+		return Stream;
+	}
+
+public:
+	bool IsZeroOr() const
+	{
+		return X == 0 || Y == 0;
+	}
+	bool IsZeroAnd() const
+	{
+		return X == 0 && Y == 0;
 	}
 
 };

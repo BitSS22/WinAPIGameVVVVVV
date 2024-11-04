@@ -27,6 +27,9 @@
     <ClInclude Include="TileMapEditorMode.h">
       <Filter>ContentsObject\GameMode\MapEditor</Filter>
     </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>ContentsObject\Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -54,6 +57,9 @@
     </ClCompile>
     <ClCompile Include="TileMapEditorMode.cpp">
       <Filter>ContentsObject\GameMode\MapEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>ContentsObject\Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

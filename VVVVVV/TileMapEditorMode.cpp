@@ -14,28 +14,14 @@ void ATileMapEditorMode::BeginPlay()
 {
 	Super::BeginPlay();
 
+	TileMap = GetWorld()->SpawnActor<UTileMap>();
+	
 	// 커서 스프라이트
 	USpriteRenderer* NewSelectSprite = CreateDefaultSubObject<USpriteRenderer>();
 	NewSelectSprite->SetSprite("Tiles", 39);
-	NewSelectSprite->SetComponentScale(FVector2D(TileSizeX, TileSizeY));
+	NewSelectSprite->SetComponentScale(FVector2D(TileMap->TileSize.X, TileMap->TileSize.Y));
 	NewSelectSprite->SetOrder(1);
 	CurSelectSprite = NewSelectSprite;
-
-	// 타일 스프라이트
-	BackGroundTiles.resize(TileCountY);
-	for (int y = 0; y < TileCountY; ++y)
-	{
-		BackGroundTiles[y].reserve(TileCountX);
-		for (int x = 0; x < TileCountX; ++x)
-		{
-			// TODO. 파일을 로드하는 내용으로 변경
-			USpriteRenderer* NewSprite = CreateDefaultSubObject<USpriteRenderer>();
-			NewSprite->SetComponentScale(FVector2D(TileSizeX, TileSizeY));
-			NewSprite->SetComponentLocation(FVector2D(TileSizeX * x + TileSizeX / 2, TileSizeY * y + TileSizeY / 2));
-			NewSprite->SetSprite("NoneTile", 0);
-			BackGroundTiles[y].push_back(NewSprite);
-		}
-	}
 }
 
 void ATileMapEditorMode::Tick()
@@ -47,47 +33,41 @@ void ATileMapEditorMode::Tick()
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("VVVVVV / FPS : " + std::to_string(frame));
 
 	// 마우스 위치 추적
-	POINT CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
+	FIntPoint CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
+
+	// 타일 크기와 사이즈
+	FIntPoint TileSize = FIntPoint(TileMap->TileSize.X, TileMap->TileSize.Y);
+	FIntPoint TileCount = FIntPoint(TileMap->TileCount.X, TileMap->TileCount.Y);
 
 	// 마우스 타일 격자 표시
-	FVector2D TileCursorPos = FVector2D(CursorPos.x / TileSizeX * TileSizeX + TileSizeX / 2, CursorPos.y / TileSizeY * TileSizeY + TileSizeY / 2);
-	CurSelectSprite->SetComponentLocation(TileCursorPos);
+	FIntPoint TileCursorPos = FIntPoint(CursorPos.X - (CursorPos.X % TileSize.X) + TileSize.X, CursorPos.Y - (CursorPos.Y % TileSize.Y) + TileSize.Y);
+	CurSelectSprite->SetComponentLocation(FVector2D(TileCursorPos.fX(), TileCursorPos.fY()));
 
 	if (KEY_PRESS(VK_LBUTTON))
 	{
 		FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
-		if (CursorPos.x < 0 || CursorPos.y < 0 || CursorPos.x >= WindowSize.X || CursorPos.y >= WindowSize.Y)
+		if (CursorPos.X < 0 || CursorPos.Y < 0 || CursorPos.X >= WindowSize.X || CursorPos.Y >= WindowSize.Y)
 			return;
 
-		int XTileIndex = CursorPos.x / TileSizeX;
-		int YTileIndex = CursorPos.y / TileSizeY;
+		int XTileIndex = CursorPos.X / TileSize.X;
+		int YTileIndex = CursorPos.Y / TileSize.Y;
 
-		BackGroundTiles[YTileIndex][XTileIndex]->SetSprite(CurSelectSprite->GetCurSpriteName(), 0);
+		TileMap->BackGroundTiles[YTileIndex][XTileIndex]->SetSprite(CurSelectSprite->GetCurSpriteName(), 0);
 
 		// 주변 3X3 타일을 조사한다.
 		for (int y = YTileIndex - 1; y <= YTileIndex + 1; ++y)
 		{
 			for (int x = XTileIndex - 1; x <= XTileIndex + 1; ++x)
 			{
-				if (IsTile(x, y))
+				if (IsSameTileName(x, y))
 				{
-					if (x < 0 || y < 0 || x >= TileCountX || y >= TileCountY)
+					if (x < 0 || y < 0 || x >= TileCount.X || y >= TileCount.Y)
 						continue;
-					BackGroundTiles[y][x]->SetSprite(CurSelectSprite->GetCurSpriteName(), AroundTileChange(x, y));
+					TileMap->BackGroundTiles[y][x]->SetSprite(CurSelectSprite->GetCurSpriteName(), AroundTileChange(x, y));
 				}
 			}
 		}
 	}
-}
-
-bool ATileMapEditorMode::IsTile(int _x, int _y)
-{
-	if (_x < 0 || _y < 0 || _x >= TileCountX || _y >= TileCountY)
-		return true;
-	else if (BackGroundTiles[_y][_x]->GetCurSpriteName() == CurSelectSprite->GetCurSpriteName())
-		return true;
-
-	return false;
 }
 
 int ATileMapEditorMode::AroundTileChange(int _X, int _Y)
@@ -98,7 +78,7 @@ int ATileMapEditorMode::AroundTileChange(int _X, int _Y)
 	{
 		for (int x = -1; x <= 1; ++x)
 		{
-			if (IsTile(_X + x, _Y + y) == true)
+			if (IsSameTileName(_X + x, _Y + y) == true)
 			{
 				if (x == 0 && y == 0)
 					continue;
@@ -146,10 +126,10 @@ int ATileMapEditorMode::AroundTileChange(int _X, int _Y)
 		Bools &= ~(1 << 7);
 	}
 
-	return FindIndex(Bools);
+	return FindAroundTile(Bools);
 }
 
-int ATileMapEditorMode::FindIndex(uint8_t _Bit)
+int ATileMapEditorMode::FindAroundTile(uint8_t _Bit) const
 {
 	int Result = -1;
 
@@ -311,4 +291,14 @@ int ATileMapEditorMode::FindIndex(uint8_t _Bit)
 		MSGASSERT(nullptr, "타일 알고리즘이 이상합니다.");
 
 	return Result;
+}
+
+bool ATileMapEditorMode::IsSameTileName(int _x, int _y) const
+{
+	if (_x < 0 || _y < 0 || _x >= TileMap->TileCount.X || _y >= TileMap->TileCount.Y)
+		return true;
+	else if (TileMap->BackGroundTiles[_y][_x]->GetCurSpriteName() == CurSelectSprite->GetCurSpriteName())
+		return true;
+
+	return false;
 }
