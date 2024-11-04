@@ -15,18 +15,17 @@ void ATileMapEditorMode::BeginPlay()
 	Super::BeginPlay();
 
 	// 커서 스프라이트
-	USpriteRenderer* NewSprite = CreateDefaultSubObject<USpriteRenderer>();
-	NewSprite->SetSprite("Tiles", 7);
-	NewSprite->SetComponentScale(FVector2D(TileSizeX, TileSizeY));
-	NewSprite->SetOrder(1);
-	CurSelectSprite = NewSprite;
+	USpriteRenderer* NewSelectSprite = CreateDefaultSubObject<USpriteRenderer>();
+	NewSelectSprite->SetSprite("Tiles", 39);
+	NewSelectSprite->SetComponentScale(FVector2D(TileSizeX, TileSizeY));
+	NewSelectSprite->SetOrder(1);
+	CurSelectSprite = NewSelectSprite;
 
 	// 타일 스프라이트
 	Tiles.resize(TileCountY);
 	for (int y = 0; y < TileCountY; ++y)
 	{
 		Tiles[y].reserve(TileCountX);
-
 		for (int x = 0; x < TileCountX; ++x)
 		{
 			// TODO. 파일을 로드하는 내용으로 변경
@@ -154,106 +153,154 @@ int ATileMapEditorMode::FindIndex(uint8_t _Bit)
 	switch (_Bit)
 	{
 	case 0b0000'0000: // 인접 없음
-		Result = 21;
+		Result = 39;
 		break;
 
 	case 0b0000'0010: // 위쪽만
-		Result = 15;
+		Result = 27;
 		break;
 	case 0b0000'1000: // 왼쪽만
-		Result = 20;
+		Result = 38;
 		break;
 	case 0b0001'0000: // 오른쪽만
-		Result = 18;
+		Result = 36;
 		break;
 	case 0b0100'0000: // 아래쪽만
 		Result = 3;
 		break;
 
 	case 0b0100'0010: // 위쪽 아래쪽만
-		Result = 9;
+		Result = 15;
 		break;
 	case 0b0001'1000: // 왼쪽 오른쪽만
-		Result = 19;
+		Result = 37;
 		break;
 
-	case 0b0000'1011:
-	case 0b0000'1010: // 위쪽 왼쪽 + 사이
-		Result = 14;
+	case 0b0000'1011: // 위쪽 왼쪽 + 사이
+		Result = 26;
 		break;
-	case 0b0001'0110:
-	case 0b0001'0010: // 위쪽 오른쪽 + 사이
-		Result = 12;
+	case 0b0000'1010:
+		Result = 17;
 		break;
-	case 0b0110'1000:
-	case 0b0100'1000: // 아래쪽 왼쪽 + 사이
+	case 0b0001'0110: // 위쪽 오른쪽 + 사이
+		Result = 24;
+		break;
+	case 0b0001'0010:
+		Result = 16;
+		break;
+	case 0b0110'1000: // 아래쪽 왼쪽 + 사이
 		Result = 2;
 		break;
-	case 0b1101'0000:
-	case 0b0101'0000: // 아래쪽 오른쪽 + 사이
+	case 0b0100'1000:
+		Result = 5;
+		break;
+	case 0b1101'0000: // 아래쪽 오른쪽 + 사이
 		Result = 0;
 		break;
-
-	case 0b0001'1011:
-	case 0b0001'1110:
-	case 0b0001'1111:
-	case 0b0001'1010: // 위쪽 왼쪽 오른쪽 + 사이
-		Result = 13;
+	case 0b0101'0000:
+		Result = 4;
 		break;
-	case 0b0100'1011:
+
+	case 0b0001'1011: // 위쪽 왼쪽 오른쪽 + 사이
+		Result = 21;
+		break;
+	case 0b0001'1110:
+		Result = 19;
+		break;
+	case 0b0001'1111:
+		Result = 25;
+		break;
+	case 0b0001'1010:
+		Result = 23;
+		break;
+	case 0b0100'1011: // 위쪽 왼쪽 아래쪽 + 사이
+		Result = 7;
+		break;
 	case 0b0110'1010:
+		Result = 9;
+		break;
 	case 0b0110'1011:
-	case 0b0100'1010: // 위쪽 왼쪽 아래쪽 + 사이
+		Result = 14;
+		break;
+	case 0b0100'1010:
+		Result = 11;
+		break;
+	case 0b0101'0110: // 위쪽 오른쪽 아래쪽 + 사이
+		Result = 20;
+		break;
+	case 0b1101'0010:
+		Result = 18;
+		break;
+	case 0b1101'0110:
+		Result = 12;
+		break;
+	case 0b0101'0010:
+		Result = 22;
+		break;
+	case 0b1101'1000: // 왼쪽 오른쪽 아래쪽 + 사이
 		Result = 8;
 		break;
-	case 0b0101'0110:
-	case 0b1101'0010:
-	case 0b1101'0110:
-	case 0b0101'0010: // 위쪽 오른쪽 아래쪽 + 사이
+	case 0b0111'1000:
 		Result = 6;
 		break;
-	case 0b1101'1000:
-	case 0b0111'1000:
 	case 0b1111'1000:
-	case 0b0101'1000: // 왼쪽 오른쪽 아래쪽 + 사이
 		Result = 1;
 		break;
-
-		// 리소스 이미지 없음, 대체 이미지
-	case 0b0101'1011:
-	case 0b0101'1110:
-	case 0b0111'1010:
-	case 0b1101'1010:
-		Result = 7;
+	case 0b0101'1000:
+		Result = 10;
 		break;
 
-		// 리소스 이미지 없음, 대체 이미지
+	case 0b0101'1011:  // 네 방향 + 사이 없음
+		Result = 34;
+		break;
+	case 0b0101'1110:
+		Result = 35;
+		break;
+	case 0b0111'1010:
+		Result = 46;
+		break;
+	case 0b1101'1010:
+		Result = 47;
+		break;
+
 	case 0b0101'1111:
+		Result = 31;
+		break;
 	case 0b0111'1011:
+		Result = 30;
+		break;
 	case 0b1101'1011:
+		Result = 33;
+		break;
 	case 0b0111'1110:
+		Result = 32;
+		break;
 	case 0b1101'1110:
+		Result = 43;
+		break;
 	case 0b1111'1010:
-		Result = 7;
+		Result = 42;
 		break;
 
 	case 0b1111'1110:
-		Result = 23;
+		Result = 41;
 		break;
 	case 0b1111'1011:
-		Result = 22;
+		Result = 40;
 		break;
 	case 0b1101'1111:
-		Result = 17;
+		Result = 29;
 		break;
 	case 0b0111'1111:
-		Result = 16;
+		Result = 28;
 		break;
 
 	case 0b0101'1010:
+		Result = 44;
+		break;
 
-	case 0b1111'1111: // 네 방향 + 사이 없음
-		Result = 7;
+	case 0b1111'1111:
+		Result = 13;
 		break;
 	}
 

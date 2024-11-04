@@ -1,4 +1,5 @@
 #pragma once
+#include <EngineCore/SpriteRenderer.h>
 
 // Ό³Έν :
 class ATileMapEditorMode : public AGameMode

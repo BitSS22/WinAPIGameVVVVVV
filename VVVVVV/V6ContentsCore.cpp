@@ -36,12 +36,12 @@ void V6ContentsCore::BeginPlay()
 	// Title Level
 	// Logo
 	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "Logo", FVector2D(318.f, 26.f), FVector2D(64.f, 64.f), FVector2D(0.f, 0.f), 1, 1);
-	// Backgroud Pattern
+	// Backgroud Pattern 
 	UImageManager::GetInst().CreateCutSprite("Main BackGround.png", "TitleBackGround", FVector2D(8.f, 130.f), FVector2D(640.f, 1920.f), FVector2D(0.f, 0.f), 1, 1);
 
 	// Play Level
 	// Tile
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "Tiles", FVector2D(0.f, 0.f), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 6, 24);
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "Tiles", FVector2D(0.f, 0.f), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "NoneTile", FVector2D(640.f, 480.f), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 1, 1);
 	
 	// Background Object
