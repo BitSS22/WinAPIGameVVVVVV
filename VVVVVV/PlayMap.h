@@ -17,7 +17,7 @@ private:
 	USpriteRenderer* SpriteRenderer = nullptr;
 
 public:
-
+	
 private:
 
 };

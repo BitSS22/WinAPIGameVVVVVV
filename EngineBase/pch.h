@@ -11,6 +11,7 @@
 
 #include "EngineDebug.h"
 #include "EngineMath.h"
+#include "EngineRandom.h"
 #include "EngineTimer.h"
 #include "Object.h"
 

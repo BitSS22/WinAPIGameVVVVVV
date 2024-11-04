@@ -11,6 +11,11 @@ UEnginePath::UEnginePath(string_view _Path)
 {
 }
 
+UEnginePath::UEnginePath(const std::string& _Path)
+	: Path(_Path)
+{
+}
+
 UEnginePath::UEnginePath(std::filesystem::path _Path)
 	: Path(_Path)
 {

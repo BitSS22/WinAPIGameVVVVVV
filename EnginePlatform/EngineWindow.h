@@ -64,5 +64,12 @@ public:
 	{
 		return hInstance;
 	}
+	POINT GetMousePos() const
+	{
+		POINT CursorPos = {};
+		GetCursorPos(&CursorPos);
+		ScreenToClient(WindowHandle, &CursorPos);
+		return CursorPos;
+	}
 
 };

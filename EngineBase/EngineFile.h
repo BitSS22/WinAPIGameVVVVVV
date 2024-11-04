@@ -2,36 +2,37 @@
 #include "EnginePath.h"
 #include <io.h>
 
-const int MAXPATH = 256;
+class UEngineSerializer;
 
 class UEngineFile : public UEnginePath
 {
 public:
 	UEngineFile();
-	UEngineFile(string_view _Path);
+	UEngineFile(std::string_view _Path);
+	UEngineFile(const std::string& _Path);
 	UEngineFile(std::filesystem::path _Path);
 	~UEngineFile();
 
 private:
-	char Path[MAXPATH] = {};
 	FILE* File = nullptr;
 
 public:
-	void Write(const void* _Ptr, size_t _Size) const;
-	void Read(void* _Ptr, size_t _Size) const;
+	void Write(UEngineSerializer& _Ser);
+	void Write(const void* _Ptr, size_t _Size);
+	void Read(UEngineSerializer& _Ser);
+	void Read(void* _Ptr, size_t _Size);
 	void FileOpen(const char* _Mode);
 	void Close();
 
 private:
 
 public:
-	void SetPath(const char* _Path)
+	size_t GetFileSize()
 	{
-		strcpy_s(Path, _Path);
-	}
-	bool IsExits() const
-	{
-		return _access(Path, 00) == 0;
+		if (IsFile() == false)
+			MSGASSERT(nullptr, Path, "는 파일이 아닙니다.");
+
+		return std::filesystem::file_size(Path);
 	}
 
 

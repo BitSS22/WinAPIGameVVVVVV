@@ -22,10 +22,10 @@ void ATileMapEditorMode::BeginPlay()
 	CurSelectSprite = NewSelectSprite;
 
 	// 타일 스프라이트
-	Tiles.resize(TileCountY);
+	BackGroundTiles.resize(TileCountY);
 	for (int y = 0; y < TileCountY; ++y)
 	{
-		Tiles[y].reserve(TileCountX);
+		BackGroundTiles[y].reserve(TileCountX);
 		for (int x = 0; x < TileCountX; ++x)
 		{
 			// TODO. 파일을 로드하는 내용으로 변경
@@ -33,7 +33,7 @@ void ATileMapEditorMode::BeginPlay()
 			NewSprite->SetComponentScale(FVector2D(TileSizeX, TileSizeY));
 			NewSprite->SetComponentLocation(FVector2D(TileSizeX * x + TileSizeX / 2, TileSizeY * y + TileSizeY / 2));
 			NewSprite->SetSprite("NoneTile", 0);
-			Tiles[y].push_back(NewSprite);
+			BackGroundTiles[y].push_back(NewSprite);
 		}
 	}
 }
@@ -42,9 +42,12 @@ void ATileMapEditorMode::Tick()
 {
 	Super::Tick();
 
+	// 프레임 표시
+	UINT frame = UEngineAPICore::GetCore()->GetFrame();
+	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("VVVVVV / FPS : " + std::to_string(frame));
+
 	// 마우스 위치 추적
-	GetCursorPos(&CursorPos);
-	ScreenToClient(UEngineAPICore::GetCore()->GetMainWindow().GetWindowHandle(), &CursorPos);
+	POINT CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
 
 	// 마우스 타일 격자 표시
 	FVector2D TileCursorPos = FVector2D(CursorPos.x / TileSizeX * TileSizeX + TileSizeX / 2, CursorPos.y / TileSizeY * TileSizeY + TileSizeY / 2);
@@ -59,7 +62,7 @@ void ATileMapEditorMode::Tick()
 		int XTileIndex = CursorPos.x / TileSizeX;
 		int YTileIndex = CursorPos.y / TileSizeY;
 
-		Tiles[YTileIndex][XTileIndex]->SetSprite(CurSelectSprite->GetCurSpriteName(), 0);
+		BackGroundTiles[YTileIndex][XTileIndex]->SetSprite(CurSelectSprite->GetCurSpriteName(), 0);
 
 		// 주변 3X3 타일을 조사한다.
 		for (int y = YTileIndex - 1; y <= YTileIndex + 1; ++y)
@@ -70,7 +73,7 @@ void ATileMapEditorMode::Tick()
 				{
 					if (x < 0 || y < 0 || x >= TileCountX || y >= TileCountY)
 						continue;
-					Tiles[y][x]->SetSprite(CurSelectSprite->GetCurSpriteName(), AroundTileChange(x, y));
+					BackGroundTiles[y][x]->SetSprite(CurSelectSprite->GetCurSpriteName(), AroundTileChange(x, y));
 				}
 			}
 		}
@@ -81,7 +84,7 @@ bool ATileMapEditorMode::IsTile(int _x, int _y)
 {
 	if (_x < 0 || _y < 0 || _x >= TileCountX || _y >= TileCountY)
 		return true;
-	else if (Tiles[_y][_x]->GetCurSpriteName() == CurSelectSprite->GetCurSpriteName())
+	else if (BackGroundTiles[_y][_x]->GetCurSpriteName() == CurSelectSprite->GetCurSpriteName())
 		return true;
 
 	return false;

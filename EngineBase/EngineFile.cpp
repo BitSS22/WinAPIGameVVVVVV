@@ -2,12 +2,18 @@
 #include "io.h"
 #include "EngineFile.h"
 #include "EngineDebug.h"
+#include "EngineSerializer.h"
 
 UEngineFile::UEngineFile()
 {
 }
 
 UEngineFile::UEngineFile(string_view _Path)
+    : UEnginePath(_Path)
+{
+}
+
+UEngineFile::UEngineFile(const string& _Path)
     : UEnginePath(_Path)
 {
 }
@@ -22,7 +28,12 @@ UEngineFile::~UEngineFile()
     Close();
 }
 
-void UEngineFile::Write(const void* _Ptr, size_t _Size) const
+void UEngineFile::Write(UEngineSerializer& _Ser)
+{
+    Write(_Ser.GetDataPtr(), _Ser.GetWriteOffset());
+}
+
+void UEngineFile::Write(const void* _Ptr, size_t _Size)
 {
     if (_Size == 0)
     {
@@ -43,7 +54,16 @@ void UEngineFile::Write(const void* _Ptr, size_t _Size) const
     fwrite(_Ptr, _Size, 1, File);
 }
 
-void UEngineFile::Read(void* _Ptr, size_t _Size) const
+void UEngineFile::Read(UEngineSerializer& _Ser)
+{
+    size_t FileSize = GetFileSize();
+
+    _Ser.DataResize(FileSize);
+
+    Read(_Ser.GetDataPtr(), FileSize);
+}
+
+void UEngineFile::Read(void* _Ptr, size_t _Size)
 {
     if (_Size == 0)
     {
@@ -66,7 +86,7 @@ void UEngineFile::Read(void* _Ptr, size_t _Size) const
 
 void UEngineFile::FileOpen(const char* _Mode)
 {
-    fopen_s(&File, Path, _Mode);
+    fopen_s(&File, GetPathToString().c_str(), _Mode);
 
     if (File == nullptr)
         MSGASSERT(nullptr, "유효하지 않은 Path입니다.");

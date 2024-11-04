@@ -2,6 +2,7 @@
 #include "SceneComponent.h"
 #include <EngineBase/EngineDelegate.h>
 #include "EngineSprite.h"
+#include <EngineCore/SceneComponent.h>
 #include <map>
 
 // Ό³Έν :

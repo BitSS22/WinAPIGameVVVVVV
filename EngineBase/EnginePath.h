@@ -6,7 +6,8 @@ class UEnginePath
 {
 public:
 	UEnginePath();
-	UEnginePath(string_view _Path);
+	UEnginePath(std::string_view _Path);
+	UEnginePath(const std::string& _Path);
 	UEnginePath(std::filesystem::path _Path);
 	~UEnginePath();
 
@@ -54,6 +55,10 @@ public:
 		if (IsDirectory() == false)
 			MSGASSERT(nullptr, Path.string(), "는 디렉토리 경로가 아닙니다.");
 		return Path.filename().string();
+	}
+	bool IsFile()
+	{
+		return IsDirectory() == false;
 	}
 
 };
