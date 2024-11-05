@@ -28,7 +28,7 @@ void UTileMap::BeginPlay()
 			USpriteRenderer* NewSprite = CreateDefaultSubObject<USpriteRenderer>();
 			NewSprite->SetComponentScale(FVector2D(TileSize.X, TileSize.Y));
 			NewSprite->SetComponentLocation(FVector2D(TileSize.X * x + TileSize.X / 2, TileSize.Y * y + TileSize.Y / 2));
-			NewSprite->SetSprite("NoneTile", 0);
+			NewSprite->SetSprite("Tile None", 0);
 			BackGroundTiles[y].push_back(NewSprite);
 		}
 	}

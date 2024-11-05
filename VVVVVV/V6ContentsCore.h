@@ -22,5 +22,17 @@ private:
 	void BeginPlay() override;
 	void Tick() override;
 
+	void ResourceLoad();
+
+	void ResourceSpriteLoad();
+
+	void TileImageLoad();
+	void BackGroundImageLoad();
+	void PlayerImageLoad();
+	void FontImageLoad();
+	void FlatformImageLoad();
+	void BackGroundObjectImageLoad();
+	void InterObjectImageLoad();
+
 };
 

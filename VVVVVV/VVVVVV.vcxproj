@@ -151,7 +151,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\EngineCore\GameString.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="EndingGameMode.h">
       <SubType>
@@ -189,7 +188,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\EngineCore\GameString.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="EndingGameMode.cpp">
       <SubType>
