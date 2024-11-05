@@ -101,6 +101,11 @@ public:
 	{
 		return MainPawn;
 	}
+	template<typename ConvertType>
+	ConvertType* GetMainPawn()
+	{
+		return dynamic_cast<ConvertType*>(MainPawn);
+	}
 
 };
 

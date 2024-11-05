@@ -270,7 +270,17 @@ public:
 		, B(_b)
 		, A(_a)
 	{}
+	UColor(unsigned long _Value)
+		: Color(_Value)
+	{}
+
+	bool operator== (const UColor& _Other)
+	{
+		return R == _Other.R && G == _Other.G && B == _Other.B;
+	}
 public:
+	static const UColor WHITE;
+	static const UColor BLACK;
 	union
 	{
 		int Color = {};

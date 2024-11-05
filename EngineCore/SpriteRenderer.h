@@ -23,6 +23,8 @@ private:
 	UEngineSprite* Sprite = nullptr;
 	int CurIndex = 0;
 	int Order = 0;
+	bool IsCameraEffect = true;
+	float CameraEffectScale = 1.f;
 	std::map<std::string, FrameAnimation> FrameAnimations = {};
 	FrameAnimation* CurAnimation = nullptr;
 
@@ -30,8 +32,6 @@ public:
 	virtual void BeginPlay() override;
 	virtual void ComponentTick() override;
 	void Render();
-	void SetSprite(std::string_view _Name, int _CurIndex);
-	void SetSpriteScale(float _Ratio, int _CurIndex);
 	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, std::vector<float> _Frame, bool _Loop);
 	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, int _Start, int _End, float _Time, bool _Loop);
 	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, float _Frame, bool _Loop);
@@ -46,7 +46,6 @@ public:
 		return Order;
 	}
 	void SetOrder(int _Order);
-	
 	template<typename EnumType>
 	void SetOrder(EnumType _Order)
 	{
@@ -69,6 +68,16 @@ public:
 	{
 		return UObject::IsDestroy() || GetActor()->IsDestroy();
 	}
+	void SetCameraEffect(bool _Value)
+	{
+		IsCameraEffect = _Value;
+	}
+	void SetCameraEffectScale(float _Effect)
+	{
+		CameraEffectScale = _Effect;
+	}
+	void SetSprite(std::string_view _Name, int _CurIndex);
+	void SetSpriteScale(float _Ratio, int _CurIndex);
 
 
 public:

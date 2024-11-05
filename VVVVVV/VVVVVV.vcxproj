@@ -151,6 +151,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\EngineCore\GameString.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="EndingGameMode.h">
       <SubType>
@@ -160,7 +161,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PlayMap.h">
+    <ClInclude Include="BackGround.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -188,6 +189,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\EngineCore\GameString.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="EndingGameMode.cpp">
       <SubType>
@@ -197,7 +199,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="PlayMap.cpp">
+    <ClCompile Include="BackGround.cpp">
       <SubType>
       </SubType>
     </ClCompile>

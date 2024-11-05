@@ -58,7 +58,9 @@ void USpriteRenderer::Render()
 
 	FTransform Trans = FTransform(GetComponentLocation(), GetComponentScale());
 	ULevel* Level = GetActor()->GetWorld();
-	Trans.Location = Trans.Location - Level->CameraPos;
+	
+	if (IsCameraEffect == true)
+		Trans.Location = Trans.Location - Level->CameraPos * CameraEffectScale;
 
 	CurData.Image->CopyToTrans(BackBufferImage, Trans, CurData.Transform);
 }
@@ -74,7 +76,6 @@ void USpriteRenderer::ComponentTick()
 {
 	Super::ComponentTick();
 }
-
 
 void USpriteRenderer::SetSprite(std::string_view _Name, int _CurIndex)
 {

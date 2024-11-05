@@ -53,6 +53,10 @@ public:
 	{
 		IsActiveValue = _IsActive;
 	}
+	void SetActiveSwitch()
+	{
+		IsActiveValue = !IsActiveValue;
+	}
 
 };
 

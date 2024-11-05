@@ -2,4 +2,4 @@
 
 #include <EngineCore/pch.h>
 
-#include <EngineCore/Actor.h>
+#include "Enums.h"

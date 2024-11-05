@@ -89,14 +89,18 @@ void ULevel::Realease()
 
 void ULevel::LevelChangeStart()
 {
-	for (const auto& actor : AllActors)
-		actor->LevelChangeStart();
+	for (const auto& CurActor : BeginPlayList)
+		CurActor->LevelChangeStart();
+	for (const auto& CurActor : AllActors)
+		CurActor->LevelChangeStart();
 }
 
 void ULevel::LevelChangeEnd()
 {
-	for (const auto& actor : AllActors)
-		actor->LevelChangeEnd();
+	for (const auto& CurActor : BeginPlayList)
+		CurActor->LevelChangeEnd();
+	for (const auto& CurActor : AllActors)
+		CurActor->LevelChangeEnd();
 }
 
 void ULevel::DoubleBuffering()

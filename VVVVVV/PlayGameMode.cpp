@@ -2,7 +2,7 @@
 #include "PlayGameMode.h"
 
 #include <EngineCore/Level.h>
-#include "PlayMap.h"
+#include "BackGround.h"
 
 APlayGameMode::APlayGameMode()
 {
@@ -16,7 +16,7 @@ void APlayGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	APlayMap* map = GetWorld()->SpawnActor<APlayMap>();
+	ABackGround* map = GetWorld()->SpawnActor<ABackGround>();
 }
 
 void APlayGameMode::Tick()

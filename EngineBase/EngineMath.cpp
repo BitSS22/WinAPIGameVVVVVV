@@ -12,3 +12,6 @@ const FIntPoint FIntPoint::LEFT = FIntPoint(-1, 0);
 const FIntPoint FIntPoint::RIGHT = FIntPoint(1, 0);
 const FIntPoint FIntPoint::UP = FIntPoint(0, -1);
 const FIntPoint FIntPoint::DOWN = FIntPoint(0, 1);
+
+const UColor UColor::WHITE = { 255, 255, 255, 0 };
+const UColor UColor::BLACK = { 0, 0, 0, 0 };
