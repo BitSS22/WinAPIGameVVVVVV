@@ -15,7 +15,7 @@ public:
 	GameString& operator=(GameString&& _Other) noexcept = delete;
 
 private:
-	vector<USpriteRenderer*> Fonts = {};
+	std::vector<USpriteRenderer*> Fonts = {};
 
 public:
 	void InsertFont(USpriteRenderer* _Sprite, FIntPoint _Size)

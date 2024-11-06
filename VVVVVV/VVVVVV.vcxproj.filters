@@ -27,9 +27,6 @@
     <ClInclude Include="TileMap.h">
       <Filter>ContentsObject\Global</Filter>
     </ClInclude>
-    <ClInclude Include="..\EngineCore\GameString.h">
-      <Filter>ContentsObject\Global</Filter>
-    </ClInclude>
     <ClInclude Include="BackGround.h">
       <Filter>ContentsObject\Global</Filter>
     </ClInclude>
@@ -65,9 +62,6 @@
       <Filter>ContentsObject\GameMode\MapEditor</Filter>
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
-      <Filter>ContentsObject\Global</Filter>
-    </ClCompile>
-    <ClCompile Include="..\EngineCore\GameString.cpp">
       <Filter>ContentsObject\Global</Filter>
     </ClCompile>
     <ClCompile Include="BackGround.cpp">

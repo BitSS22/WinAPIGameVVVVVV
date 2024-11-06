@@ -9,6 +9,7 @@ enum class ERenderOrder
 
 enum class EColorType
 {
+	WHITE,
 	CYAN,
 	PINK,
 	RED,

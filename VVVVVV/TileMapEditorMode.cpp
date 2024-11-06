@@ -18,7 +18,7 @@ void ATileMapEditorMode::BeginPlay()
 	
 	// 커서 스프라이트
 	USpriteRenderer* NewSelectSprite = CreateDefaultSubObject<USpriteRenderer>();
-	NewSelectSprite->SetSprite("Tiles", 39);
+	NewSelectSprite->SetSprite("Tiles Type06 Blue", 45);
 	NewSelectSprite->SetComponentScale(FVector2D(TileMap->TileSize.X, TileMap->TileSize.Y));
 	NewSelectSprite->SetOrder(1);
 	CurSelectSprite = NewSelectSprite;
