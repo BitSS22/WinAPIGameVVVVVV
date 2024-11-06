@@ -13,8 +13,6 @@
     <ClInclude Include="Player.h">
       <Filter>ContentsObject\Global</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Enums.h" />
     <ClInclude Include="TitleGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
@@ -24,17 +22,23 @@
     <ClInclude Include="TileMapEditorMode.h">
       <Filter>ContentsObject\GameMode\MapEditor</Filter>
     </ClInclude>
+    <ClInclude Include="MapData.h">
+      <Filter>ContentsObject\Map</Filter>
+    </ClInclude>
     <ClInclude Include="TileMap.h">
-      <Filter>ContentsObject\Global</Filter>
+      <Filter>ContentsObject\Map</Filter>
     </ClInclude>
     <ClInclude Include="BackGround.h">
-      <Filter>ContentsObject\Global</Filter>
-    </ClInclude>
-    <ClInclude Include="MapData.h">
-      <Filter>ContentsObject\Global</Filter>
+      <Filter>ContentsObject\Map</Filter>
     </ClInclude>
     <ClInclude Include="EngineConst.h">
-      <Filter>ContentsObject</Filter>
+      <Filter>Define</Filter>
+    </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>Define</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>ContentsObject\Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -50,8 +54,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>ContentsObject\Global</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="Enums.cpp" />
     <ClCompile Include="TitleGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
@@ -61,17 +63,23 @@
     <ClCompile Include="TileMapEditorMode.cpp">
       <Filter>ContentsObject\GameMode\MapEditor</Filter>
     </ClCompile>
+    <ClCompile Include="MapData.cpp">
+      <Filter>ContentsObject\Map</Filter>
+    </ClCompile>
     <ClCompile Include="TileMap.cpp">
-      <Filter>ContentsObject\Global</Filter>
+      <Filter>ContentsObject\Map</Filter>
     </ClCompile>
     <ClCompile Include="BackGround.cpp">
-      <Filter>ContentsObject\Global</Filter>
-    </ClCompile>
-    <ClCompile Include="MapData.cpp">
-      <Filter>ContentsObject\Global</Filter>
+      <Filter>ContentsObject\Map</Filter>
     </ClCompile>
     <ClCompile Include="EngineConst.cpp">
-      <Filter>ContentsObject</Filter>
+      <Filter>Define</Filter>
+    </ClCompile>
+    <ClCompile Include="Enums.cpp">
+      <Filter>Define</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>ContentsObject\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -90,11 +98,17 @@
     <Filter Include="ContentsObject\Global">
       <UniqueIdentifier>{720a4477-9a73-4824-9bcb-fa23457e6975}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Play">
-      <UniqueIdentifier>{69c0bcfb-ab48-4c33-a387-5e33c48b131c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\GameMode\MapEditor">
       <UniqueIdentifier>{c74ca425-9334-4363-b47e-71edc5d3b195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Map">
+      <UniqueIdentifier>{9cb2d7da-da33-4b2c-a088-a0a5f034b315}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\PlayObject">
+      <UniqueIdentifier>{69c0bcfb-ab48-4c33-a387-5e33c48b131c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Define">
+      <UniqueIdentifier>{d14c7087-ff09-40ac-9588-44d64ce3bf84}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

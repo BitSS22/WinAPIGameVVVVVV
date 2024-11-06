@@ -17,7 +17,7 @@ public:
 private:
 	FIntPoint WorldIndexSize = { 5, 5 };
 	FIntPoint CurSelectTileMap = { 0, 0 };
-	UTileMap* TileMap = nullptr;
+	ATileMap* TileMap = nullptr;
 	std::vector<USpriteRenderer*> Sprites = {};
 	USpriteRenderer* CurSelectSprite = nullptr;
 

@@ -1,21 +1,21 @@
 #include "pch.h"
 #include "TileMap.h"
 
-UTileMap::UTileMap()
+ATileMap::ATileMap()
 {
 }
 
-UTileMap::UTileMap(FIntPoint _TileCount, FIntPoint _TileSize)
+ATileMap::ATileMap(FIntPoint _TileCount, FIntPoint _TileScale)
 	: TileCount(_TileCount)
-	, TileSize (_TileSize)
+	, TileScale (_TileScale)
 {
 }
 
-UTileMap::~UTileMap()
+ATileMap::~ATileMap()
 {
 }
 
-void UTileMap::BeginPlay()
+void ATileMap::BeginPlay()
 {
 	// 타일 스프라이트
 	BackGroundTiles.resize(TileCount.Y);
@@ -26,8 +26,8 @@ void UTileMap::BeginPlay()
 		{
 			// TODO. 파일을 로드하는 내용으로 변경
 			USpriteRenderer* NewSprite = CreateDefaultSubObject<USpriteRenderer>();
-			NewSprite->SetComponentScale(FVector2D(TileSize.X, TileSize.Y));
-			NewSprite->SetComponentLocation(FVector2D(TileSize.X * x + TileSize.X / 2, TileSize.Y * y + TileSize.Y / 2));
+			NewSprite->SetComponentScale(FVector2D(TileScale.X, TileScale.Y));
+			NewSprite->SetComponentLocation(FVector2D(TileScale.X * x + TileScale.X / 2, TileScale.Y * y + TileScale.Y / 2));
 			NewSprite->SetSprite("Tile None", 0);
 			BackGroundTiles[y].push_back(NewSprite);
 		}

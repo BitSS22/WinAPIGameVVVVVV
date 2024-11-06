@@ -1,20 +1,20 @@
 #pragma once
 
-class UTileMap : public AActor
+class ATileMap : public AActor
 {
 public:
-	UTileMap();
-	UTileMap(FIntPoint _TileCount, FIntPoint _TileSize);
-	~UTileMap();
+	ATileMap();
+	ATileMap(FIntPoint _TileCount, FIntPoint _TileScale);
+	~ATileMap();
 
-	UTileMap(const UTileMap& _Other) = delete;
-	UTileMap(UTileMap&& _Other) noexcept = delete;
-	UTileMap& operator=(const UTileMap& _Other) = delete;
-	UTileMap& operator=(UTileMap&& _Other) noexcept = delete;
+	ATileMap(const ATileMap& _Other) = delete;
+	ATileMap(ATileMap&& _Other) noexcept = delete;
+	ATileMap& operator=(const ATileMap& _Other) = delete;
+	ATileMap& operator=(ATileMap&& _Other) noexcept = delete;
 
 public:
-	FIntPoint TileCount = EEngineConst::TileCount;
-	FIntPoint TileSize = EEngineConst::TileSize;
+	FIntPoint TileCount = EGameConst::TileCount;
+	FIntPoint TileScale = EGameConst::TileScale;
 	std::vector<std::vector<AActor*>> Tiles = {};
 	std::vector<std::vector<USpriteRenderer*>> BackGroundTiles = {};
 

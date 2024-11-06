@@ -14,12 +14,12 @@ void ATileMapEditorMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	TileMap = GetWorld()->SpawnActor<UTileMap>();
+	TileMap = GetWorld()->SpawnActor<ATileMap>();
 	
 	// 커서 스프라이트
 	USpriteRenderer* NewSelectSprite = CreateDefaultSubObject<USpriteRenderer>();
 	NewSelectSprite->SetSprite("Tiles Type06 Blue", 45);
-	NewSelectSprite->SetComponentScale(FVector2D(TileMap->TileSize.X, TileMap->TileSize.Y));
+	NewSelectSprite->SetComponentScale(FVector2D(TileMap->TileScale.X, TileMap->TileScale.Y));
 	NewSelectSprite->SetOrder(1);
 	CurSelectSprite = NewSelectSprite;
 }
@@ -36,7 +36,7 @@ void ATileMapEditorMode::Tick()
 	FIntPoint CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
 
 	// 타일 크기와 사이즈
-	FIntPoint TileSize = FIntPoint(TileMap->TileSize.X, TileMap->TileSize.Y);
+	FIntPoint TileSize = FIntPoint(TileMap->TileScale.X, TileMap->TileScale.Y);
 	FIntPoint TileCount = FIntPoint(TileMap->TileCount.X, TileMap->TileCount.Y);
 
 	// 마우스 타일 격자 표시

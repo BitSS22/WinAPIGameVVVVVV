@@ -2,22 +2,22 @@
 #include "EngineBase/EngineMath.h"
 
 // Ό³Έν :
-class EEngineConst
+class EGameConst
 {
 private:
-	EEngineConst()
+	EGameConst()
 	{}
-	~EEngineConst()
+	~EGameConst()
 	{}
 
-	EEngineConst(const EEngineConst& _Other) = delete;
-	EEngineConst(EEngineConst&& _Other) noexcept = delete;
-	EEngineConst& operator=(const EEngineConst& _Other) = delete;
-	EEngineConst& operator=(EEngineConst&& _Other) noexcept = delete;
+	EGameConst(const EGameConst& _Other) = delete;
+	EGameConst(EGameConst&& _Other) noexcept = delete;
+	EGameConst& operator=(const EGameConst& _Other) = delete;
+	EGameConst& operator=(EGameConst&& _Other) noexcept = delete;
 
 public:
 	static const FIntPoint WorldSize;
-	static const FIntPoint TileSize;
+	static const FIntPoint TileScale;
 	static const FIntPoint TileCount;
 
 };

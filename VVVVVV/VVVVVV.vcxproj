@@ -151,7 +151,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet.h" />
     <ClInclude Include="EndingGameMode.h">
       <SubType>
       </SubType>
@@ -194,9 +193,12 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="World.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="EndingGameMode.cpp">
       <SubType>
       </SubType>
@@ -239,6 +241,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="V6ContentsCore.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
       <SubType>
       </SubType>
     </ClCompile>

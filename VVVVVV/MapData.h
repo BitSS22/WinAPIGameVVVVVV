@@ -1,16 +1,16 @@
 #pragma once
 
 // Ό³Έν :
-class MapData
+class UMapData
 {
 public:
-	MapData();
-	~MapData();
+	UMapData();
+	~UMapData();
 
-	MapData(const MapData& _Other) = delete;
-	MapData(MapData&& _Other) noexcept = delete;
-	MapData& operator=(const MapData& _Other) = delete;
-	MapData& operator=(MapData&& _Other) noexcept = delete;
+	UMapData(const UMapData& _Other) = delete;
+	UMapData(UMapData&& _Other) noexcept = delete;
+	UMapData& operator=(const UMapData& _Other) = delete;
+	UMapData& operator=(UMapData&& _Other) noexcept = delete;
 
 private:
 

@@ -1,10 +1,11 @@
+#include "pch.h"
 #include "MapData.h"
 
-MapData::MapData()
+UMapData::UMapData()
 {
 }
 
-MapData::~MapData()
+UMapData::~UMapData()
 {
 }
 
