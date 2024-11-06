@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Room.h"
+#include "BackGround.h"
 
 ARoom::ARoom()
 {
@@ -17,6 +18,8 @@ ARoom::~ARoom()
 
 void ARoom::BeginPlay()
 {
+	BackGround = GetWorld()->SpawnActor<ABackGround>();
+
 	// 타일 스프라이트
 	Tiles.resize(TileCount.Y);
 	for (int y = 0; y < TileCount.Y; ++y)
@@ -29,6 +32,7 @@ void ARoom::BeginPlay()
 			NewSprite->SetComponentScale(FVector2D(TileScale.X, TileScale.Y));
 			NewSprite->SetComponentLocation(FVector2D(TileScale.X * x + TileScale.X / 2, TileScale.Y * y + TileScale.Y / 2));
 			NewSprite->SetSprite("Debug Tile", 0);
+			NewSprite->SetOrder(ERenderOrder::TILE);
 			Tiles[y].push_back(NewSprite);
 		}
 	}
@@ -43,6 +47,7 @@ void ARoom::BeginPlay()
 			NewSprite->SetComponentScale(FVector2D(TileScale.X, TileScale.Y));
 			NewSprite->SetComponentLocation(FVector2D(TileScale.X * x + TileScale.X / 2, TileScale.Y * y + TileScale.Y / 2));
 			NewSprite->SetSprite("Debug Tile", 0);
+			NewSprite->SetOrder(ERenderOrder::BACK_TILE);
 			BackGroundTiles[y].push_back(NewSprite);
 		}
 	}

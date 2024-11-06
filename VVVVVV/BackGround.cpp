@@ -14,6 +14,7 @@ void ABackGround::BeginPlay()
 	Sprite = CreateDefaultSubObject<USpriteRenderer>();
 	Sprite->SetSprite("Debug BackGround.png", 0);
 	Sprite->SetSpriteScale(1.f, Sprite->GetCurIndex());
+	Sprite->SetOrder(ERenderOrder::BACK_GROUND);
 	Sprite->SetComponentLocation(UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half());
 }
 
@@ -23,7 +24,7 @@ void ABackGround::Tick()
 	{
 		for (size_t i = 0; i < 2500; ++i)
 		{
-			Sprite->SetSprite("Ending", 0);
+			Sprite->SetSprite("BackGrounds::23 Ending", 0);
 		}
 	}
 

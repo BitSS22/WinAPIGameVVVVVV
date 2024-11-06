@@ -72,22 +72,48 @@ void ATileMapEditorMode::Tick()
 		int XTileIndex = CursorPos.X / TileSize.X;
 		int YTileIndex = CursorPos.Y / TileSize.Y;
 
-		World->GetRoom()->BackGroundTiles[YTileIndex][XTileIndex]->SetSprite(CurSelectSprite->GetCurSpriteName(), 0);
+		World->GetRoom()->BackGroundTiles[YTileIndex][XTileIndex]->SetSprite(CurSelectSprite->GetCurSpriteName(), CurSelectSprite->GetCurIndex());
 
 		// 주변 3X3 타일을 조사한다.
-		for (int y = YTileIndex - 1; y <= YTileIndex + 1; ++y)
+		if (CurSelectSprite->GetCurIndex() == 45)
 		{
-			for (int x = XTileIndex - 1; x <= XTileIndex + 1; ++x)
+			// World->GetRoom()->BackGroundTiles[YTileIndex][XTileIndex]->SetSprite(CurSelectSprite->GetCurSpriteName(), AroundTileChange(XTileIndex, YTileIndex));
+
+			for (int y = YTileIndex - 1; y <= YTileIndex + 1; ++y)
 			{
-				if (IsSameTileName(x, y))
+				for (int x = XTileIndex - 1; x <= XTileIndex + 1; ++x)
 				{
-					if (x < 0 || y < 0 || x >= TileCount.X || y >= TileCount.Y)
-						continue;
-					World->GetRoom()->BackGroundTiles[y][x]->SetSprite(CurSelectSprite->GetCurSpriteName(), AroundTileChange(x, y));
+					if (IsSameTileName(x, y))
+					{
+						if (x < 0 || y < 0 || x >= TileCount.X || y >= TileCount.Y)
+							continue;
+						World->GetRoom()->BackGroundTiles[y][x]->SetSprite(CurSelectSprite->GetCurSpriteName(), AroundTileChange(x, y));
+					}
 				}
 			}
 		}
 	}
+
+	if (KEY_DOWN('1'))
+		NextTileList();
+
+	if (KEY_DOWN('Q'))
+		PrevTileSet();
+
+	if (KEY_DOWN('W'))
+		NextTileSet();
+
+	if (KEY_DOWN('A'))
+		PrevTile();
+
+	if (KEY_DOWN('S'))
+		NextTile();
+
+	if (KEY_DOWN('Z'))
+		ShowTiles();
+
+	if (KEY_DOWN('X'))
+		ShowBackGroundTiles();
 }
 
 int ATileMapEditorMode::AroundTileChange(int _X, int _Y)
@@ -325,11 +351,9 @@ bool ATileMapEditorMode::IsSameTileName(int _x, int _y) const
 
 void ATileMapEditorMode::NextTileList()
 {
-
 	// TODO. 여기 해야됨
 	if (CurSelectTileList == &BackGroundTileList)
 	{
-
 		CurSelectTileList = &TileList;
 	}
 	else if (CurSelectTileList == &TileList)
@@ -338,7 +362,7 @@ void ATileMapEditorMode::NextTileList()
 	}
 	else if (CurSelectTileList == &SpikeTileList)
 	{
-		CurSelectTileList = &TileList;
+		CurSelectTileList = &BackGroundTileList;
 	}
 }
 
@@ -346,13 +370,15 @@ void ATileMapEditorMode::PrevTileSet()
 {
 	--CurTileSetIndex;
 	if (CurTileSetIndex < 0)
-		CurTileSetIndex = CurSelectTileList->size() - 1;
+		CurTileSetIndex = CurSelectTileList->size() - size_t(1);
 
-	int index = CurSelectSprite->GetCurIndex();
-	if (index >= (*CurSelectTileList)[CurTileSetIndex].size())
-		index = (*CurSelectTileList)[CurTileSetIndex].size() - 1;
+	int Curindex = CurSelectSprite->GetCurIndex();
+	UEngineSprite* Sprite = UImageManager::GetInst().FindSprite((*CurSelectTileList)[CurTileSetIndex]);
 
-	CurSelectSprite->SetSprite((*CurSelectTileList)[CurTileSetIndex], index);
+	if (Curindex >= Sprite->GetSpriteCount())
+		Curindex = Sprite->GetSpriteCount() - 1;
+
+	CurSelectSprite->SetSprite((*CurSelectTileList)[CurTileSetIndex], Curindex);
 }
 
 void ATileMapEditorMode::NextTileSet()
@@ -361,27 +387,31 @@ void ATileMapEditorMode::NextTileSet()
 	if (CurTileSetIndex >= CurSelectTileList->size())
 		CurTileSetIndex = 0;
 
-	int index = CurSelectSprite->GetCurIndex();
-	if (index >= (*CurSelectTileList)[CurTileSetIndex].size())
-		index = (*CurSelectTileList)[CurTileSetIndex].size() - 1;
+	int Curindex = CurSelectSprite->GetCurIndex();
+	UEngineSprite* Sprite = UImageManager::GetInst().FindSprite((*CurSelectTileList)[CurTileSetIndex]);
 
-	CurSelectSprite->SetSprite((*CurSelectTileList)[CurTileSetIndex], index);
+	if (Curindex >= Sprite->GetSpriteCount())
+		Curindex = Sprite->GetSpriteCount() - 1;
+
+	CurSelectSprite->SetSprite((*CurSelectTileList)[CurTileSetIndex], Curindex);
 }
 
 void ATileMapEditorMode::PrevTile()
 {
-	int index = CurSelectSprite->GetCurIndex() - 1;
+	int index = CurSelectSprite->GetCurIndex();
+	--index;
 	if (index < 0)
-		index += CurSelectSprite->GetMaxIndex();
-	CurSelectSprite->SetSprite(CurSelectSprite->GetNameView(), index);
+		index = CurSelectSprite->GetMaxIndex() - 1;
+	CurSelectSprite->SetSprite(CurSelectSprite->GetCurSpriteName(), index);
 }
 
 void ATileMapEditorMode::NextTile()
 {
-	int index = CurSelectSprite->GetCurIndex() + 1;
-	if (index <= CurSelectSprite->GetMaxIndex())
-		index -= CurSelectSprite->GetMaxIndex();
-	CurSelectSprite->SetSprite(CurSelectSprite->GetNameView(), index);
+	int index = CurSelectSprite->GetCurIndex();
+	++index;
+	if (index >= CurSelectSprite->GetMaxIndex())
+		index = 0;
+	CurSelectSprite->SetSprite(CurSelectSprite->GetCurSpriteName(), index);
 }
 
 void ATileMapEditorMode::ShowTiles()

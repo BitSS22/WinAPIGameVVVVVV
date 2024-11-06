@@ -39,7 +39,7 @@ public:
 	}
 	std::string_view GetNameView() const
 	{
-		return Name.c_str();
+		return Name.data();
 	}
 	virtual bool IsActive() const
 	{

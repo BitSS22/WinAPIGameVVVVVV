@@ -4,6 +4,11 @@
 enum class ERenderOrder
 {
 	BACK_GROUND,
+	BACK_GROUND_EFFECT,
+	BACK_TILE,
+	TILE,
+	OBJECT,
+	FRIEND,
 	PLAYER
 };
 
