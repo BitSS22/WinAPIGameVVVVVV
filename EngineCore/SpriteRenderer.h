@@ -56,6 +56,10 @@ public:
 	{
 		return CurIndex;
 	}
+	int GetMaxIndex() const
+	{
+		return Sprite->GetSpriteSize();
+	}
 	std::string GetCurSpriteName() const
 	{
 		return Sprite->GetName();

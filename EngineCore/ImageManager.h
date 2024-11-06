@@ -34,7 +34,7 @@ public:
 	UEngineSprite* FindSprite(string_view _KeyName);
 	UEngineWindowImage* FindImage(string_view _KeyName);
 	void CutSprite(string_view _KeyName, FVector2D _CuttingSize);
-	void CreateCutSprite(string_view _SearchKeyName, string_view _NewSpriteKeyName, FVector2D _StartPos, FVector2D _CuttingSize, FVector2D _XYOffSet, UINT _Xcount, UINT _ImageCount);
+	UEngineSprite* CreateCutSprite(string_view _SearchKeyName, string_view _NewSpriteKeyName, FVector2D _StartPos, FVector2D _CuttingSize, FVector2D _XYOffSet, UINT _Xcount, UINT _ImageCount);
 
 private:
 

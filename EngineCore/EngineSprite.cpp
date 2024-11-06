@@ -15,5 +15,6 @@ void UEngineSprite::PushData(UEngineWindowImage* _Image, const FTransform& _Tran
 		MSGASSERT(nullptr, "이미지의 크기가 0입니다.");
 
 	Data.push_back({ _Image, _Trans });
+	++SpriteCount;
 }
 

@@ -13,9 +13,9 @@ public:
 	UTileMap& operator=(UTileMap&& _Other) noexcept = delete;
 
 public:
-	FIntPoint TileCount = { 40, 30 };
-	FIntPoint TileSize = { 16, 16 };
-	std::vector<std::vector<AActor*>> CollisionTiles = {};
+	FIntPoint TileCount = EEngineConst::TileCount;
+	FIntPoint TileSize = EEngineConst::TileSize;
+	std::vector<std::vector<AActor*>> Tiles = {};
 	std::vector<std::vector<USpriteRenderer*>> BackGroundTiles = {};
 
 public:

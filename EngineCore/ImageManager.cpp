@@ -168,7 +168,7 @@ void UImageManager::CutSprite(string_view _KeyName, FVector2D _CuttingSize)
 	}
 }
 
-void UImageManager::CreateCutSprite(string_view _SearchKeyName, string_view _NewSpriteKeyName, FVector2D _StartPos, FVector2D _CuttingSize, FVector2D _XYOffSet, UINT _Xcount, UINT _ImageCount)
+UEngineSprite* UImageManager::CreateCutSprite(string_view _SearchKeyName, string_view _NewSpriteKeyName, FVector2D _StartPos, FVector2D _CuttingSize, FVector2D _XYOffSet, UINT _Xcount, UINT _ImageCount)
 {
 	string SearchName = UEngineString::ToUpper(_SearchKeyName);
 	string NewSpriteName = UEngineString::ToUpper(_NewSpriteKeyName);
@@ -236,5 +236,7 @@ void UImageManager::CreateCutSprite(string_view _SearchKeyName, string_view _New
 		}
 		CuttingPos.X = 0.f;
 	}
+
+	return NewSprite;
 }
 
