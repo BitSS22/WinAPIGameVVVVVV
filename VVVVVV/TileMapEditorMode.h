@@ -20,10 +20,10 @@ private:
 	std::vector<std::string> TileList = {};
 	std::vector<std::string> SpikeTileList = {};
 	std::vector<std::string> BackGroundList = {};
-	std::vector<std::string>* CurSelectTileList = &TileList;
 	int CurTileSetIndex = 0;
 	int CurBackGroundIndex = 0;
 	AWorld* World = nullptr;
+	std::vector<std::string>* CurSelectTileList = nullptr;
 	USpriteRenderer* CurSelectSprite = nullptr;
 
 public:
@@ -54,6 +54,16 @@ private:
 	int AroundTileChange(int _X, int _Y);
 	int FindAroundTile(uint8_t _Bit) const;
 	bool IsSameTileName(int x, int y) const;
+	std::vector<std::vector<USpriteRenderer*>>* GetCurSelectTileMap() const
+	{
+		if (CurSelectTileList == &BackGroundTileList)
+			return &(World->GetRoom()->BackGroundTiles);
+		else
+			return &(World->GetRoom()->Tiles);
+	}
+
+	void ChangeTile();
+	void DeleteTile();
 	void NextTileList();
 	void PrevTileSet();
 	void NextTileSet();
@@ -63,9 +73,5 @@ private:
 	void ShowBackGroundTiles();
 
 public:
-	void SetCurSelectSprite(std::string_view _Name, int _Index)
-	{
-		CurSelectSprite->SetSprite(_Name, _Index);
-	}
 	
 };

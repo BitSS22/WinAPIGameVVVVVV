@@ -5,6 +5,8 @@ class ABackGround;
 class ARoom : public AActor
 {
 public:
+	friend class ATileMapEditorMode;
+public:
 	ARoom();
 	ARoom(FIntPoint _TileCount, FIntPoint _TileScale);
 	~ARoom();
@@ -14,7 +16,7 @@ public:
 	ARoom& operator=(const ARoom& _Other) = delete;
 	ARoom& operator=(ARoom&& _Other) noexcept = delete;
 
-public:
+private:
 	FIntPoint TileCount = EGameConst::TileCount;
 	FIntPoint TileScale = EGameConst::TileScale;
 	std::vector<std::vector<USpriteRenderer*>> Tiles = {};

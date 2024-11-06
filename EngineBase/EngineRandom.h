@@ -15,7 +15,7 @@ public:
 	UEngineRandom& operator=(UEngineRandom&& _Other) noexcept = delete;
 
 private:
-	std::random_device rd;
+	std::random_device rd = {};
 	std::mt19937_64 Gen = std::mt19937_64(rd());
 
 public:

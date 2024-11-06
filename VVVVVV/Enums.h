@@ -9,7 +9,8 @@ enum class ERenderOrder
 	TILE,
 	OBJECT,
 	FRIEND,
-	PLAYER
+	PLAYER,
+	EDITOR_CURSOR
 };
 
 enum class EColorType

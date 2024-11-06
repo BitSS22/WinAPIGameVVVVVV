@@ -50,6 +50,10 @@ public:
 	{
 		Transform.Scale = _Scale;
 	}
+	void AddComponentLocation(FVector2D _Location)
+	{
+		Transform.Location += _Location;
+	}
 
 };
 

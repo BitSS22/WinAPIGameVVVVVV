@@ -39,6 +39,7 @@ private:
 	ULevel* CurLevel = nullptr;
 	ULevel* NextLevel = nullptr;
 	UEngineTimer DeltaTimer = {};
+	UEngineRandom Random = {};
 
 public:
 	static int EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore);
@@ -77,6 +78,10 @@ public:
 	UINT GetFrame()
 	{
 		return DeltaTimer.GetFrame();
+	}
+	UEngineRandom& GetRandomDevice()
+	{
+		return Random;
 	}
 
 };

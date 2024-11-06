@@ -3,6 +3,8 @@
 // Ό³Έν :
 class ABackGround : public AActor
 {
+private:
+	INNER_CLASS struct Star;
 public:
 	ABackGround();
 	~ABackGround();
@@ -14,20 +16,31 @@ public:
 
 private:
 	USpriteRenderer* Sprite = nullptr;
-	std::vector<USpriteRenderer*> Effects = {};
+	std::vector<Star> Effects = {};
 
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
 
 private:
+	void SetStarEffect(bool _Value)
+	{
+		for (size_t i = 0; i < Effects.size(); ++i)
+			Effects[i].Sprite->SetActive(_Value);
+	}
 
 public:
 	void SetBackGround(std::string_view _Name)
 	{
 		Sprite->SetSprite(_Name, 0);
-
 	}
 
+private:
+	INNER_CLASS struct Star
+	{
+	public:
+		USpriteRenderer* Sprite = nullptr;
+		float Speed = 0.f;
+	};
 };
 

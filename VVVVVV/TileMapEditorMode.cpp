@@ -18,10 +18,11 @@ void ATileMapEditorMode::BeginPlay()
 
 	// 커서 스프라이트
 	USpriteRenderer* NewSelectSprite = CreateDefaultSubObject<USpriteRenderer>();
-	NewSelectSprite->SetSprite("CollisionTiles::28 Type05 Red", 45);
+	NewSelectSprite->SetSprite("CollisionTiles::01 Type00 Cyan", 45);
 	NewSelectSprite->SetComponentScale(EGameConst::TileScale);
-	NewSelectSprite->SetOrder(1);
+	NewSelectSprite->SetOrder(ERenderOrder::EDITOR_CURSOR);
 	CurSelectSprite = NewSelectSprite;
+	CurSelectTileList = &TileList;
 
 	// 리소스 리스트 만들기
 	const auto& SpritesList = UImageManager::GetInst().ViewSprites();
@@ -65,33 +66,12 @@ void ATileMapEditorMode::Tick()
 
 	if (KEY_PRESS(VK_LBUTTON))
 	{
-		FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
-		if (CursorPos.X < 0 || CursorPos.Y < 0 || CursorPos.X >= WindowSize.X || CursorPos.Y >= WindowSize.Y)
-			return;
+		ChangeTile();
+	}
 
-		int XTileIndex = CursorPos.X / TileSize.X;
-		int YTileIndex = CursorPos.Y / TileSize.Y;
+	if (KEY_PRESS(VK_LBUTTON))
+	{
 
-		World->GetRoom()->BackGroundTiles[YTileIndex][XTileIndex]->SetSprite(CurSelectSprite->GetCurSpriteName(), CurSelectSprite->GetCurIndex());
-
-		// 주변 3X3 타일을 조사한다.
-		if (CurSelectSprite->GetCurIndex() == 45)
-		{
-			// World->GetRoom()->BackGroundTiles[YTileIndex][XTileIndex]->SetSprite(CurSelectSprite->GetCurSpriteName(), AroundTileChange(XTileIndex, YTileIndex));
-
-			for (int y = YTileIndex - 1; y <= YTileIndex + 1; ++y)
-			{
-				for (int x = XTileIndex - 1; x <= XTileIndex + 1; ++x)
-				{
-					if (IsSameTileName(x, y))
-					{
-						if (x < 0 || y < 0 || x >= TileCount.X || y >= TileCount.Y)
-							continue;
-						World->GetRoom()->BackGroundTiles[y][x]->SetSprite(CurSelectSprite->GetCurSpriteName(), AroundTileChange(x, y));
-					}
-				}
-			}
-		}
 	}
 
 	if (KEY_DOWN('1'))
@@ -109,10 +89,10 @@ void ATileMapEditorMode::Tick()
 	if (KEY_DOWN('S'))
 		NextTile();
 
-	if (KEY_DOWN('Z'))
+	if (KEY_DOWN('X'))
 		ShowTiles();
 
-	if (KEY_DOWN('X'))
+	if (KEY_DOWN('Z'))
 		ShowBackGroundTiles();
 }
 
@@ -341,12 +321,54 @@ int ATileMapEditorMode::FindAroundTile(uint8_t _Bit) const
 
 bool ATileMapEditorMode::IsSameTileName(int _x, int _y) const
 {
+	auto CurSelectTileMap = GetCurSelectTileMap();
 	if (_x < 0 || _y < 0 || _x >= World->GetRoom()->TileCount.X || _y >= World->GetRoom()->TileCount.Y)
 		return true;
-	else if (World->GetRoom()->BackGroundTiles[_y][_x]->GetCurSpriteName() == CurSelectSprite->GetCurSpriteName())
+	else if ((*CurSelectTileMap)[_y][_x]->GetCurSpriteName() == CurSelectSprite->GetCurSpriteName())
 		return true;
 
 	return false;
+}
+
+void ATileMapEditorMode::ChangeTile()
+{
+	auto CurSelectTileMap = GetCurSelectTileMap();
+
+	FIntPoint CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
+
+	FIntPoint TileSize = World->GetRoom()->TileScale;
+	FIntPoint TileCount = World->GetRoom()->TileCount;
+
+	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+	if (CursorPos.X < 0 || CursorPos.Y < 0 || CursorPos.X >= WindowSize.X || CursorPos.Y >= WindowSize.Y)
+		return;
+
+	int XTileIndex = CursorPos.X / TileSize.X;
+	int YTileIndex = CursorPos.Y / TileSize.Y;
+
+	(*CurSelectTileMap)[YTileIndex][XTileIndex]->SetSprite(CurSelectSprite->GetCurSpriteName(), CurSelectSprite->GetCurIndex());
+
+	// 주변 3X3 타일을 조사한다.
+	if (CurSelectSprite->GetCurIndex() == 45)
+	{
+		for (int y = YTileIndex - 1; y <= YTileIndex + 1; ++y)
+		{
+			for (int x = XTileIndex - 1; x <= XTileIndex + 1; ++x)
+			{
+				if (IsSameTileName(x, y))
+				{
+					if (x < 0 || y < 0 || x >= TileCount.X || y >= TileCount.Y)
+						continue;
+					(*CurSelectTileMap)[y][x]->SetSprite(CurSelectSprite->GetCurSpriteName(), AroundTileChange(x, y));
+				}
+			}
+		}
+	}
+}
+
+void ATileMapEditorMode::DeleteTile()
+{
+	// TODO. 작성해야 함
 }
 
 void ATileMapEditorMode::NextTileList()
@@ -355,22 +377,25 @@ void ATileMapEditorMode::NextTileList()
 	if (CurSelectTileList == &BackGroundTileList)
 	{
 		CurSelectTileList = &TileList;
+		CurSelectSprite->SetSprite((*CurSelectTileList)[0], 0);
 	}
 	else if (CurSelectTileList == &TileList)
 	{
 		CurSelectTileList = &SpikeTileList;
+		CurSelectSprite->SetSprite((*CurSelectTileList)[0], 0);
 	}
 	else if (CurSelectTileList == &SpikeTileList)
 	{
 		CurSelectTileList = &BackGroundTileList;
+		CurSelectSprite->SetSprite((*CurSelectTileList)[0], 0);
 	}
 }
 
 void ATileMapEditorMode::PrevTileSet()
 {
 	--CurTileSetIndex;
-	if (CurTileSetIndex < 0)
-		CurTileSetIndex = CurSelectTileList->size() - size_t(1);
+	if (CurTileSetIndex < 0 || CurTileSetIndex >= CurSelectTileList->size())
+		CurTileSetIndex = CurSelectTileList->size() - 1;
 
 	int Curindex = CurSelectSprite->GetCurIndex();
 	UEngineSprite* Sprite = UImageManager::GetInst().FindSprite((*CurSelectTileList)[CurTileSetIndex]);
@@ -384,7 +409,7 @@ void ATileMapEditorMode::PrevTileSet()
 void ATileMapEditorMode::NextTileSet()
 {
 	++CurTileSetIndex;
-	if (CurTileSetIndex >= CurSelectTileList->size())
+	if (CurTileSetIndex < 0 || CurTileSetIndex >= CurSelectTileList->size())
 		CurTileSetIndex = 0;
 
 	int Curindex = CurSelectSprite->GetCurIndex();

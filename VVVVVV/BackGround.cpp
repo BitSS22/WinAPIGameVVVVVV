@@ -16,10 +16,55 @@ void ABackGround::BeginPlay()
 	Sprite->SetSpriteScale(1.f, Sprite->GetCurIndex());
 	Sprite->SetOrder(ERenderOrder::BACK_GROUND);
 	Sprite->SetComponentLocation(UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half());
+
+	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+
+	for (size_t i = 0; i < 8; ++i)
+	{
+		USpriteRenderer* StarSprite = CreateDefaultSubObject<USpriteRenderer>();
+		StarSprite->SetSprite("Stars", 0);
+		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
+		StarSprite->SetOrder(ERenderOrder::BACK_GROUND_EFFECT);
+		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
+		Effects.push_back(Star(StarSprite, -150.f));
+	}
+	for (size_t i = 0; i < 20; ++i)
+	{
+		USpriteRenderer* StarSprite = CreateDefaultSubObject<USpriteRenderer>();
+		StarSprite->SetSprite("Stars", 1);
+		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
+		StarSprite->SetOrder(ERenderOrder::BACK_GROUND_EFFECT);
+		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
+		Effects.push_back(Star(StarSprite, -220.f));
+	}
+	for (size_t i = 0; i < 40; ++i)
+	{
+		USpriteRenderer* StarSprite = CreateDefaultSubObject<USpriteRenderer>();
+		StarSprite->SetSprite("Stars", 2);
+		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
+		StarSprite->SetOrder(ERenderOrder::BACK_GROUND_EFFECT);
+		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
+		Effects.push_back(Star(StarSprite, -300.f));
+	}
 }
 
 void ABackGround::Tick()
 {
+	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+
+	for (size_t i = 0; i < Effects.size(); ++i)
+	{
+		Effects[i].Sprite->AddComponentLocation(FVector2D(Effects[i].Speed * GET_DELTA, 0.f));
+		FVector2D Pos = Effects[i].Sprite->GetComponentLocation();
+
+		if (Pos.X < 0)
+		{
+			Pos.X += WindowSize.X;
+			Pos.Y = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y);
+			Effects[i].Sprite->SetComponentLocation(Pos);
+		}
+	}
+
 	if (KEY_PRESS('P'))
 	{
 		for (size_t i = 0; i < 2500; ++i)
