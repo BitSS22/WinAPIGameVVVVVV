@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Player.h"
-#include "Bullet.h"
 #include <EngineCore/SpriteRenderer.h>
 
 APlayer::APlayer()
@@ -59,17 +58,6 @@ void APlayer::Tick()
 	if (UEngineInput::GetInst().IsPress('S'))
 	{
 		AddActorLocation(FVector2D::DOWN * GET_DELTA * Speed);
-	}
-	if (false)// KEY_PRESS(VK_LBUTTON))
-	{
-		POINT CursorPos = {};
-		GetCursorPos(&CursorPos);
-		ScreenToClient(UEngineAPICore::GetCore()->GetMainWindow().GetWindowHandle(), &CursorPos);
-		FVector2D VectorCursor = CursorPos;
-		VectorCursor -= GetActorLocation();
-		Bullet* NewBullet = GetWorld()->SpawnActor<Bullet>();
-		NewBullet->SetActorLocation(GetActorLocation());
-		NewBullet->SetDir(VectorCursor.SetNomalize());
 	}
 
 	if (KEY_DOWN('Q'))

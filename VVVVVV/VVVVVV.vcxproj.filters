@@ -22,13 +22,7 @@
     <ClInclude Include="TileMapEditorMode.h">
       <Filter>ContentsObject\GameMode\MapEditor</Filter>
     </ClInclude>
-    <ClInclude Include="MapData.h">
-      <Filter>ContentsObject\Map</Filter>
-    </ClInclude>
     <ClInclude Include="TileMap.h">
-      <Filter>ContentsObject\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="BackGround.h">
       <Filter>ContentsObject\Map</Filter>
     </ClInclude>
     <ClInclude Include="EngineConst.h">
@@ -63,13 +57,7 @@
     <ClCompile Include="TileMapEditorMode.cpp">
       <Filter>ContentsObject\GameMode\MapEditor</Filter>
     </ClCompile>
-    <ClCompile Include="MapData.cpp">
-      <Filter>ContentsObject\Map</Filter>
-    </ClCompile>
     <ClCompile Include="TileMap.cpp">
-      <Filter>ContentsObject\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="BackGround.cpp">
       <Filter>ContentsObject\Map</Filter>
     </ClCompile>
     <ClCompile Include="EngineConst.cpp">

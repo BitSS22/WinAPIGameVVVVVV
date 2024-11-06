@@ -1,13 +1,13 @@
 #pragma once
-#include "MapData.h"
 
 class ATileMap;
 // Ό³Έν :
 class AWorld : public AActor
 {
-private:
-	AWorld();
 public:
+	INNER_CLASS struct RoomData;
+public:
+	AWorld();
 	~AWorld();
 
 	AWorld(const AWorld& _Other) = delete;
@@ -17,13 +17,21 @@ public:
 
 private:
 	FIntPoint WorldSize = EGameConst::WorldSize;
-	ATileMap* Map = nullptr;
-	std::vector<std::vector<UMapData>> WorldTileData = {};
-	
+	ATileMap* TileMap = nullptr;
+	std::vector<std::vector<RoomData>> Rooms = {};
+	std::vector<std::vector<RoomData>> RoomsBackGround = {};
+
 
 public:
 
 private:
+
+public:
+	INNER_CLASS struct RoomData
+	{
+		std::string Name = {};
+		int CurSpriteIndex = -1;
+	};
 
 };
 

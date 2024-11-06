@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "TitleGameMode.h"
-#include "BackGround.h"
 
 ATitleGameMode::ATitleGameMode()
 {
@@ -14,7 +13,7 @@ void ATitleGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ABackGround* map = GetWorld()->SpawnActor<ABackGround>();
+	USpriteRenderer* map = GetWorld()->SpawnActor<USpriteRenderer>();
 }
 
 void ATitleGameMode::Tick()

@@ -2,7 +2,6 @@
 #include "PlayGameMode.h"
 
 #include <EngineCore/Level.h>
-#include "BackGround.h"
 
 APlayGameMode::APlayGameMode()
 {
@@ -16,7 +15,9 @@ void APlayGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ABackGround* map = GetWorld()->SpawnActor<ABackGround>();
+	USpriteRenderer* map = GetWorld()->SpawnActor<USpriteRenderer>();
+	map->SetSprite("TempTitleImage", 0);
+	map->SetComponentLocation(UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half());
 }
 
 void APlayGameMode::Tick()

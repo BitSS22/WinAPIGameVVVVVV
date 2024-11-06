@@ -17,6 +17,8 @@ public:
 	FIntPoint TileScale = EGameConst::TileScale;
 	std::vector<std::vector<AActor*>> Tiles = {};
 	std::vector<std::vector<USpriteRenderer*>> BackGroundTiles = {};
+	USpriteRenderer* BackGround = nullptr;
+	FIntPoint CurWorldIndex = {};
 
 public:
 	virtual void BeginPlay() override;

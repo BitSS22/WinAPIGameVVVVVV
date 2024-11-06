@@ -163,14 +163,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="BackGround.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="MapData.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h">
       <SubType>
@@ -208,14 +200,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Enums.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="BackGround.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="MapData.cpp">
       <SubType>
       </SubType>
     </ClCompile>
