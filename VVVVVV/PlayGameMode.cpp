@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "PlayGameMode.h"
+#include "BackGround.h"
 
 #include <EngineCore/Level.h>
 
@@ -15,9 +16,7 @@ void APlayGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	USpriteRenderer* map = GetWorld()->SpawnActor<USpriteRenderer>();
-	map->SetSprite("TempTitleImage", 0);
-	map->SetComponentLocation(UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half());
+	BackGround = GetWorld()->SpawnActor<ABackGround>();
 }
 
 void APlayGameMode::Tick()
@@ -27,6 +26,10 @@ void APlayGameMode::Tick()
 	UINT frame = UEngineAPICore::GetCore()->GetFrame();
 
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("VVVVVV / FPS : " + std::to_string(frame));
+}
+
+void APlayGameMode::LevelChangeStart()
+{
 }
 
 

@@ -50,10 +50,7 @@ void USpriteRenderer::Render()
 
 	if (Sprite == nullptr)
 		MSGASSERT(nullptr, "Sprite가 없어 렌더링 할 수 없습니다.");
-
-	UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
-	UEngineWindowImage* BackBufferImage = MainWindow.GetBackBufferImage();
-
+	
 	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
 
 	FTransform Trans = FTransform(GetComponentLocation(), GetComponentScale());
@@ -62,7 +59,7 @@ void USpriteRenderer::Render()
 	if (IsCameraEffect == true)
 		Trans.Location = Trans.Location - Level->CameraPos * CameraEffectScale;
 
-	CurData.Image->CopyToTrans(BackBufferImage, Trans, CurData.Transform);
+	CurData.Image->CopyToTrans(UEngineAPICore::GetCore()->GetMainWindow().GetBackBufferImage(), Trans, CurData.Transform);
 }
 
 void USpriteRenderer::BeginPlay()
@@ -77,14 +74,14 @@ void USpriteRenderer::ComponentTick()
 	Super::ComponentTick();
 }
 
-void USpriteRenderer::SetSprite(std::string_view _Name, int _CurIndex)
+void USpriteRenderer::SetSprite(std::string_view _Name, int _Index)
 {
 	Sprite = UImageManager::GetInst().FindSprite(_Name);
 
 	if (Sprite == nullptr)
 		MSGASSERT(nullptr, _Name, "은 로드 되지 않은 Image입니다.");
 
-	CurIndex = _CurIndex;
+	CurIndex = _Index;
 }
 
 void USpriteRenderer::SetSpriteScale(float _Ratio, int _CurIndex)

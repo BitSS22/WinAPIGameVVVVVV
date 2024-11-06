@@ -16,7 +16,8 @@ enum class EColorType
 	BLUE,
 	YELLOW,
 	GREEN,
-	GREY
+	GREY,
+	SIZE
 };
 
 enum class EBackGroundType
@@ -24,5 +25,6 @@ enum class EBackGroundType
 	SPACE,
 	HORIZONTAL,
 	VERTICAL,
-	TOWER
+	TOWER,
+	SIZE
 };

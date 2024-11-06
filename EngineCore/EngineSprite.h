@@ -35,7 +35,7 @@ public:
 			MSGASSERT(nullptr, GetNameView(), " Sprite Index overflow.");
 		return Data[_Index];
 	}
-	int GetSpriteSize() const
+	int GetSpriteCount() const
 	{
 		return SpriteCount;
 	}

@@ -15,3 +15,8 @@ const FIntPoint FIntPoint::DOWN = FIntPoint(0, 1);
 
 const UColor UColor::WHITE = { 255, 255, 255, 0 };
 const UColor UColor::BLACK = { 0, 0, 0, 0 };
+
+FVector2D::FVector2D(FIntPoint _Value)
+	: X(static_cast<float>(_Value.X))
+	, Y(static_cast<float>(_Value.Y))
+{}

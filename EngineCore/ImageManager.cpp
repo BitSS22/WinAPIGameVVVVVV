@@ -168,7 +168,7 @@ void UImageManager::CutSprite(string_view _KeyName, FVector2D _CuttingSize)
 	}
 }
 
-UEngineSprite* UImageManager::CreateCutSprite(string_view _SearchKeyName, string_view _NewSpriteKeyName, FVector2D _StartPos, FVector2D _CuttingSize, FVector2D _XYOffSet, UINT _Xcount, UINT _ImageCount)
+void UImageManager::CreateCutSprite(string_view _SearchKeyName, string_view _NewSpriteKeyName, FVector2D _StartPos, FVector2D _CuttingSize, FVector2D _XYOffSet, UINT _Xcount, UINT _ImageCount)
 {
 	string SearchName = UEngineString::ToUpper(_SearchKeyName);
 	string NewSpriteName = UEngineString::ToUpper(_NewSpriteKeyName);
@@ -187,11 +187,7 @@ UEngineSprite* UImageManager::CreateCutSprite(string_view _SearchKeyName, string
 		MSGASSERT(nullptr, _NewSpriteKeyName, "라는 이름의 Image가 이미 존재합니다.");
 
 
-	// UEngineSprite* Sprite = Sprites[SearchName];
 	UEngineWindowImage* Image = Images[SearchName];
-
-	// Sprite->ClearSpriteData();
-	// Sprite->SetName(NewSpriteName);
 
 	UINT YCount = _ImageCount / _Xcount;
 	if (_ImageCount % _Xcount > 0)
@@ -205,19 +201,11 @@ UEngineSprite* UImageManager::CreateCutSprite(string_view _SearchKeyName, string
 	if (TotalSizeY > Image->GetImageScale().Y)
 		MSGASSERT(nullptr, "필요한 이미지 세로 사이즈가 원본 이미지 사이즈보다 큽니다.");
 
-	// FVector2D TotalSize = FVector2D(static_cast<int>(TotalSizeX), static_cast<int>(TotalSizeY));
-
-	// 주석 : 새로운 이미지를 추가하는 코드입니다. // 만들지 않습니다.
-	// UEngineWindowImage* NewImage = new UEngineWindowImage();
 	UEngineSprite* NewSprite = new UEngineSprite();
 	
 	NewSprite->ClearSpriteData();
 	NewSprite->SetName(NewSpriteName);
-	// NewImage->Create(UEngineAPICore::GetCore()->GetMainWindow().GetWindowImage(), TotalSize);
 
-	// BitBlt(NewImage->GetDC(), 0, 0, static_cast<int>(TotalSizeX), static_cast<int>(TotalSizeY), Image->GetDC(), static_cast<int>(_StartPos.X), static_cast<int>(_StartPos.Y), SRCCOPY);
-
-	// Images.insert(make_pair(NewSpriteName, NewImage));
 	Sprites.insert(make_pair(NewSpriteName, NewSprite));
 
 	FVector2D CuttingPos = {};
@@ -236,7 +224,5 @@ UEngineSprite* UImageManager::CreateCutSprite(string_view _SearchKeyName, string
 		}
 		CuttingPos.X = 0.f;
 	}
-
-	return NewSprite;
 }
 

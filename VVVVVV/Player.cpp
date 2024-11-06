@@ -13,15 +13,15 @@ APlayer::~APlayer()
 void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
-
-	SetActorLocation(FVector2D(8.f, 8.f));
-	SetActorScale(FVector2D(16, 16));
-
+	
 	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
-	SpriteRenderer->SetComponentScale(GetActorScale());
-	SpriteRenderer->SetComponentLocation(GetActorLocation() - GetActorScale().Half());
-	SpriteRenderer->SetSprite("Titles", 0);
+	SpriteRenderer->SetSprite("Cyan Right", 0);
+	SpriteRenderer->SetSpriteScale(1.f, SpriteRenderer->GetCurIndex());
+	SpriteRenderer->SetComponentLocation(GetActorScale().Half());
 	SpriteRenderer->SetOrder(1);
+
+	SetActorLocation(FVector2D(0.f, 0.f));
+	SetActorScale(SpriteRenderer->GetComponentScale());
 
 	GetWorld()->SetCameraToMainPawn(false);
 	
@@ -65,4 +65,5 @@ void APlayer::Tick()
 	if (KEY_UP('Q'))
 		SpriteRenderer->SetOrder(state::down);
 	
+	SpriteRenderer->SetComponentLocation(GetActorLocation());
 }

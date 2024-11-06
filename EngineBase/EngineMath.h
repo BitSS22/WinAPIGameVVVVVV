@@ -1,5 +1,7 @@
 #pragma once
 
+struct FIntPoint;
+
 struct FVector2D
 {
 public:
@@ -13,6 +15,7 @@ public:
 	FVector2D(int _X, int _Y)
 		: X(static_cast<float>(_X))
 		, Y(static_cast<float>(_Y)) {}
+	FVector2D(FIntPoint _Value);
 	FVector2D(POINT _Value)
 		: X(static_cast<float>(_Value.x))
 		, Y(static_cast<float>(_Value.y)) {}
