@@ -16,17 +16,23 @@ public:
 	ATileMapEditorMode& operator=(ATileMapEditorMode&& _Other) noexcept = delete;
 
 private:
-	std::vector<std::string> TileList = {};
 	std::vector<std::string> BackGroundTileList = {};
+	std::vector<std::string> TileList = {};
 	std::vector<std::string> SpikeTileList = {};
 	std::vector<std::string> BackGroundList = {};
-	std::vector<std::string>* CurSelectTileSet = &TileList;
+	std::vector<std::string>* CurSelectTileList = &TileList;
+	int CurTileSetIndex = 0;
+	int CurBackGroundIndex = 0;
 	AWorld* World = nullptr;
 	USpriteRenderer* CurSelectSprite = nullptr;
 
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
+
+	void PrevBackGroundImage();
+	void NextBackGroundImage();
+
 	void AddTileList(std::string_view _Name)
 	{
 		TileList.push_back(_Name.data());
@@ -43,42 +49,23 @@ public:
 	{
 		BackGroundList.push_back(_Name.data());
 	}
-
+	
 private:
 	int AroundTileChange(int _X, int _Y);
 	int FindAroundTile(uint8_t _Bit) const;
 	bool IsSameTileName(int x, int y) const;
+	void NextTileList();
+	void PrevTileSet();
 	void NextTileSet();
-	void ShowTiles()
-	{
-		auto& room = World->GetRoom()->Tiles;
-		for (size_t y = 0; y < room.size(); ++y)
-		{
-			for (size_t x = 0; x < room[y].size(); ++x)
-			{
-				room[y][x]->SetActive(!room[y][x]->IsActive());
-			}
-		}
-	}
-	void ShowBackGroundTiles()
-	{
-		auto& room = World->GetRoom()->BackGroundTiles;
-		for (size_t y = 0; y < room.size(); ++y)
-		{
-			for (size_t x = 0; x < room[y].size(); ++x)
-			{
-				room[y][x]->SetActive(!room[y][x]->IsActive());
-			}
-		}
-	}
+	void PrevTile();
+	void NextTile();
+	void ShowTiles();
+	void ShowBackGroundTiles();
 
 public:
 	void SetCurSelectSprite(std::string_view _Name, int _Index)
 	{
 		CurSelectSprite->SetSprite(_Name, _Index);
 	}
-	void SetBackGroundImage(std::string_view _Name, int _Index)
-	{
-		World->GetRoom()->BackGround->SetBackGround(_Name, _Index);
-	}
+	
 };

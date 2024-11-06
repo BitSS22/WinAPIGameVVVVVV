@@ -15,7 +15,7 @@ void ATileMapEditorMode::BeginPlay()
 	Super::BeginPlay();
 
 	World = GetWorld()->SpawnActor<AWorld>();
-	
+
 	// 커서 스프라이트
 	USpriteRenderer* NewSelectSprite = CreateDefaultSubObject<USpriteRenderer>();
 	NewSelectSprite->SetSprite("CollisionTiles::28 Type05 Red", 45);
@@ -323,12 +323,109 @@ bool ATileMapEditorMode::IsSameTileName(int _x, int _y) const
 	return false;
 }
 
+void ATileMapEditorMode::NextTileList()
+{
+
+	// TODO. 여기 해야됨
+	if (CurSelectTileList == &BackGroundTileList)
+	{
+
+		CurSelectTileList = &TileList;
+	}
+	else if (CurSelectTileList == &TileList)
+	{
+		CurSelectTileList = &SpikeTileList;
+	}
+	else if (CurSelectTileList == &SpikeTileList)
+	{
+		CurSelectTileList = &TileList;
+	}
+}
+
+void ATileMapEditorMode::PrevTileSet()
+{
+	--CurTileSetIndex;
+	if (CurTileSetIndex < 0)
+		CurTileSetIndex = CurSelectTileList->size() - 1;
+
+	int index = CurSelectSprite->GetCurIndex();
+	if (index >= (*CurSelectTileList)[CurTileSetIndex].size())
+		index = (*CurSelectTileList)[CurTileSetIndex].size() - 1;
+
+	CurSelectSprite->SetSprite((*CurSelectTileList)[CurTileSetIndex], index);
+}
+
 void ATileMapEditorMode::NextTileSet()
 {
-	if (CurSelectTileSet == &TileList)
-		CurSelectTileSet = &BackGroundTileList;
-	else if (CurSelectTileSet == &BackGroundTileList)
-		CurSelectTileSet = &SpikeTileList;
-	else if (CurSelectTileSet == &SpikeTileList)
-		CurSelectTileSet = &TileList;
+	++CurTileSetIndex;
+	if (CurTileSetIndex >= CurSelectTileList->size())
+		CurTileSetIndex = 0;
+
+	int index = CurSelectSprite->GetCurIndex();
+	if (index >= (*CurSelectTileList)[CurTileSetIndex].size())
+		index = (*CurSelectTileList)[CurTileSetIndex].size() - 1;
+
+	CurSelectSprite->SetSprite((*CurSelectTileList)[CurTileSetIndex], index);
+}
+
+void ATileMapEditorMode::PrevTile()
+{
+	int index = CurSelectSprite->GetCurIndex() - 1;
+	if (index < 0)
+		index += CurSelectSprite->GetMaxIndex();
+	CurSelectSprite->SetSprite(CurSelectSprite->GetNameView(), index);
+}
+
+void ATileMapEditorMode::NextTile()
+{
+	int index = CurSelectSprite->GetCurIndex() + 1;
+	if (index <= CurSelectSprite->GetMaxIndex())
+		index -= CurSelectSprite->GetMaxIndex();
+	CurSelectSprite->SetSprite(CurSelectSprite->GetNameView(), index);
+}
+
+void ATileMapEditorMode::ShowTiles()
+{
+	auto& room = World->GetRoom()->Tiles;
+	for (size_t y = 0; y < room.size(); ++y)
+	{
+		for (size_t x = 0; x < room[y].size(); ++x)
+		{
+			room[y][x]->SetActive(!room[y][x]->IsActive());
+		}
+	}
+}
+
+void ATileMapEditorMode::ShowBackGroundTiles()
+{
+	auto& room = World->GetRoom()->BackGroundTiles;
+	for (size_t y = 0; y < room.size(); ++y)
+	{
+		for (size_t x = 0; x < room[y].size(); ++x)
+		{
+			room[y][x]->SetActive(!room[y][x]->IsActive());
+		}
+	}
+}
+
+void ATileMapEditorMode::PrevBackGroundImage()
+{
+	--CurBackGroundIndex;
+	if (CurBackGroundIndex < 0)
+	{
+		++CurBackGroundIndex;
+		return;
+	}
+	World->GetRoom()->BackGround->SetBackGround(BackGroundList[CurBackGroundIndex]);
+}
+
+void ATileMapEditorMode::NextBackGroundImage()
+{
+	++CurBackGroundIndex;
+	if (CurBackGroundIndex >= BackGroundList.size())
+	{
+		--CurBackGroundIndex;
+		return;
+	}
+	World->GetRoom()->BackGround->SetBackGround(BackGroundList[CurBackGroundIndex]);
 }

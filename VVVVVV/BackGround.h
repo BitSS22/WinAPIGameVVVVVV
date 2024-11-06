@@ -23,9 +23,10 @@ public:
 private:
 
 public:
-	void SetBackGround(std::string_view _Name, int _Index)
+	void SetBackGround(std::string_view _Name)
 	{
-		Sprite->SetSprite(_Name, _Index);
+		Sprite->SetSprite(_Name, 0);
+
 	}
 
 };
