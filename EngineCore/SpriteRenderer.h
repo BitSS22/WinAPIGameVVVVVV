@@ -5,6 +5,13 @@
 #include <EngineCore/SceneComponent.h>
 #include <map>
 
+enum class PivotType
+{
+	Center,
+	Bot,
+	Top
+};
+
 // Ό³Έν :
 class USpriteRenderer : public USceneComponent
 {
@@ -23,6 +30,7 @@ private:
 	UEngineSprite* Sprite = nullptr;
 	int CurIndex = 0;
 	int Order = 0;
+	FVector2D Pivot = FVector2D::ZERO;
 	bool IsCameraEffect = true;
 	float CameraEffectScale = 1.f;
 	std::map<std::string, FrameAnimation> FrameAnimations = {};
@@ -76,12 +84,14 @@ public:
 	{
 		IsCameraEffect = _Value;
 	}
-	void SetCameraEffectScale(float _Effect)
-	{
-		CameraEffectScale = _Effect;
-	}
+	void SetCameraEffectScale(float _Effect);
 	void SetSprite(std::string_view _Name, int _CurIndex);
 	void SetSpriteScale(float _Ratio, int _CurIndex);
+	void SetPivot(FVector2D _Pivot)
+	{
+		Pivot = _Pivot;
+	}
+	void SetPivotType(PivotType _Type);
 
 
 public:

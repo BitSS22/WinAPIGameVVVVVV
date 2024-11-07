@@ -30,6 +30,7 @@ void ATileMapEditorMode::BeginPlay()
 	string SearchName0 = UEngineString::ToUpper("BackGroundTiles::");
 	string SearchName1 = UEngineString::ToUpper("CollisionTiles::");
 	string SearchName2 = UEngineString::ToUpper("SpikeTiles::");
+
 	string SearchName3 = UEngineString::ToUpper("BackGrounds::");
 
 	for (auto& Sprite : SpritesList)

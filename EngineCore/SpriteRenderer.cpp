@@ -59,6 +59,8 @@ void USpriteRenderer::Render()
 	if (IsCameraEffect == true)
 		Trans.Location = Trans.Location - Level->CameraPos * CameraEffectScale;
 
+	Trans.Location += Pivot;
+
 	CurData.Image->CopyToTrans(UEngineAPICore::GetCore()->GetMainWindow().GetBackBufferImage(), Trans, CurData.Transform);
 }
 
@@ -72,6 +74,10 @@ void USpriteRenderer::BeginPlay()
 void USpriteRenderer::ComponentTick()
 {
 	Super::ComponentTick();
+}
+
+void USpriteRenderer::SetCameraEffectScale(float _Effect)
+{
 }
 
 void USpriteRenderer::SetSprite(std::string_view _Name, int _Index)
@@ -92,6 +98,34 @@ void USpriteRenderer::SetSpriteScale(float _Ratio, int _CurIndex)
 	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(_CurIndex);
 	FVector2D Scale = CurData.Transform.Scale * _Ratio;
 	SetComponentScale(Scale);
+}
+
+void USpriteRenderer::SetPivotType(PivotType _Type)
+{
+	if (PivotType::Center == _Type)
+	{
+		Pivot = FVector2D::ZERO;
+		return;
+	}
+
+	if (Sprite == nullptr)
+		MSGASSERT(nullptr, "Image가 없어 Pivot 설정이 불가능합니다.");
+
+	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
+
+	switch (_Type)
+	{
+	case PivotType::Bot:
+		Pivot.X = 0.f;
+		Pivot.Y -= CurData.Transform.Scale.Y * 0.5f;
+		break;
+	case PivotType::Top:
+		Pivot.X = 0.f;
+		Pivot.Y += CurData.Transform.Scale.Y * 0.5f;
+		break;
+	default:
+		break;
+	}
 }
 
 void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, std::vector<float> _Frame, bool _Loop)
