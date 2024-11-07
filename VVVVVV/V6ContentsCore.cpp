@@ -81,7 +81,7 @@ void V6ContentsCore::TileImageLoad()
 	float X = 192.f;
 	float Y = 64.f;
 	
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::00 None", FVector2D(80.f, 832.f + 16.f * 7), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "None Tile", FVector2D(80.f, 832.f + 16.f * 7), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 1, 1);
 
 
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::01 Type00 Cyan", FVector2D(X * 0, Y * 11), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
@@ -122,9 +122,6 @@ void V6ContentsCore::TileImageLoad()
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::26 Tower Green", FVector2D(384.f + 16.f * 5, 832.f), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 1, 1);
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::27 Tower Grey", FVector2D(384.f + 16.f * 6, 832.f), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 1, 1);
 	
-
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "CollisionTiles::00 None", FVector2D(80.f, 832.f + 16.f * 7), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 1, 1);
-
 
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "CollisionTiles::01 Type00 Cyan", FVector2D(X * 0, Y * 0), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "CollisionTiles::02 Type01 Cyan", FVector2D(X * 0, Y * 1), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
@@ -215,9 +212,6 @@ void V6ContentsCore::TileImageLoad()
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "CollisionTiles::79 Animation Blue", FVector2D(192.f, 832.f + 16.f * 3), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "CollisionTiles::80 Animation Yellow", FVector2D(192.f, 832.f + 16.f * 4), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "CollisionTiles::81 Animation Green", FVector2D(192.f, 832.f + 16.f * 5), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 12);
-
-
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "SpikeTiles::00 None", FVector2D(80.f, 832.f + 16.f * 7), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 1, 1);
 
 
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "SpikeTiles::01 Cyan", FVector2D(0.f, 832.f + 16.f * 0), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 8, 8);

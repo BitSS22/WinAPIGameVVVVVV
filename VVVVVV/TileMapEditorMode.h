@@ -51,9 +51,9 @@ public:
 	}
 	
 private:
-	int AroundTileChange(int _X, int _Y);
+	int AroundTileChange(const string& _Name, int _X, int _Y);
 	int FindAroundTile(uint8_t _Bit) const;
-	bool IsSameTileName(int x, int y) const;
+	bool IsSameTileName(const string& _Name, int x, int y) const;
 	std::vector<std::vector<USpriteRenderer*>>* GetCurSelectTileMap() const
 	{
 		if (CurSelectTileList == &BackGroundTileList)
@@ -63,7 +63,7 @@ private:
 	}
 
 	void ChangeTile();
-	void DeleteTile();
+	void DeleteTile(bool _AroundTileChange);
 	void NextTileList();
 	void PrevTileSet();
 	void NextTileSet();

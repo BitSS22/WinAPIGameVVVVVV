@@ -19,10 +19,19 @@ void ABackGround::BeginPlay()
 
 	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 
-	for (size_t i = 0; i < 8; ++i)
+	for (size_t i = 0; i < 6; ++i)
 	{
 		USpriteRenderer* StarSprite = CreateDefaultSubObject<USpriteRenderer>();
 		StarSprite->SetSprite("Stars", 0);
+		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
+		StarSprite->SetOrder(ERenderOrder::BACK_GROUND_EFFECT);
+		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
+		Effects.push_back(Star(StarSprite, -100.f));
+	}
+	for (size_t i = 0; i < 10; ++i)
+	{
+		USpriteRenderer* StarSprite = CreateDefaultSubObject<USpriteRenderer>();
+		StarSprite->SetSprite("Stars", 1);
 		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
 		StarSprite->SetOrder(ERenderOrder::BACK_GROUND_EFFECT);
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
@@ -31,20 +40,11 @@ void ABackGround::BeginPlay()
 	for (size_t i = 0; i < 20; ++i)
 	{
 		USpriteRenderer* StarSprite = CreateDefaultSubObject<USpriteRenderer>();
-		StarSprite->SetSprite("Stars", 1);
-		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
-		StarSprite->SetOrder(ERenderOrder::BACK_GROUND_EFFECT);
-		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
-		Effects.push_back(Star(StarSprite, -220.f));
-	}
-	for (size_t i = 0; i < 40; ++i)
-	{
-		USpriteRenderer* StarSprite = CreateDefaultSubObject<USpriteRenderer>();
 		StarSprite->SetSprite("Stars", 2);
 		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
 		StarSprite->SetOrder(ERenderOrder::BACK_GROUND_EFFECT);
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
-		Effects.push_back(Star(StarSprite, -300.f));
+		Effects.push_back(Star(StarSprite, -200.f));
 	}
 }
 

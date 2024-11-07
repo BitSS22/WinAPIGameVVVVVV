@@ -69,9 +69,9 @@ void ATileMapEditorMode::Tick()
 		ChangeTile();
 	}
 
-	if (KEY_PRESS(VK_LBUTTON))
+	if (KEY_PRESS(VK_RBUTTON))
 	{
-
+		DeleteTile(false);
 	}
 
 	if (KEY_DOWN('1'))
@@ -96,7 +96,7 @@ void ATileMapEditorMode::Tick()
 		ShowBackGroundTiles();
 }
 
-int ATileMapEditorMode::AroundTileChange(int _X, int _Y)
+int ATileMapEditorMode::AroundTileChange(const string& _Name, int _X, int _Y)
 {
 	uint8_t Bools = 0;
 
@@ -104,7 +104,7 @@ int ATileMapEditorMode::AroundTileChange(int _X, int _Y)
 	{
 		for (int x = -1; x <= 1; ++x)
 		{
-			if (IsSameTileName(_X + x, _Y + y) == true)
+			if (IsSameTileName(_Name, _X + x, _Y + y) == true)
 			{
 				if (x == 0 && y == 0)
 					continue;
@@ -319,12 +319,13 @@ int ATileMapEditorMode::FindAroundTile(uint8_t _Bit) const
 	return Result;
 }
 
-bool ATileMapEditorMode::IsSameTileName(int _x, int _y) const
+bool ATileMapEditorMode::IsSameTileName(const string& _Name, int _x, int _y) const
 {
 	auto CurSelectTileMap = GetCurSelectTileMap();
+
 	if (_x < 0 || _y < 0 || _x >= World->GetRoom()->TileCount.X || _y >= World->GetRoom()->TileCount.Y)
 		return true;
-	else if ((*CurSelectTileMap)[_y][_x]->GetCurSpriteName() == CurSelectSprite->GetCurSpriteName())
+	else if ((*CurSelectTileMap)[_y][_x]->GetCurSpriteName() == _Name)
 		return true;
 
 	return false;
@@ -348,27 +349,60 @@ void ATileMapEditorMode::ChangeTile()
 
 	(*CurSelectTileMap)[YTileIndex][XTileIndex]->SetSprite(CurSelectSprite->GetCurSpriteName(), CurSelectSprite->GetCurIndex());
 
-	// 주변 3X3 타일을 조사한다.
+	// Auto Tile은 주변 3X3 타일을 조사한다.
 	if (CurSelectSprite->GetCurIndex() == 45)
 	{
 		for (int y = YTileIndex - 1; y <= YTileIndex + 1; ++y)
 		{
 			for (int x = XTileIndex - 1; x <= XTileIndex + 1; ++x)
 			{
-				if (IsSameTileName(x, y))
+				if (IsSameTileName(CurSelectSprite->GetCurSpriteName(), x, y))
 				{
 					if (x < 0 || y < 0 || x >= TileCount.X || y >= TileCount.Y)
 						continue;
-					(*CurSelectTileMap)[y][x]->SetSprite(CurSelectSprite->GetCurSpriteName(), AroundTileChange(x, y));
+					(*CurSelectTileMap)[y][x]->SetSprite(CurSelectSprite->GetCurSpriteName(), AroundTileChange(CurSelectSprite->GetCurSpriteName(), x, y));
 				}
 			}
 		}
 	}
 }
 
-void ATileMapEditorMode::DeleteTile()
+void ATileMapEditorMode::DeleteTile(bool _AroundTileChange)
 {
-	// TODO. 작성해야 함
+	auto CurSelectTileMap = GetCurSelectTileMap();
+
+	FIntPoint CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
+
+	FIntPoint TileSize = World->GetRoom()->TileScale;
+	FIntPoint TileCount = World->GetRoom()->TileCount;
+
+	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+	if (CursorPos.X < 0 || CursorPos.Y < 0 || CursorPos.X >= WindowSize.X || CursorPos.Y >= WindowSize.Y)
+		return;
+
+	int XTileIndex = CursorPos.X / TileSize.X;
+	int YTileIndex = CursorPos.Y / TileSize.Y;
+
+	string PrevName = (*CurSelectTileMap)[YTileIndex][XTileIndex]->GetCurSpriteName();
+	int MaxIndex = (*CurSelectTileMap)[YTileIndex][XTileIndex]->GetMaxIndex();
+	(*CurSelectTileMap)[YTileIndex][XTileIndex]->SetSprite("None Tile", 0);
+
+	// Auto Tile은 주변 3X3 타일을 조사한다.
+	if (CurSelectSprite->GetCurIndex() == 45 && MaxIndex >= 47 && _AroundTileChange)
+	{
+		for (int y = YTileIndex - 1; y <= YTileIndex + 1; ++y)
+		{
+			for (int x = XTileIndex - 1; x <= XTileIndex + 1; ++x)
+			{
+				if (IsSameTileName(PrevName, x, y))
+				{
+					if (x < 0 || y < 0 || x >= TileCount.X || y >= TileCount.Y)
+						continue;
+					(*CurSelectTileMap)[y][x]->SetSprite(PrevName, AroundTileChange(PrevName, x, y));
+				}
+			}
+		}
+	}
 }
 
 void ATileMapEditorMode::NextTileList()
@@ -425,7 +459,7 @@ void ATileMapEditorMode::PrevTile()
 {
 	int index = CurSelectSprite->GetCurIndex();
 	--index;
-	if (index < 0)
+	if (index < 0 || index >= CurSelectSprite->GetMaxIndex())
 		index = CurSelectSprite->GetMaxIndex() - 1;
 	CurSelectSprite->SetSprite(CurSelectSprite->GetCurSpriteName(), index);
 }
@@ -434,7 +468,7 @@ void ATileMapEditorMode::NextTile()
 {
 	int index = CurSelectSprite->GetCurIndex();
 	++index;
-	if (index >= CurSelectSprite->GetMaxIndex())
+	if (index < 0 || index >= CurSelectSprite->GetMaxIndex())
 		index = 0;
 	CurSelectSprite->SetSprite(CurSelectSprite->GetCurSpriteName(), index);
 }
