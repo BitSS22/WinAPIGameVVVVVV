@@ -55,7 +55,7 @@ void ULevel::Render()
 		}
 	}
 
-	UEngineDebug::PrintEngineDebugText();
+	UEngineDebug::PrintEngineDebugRender();
 
 	DoubleBuffering();
 }
@@ -101,6 +101,12 @@ void ULevel::LevelChangeEnd()
 		CurActor->LevelChangeEnd();
 	for (const auto& CurActor : AllActors)
 		CurActor->LevelChangeEnd();
+}
+
+void ULevel::PushCollision(U2DCollision* _Collision)
+{
+	int Order = _Collision->GetGroup();
+	Collisions[Order].push_back(_Collision);
 }
 
 void ULevel::DoubleBuffering()

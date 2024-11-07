@@ -27,11 +27,11 @@ private:
 	static std::list<UActorComponent*> ComponentBeginList;
 	std::list<UActorComponent*> Components = {};
 
+
 public:
 	virtual void BeginPlay()
 	{}
-	virtual void Tick()
-	{}
+	virtual void Tick();
 	virtual void LevelChangeStart()
 	{}
 	virtual void LevelChangeEnd()

@@ -2,6 +2,15 @@
 
 struct FIntPoint;
 
+class UEngineMath
+{
+public:
+	static float sqrtf(float _Value)
+	{
+		return sqrtf(_Value);
+	}
+};
+
 struct FVector2D
 {
 public:
@@ -42,6 +51,10 @@ public:
 		X -= _Value.X;
 		Y -= _Value.Y;
 		return *this;
+	}
+	FVector2D operator-() const
+	{
+		return FVector2D(-X, -Y);
 	}
 	FVector2D operator* (float _Value) const
 	{
@@ -91,23 +104,20 @@ public:
 	}
 	float Length() const
 	{
-		return sqrt(X * X + Y * Y);
+		return UEngineMath::sqrtf(X * X + Y * Y);
 	}
-	FVector2D& SetNomalize()
+	FVector2D& Nomalize()
 	{
 		float Scalar = Length();
-		if (Scalar == 0.f)
+		if (Scalar > 0.f && isnan(Scalar) == false)
 			MSGASSERT(nullptr, "Scalar 값이 0인 Vector를 Nomalize 할 수 없습니다.");
 		X /= Scalar;
 		Y /= Scalar;
 		return *this;
 	}
-	FVector2D GetNomalize() const
+	static FVector2D Nomalize(FVector2D _Value)
 	{
-		float Scalar = Length();
-		if (Scalar == 0.f)
-			MSGASSERT(nullptr, "Scalar 값이 0인 Vector를 Nomalize 할 수 없습니다.");
-		return FVector2D(X / Scalar, Y / Scalar);
+		return _Value.Nomalize();
 	}
 	float Dot(FVector2D _Other) const
 	{

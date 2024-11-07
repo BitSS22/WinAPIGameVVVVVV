@@ -25,7 +25,6 @@ public:
 	{
 		return GetActor()->GetActorLocation();
 	}
-
 	FTransform GetComponentTransform() const
 	{
 		return Transform;

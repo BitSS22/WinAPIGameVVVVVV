@@ -19,6 +19,24 @@ AActor::~AActor()
 	Components.clear();
 }
 
+void AActor::Tick()
+{
+	if (IsDebug() == true)
+	{
+		FVector2D Pos = GetActorLocation();
+		FVector2D CameraPos = GetWorld()->GetCameraPos();
+
+		FTransform Trans = {};
+		Trans.Location = Pos - CameraPos;
+		Trans.Scale = FVector2D(6.f, 6.f);
+
+		UEngineDebug::CoreDebugRender(Trans, UEngineDebug::EDebugPosType::Circle);
+	}
+
+	for (const auto& Component : Components)
+		Component->ComponentTick();
+}
+
 void AActor::ComponentBeginPlay()
 {
 	for (const auto& component : ComponentBeginList)

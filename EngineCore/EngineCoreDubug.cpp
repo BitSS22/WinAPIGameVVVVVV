@@ -11,9 +11,22 @@ namespace UEngineDebug
 		FVector2D Pos;
 	};
 
+	struct DebugRenderInfo
+	{
+	public:
+		FTransform Trans;
+		EDebugPosType Type;
+	};
+
+	vector<DebugRenderInfo> DebugPoses = {};
 	vector<DebugTextInfo> DebugTexts = {};
 	FVector2D EngineTextPos = FVector2D::ZERO;
 	bool IsDebug = false;
+
+	void CoreDebugRender(FTransform _Trans, EDebugPosType _Type)
+	{
+		DebugPoses.push_back({ _Trans, _Type });
+	}
 
 	void CoreOutputString(std::string_view _Text)
 	{
@@ -26,7 +39,7 @@ namespace UEngineDebug
 		DebugTexts.push_back(DebugTextInfo(_Text.data(), _Pos));
 	}
 
-	void PrintEngineDebugText()
+	void PrintEngineDebugRender()
 	{
 		UEngineWindowImage* BackBuffer = UEngineAPICore::GetCore()->GetMainWindow().GetBackBufferImage();
 
@@ -38,6 +51,28 @@ namespace UEngineDebug
 
 		EngineTextPos = FVector2D::ZERO;
 		DebugTexts.clear();
+
+		for (size_t i = 0; i < DebugPoses.size(); ++i)
+		{
+			EDebugPosType Type = DebugPoses[i].Type;
+
+			FVector2D LT = DebugPoses[i].Trans.CenterLeftTop();
+			FVector2D RB = DebugPoses[i].Trans.CenterRightBottom();
+
+			switch (Type)
+			{
+			case UEngineDebug::EDebugPosType::Rect:
+				Rectangle(BackBuffer->GetDC(), LT.iX(), LT.iY(), RB.iX(), RB.iY());
+				break;
+			case UEngineDebug::EDebugPosType::Circle:
+				Ellipse(BackBuffer->GetDC(), LT.iX(), LT.iY(), RB.iX(), RB.iY());
+				break;
+			default:
+				break;
+			}
+		}
+
+		DebugPoses.clear();
 	}
 
 	void SetIsDebug(bool _IsDebug)
@@ -47,6 +82,11 @@ namespace UEngineDebug
 	void SwitchIsDebug()
 	{
 		IsDebug = !IsDebug;
+	}
+
+	void CoreDebugBox(FTransform _Trans)
+	{
+
 	}
 }
 

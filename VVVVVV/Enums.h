@@ -13,6 +13,13 @@ enum class ERenderOrder
 	EDITOR_CURSOR
 };
 
+enum class ECollisionGroup
+{
+	Player,
+	Enermy,
+	Platform
+};
+
 enum class EColorType
 {
 	WHITE,

@@ -20,6 +20,7 @@ private:
 	bool IsDestroyValue = false;
 	bool IsActiveValue = true;
 	bool IsDeathTimeCheck = false;
+	bool IsDebugValue = false;
 
 public:
 	void Destroy(float _Time = 0.f);
@@ -56,6 +57,22 @@ public:
 	void SetActiveSwitch()
 	{
 		IsActiveValue = !IsActiveValue;
+	}
+	bool IsDebug()
+	{
+		return IsDebugValue;
+	}
+	void DebugOn()
+	{
+		IsDebugValue = true;
+	}
+	void DebugOff()
+	{
+		IsDebugValue = false;
+	}
+	void DebugSwitch()
+	{
+		IsDebugValue = !IsDebugValue;
 	}
 
 };

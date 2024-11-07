@@ -2,6 +2,7 @@
 #include "GameMode.h"
 #include <list>
 #include "SpriteRenderer.h"
+#include "2DCollision.h"
 
 // Ό³Έν :
 class ULevel
@@ -9,6 +10,7 @@ class ULevel
 public:
 	friend class UEngineAPICore;
 	friend class USpriteRenderer;
+	friend class U2DCollision;
 public:
 	ULevel();
 	~ULevel();
@@ -22,6 +24,7 @@ private:
 	std::list<AActor*> AllActors = {};
 	std::list<AActor*> BeginPlayList = {};
 	std::map<int, std::list<USpriteRenderer*>> Renderers = {};
+	std::map<int, std::list<U2DCollision*>> Collisions = {};
 
 	AGameMode* GameMode = nullptr;
 	AActor* MainPawn = nullptr;
@@ -73,6 +76,7 @@ private:
 	{
 		Renderers[_Renderer->GetOrder()].push_back(_Renderer);
 	}
+	void PushCollision(U2DCollision* _Collision);
 	void DoubleBuffering();
 	void ScreenClear();
 
