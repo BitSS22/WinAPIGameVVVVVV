@@ -50,30 +50,34 @@ void ABackGround::BeginPlay()
 
 void ABackGround::Tick()
 {
-	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
-
-	for (size_t i = 0; i < Effects.size(); ++i)
+	if (EffectValue == true)
 	{
-		Effects[i].Sprite->AddComponentLocation(FVector2D(Effects[i].Speed * GET_DELTA, 0.f));
-		FVector2D Pos = Effects[i].Sprite->GetComponentLocation();
+		FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 
-		if (Pos.X < 0)
+		for (size_t i = 0; i < Effects.size(); ++i)
 		{
-			Pos.X += WindowSize.X;
-			Pos.Y = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y);
-			Effects[i].Sprite->SetComponentLocation(Pos);
+			Effects[i].Sprite->AddComponentLocation(FVector2D(Effects[i].Speed * GET_DELTA, 0.f));
+			FVector2D Pos = Effects[i].Sprite->GetComponentLocation();
+
+			if (Pos.X < 0)
+			{
+				Pos.X += WindowSize.X;
+				Pos.Y = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y);
+				Effects[i].Sprite->SetComponentLocation(Pos);
+			}
 		}
 	}
 
 	if (KEY_PRESS('P'))
 	{
-		for (size_t i = 0; i < 2500; ++i)
-		{
-			Sprite->SetSprite("BackGrounds::23 Ending", 0);
-		}
+		Sprite->SetSprite("BackGrounds::23 Ending", 0);
+		SetEffect(false);
 	}
 
 	if (KEY_DOWN('O'))
+	{
 		Sprite->SetSprite("Debug BackGround.png", 0);
+		SetEffect(true);
+	}
 }
 

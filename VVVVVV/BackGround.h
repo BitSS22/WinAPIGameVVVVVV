@@ -17,16 +17,18 @@ public:
 private:
 	USpriteRenderer* Sprite = nullptr;
 	std::vector<Star> Effects = {};
+	bool EffectValue = false;
 
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
 
 private:
-	void SetStarEffect(bool _Value)
+	void SetEffect(bool _Value)
 	{
 		for (size_t i = 0; i < Effects.size(); ++i)
 			Effects[i].Sprite->SetActive(_Value);
+		EffectValue = _Value;
 	}
 
 public:

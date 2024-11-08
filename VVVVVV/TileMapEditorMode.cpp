@@ -44,6 +44,8 @@ void ATileMapEditorMode::BeginPlay()
 		else if (std::string::npos != Sprite.first.find(SearchName3))
 			AddBackGroundList(Sprite.first);
 	}
+
+	UEngineDebug::SetIsDebug(true);
 }
 
 void ATileMapEditorMode::Tick()
@@ -95,6 +97,35 @@ void ATileMapEditorMode::Tick()
 
 	if (KEY_DOWN('Z'))
 		ShowBackGroundTiles();
+
+	FIntPoint RoomIndex = World->CurRoomIndex;
+	if (KEY_DOWN(VK_UP))
+	{
+		RoomIndex.Y -= 1;
+		MoveRoom(RoomIndex);
+	}
+	if (KEY_DOWN(VK_DOWN))
+	{
+		RoomIndex.Y += 1;
+		MoveRoom(RoomIndex);
+	}
+	if (KEY_DOWN(VK_LEFT))
+	{
+		RoomIndex.X -= 1;
+		MoveRoom(RoomIndex);
+	}
+	if (KEY_DOWN(VK_RIGHT))
+	{
+		RoomIndex.X += 1;
+		MoveRoom(RoomIndex);
+	}
+
+	string str = "World Index = ";
+	str += std::to_string(RoomIndex.X);
+	str += ", ";
+	str += std::to_string(RoomIndex.Y);
+
+	UEngineDebug::CoreOutputString(str);
 }
 
 int ATileMapEditorMode::AroundTileChange(const string& _Name, int _X, int _Y)
@@ -507,6 +538,8 @@ void ATileMapEditorMode::MoveRoom(FIntPoint _Index)
 
 	SaveRoomData();
 	LoadRoomData(_Index);
+
+	World->CurRoomIndex = _Index;
 }
 
 void ATileMapEditorMode::SaveRoomData()
@@ -514,13 +547,12 @@ void ATileMapEditorMode::SaveRoomData()
 	FIntPoint CurRoomIndex = World->CurRoomIndex;
 	auto& CurRoomTiles = World->GetRoom()->Tiles;
 	auto& CurRoomBackGroundTiles = World->GetRoom()->BackGroundTiles;
-	auto& CurSaveData = World->RoomBackGroundDatas;
 
 	for (size_t y = 0; y < CurRoomTiles.size(); ++y)
 	{
 		for (size_t x = 0; x < CurRoomTiles[y].size(); ++x)
 		{
-			World->RoomBackGroundDatas[CurRoomIndex.Y][CurRoomIndex.X].RoomBackGroundTileDatas[y][x] = { CurRoomTiles[y][x]->GetCurSpriteName(), CurRoomTiles[y][x]->GetCurIndex() };
+			World->RoomTileDatas[CurRoomIndex.Y][CurRoomIndex.X].RoomTileDatas[y][x] = { CurRoomTiles[y][x]->GetCurSpriteName(), CurRoomTiles[y][x]->GetCurIndex() };
 		}
 	}
 
@@ -528,14 +560,33 @@ void ATileMapEditorMode::SaveRoomData()
 	{
 		for (size_t x = 0; x < CurRoomBackGroundTiles[y].size(); ++x)
 		{
-			World->RoomBackGroundDatas[CurRoomIndex.Y][CurRoomIndex.X].RoomBackGroundTileDatas[y][x] = { CurRoomBackGroundTiles[y][x]->GetCurSpriteName(), CurRoomBackGroundTiles[y][x]->GetCurIndex() };
+			World->RoomBackGroundTileDatas[CurRoomIndex.Y][CurRoomIndex.X].RoomBackGroundTileDatas[y][x] = { CurRoomBackGroundTiles[y][x]->GetCurSpriteName(), CurRoomBackGroundTiles[y][x]->GetCurIndex() };
 		}
 	}
 }
 
 void ATileMapEditorMode::LoadRoomData(FIntPoint _Index)
 {
-	auto& CurSaveData = World->RoomBackGroundDatas;
+	auto& CurRoomTiles = World->GetRoom()->Tiles;
+	auto& CurRoomBackGroundTiles = World->GetRoom()->BackGroundTiles;
+	auto& CurLoadTilesData = World->RoomTileDatas[_Index.Y][_Index.X];
+	auto& CurLoadBackGroundTilesData = World->RoomBackGroundTileDatas[_Index.Y][_Index.X];
+
+	for (size_t y = 0; y < CurRoomBackGroundTiles.size(); ++y)
+	{
+		for (size_t x = 0; x < CurRoomBackGroundTiles[y].size(); ++x)
+		{
+			CurRoomBackGroundTiles[y][x]->SetSprite(CurLoadBackGroundTilesData.RoomBackGroundTileDatas[y][x].Name, CurLoadBackGroundTilesData.RoomBackGroundTileDatas[y][x].SpriteIndex);
+		}
+	}
+
+	for (size_t y = 0; y < CurRoomTiles.size(); ++y)
+	{
+		for (size_t x = 0; x < CurRoomTiles[y].size(); ++x)
+		{
+			CurRoomTiles[y][x]->SetSprite(CurLoadTilesData.RoomTileDatas[y][x].Name, CurLoadTilesData.RoomTileDatas[y][x].SpriteIndex);
+		}
+	}
 }
 
 void ATileMapEditorMode::PrevBackGroundImage()
