@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 
 struct FIntPoint;
 
@@ -15,7 +16,7 @@ class UEngineMath
 public:
 	static float sqrtf(float _Value)
 	{
-		return sqrtf(_Value);
+		return ::sqrtf(_Value);
 	}
 };
 

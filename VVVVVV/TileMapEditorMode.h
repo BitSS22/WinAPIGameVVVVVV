@@ -4,6 +4,16 @@
 #include "Room.h"
 #include "World.h"
 
+enum class TileList
+{
+	BackGroundTileList,
+	TileList,
+	SpikeTileList,
+	RailTileList,
+	BackGroundList,
+	LAST
+};
+
 class ATileMapEditorMode : public AGameMode
 {
 public:
@@ -16,69 +26,88 @@ public:
 	ATileMapEditorMode& operator=(ATileMapEditorMode&& _Other) noexcept = delete;
 
 private:
-	std::vector<std::string> BackGroundTileList = {};
-	std::vector<std::string> TileList = {};
-	std::vector<std::string> SpikeTileList = {};
-	std::vector<std::string> BackGroundList = {};
+	std::vector<std::string> TileLists[static_cast<int>(TileList::LAST)] = {};
+	TileList CurSelectTileList = TileList::TileList;
 	int CurTileSetIndex = 0;
 	int CurBackGroundIndex = 0;
 	AWorld* World = nullptr;
-	std::vector<std::string>* CurSelectTileList = nullptr;
 	USpriteRenderer* CurSelectSprite = nullptr;
 
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
 
-	void PrevBackGroundImage();
-	void NextBackGroundImage();
-
-	void AddTileList(std::string_view _Name)
-	{
-		TileList.push_back(_Name.data());
-	}
-	void AddBackGroundTileList(std::string_view _Name)
-	{
-		BackGroundTileList.push_back(_Name.data());
-	}
-	void AddSpikeTileList(std::string_view _Name)
-	{
-		SpikeTileList.push_back(_Name.data());
-	}
-	void AddBackGroundList(std::string_view _Name)
-	{
-		BackGroundList.push_back(_Name.data());
-	}
-	
 private:
 	int AroundTileChange(const string& _Name, int _X, int _Y);
 	int FindAroundTile(uint8_t _Bit) const;
 	bool IsSameTileName(const string& _Name, int x, int y) const;
-	std::vector<std::vector<USpriteRenderer*>>* GetCurSelectTileMap() const
+	std::vector<std::vector<USpriteRenderer*>>& GetCurSelectTileMap() const
 	{
-		if (CurSelectTileList == &BackGroundTileList)
-			return &(World->GetRoom()->BackGroundTiles);
-		else
-			return &(World->GetRoom()->Tiles);
+		switch (CurSelectTileList)
+		{
+		case TileList::BackGroundTileList:
+			return World->GetRoom()->BackGroundTiles;
+			break;
+		case TileList::TileList:
+		case TileList::SpikeTileList:
+		case TileList::RailTileList: 
+			return World->GetRoom()->Tiles;
+			break;
+		default:
+			MSGASSERT(nullptr, "타일 리스트가 제대로 선택되지 않았습니다.");
+			break;
+		}
+		return World->GetRoom()->Tiles;
 	}
 
 	void ChangeTile(bool _AroundTileChange);
 	void DeleteTile(bool _AroundTileChange);
 	void NextTileList();
+	void PrevTileList();
 	void PrevTileSet();
 	void NextTileSet();
 	void PrevTile();
 	void NextTile();
+
 	void ShowTiles();
 	void ShowBackGroundTiles();
 
 	void PickUpTile();
+	void DrawingRect();
 
 	void MoveRoom(FIntPoint _Index);
 
 	void SaveRoomData();
 	void LoadRoomData(FIntPoint _Index);
 
+	void AddTileList(std::string_view _Name)
+	{
+		TileLists[static_cast<int>(TileList::TileList)].push_back(_Name.data());
+	}
+	void AddBackGroundTileList(std::string_view _Name)
+	{
+		TileLists[static_cast<int>(TileList::BackGroundTileList)].push_back(_Name.data());
+	}
+	void AddSpikeTileList(std::string_view _Name)
+	{
+		TileLists[static_cast<int>(TileList::SpikeTileList)].push_back(_Name.data());
+	}
+	void AddRailTileList(std::string_view _Name)
+	{
+		TileLists[static_cast<int>(TileList::RailTileList)].push_back(_Name.data());
+	}
+	void AddBackGroundList(std::string_view _Name)
+	{
+		TileLists[static_cast<int>(TileList::BackGroundList)].push_back(_Name.data());
+	}
+
+	void PrevBackGroundImage();
+	void NextBackGroundImage();
+
 public:
-	
+
 };
+
+
+TileList& operator++(TileList& _List);
+TileList& operator--(TileList& _List);

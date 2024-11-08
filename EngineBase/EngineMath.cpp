@@ -16,6 +16,8 @@ const FIntPoint FIntPoint::DOWN = FIntPoint(0, 1);
 const UColor UColor::WHITE = { 255, 255, 255, 0 };
 const UColor UColor::BLACK = { 0, 0, 0, 0 };
 
+std::function<bool(const FTransform&, const FTransform&)> FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::Max)][static_cast<int>(ECollisionType::Max)] = {};
+
 class CollisionFunctionInit
 {
 public:
