@@ -72,6 +72,8 @@ private:
 	void ShowTiles();
 	void ShowBackGroundTiles();
 
+	void PickUpTile();
+
 	void MoveRoom(FIntPoint _Index);
 
 	void SaveRoomData();

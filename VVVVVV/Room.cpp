@@ -52,3 +52,4 @@ void ARoom::BeginPlay()
 		}
 	}
 }
+

@@ -45,6 +45,7 @@ void ATileMapEditorMode::BeginPlay()
 			AddBackGroundList(Sprite.first);
 	}
 
+	// Set Debug
 	UEngineDebug::SetIsDebug(true);
 }
 
@@ -120,11 +121,35 @@ void ATileMapEditorMode::Tick()
 		MoveRoom(RoomIndex);
 	}
 
-	string str = "World Index = ";
+	// DEBUG TEXT
+	string str = "World Index : ";
 	str += std::to_string(RoomIndex.X);
 	str += ", ";
 	str += std::to_string(RoomIndex.Y);
+	UEngineDebug::CoreOutputString(str);
 
+	str = "Tile Set Index : ";
+	str += std::to_string(CurTileSetIndex);
+	UEngineDebug::CoreOutputString(str);
+
+	str = "Select Tile Name : ";
+	str += CurSelectSprite->GetCurSpriteName();
+	str += ", Index : ";
+	str += std::to_string(CurSelectSprite->GetCurIndex());
+	UEngineDebug::CoreOutputString(str);
+
+	FIntPoint TileCursorIndex = World->GetRoom()->GetOnTileIndex(CursorPos);
+
+	str = "On BackGroundTile Name : ";
+	str += World->GetRoom()->BackGroundTiles[TileCursorIndex.Y][TileCursorIndex.X]->GetCurSpriteName();
+	str += ", Index : ";
+	str += std::to_string(World->GetRoom()->BackGroundTiles[TileCursorIndex.Y][TileCursorIndex.X]->GetCurIndex());
+	UEngineDebug::CoreOutputString(str);
+
+	str = "On Tile Name : ";
+	str += World->GetRoom()->Tiles[TileCursorIndex.Y][TileCursorIndex.X]->GetCurSpriteName();
+	str += ", Index : ";
+	str += std::to_string(World->GetRoom()->Tiles[TileCursorIndex.Y][TileCursorIndex.X]->GetCurIndex());
 	UEngineDebug::CoreOutputString(str);
 }
 
@@ -529,6 +554,11 @@ void ATileMapEditorMode::ShowBackGroundTiles()
 			room[y][x]->SetActive(!room[y][x]->IsActive());
 		}
 	}
+}
+
+void ATileMapEditorMode::PickUpTile()
+{
+
 }
 
 void ATileMapEditorMode::MoveRoom(FIntPoint _Index)
