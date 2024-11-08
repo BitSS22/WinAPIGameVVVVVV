@@ -67,7 +67,7 @@ void ATileMapEditorMode::Tick()
 
 	if (KEY_PRESS(VK_LBUTTON))
 	{
-		ChangeTile();
+		ChangeTile(true);
 	}
 
 	if (KEY_PRESS(VK_RBUTTON))
@@ -332,7 +332,7 @@ bool ATileMapEditorMode::IsSameTileName(const string& _Name, int _x, int _y) con
 	return false;
 }
 
-void ATileMapEditorMode::ChangeTile()
+void ATileMapEditorMode::ChangeTile(bool _AroundTileChange)
 {
 	auto CurSelectTileMap = GetCurSelectTileMap();
 
@@ -348,10 +348,12 @@ void ATileMapEditorMode::ChangeTile()
 	int XTileIndex = CursorPos.X / TileSize.X;
 	int YTileIndex = CursorPos.Y / TileSize.Y;
 
+	int MaxIndex = CurSelectSprite->GetMaxIndex();
+
 	(*CurSelectTileMap)[YTileIndex][XTileIndex]->SetSprite(CurSelectSprite->GetCurSpriteName(), CurSelectSprite->GetCurIndex());
 
 	// Auto Tile은 주변 3X3 타일을 조사한다.
-	if (CurSelectSprite->GetCurIndex() == 45)
+	if ((_AroundTileChange || CurSelectSprite->GetCurIndex() == 45) && MaxIndex >= 47)
 	{
 		for (int y = YTileIndex - 1; y <= YTileIndex + 1; ++y)
 		{
@@ -389,7 +391,7 @@ void ATileMapEditorMode::DeleteTile(bool _AroundTileChange)
 	(*CurSelectTileMap)[YTileIndex][XTileIndex]->SetSprite("None Tile", 0);
 
 	// Auto Tile은 주변 3X3 타일을 조사한다.
-	if (CurSelectSprite->GetCurIndex() == 45 && MaxIndex >= 47 && _AroundTileChange)
+	if ((_AroundTileChange || CurSelectSprite->GetCurIndex() == 45) && MaxIndex >= 47)
 	{
 		for (int y = YTileIndex - 1; y <= YTileIndex + 1; ++y)
 		{
@@ -430,7 +432,7 @@ void ATileMapEditorMode::PrevTileSet()
 {
 	--CurTileSetIndex;
 	if (CurTileSetIndex < 0 || CurTileSetIndex >= CurSelectTileList->size())
-		CurTileSetIndex = CurSelectTileList->size() - 1;
+		CurTileSetIndex = static_cast<int>(CurSelectTileList->size()) - 1;
 
 	int Curindex = CurSelectSprite->GetCurIndex();
 	UEngineSprite* Sprite = UImageManager::GetInst().FindSprite((*CurSelectTileList)[CurTileSetIndex]);
@@ -496,6 +498,44 @@ void ATileMapEditorMode::ShowBackGroundTiles()
 			room[y][x]->SetActive(!room[y][x]->IsActive());
 		}
 	}
+}
+
+void ATileMapEditorMode::MoveRoom(FIntPoint _Index)
+{
+	if (World->IsRoomIndexOver(_Index))
+		return;
+
+	SaveRoomData();
+	LoadRoomData(_Index);
+}
+
+void ATileMapEditorMode::SaveRoomData()
+{
+	FIntPoint CurRoomIndex = World->CurRoomIndex;
+	auto& CurRoomTiles = World->GetRoom()->Tiles;
+	auto& CurRoomBackGroundTiles = World->GetRoom()->BackGroundTiles;
+	auto& CurSaveData = World->RoomBackGroundDatas;
+
+	for (size_t y = 0; y < CurRoomTiles.size(); ++y)
+	{
+		for (size_t x = 0; x < CurRoomTiles[y].size(); ++x)
+		{
+			World->RoomBackGroundDatas[CurRoomIndex.Y][CurRoomIndex.X].RoomBackGroundTileDatas[y][x] = { CurRoomTiles[y][x]->GetCurSpriteName(), CurRoomTiles[y][x]->GetCurIndex() };
+		}
+	}
+
+	for (size_t y = 0; y < CurRoomBackGroundTiles.size(); ++y)
+	{
+		for (size_t x = 0; x < CurRoomBackGroundTiles[y].size(); ++x)
+		{
+			World->RoomBackGroundDatas[CurRoomIndex.Y][CurRoomIndex.X].RoomBackGroundTileDatas[y][x] = { CurRoomBackGroundTiles[y][x]->GetCurSpriteName(), CurRoomBackGroundTiles[y][x]->GetCurIndex() };
+		}
+	}
+}
+
+void ATileMapEditorMode::LoadRoomData(FIntPoint _Index)
+{
+	auto& CurSaveData = World->RoomBackGroundDatas;
 }
 
 void ATileMapEditorMode::PrevBackGroundImage()

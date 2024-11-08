@@ -16,7 +16,7 @@ private:
 	EGameConst& operator=(EGameConst&& _Other) noexcept = delete;
 
 public:
-	static const FIntPoint WorldSize;
+	static const FIntPoint WorldMaxIndex;
 	static const FIntPoint TileScale;
 	static const FIntPoint TileCount;
 

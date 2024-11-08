@@ -62,7 +62,7 @@ private:
 			return &(World->GetRoom()->Tiles);
 	}
 
-	void ChangeTile();
+	void ChangeTile(bool _AroundTileChange);
 	void DeleteTile(bool _AroundTileChange);
 	void NextTileList();
 	void PrevTileSet();
@@ -71,6 +71,11 @@ private:
 	void NextTile();
 	void ShowTiles();
 	void ShowBackGroundTiles();
+
+	void MoveRoom(FIntPoint _Index);
+
+	void SaveRoomData();
+	void LoadRoomData(FIntPoint _Index);
 
 public:
 	

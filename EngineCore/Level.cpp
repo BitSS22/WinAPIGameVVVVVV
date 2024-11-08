@@ -2,6 +2,7 @@
 #include "Level.h"
 #include <EngineBase/EngineMath.h>
 #include <EngineCore/SpriteRenderer.h>
+#include "2DCollision.h"
 
 ULevel::ULevel()
 {
@@ -105,7 +106,7 @@ void ULevel::LevelChangeEnd()
 
 void ULevel::PushCollision(U2DCollision* _Collision)
 {
-	int Order = _Collision->GetGroup();
+	int Order = _Collision->GetCollisionGroup();
 	Collisions[Order].push_back(_Collision);
 }
 

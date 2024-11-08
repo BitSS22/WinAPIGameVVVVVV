@@ -23,7 +23,6 @@ private:
 	std::vector<std::vector<USpriteRenderer*>> Tiles = {};
 	std::vector<std::vector<USpriteRenderer*>> BackGroundTiles = {};
 	ABackGround* BackGround = nullptr;
-	UEngineWindowImage* RenderImage;
 
 public:
 	virtual void BeginPlay() override;

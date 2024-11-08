@@ -5,6 +5,7 @@
 class AWorld : public AActor
 {
 public:
+	friend class ATileMapEditorMode;
 	INNER_CLASS struct RoomData;
 	INNER_CLASS struct RoomTileData;
 public:
@@ -17,7 +18,7 @@ public:
 	AWorld& operator=(AWorld&& _Other) noexcept = delete;
 
 private:
-	FIntPoint WorldSize = EGameConst::WorldSize;
+	FIntPoint WorldMaxIndex = EGameConst::WorldMaxIndex;
 	FIntPoint CurRoomIndex = { 0, 0 };
 	ARoom* Room = {};
 	std::vector<std::vector<RoomData>> RoomDatas = {};
@@ -27,7 +28,7 @@ public:
 	virtual void BeginPlay() override;
 
 private:
-	void LoadRoomData(int _X, int _Y);
+	void LoadRoomData(FIntPoint _Index);
 	void ChangeRoom(FIntPoint _Index);
 
 public:
@@ -37,7 +38,7 @@ public:
 	}
 	FIntPoint GetWorldSize() const
 	{
-		return WorldSize;
+		return WorldMaxIndex;
 	}
 	FIntPoint GetCurRoomIndex() const
 	{
@@ -47,6 +48,12 @@ public:
 	{
 		CurRoomIndex = _Index;
 	}
+	bool IsRoomIndexOver(FIntPoint _Index)
+	{
+		if (_Index.X < 0 || _Index.Y < 0 || _Index.X >= WorldMaxIndex.X, _Index.Y >= WorldMaxIndex.Y)
+			return true;
+		return false;
+	}
 
 public:
 	INNER_CLASS struct RoomTileData
@@ -54,12 +61,15 @@ public:
 	public:
 		std::string Name = "Debug Tile";
 		int CurSpriteIndex = -1;
+
 	};
 	INNER_CLASS struct RoomData
 	{
 	public:
 		std::vector<std::vector<RoomTileData>> RoomTileDatas = {};
 		std::vector<std::vector<RoomTileData>> RoomBackGroundTileDatas = {};
+		FIntPoint TileCount = {};
+		FIntPoint TileScale = {};
 	};
 };
 

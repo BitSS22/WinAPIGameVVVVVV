@@ -28,7 +28,7 @@ public:
 	{
 		return static_cast<EnumType>(CollisionGroup);
 	}
-	int GetCollosionGroup()
+	int GetCollisionGroup()
 	{
 		return CollisionGroup;
 	}
