@@ -63,6 +63,17 @@ void ULevel::Render()
 
 void ULevel::Realease()
 {
+	for (auto iter = Collisions.begin(); iter != Collisions.end(); ++iter)
+	{
+		for (auto Seconditer = iter->second.begin(); Seconditer != iter->second.end();)
+		{
+			if ((*Seconditer)->IsDestroy() == false)
+				++Seconditer;
+			else
+				Seconditer = iter->second.erase(Seconditer);
+		}
+	}
+
 	for (auto iter = Renderers.begin(); iter != Renderers.end(); ++iter)
 	{
 		for (auto Seconditer = iter->second.begin(); Seconditer != iter->second.end();)
@@ -73,6 +84,7 @@ void ULevel::Realease()
 				Seconditer = iter->second.erase(Seconditer);
 		}
 	}
+
 	for (auto iter = AllActors.begin(); iter != AllActors.end();)
 	{
 		if ((*iter)->IsDestroy() == false)

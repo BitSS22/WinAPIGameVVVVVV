@@ -14,11 +14,35 @@ public:
 	U2DCollision& operator=(U2DCollision&& _Other) noexcept = delete;
 
 private:
+	ECollisionType CollisionType = ECollisionType::Circle;
 	int CollisionGroup = -1;
 
 public:
 	virtual void BeginPlay() override;
 	virtual void ComponentTick() override;
+
+	bool Collision(int _OtherCollisionGroup, std::vector<AActor*>& _Result, FVector2D _NextPos, UINT _Limit);
+	
+	template<typename EnumType>
+	AActor* CollisionOnce(EnumType _OtherCollisionGroup, FVector2D _NextPos = FVector2D::ZERO)
+	{
+		std::vector<AActor*> Result = {};
+		Collision(static_cast<int>(_OtherCollisionGroup), Result, _NextPos, 1);
+
+		if (Result.empty() == true)
+			return nullptr;
+
+		return Result[0];
+	}
+
+	template<typename EnumType>
+	std::vector<AActor*> CollisionAll(EnumType _OtherCollisionGroup)
+	{
+		std::vector<AActor*> Result = {};
+		Collision(static_cast<int>(_OtherCollisionGroup), Result, -1);
+
+		return Result;
+	}
 
 private:
 
@@ -32,6 +56,7 @@ public:
 	{
 		return CollisionGroup;
 	}
+
 	template<typename EnumType>
 	void SetCollisionGroup(EnumType _CollisionGroup)
 	{
@@ -41,13 +66,11 @@ public:
 	{
 		CollisionGroup = _CollisionGroup;
 	}
-	template<typename EnumType>
-	bool IsCollision(EnumType _OtherCollisionGroup)
+
+	void SetCollisionType(ECollisionType _Type)
 	{
-		IsCollision(static_cast<int>(_OtherCollisionGroup));
+		CollisionType = _Type;
 	}
-	bool IsCollision(int _OtherCollisionGroup)
-	{}
 
 };
 

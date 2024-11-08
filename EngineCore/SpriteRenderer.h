@@ -72,14 +72,6 @@ public:
 	{
 		return Sprite->GetName();
 	}
-	virtual bool IsActive() const override
-	{
-		return UObject::IsActive() == true && GetActor()->IsActive();
-	}
-	virtual bool IsDestroy() const override
-	{
-		return UObject::IsDestroy() || GetActor()->IsDestroy();
-	}
 	void SetCameraEffect(bool _Value)
 	{
 		IsCameraEffect = _Value;

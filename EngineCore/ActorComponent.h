@@ -31,6 +31,14 @@ public:
 	{
 		return ParentActor;
 	}
+	virtual bool IsActive() const override
+	{
+		return UObject::IsActive() == true && GetActor()->IsActive();
+	}
+	virtual bool IsDestroy() const override
+	{
+		return UObject::IsDestroy() || GetActor()->IsDestroy();
+	}
 
 };
 

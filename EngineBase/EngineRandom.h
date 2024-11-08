@@ -29,7 +29,7 @@ public:
 	}
 	int GetRandomInt(int _Min, int _Max)
 	{
-		std::uniform_int_distribution<int> Number(_Min, _Max + 1);
+		std::uniform_int_distribution<int> Number(_Min, _Max);
 		return Number(Gen);
 	}
 	float GetRandomFloat(float _Min, float _Max)

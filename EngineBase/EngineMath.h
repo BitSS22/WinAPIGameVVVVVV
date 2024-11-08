@@ -2,6 +2,14 @@
 
 struct FIntPoint;
 
+enum class ECollisionType
+{
+	Point,
+	Rect,
+	Circle,
+	Max
+};
+
 class UEngineMath
 {
 public:
@@ -101,6 +109,14 @@ public:
 	FVector2D Half() const
 	{
 		return FVector2D(X * 0.5f, Y * 0.5f);
+	}
+	float HalfX() const
+	{
+		return X * 0.5f;
+	}
+	float HalfY() const
+	{
+		return Y * 0.5f;
 	}
 	float Length() const
 	{
@@ -259,10 +275,17 @@ public:
 struct FTransform
 {
 public:
+	friend class CollisionFunctionInit;
+public:
+	static std::function<bool(const FTransform&, const FTransform&)> AllCollisionFunction[static_cast<int>(ECollisionType::Max)][static_cast<int>(ECollisionType::Max)];
 	FVector2D Location = {};
 	FVector2D Scale = {};
 
 public:
+	static bool Collision(ECollisionType _LeftType, const FTransform& _Left, ECollisionType _RightType, const FTransform& _Right);
+	static bool RectToTect(const FTransform& _Left, const FTransform& _Right);
+	static bool CircleToCircle(const FTransform& _Left, const FTransform& _Right);
+
 	FVector2D CenterLeftTop() const
 	{
 		return Location - Scale.Half();
@@ -271,6 +294,23 @@ public:
 	{
 		return Location + Scale.Half();
 	}
+	float CenterLeft() const
+	{
+		return Location.X - Scale.HalfX();
+	}
+	float CenterRight() const
+	{
+		return Location.X + Scale.HalfX();
+	}
+	float CenterTop() const
+	{
+		return Location.Y - Scale.HalfY();
+	}
+	float CenterBottom() const
+	{
+		return Location.Y + Scale.HalfY();
+	}
+
 
 };
 
@@ -306,3 +346,4 @@ public:
 		};
 	};
 };
+

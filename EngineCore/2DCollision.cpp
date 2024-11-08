@@ -30,7 +30,48 @@ void U2DCollision::ComponentTick()
 
 		ActorTransform.Location -= CameraPos;
 
-		UEngineDebug::CoreDebugRender(ActorTransform, UEngineDebug::EDebugPosType::Circle);
+		switch (CollisionType)
+		{
+		case ECollisionType::Rect:
+			UEngineDebug::CoreDebugRender(ActorTransform, UEngineDebug::EDebugPosType::Rect);
+			break;
+		case ECollisionType::Circle:
+			UEngineDebug::CoreDebugRender(ActorTransform, UEngineDebug::EDebugPosType::Circle);
+			break;
+		default:
+			break;
+		}
 	}
+}
+
+bool U2DCollision::Collision(int _OtherCollisionGroup, std::vector<AActor*>& _Result, FVector2D _NextPos, UINT _Limit)
+{
+	list<U2DCollision*>& OtherCollisions = GetActor()->GetWorld()->Collisions[_OtherCollisionGroup];
+
+	U2DCollision* ThisCollision = this;
+
+	for (const auto& DestCollision : OtherCollisions)
+	{
+		FTransform ThisTrans = ThisCollision->GetComponentOffsetTransform();
+		FTransform DestTrans = DestCollision->GetComponentOffsetTransform();
+
+		ThisTrans.Location += _NextPos;
+
+		ECollisionType ThisType = ThisCollision->CollisionType;
+		ECollisionType DestType = DestCollision->CollisionType;
+
+		bool Result = FTransform::Collision(ThisType, ThisTrans, DestType, DestTrans);
+
+		if (Result == true)
+		{
+			_Result.push_back(DestCollision->GetActor());
+			--_Limit;
+
+			if (_Limit == 0)
+				return _Result.size() != 0;
+		}
+	}
+
+	return _Result.size() != 0;
 }
 

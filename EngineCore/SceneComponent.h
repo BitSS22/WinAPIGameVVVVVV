@@ -21,10 +21,6 @@ public:
 private:
 
 public:
-	FVector2D GetActorLocation() const
-	{
-		return GetActor()->GetActorLocation();
-	}
 	FTransform GetComponentTransform() const
 	{
 		return Transform;
@@ -36,6 +32,14 @@ public:
 	FVector2D GetComponentScale() const
 	{
 		return Transform.Scale;
+	}
+	FVector2D GetComponentOffset() const
+	{
+		return GetActor()->GetActorLocation() + Transform.Location;
+	}
+	FTransform GetComponentOffsetTransform() const
+	{
+		return FTransform(GetActor()->GetActorLocation() + Transform.Location, Transform.Scale);
 	}
 	void SetComponentLocation(FTransform _Transform)
 	{
