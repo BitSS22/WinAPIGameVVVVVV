@@ -22,7 +22,7 @@
     <ClInclude Include="TileMapEditorMode.h">
       <Filter>ContentsObject\GameMode\MapEditor</Filter>
     </ClInclude>
-    <ClInclude Include="EngineConst.h">
+    <ClInclude Include="GameConst.h">
       <Filter>Define</Filter>
     </ClInclude>
     <ClInclude Include="Enums.h">
@@ -60,7 +60,7 @@
     <ClCompile Include="TileMapEditorMode.cpp">
       <Filter>ContentsObject\GameMode\MapEditor</Filter>
     </ClCompile>
-    <ClCompile Include="EngineConst.cpp">
+    <ClCompile Include="GameConst.cpp">
       <Filter>Define</Filter>
     </ClCompile>
     <ClCompile Include="Enums.cpp">

@@ -20,5 +20,7 @@ public:
 	static const FIntPoint TileScale;
 	static const FIntPoint TileCount;
 
+	static const float AnimationTime;
+
 };
 

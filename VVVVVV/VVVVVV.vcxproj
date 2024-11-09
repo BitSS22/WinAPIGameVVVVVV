@@ -159,7 +159,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EngineConst.h">
+    <ClInclude Include="GameConst.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -203,7 +203,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="EngineConst.cpp">
+    <ClCompile Include="GameConst.cpp">
       <SubType>
       </SubType>
     </ClCompile>

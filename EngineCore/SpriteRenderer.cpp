@@ -209,6 +209,12 @@ void USpriteRenderer::SetAnimationEvent(std::string_view _AnimationName, int _An
 	FrameAnimations[UpperName].Events[_AnimationFrame] += _Function;
 }
 
+void USpriteRenderer::CopyAnimation(const USpriteRenderer* _Origin)
+{
+	SetSprite(_Origin->GetCurSpriteName(), _Origin->CurIndex);
+	CurAnimation = _Origin->CurAnimation;
+}
+
 void USpriteRenderer::SetOrder(int _Order)
 {
 	int PrevOrder = Order;

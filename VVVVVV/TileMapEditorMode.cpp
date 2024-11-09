@@ -42,7 +42,7 @@ void ATileMapEditorMode::BeginPlay()
 		else if (std::string::npos != Sprite.first.find(SearchName2))
 			AddSpikeTileList(Sprite.first);
 		else if (std::string::npos != Sprite.first.find(SearchName3))
-			AddBackGroundList(Sprite.first);
+			AddRailTileList(Sprite.first);
 		else if (std::string::npos != Sprite.first.find(SearchName4))
 			AddBackGroundList(Sprite.first);
 	}
@@ -144,7 +144,7 @@ void ATileMapEditorMode::Tick()
 		CurTileList = "SpikeTiles";
 		break;
 	case TileList::RailTileList:
-		CurTileList = "RailTileList";
+		CurTileList = "RailTiles";
 		break;
 	default:
 		break;

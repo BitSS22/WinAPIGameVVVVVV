@@ -22,9 +22,6 @@ V6ContentsCore::~V6ContentsCore()
 
 void V6ContentsCore::BeginPlay()
 {
-	ResourceLoad();
-
-	// TODO. Create Animation
 
 
 
@@ -43,6 +40,7 @@ void V6ContentsCore::BeginPlay()
 	UEngineAPICore::GetCore()->CreateLevel<AEndingGameMode, AActor>("End");
 	UEngineAPICore::GetCore()->CreateLevel<ATileMapEditorMode, AActor>("TileMapEditor");
 
+	ResourceLoad();
 
 	// Open Level
 	UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
@@ -63,6 +61,7 @@ void V6ContentsCore::ResourceLoad()
 		UImageManager::GetInst().Load(image.GetPathToString());
 
 	ResourceSpriteLoad();
+
 }
 
 void V6ContentsCore::ResourceSpriteLoad()
@@ -71,7 +70,6 @@ void V6ContentsCore::ResourceSpriteLoad()
 	BackGroundImageLoad();
 	PlayerImageLoad();
 	FontImageLoad();
-	FlatformImageLoad();
 	BackGroundObjectImageLoad();
 	InterObjectImageLoad();
 }
@@ -80,7 +78,7 @@ void V6ContentsCore::TileImageLoad()
 {
 	float X = 192.f;
 	float Y = 64.f;
-	
+	 
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "None Tile", FVector2D(80.f, 832.f + 16.f * 7), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 1, 1);
 
 
@@ -109,7 +107,7 @@ void V6ContentsCore::TileImageLoad()
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::15 Bridge Pink", FVector2D(128.f, 832.f + 16.f * 1), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 3, 3);
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::16 Bridge Red", FVector2D(128.f, 832.f + 16.f * 2), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 3, 3);
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::17 Bridge Blue", FVector2D(128.f, 832.f + 16.f * 3), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 3, 3);
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::18  Bridge Yellow", FVector2D(128.f, 832.f + 16.f * 4), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 3, 3);
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::18 Bridge Yellow", FVector2D(128.f, 832.f + 16.f * 4), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 3, 3);
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::19 Bridge Green", FVector2D(128.f, 832.f + 16.f * 5), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 3, 3);
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::20 Bridge Grey", FVector2D(128.f, 832.f + 16.f * 6), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 3, 3);
 
@@ -214,6 +212,23 @@ void V6ContentsCore::TileImageLoad()
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "CollisionTiles::81 Animation Green", FVector2D(192.f, 832.f + 16.f * 5), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 12);
 
 
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "RailTiles::01 Rail Left Cyan", FVector2D(256.f, 16.f * 0), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "RailTiles::02 Rail Left Pink", FVector2D(256.f, 16.f * 1), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "RailTiles::03 Rail Left Red", FVector2D(256.f, 16.f * 2), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "RailTiles::04 Rail Left Blue", FVector2D(256.f, 16.f * 3), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "RailTiles::05 Rail Left Yellow", FVector2D(256.f, 16.f * 4), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "RailTiles::06 Rail Left Green", FVector2D(256.f, 16.f * 5), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "RailTiles::07 Rail Left Grey", FVector2D(256.f, 16.f * 6), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
+
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "RailTiles::08 Rail Right Cyan", FVector2D(320.f, 16.f * 0), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "RailTiles::09 Rail Right Pink", FVector2D(320.f, 16.f * 1), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "RailTiles::10 Rail Right Red", FVector2D(320.f, 16.f * 2), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "RailTiles::11 Rail Right Blue", FVector2D(320.f, 16.f * 3), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "RailTiles::12 Rail Right Yellow", FVector2D(320.f, 16.f * 4), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "RailTiles::13 Rail Right Green", FVector2D(320.f, 16.f * 5), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "RailTiles::14 Rail Right Grey", FVector2D(320.f, 16.f * 6), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
+
+
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "SpikeTiles::01 Cyan", FVector2D(0.f, 832.f + 16.f * 0), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 8, 8);
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "SpikeTiles::02 Pink", FVector2D(0.f, 832.f + 16.f * 1), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 8, 8);
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "SpikeTiles::03 Red", FVector2D(0.f, 832.f + 16.f * 2), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 8, 8);
@@ -259,6 +274,7 @@ void V6ContentsCore::BackGroundImageLoad()
 	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::21 Tower Grey", FVector2D(640.f * 6, Y * 2), FVector2D(640.f, 1920.f), FVector2D(0.f, 0.f), 1, 1);
 
 
+	// Effect
 	UImageManager::GetInst().CreateCutSprite("BackGround.png", "Stars", FVector2D(4480.f, 1088.f), FVector2D(8.f, 8.f), FVector2D(0.f, 0.f), 3, 3);
 
 	// Ending Image
@@ -370,35 +386,6 @@ void V6ContentsCore::FontImageLoad()
 	UImageManager::GetInst().CreateCutSprite("Fonts & Text.png", "TextBoxs:: Green", FVector2D(256.f + X * 2, Y * 1), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 3, 9);
 	UImageManager::GetInst().CreateCutSprite("Fonts & Text.png", "TextBoxs:: Grey", FVector2D(256.f + X * 3, Y * 1), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 3, 9);
 
-}
-
-void V6ContentsCore::FlatformImageLoad()
-{
-	float X = 64.f;
-	float Y = 16.f;
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Cyan", FVector2D(X * 0, Y * 0), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Pink", FVector2D(X * 0, Y * 1), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Red", FVector2D(X * 0, Y * 2), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Blue", FVector2D(X * 0, Y * 3), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Yellow", FVector2D(X * 0, Y * 4), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Green", FVector2D(X * 0, Y * 5), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Grey", FVector2D(X * 0, Y * 6), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Rail Left Cyan", FVector2D(X * 4, Y * 0), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Rail Left Pink", FVector2D(X * 4, Y * 1), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Rail Left Red", FVector2D(X * 4, Y * 2), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Rail Left Blue", FVector2D(X * 4, Y * 3), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Rail Left Yellow", FVector2D(X * 4, Y * 4), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Rail Left Green", FVector2D(X * 4, Y * 5), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Rail Left Grey", FVector2D(X * 4, Y * 6), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Rail Right Cyan", FVector2D(X * 8, Y * 0), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Rail Right Pink", FVector2D(X * 8, Y * 1), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Rail Right Red", FVector2D(X * 8, Y * 2), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Rail Right Blue", FVector2D(X * 8, Y * 3), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Rail Right Yellow", FVector2D(X * 8, Y * 4), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Rail Right Green", FVector2D(X * 8, Y * 5), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platform:: Rail Right Grey", FVector2D(X * 8, Y * 6), FVector2D(64.f, 16.f), FVector2D(0.f, 0.f), 4, 4);
 }
 
 void V6ContentsCore::BackGroundObjectImageLoad()
