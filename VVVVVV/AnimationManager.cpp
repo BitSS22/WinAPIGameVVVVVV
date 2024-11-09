@@ -14,13 +14,12 @@ AAnimationManager::~AAnimationManager()
 
 void AAnimationManager::BeginPlay()
 {
-	CreateAnimation("CollisionTiles::76 Animation Cyan", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
-	CreateAnimation("CollisionTiles::77 Animation Pink", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
-	CreateAnimation("CollisionTiles::78 Animation Red", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
-	CreateAnimation("CollisionTiles::79 Animation Blue", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
-	CreateAnimation("CollisionTiles::80 Animation Yellow", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
-	CreateAnimation("CollisionTiles::77 Animation Pink", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
-	CreateAnimation("CollisionTiles::81 Animation Green", { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }, EGameConst::AnimationTime, true);
+	CreateAnimation("AnimationTiles::01 Animation Cyan", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
+	CreateAnimation("AnimationTiles::02 Animation Pink", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
+	CreateAnimation("AnimationTiles::03 Animation Red", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
+	CreateAnimation("AnimationTiles::04 Animation Blue", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
+	CreateAnimation("AnimationTiles::05 Animation Yellow", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
+	CreateAnimation("AnimationTiles::06 Animation Green", { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }, EGameConst::AnimationTime, true);
 
 	CreateAnimation("RailTiles::01 Rail Left Cyan", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
 	CreateAnimation("RailTiles::02 Rail Left Pink", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);

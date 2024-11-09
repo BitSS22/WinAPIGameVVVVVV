@@ -46,7 +46,7 @@ public:
 	void ChangeAnimation(std::string_view _AnimationName, bool _Force = false);
 	void SetAnimationEvent(std::string_view _AnimationName, int _Frame, std::function<void()> _Function);
 
-	void CopySpriteAnimation(USpriteRenderer* _Origin);
+	void CopySprite(USpriteRenderer* _Origin);
 
 private:
 

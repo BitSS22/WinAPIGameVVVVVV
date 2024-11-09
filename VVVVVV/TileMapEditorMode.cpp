@@ -31,9 +31,10 @@ void ATileMapEditorMode::BeginPlay()
 	string SearchName0 = UEngineString::ToUpper("BackGroundTiles::");
 	string SearchName1 = UEngineString::ToUpper("CollisionTiles::");
 	string SearchName2 = UEngineString::ToUpper("SpikeTiles::");
-	string SearchName3 = UEngineString::ToUpper("RailTiles::");
+	string SearchName3 = UEngineString::ToUpper("AnimationTiles::");
+	string SearchName4 = UEngineString::ToUpper("RailTiles::");
 
-	string SearchName4 = UEngineString::ToUpper("BackGrounds::");
+	string SearchName5 = UEngineString::ToUpper("BackGrounds::");
 
 	for (auto& Sprite : SpritesList)
 	{
@@ -75,7 +76,7 @@ void ATileMapEditorMode::Tick()
 	if (KEY_DOWN(VK_SPACE))
 	{
 		USpriteRenderer* Sprite = AAnimationManager::GetInst()->GetTileAnimation("RailTiles::08 Rail Right Cyan");
-		CurSelectSprite->CopySpriteAnimation(Sprite);
+		CurSelectSprite->CopySprite(Sprite);
 	}
 
 	if (KEY_PRESS(VK_LBUTTON))
@@ -150,6 +151,9 @@ void ATileMapEditorMode::Tick()
 		break;
 	case TileList::SpikeTileList:
 		CurTileList = "SpikeTiles";
+		break;
+	case TileList::AnimationTileList:
+		CurTileList = "AnimationTiles";
 		break;
 	case TileList::RailTileList:
 		CurTileList = "RailTiles";
@@ -441,7 +445,7 @@ void ATileMapEditorMode::ChangeTile(bool _AroundTileChange)
 	int MaxIndex = CurSelectSprite->GetMaxIndex();
 
 	CurSelectTileMap[YTileIndex][XTileIndex]->SetSprite(CurSelectSprite->GetCurSpriteName(), CurSelectSprite->GetCurIndex());
-	CurSelectTileMap[YTileIndex][XTileIndex]->CopySpriteAnimation(CurSelectSprite);
+	CurSelectTileMap[YTileIndex][XTileIndex]->CopySprite(CurSelectSprite);
 
 	// Auto Tile은 주변 3X3 타일을 조사한다.
 	if ((_AroundTileChange || CurSelectSprite->GetCurIndex() == 45) && MaxIndex >= 47)
@@ -455,7 +459,6 @@ void ATileMapEditorMode::ChangeTile(bool _AroundTileChange)
 					if (x < 0 || y < 0 || x >= TileCount.X || y >= TileCount.Y)
 						continue;
 					CurSelectTileMap[y][x]->SetSprite(CurSelectSprite->GetCurSpriteName(), AroundTileChange(CurSelectSprite->GetCurSpriteName(), x, y));
-					CurSelectTileMap[y][x]->CopySpriteAnimation(CurSelectSprite);
 				}
 			}
 		}
@@ -480,7 +483,7 @@ void ATileMapEditorMode::DeleteTile(bool _AroundTileChange)
 
 	string PrevName = CurSelectTileMap[YTileIndex][XTileIndex]->GetCurSpriteName();
 	int MaxIndex = CurSelectTileMap[YTileIndex][XTileIndex]->GetMaxIndex();
-	CurSelectTileMap[YTileIndex][XTileIndex]->SetSprite("None Tile", 0);
+	CurSelectTileMap[YTileIndex][XTileIndex]->CopySprite(CurSelectSprite);
 
 	// Auto Tile은 주변 3X3 타일을 조사한다.
 	if ((_AroundTileChange || CurSelectSprite->GetCurIndex() == 45) && MaxIndex >= 47)

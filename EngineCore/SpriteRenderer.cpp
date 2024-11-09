@@ -210,13 +210,18 @@ void USpriteRenderer::SetAnimationEvent(std::string_view _AnimationName, int _An
 	FrameAnimations[UpperName].Events[_AnimationFrame] += _Function;
 }
 
-void USpriteRenderer::CopySpriteAnimation(USpriteRenderer* _Origin)
+void USpriteRenderer::CopySprite(USpriteRenderer* _Origin)
 {
-	Sprite = _Origin->Sprite;
-	CurIndex = _Origin->CurIndex;
-	Order = _Origin->Order;
-	FrameAnimations = _Origin->FrameAnimations;
-	CurAnimation = _Origin->CurAnimation;
+	SetSprite(_Origin->GetCurSpriteName(), _Origin->GetCurIndex());
+	
+	if (_Origin->CurAnimation != nullptr && _Origin->FrameAnimations.empty() == false)
+	{
+		FrameAnimation CopyAnimation = *(_Origin->CurAnimation);
+		FrameAnimations.insert(make_pair(_Origin->GetCurSpriteName(), CopyAnimation));
+		ChangeAnimation(GetCurSpriteName(), false);
+	}
+	else
+		CurAnimation = nullptr;
 }
 
 void USpriteRenderer::SetOrder(int _Order)
