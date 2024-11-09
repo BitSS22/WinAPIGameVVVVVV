@@ -37,6 +37,7 @@
     <ClInclude Include="Room.h">
       <Filter>ContentsObject\Map\World\Room</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -75,6 +76,7 @@
     <ClCompile Include="Room.cpp">
       <Filter>ContentsObject\Map\World\Room</Filter>
     </ClCompile>
+    <ClCompile Include="AnimationManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="pch">

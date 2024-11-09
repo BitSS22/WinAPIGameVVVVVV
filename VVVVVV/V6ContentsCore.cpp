@@ -22,9 +22,6 @@ V6ContentsCore::~V6ContentsCore()
 
 void V6ContentsCore::BeginPlay()
 {
-
-
-
 	// Init Window Pos & Scale
 	int width = GetSystemMetrics(SM_CXSCREEN);
 	int height = GetSystemMetrics(SM_CYSCREEN);

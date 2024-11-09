@@ -78,6 +78,7 @@ void USpriteRenderer::ComponentTick()
 
 void USpriteRenderer::SetCameraEffectScale(float _Effect)
 {
+	CameraEffectScale = _Effect;
 }
 
 void USpriteRenderer::SetSprite(std::string_view _Name, int _Index)
@@ -209,9 +210,12 @@ void USpriteRenderer::SetAnimationEvent(std::string_view _AnimationName, int _An
 	FrameAnimations[UpperName].Events[_AnimationFrame] += _Function;
 }
 
-void USpriteRenderer::CopyAnimation(const USpriteRenderer* _Origin)
+void USpriteRenderer::CopySpriteAnimation(USpriteRenderer* _Origin)
 {
-	SetSprite(_Origin->GetCurSpriteName(), _Origin->CurIndex);
+	Sprite = _Origin->Sprite;
+	CurIndex = _Origin->CurIndex;
+	Order = _Origin->Order;
+	FrameAnimations = _Origin->FrameAnimations;
 	CurAnimation = _Origin->CurAnimation;
 }
 
