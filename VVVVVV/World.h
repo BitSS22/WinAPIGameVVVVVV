@@ -49,12 +49,6 @@ public:
 	{
 		CurRoomIndex = _Index;
 	}
-	bool IsRoomIndexOver(FIntPoint _Index)
-	{
-		if (_Index.X < 0 || _Index.Y < 0 || _Index.X >= WorldMaxIndex.X || _Index.Y >= WorldMaxIndex.Y)
-			return true;
-		return false;
-	}
 
 public:
 	INNER_CLASS struct RoomTileData

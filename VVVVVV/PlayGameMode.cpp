@@ -15,8 +15,6 @@ APlayGameMode::~APlayGameMode()
 void APlayGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-
-	BackGround = GetWorld()->SpawnActor<ABackGround>();
 }
 
 void APlayGameMode::Tick()

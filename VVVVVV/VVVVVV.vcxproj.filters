@@ -119,5 +119,17 @@
     <Filter Include="ContentsObject\Entity">
       <UniqueIdentifier>{720a4477-9a73-4824-9bcb-fa23457e6975}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ContentsObject\Entity\Enermy">
+      <UniqueIdentifier>{2d273734-dd48-4a7f-96db-95239822e905}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Entity\Guy">
+      <UniqueIdentifier>{6dcae77c-f5bc-4298-9ac9-379a4f4adc75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Entity\InterObject">
+      <UniqueIdentifier>{89ce6dd6-d671-4c5b-b625-d948fe2f71c4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Think.txt" />
   </ItemGroup>
 </Project>

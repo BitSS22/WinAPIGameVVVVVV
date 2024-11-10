@@ -625,10 +625,17 @@ void ATileMapEditorMode::PickUpTile()
 
 void ATileMapEditorMode::MoveRoom(FIntPoint _Index)
 {
-	if (World->IsRoomIndexOver(_Index))
-		return;
-
 	SaveRoomData();
+
+	if (_Index.X < 0)
+		_Index.X = World->WorldMaxIndex.X - 1;
+	else if (_Index.X >= World->WorldMaxIndex.X)
+		_Index.X = 0;
+	if (_Index.Y < 0)
+		_Index.Y = World->WorldMaxIndex.Y - 1;
+	else if (_Index.Y >= World->WorldMaxIndex.Y)
+		_Index.Y = 0;
+	
 	LoadRoomData(_Index);
 
 	World->CurRoomIndex = _Index;
