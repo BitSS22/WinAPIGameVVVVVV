@@ -19,9 +19,20 @@ void AWorld::BeginPlay()
 	{
 		RoomTileDatas[y].resize(WorldMaxIndex.X);
 	}
+
 	RoomBackGroundTileDatas.resize(WorldMaxIndex.X);
 	for (size_t y = 0; y < RoomBackGroundTileDatas.size(); ++y)
 	{
 		RoomBackGroundTileDatas[y].resize(WorldMaxIndex.X);
+	}
+
+	RoomBackGroundDatas.resize(WorldMaxIndex.X);
+	for (size_t y = 0; y < RoomBackGroundDatas.size(); ++y)
+	{
+		RoomBackGroundDatas[y].resize(WorldMaxIndex.X);
+		for (size_t x = 0; x < RoomBackGroundDatas[y].size(); ++x)
+		{
+			RoomBackGroundDatas[y][x] = "Debug BackGround.png";
+		}
 	}
 }

@@ -75,30 +75,51 @@ void ATileMapEditorMode::Tick()
 
 	FIntPoint CurTileIndex = CursorPos / TileSize;
 
+	if (KEY_DOWN(VK_ESCAPE))
+		UEngineDebug::SwitchIsDebug();
+
 	if (KEY_PRESS(VK_LBUTTON))
 	{
-		for (int y = CurTileIndex.Y - 1; y <= CurTileIndex.Y + 1; ++y)
+		bool Around = false;
+		if (KEY_PRESS(VK_CONTROL))
+			Around = true;
+
+		if (KEY_PRESS(VK_SHIFT))
 		{
-			for (int x = CurTileIndex.X - 1; x <= CurTileIndex.X + 1; ++x)
+			for (int y = CurTileIndex.Y - 1; y <= CurTileIndex.Y + 1; ++y)
 			{
-				if (x < 0 || y < 0 || x >= TileCount.X || y >= TileCount.Y)
-					continue;
-				ChangeTile(true, FIntPoint(x, y));
+				for (int x = CurTileIndex.X - 1; x <= CurTileIndex.X + 1; ++x)
+				{
+					if (x < 0 || y < 0 || x >= TileCount.X || y >= TileCount.Y)
+						continue;
+					ChangeTile(Around, FIntPoint(x, y));
+				}
 			}
 		}
+		else
+			ChangeTile(Around, CurTileIndex);
 	}
 
 	if (KEY_PRESS(VK_RBUTTON))
 	{
-		for (int y = CurTileIndex.Y - 1; y <= CurTileIndex.Y + 1; ++y)
+		bool Around = false;
+		if (KEY_PRESS(VK_CONTROL))
+			Around = true;
+
+		if (KEY_PRESS(VK_SHIFT))
 		{
-			for (int x = CurTileIndex.X - 1; x <= CurTileIndex.X + 1; ++x)
+			for (int y = CurTileIndex.Y - 1; y <= CurTileIndex.Y + 1; ++y)
 			{
-				if (x < 0 || y < 0 || x >= TileCount.X || y >= TileCount.Y)
-					continue;
-				DeleteTile(true, FIntPoint(x, y));
+				for (int x = CurTileIndex.X - 1; x <= CurTileIndex.X + 1; ++x)
+				{
+					if (x < 0 || y < 0 || x >= TileCount.X || y >= TileCount.Y)
+						continue;
+					DeleteTile(Around, FIntPoint(x, y));
+				}
 			}
 		}
+		else
+			DeleteTile(Around, CurTileIndex);
 	}
 
 	if (KEY_DOWN('1'))
@@ -634,6 +655,8 @@ void ATileMapEditorMode::SaveRoomData()
 			World->RoomBackGroundTileDatas[CurRoomIndex.Y][CurRoomIndex.X].RoomBackGroundTileDatas[y][x] = { CurRoomBackGroundTiles[y][x]->GetCurSpriteName(), CurRoomBackGroundTiles[y][x]->GetCurIndex() };
 		}
 	}
+
+	World->RoomBackGroundDatas[CurRoomIndex.Y][CurRoomIndex.X] = World->GetRoom()->BackGround->Sprite->GetCurSpriteName();
 }
 
 void ATileMapEditorMode::LoadRoomData(FIntPoint _Index)
@@ -658,6 +681,8 @@ void ATileMapEditorMode::LoadRoomData(FIntPoint _Index)
 			CurRoomTiles[y][x]->SetSprite(CurLoadTilesData.RoomTileDatas[y][x].Name, CurLoadTilesData.RoomTileDatas[y][x].SpriteIndex);
 		}
 	}
+
+	World->GetRoom()->BackGround->SetBackGround(World->RoomBackGroundDatas[_Index.Y][_Index.X]);
 }
 
 void ATileMapEditorMode::PrevBackGroundImage()

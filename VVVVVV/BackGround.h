@@ -13,6 +13,8 @@ enum class EBackGroundType
 // Ό³Έν :
 class ABackGround : public AActor
 {
+public:
+	friend class ATileMapEditorMode;
 private:
 	INNER_CLASS struct Star;
 public:
@@ -28,7 +30,7 @@ private:
 	USpriteRenderer* Sprite = nullptr;
 	EBackGroundType CurBackGroundType = EBackGroundType::DEBUG;
 	std::vector<Star> Effects = {};
-	float AnimationSpeed = 160.f;
+	float AnimationSpeed = 320.f;
 	bool EffectValue = false;
 
 public:

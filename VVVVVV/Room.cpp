@@ -47,7 +47,7 @@ void ARoom::BeginPlay()
 			NewSprite->SetComponentScale(FVector2D(TileScale.X, TileScale.Y));
 			NewSprite->SetComponentLocation(FVector2D(TileScale.X * x + TileScale.X / 2, TileScale.Y * y + TileScale.Y / 2));
 			NewSprite->SetSprite("Debug Tile", 0);
-			NewSprite->SetOrder(ERenderOrder::BACK_TILE);
+			NewSprite->SetOrder(ERenderOrder::BACKGROUND_TILE);
 			BackGroundTiles[y].push_back(NewSprite);
 		}
 	}

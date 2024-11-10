@@ -1,6 +1,7 @@
 #pragma once
 #include <EnginePlatform/EngineWindowImage.h>
 
+class AEntity;
 class ABackGround;
 
 class ARoom : public AActor
@@ -23,6 +24,7 @@ private:
 	std::vector<std::vector<USpriteRenderer*>> Tiles = {};
 	std::vector<std::vector<USpriteRenderer*>> BackGroundTiles = {};
 	ABackGround* BackGround = nullptr;
+	std::vector<AEntity*> Entitys = {};
 
 public:
 	virtual void BeginPlay() override;

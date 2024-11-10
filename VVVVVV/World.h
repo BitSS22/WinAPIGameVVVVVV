@@ -23,6 +23,7 @@ private:
 	ARoom* Room = {};
 	std::vector<std::vector<RoomData>> RoomTileDatas = {};
 	std::vector<std::vector<RoomData>> RoomBackGroundTileDatas = {};
+	std::vector<std::vector<std::string>> RoomBackGroundDatas = {};
 
 public:
 	virtual void BeginPlay() override;

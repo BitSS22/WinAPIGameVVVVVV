@@ -41,6 +41,9 @@ namespace UEngineDebug
 
 	void PrintEngineDebugRender()
 	{
+		if (IsDebug == false)
+			return;
+
 		UEngineWindowImage* BackBuffer = UEngineAPICore::GetCore()->GetMainWindow().GetBackBufferImage();
 
 		for (size_t i = 0; i < DebugTexts.size(); ++i)

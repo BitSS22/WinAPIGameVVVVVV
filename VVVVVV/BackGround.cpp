@@ -14,7 +14,7 @@ void ABackGround::BeginPlay()
 	Sprite = CreateDefaultSubObject<USpriteRenderer>();
 	Sprite->SetSprite("Debug BackGround.png", 0);
 	Sprite->SetSpriteScale(1.f, Sprite->GetCurIndex());
-	Sprite->SetOrder(ERenderOrder::BACK_GROUND);
+	Sprite->SetOrder(ERenderOrder::BACKGROUND);
 	Sprite->SetComponentLocation(UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half());
 
 	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
@@ -24,30 +24,33 @@ void ABackGround::BeginPlay()
 		USpriteRenderer* StarSprite = CreateDefaultSubObject<USpriteRenderer>();
 		StarSprite->SetSprite("Stars", 0);
 		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
-		StarSprite->SetOrder(ERenderOrder::BACK_GROUND_EFFECT);
+		StarSprite->SetOrder(ERenderOrder::BACKGROUND_EFFECT);
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
 		StarSprite->SetActive(false);
-		Effects.push_back(Star(StarSprite, -100.f));
+		float RandNumber = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(-440.f, -360.f);
+		Effects.push_back(Star(StarSprite, RandNumber));
 	}
 	for (size_t i = 0; i < 10; ++i)
 	{
 		USpriteRenderer* StarSprite = CreateDefaultSubObject<USpriteRenderer>();
 		StarSprite->SetSprite("Stars", 1);
 		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
-		StarSprite->SetOrder(ERenderOrder::BACK_GROUND_EFFECT);
+		StarSprite->SetOrder(ERenderOrder::BACKGROUND_EFFECT);
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
 		StarSprite->SetActive(false);
-		Effects.push_back(Star(StarSprite, -150.f));
+		float RandNumber = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(-520.f, -400.f);
+		Effects.push_back(Star(StarSprite, RandNumber));
 	}
 	for (size_t i = 0; i < 20; ++i)
 	{
 		USpriteRenderer* StarSprite = CreateDefaultSubObject<USpriteRenderer>();
 		StarSprite->SetSprite("Stars", 2);
 		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
-		StarSprite->SetOrder(ERenderOrder::BACK_GROUND_EFFECT);
+		StarSprite->SetOrder(ERenderOrder::BACKGROUND_EFFECT);
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
 		StarSprite->SetActive(false);
-		Effects.push_back(Star(StarSprite, -200.f));
+		float RandNumber = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(-600.f, -440.f);
+		Effects.push_back(Star(StarSprite, RandNumber));
 	}
 }
 
@@ -107,6 +110,8 @@ void ABackGround::SetBackGround(std::string_view _Name)
 		CurBackGroundType = EBackGroundType::TOWER;
 	else if (_Name.find("ENDING") != std::string::npos)
 		CurBackGroundType = EBackGroundType::ENDING;
+	else
+		CurBackGroundType = EBackGroundType::DEBUG;
 
 	if (CurBackGroundType == EBackGroundType::SPACE)
 		SetEffect(true);

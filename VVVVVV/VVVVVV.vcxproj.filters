@@ -11,7 +11,7 @@
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>ContentsObject\Global</Filter>
+      <Filter>ContentsObject\Entity</Filter>
     </ClInclude>
     <ClInclude Include="TitleGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
@@ -37,6 +37,9 @@
     <ClInclude Include="Room.h">
       <Filter>ContentsObject\Map\World\Room</Filter>
     </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>ContentsObject\Entity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -49,7 +52,7 @@
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>ContentsObject\Global</Filter>
+      <Filter>ContentsObject\Entity</Filter>
     </ClCompile>
     <ClCompile Include="TitleGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
@@ -75,6 +78,9 @@
     <ClCompile Include="Room.cpp">
       <Filter>ContentsObject\Map\World\Room</Filter>
     </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>ContentsObject\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="pch">
@@ -88,9 +94,6 @@
     </Filter>
     <Filter Include="ContentsObject\GameMode">
       <UniqueIdentifier>{dd62fd73-dd9c-439a-bfa5-cecfa2f0a1fa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContentsObject\Global">
-      <UniqueIdentifier>{720a4477-9a73-4824-9bcb-fa23457e6975}</UniqueIdentifier>
     </Filter>
     <Filter Include="ContentsObject\GameMode\MapEditor">
       <UniqueIdentifier>{c74ca425-9334-4363-b47e-71edc5d3b195}</UniqueIdentifier>
@@ -112,6 +115,9 @@
     </Filter>
     <Filter Include="ContentsObject\Map\World\Room\BackGround">
       <UniqueIdentifier>{cad76ed6-02be-47e9-a6e0-3aac7c51eff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Entity">
+      <UniqueIdentifier>{720a4477-9a73-4824-9bcb-fa23457e6975}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
