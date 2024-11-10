@@ -26,6 +26,7 @@ void ABackGround::BeginPlay()
 		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
 		StarSprite->SetOrder(ERenderOrder::BACK_GROUND_EFFECT);
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
+		StarSprite->SetActive(false);
 		Effects.push_back(Star(StarSprite, -100.f));
 	}
 	for (size_t i = 0; i < 10; ++i)
@@ -35,6 +36,7 @@ void ABackGround::BeginPlay()
 		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
 		StarSprite->SetOrder(ERenderOrder::BACK_GROUND_EFFECT);
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
+		StarSprite->SetActive(false);
 		Effects.push_back(Star(StarSprite, -150.f));
 	}
 	for (size_t i = 0; i < 20; ++i)
@@ -44,12 +46,14 @@ void ABackGround::BeginPlay()
 		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
 		StarSprite->SetOrder(ERenderOrder::BACK_GROUND_EFFECT);
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
+		StarSprite->SetActive(false);
 		Effects.push_back(Star(StarSprite, -200.f));
 	}
 }
 
 void ABackGround::Tick()
 {
+	// Space Star Effect
 	if (EffectValue == true)
 	{
 		FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
@@ -68,16 +72,48 @@ void ABackGround::Tick()
 		}
 	}
 
-	if (KEY_PRESS('P'))
+	switch (CurBackGroundType)
 	{
-		Sprite->SetSprite("BackGrounds::23 Ending", 0);
-		SetEffect(false);
+	case EBackGroundType::HORIZONTAL:
+		Sprite->AddComponentLocation(FVector2D(-AnimationSpeed * GET_DELTA, 0.f));
+		if (Sprite->GetComponentLocation().X < UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half().X - 16.f)
+			Sprite->AddComponentLocation(FVector2D(32.f, 0.f));
+		break;
+	case EBackGroundType::VERTICAL:
+		Sprite->AddComponentLocation(FVector2D(0.f, -AnimationSpeed * GET_DELTA));
+		if (Sprite->GetComponentLocation().Y < UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half().Y - 16.f)
+			Sprite->AddComponentLocation(FVector2D(0.f, 32.f));
+		break;
+	case EBackGroundType::TOWER:
+		break;
 	}
+}
 
-	if (KEY_DOWN('O'))
-	{
-		Sprite->SetSprite("Debug BackGround.png", 0);
+void ABackGround::SetBackGround(std::string_view _Name)
+{
+	Sprite->SetSprite(_Name, 0);
+	UEngineSprite* SpriteImage = UImageManager::GetInst().FindSprite(_Name);
+	Sprite->SetComponentScale(SpriteImage->GetSpriteData(0).Transform.Scale);
+
+	EBackGroundType PrevType = CurBackGroundType;
+
+	if (_Name.find("SPACE") != std::string::npos)
+		CurBackGroundType = EBackGroundType::SPACE;
+	else if (_Name.find("HORIZONTAL") != std::string::npos)
+		CurBackGroundType = EBackGroundType::HORIZONTAL;
+	else if (_Name.find("VERTICAL") != std::string::npos)
+		CurBackGroundType = EBackGroundType::VERTICAL;
+	else if (_Name.find("TOWER") != std::string::npos)
+		CurBackGroundType = EBackGroundType::TOWER;
+	else if (_Name.find("ENDING") != std::string::npos)
+		CurBackGroundType = EBackGroundType::ENDING;
+
+	if (CurBackGroundType == EBackGroundType::SPACE)
 		SetEffect(true);
-	}
+	else
+		SetEffect(false);
+
+	if (PrevType != CurBackGroundType)
+		Sprite->SetComponentLocation(UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half());
 }
 

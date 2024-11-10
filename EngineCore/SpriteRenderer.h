@@ -84,6 +84,10 @@ public:
 		Pivot = _Pivot;
 	}
 	void SetPivotType(PivotType _Type);
+	void OffAnimation()
+	{
+		CurAnimation = nullptr;
+	}
 
 public:
 	INNER_CLASS struct FrameAnimation

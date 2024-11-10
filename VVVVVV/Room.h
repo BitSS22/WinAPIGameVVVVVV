@@ -27,6 +27,8 @@ private:
 public:
 	virtual void BeginPlay() override;
 
+	void SetupAnimationTiles();
+
 private:
 
 public:

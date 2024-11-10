@@ -241,41 +241,46 @@ void V6ContentsCore::TileImageLoad()
 
 void V6ContentsCore::BackGroundImageLoad()
 {
-	float X = 704.f;
-	float Y = 544.f;
+	float X = 672.f;
+	float Y = 480.f;
 
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::00 Space", FVector2D(4480.f, 1120.f), FVector2D(640.f, 480.f), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::00 Space", FVector2D(0.f, 3392.f), FVector2D(640.f, 480.f), FVector2D(0.f, 0.f), 1, 1);
 
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::01 Horizontal Cyan", FVector2D(X * 0, Y * 0), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::02 Horizontal Red", FVector2D(X * 1, Y * 0), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::03 Horizontal Pink", FVector2D(X * 2, Y * 0), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::04 Horizontal Blue", FVector2D(X * 3, Y * 0), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::05 Horizontal Yellow", FVector2D(X * 4, Y * 0), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::06 Horizontal Green", FVector2D(X * 5, Y * 0), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::07 Horizontal Grey", FVector2D(X * 6, Y * 0), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::01 Horizontal Cyan", FVector2D(X * 0, 0.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::02 Horizontal Red", FVector2D(X * 1, 0.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::03 Horizontal Pink", FVector2D(X * 2, 0.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::04 Horizontal Blue", FVector2D(X * 3, 0.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::05 Horizontal Yellow", FVector2D(X * 4, 0.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::06 Horizontal Green", FVector2D(X * 5, 0.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::07 Horizontal Grey", FVector2D(X * 6, 0.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
 
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::08 Vertical Cyan", FVector2D(X * 0, Y * 1), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::09 Vertical Red", FVector2D(X * 1, Y * 1), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::10 Vertical Pink", FVector2D(X * 2, Y * 1), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::11 Vertical Blue", FVector2D(X * 3, Y * 1), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::12 Vertical Yellow", FVector2D(X * 4, Y * 1), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::13 Vertical Green", FVector2D(X * 5, Y * 1), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::14 Vertical Grey", FVector2D(X * 6, Y * 1), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	X = 640.f;
+	Y = 512.f;
 
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::15 Tower Cyan", FVector2D(640.f * 0, Y * 2), FVector2D(640.f, 1920.f), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::16 Tower Red", FVector2D(640.f * 1, Y * 2), FVector2D(640.f, 1920.f), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::17 Tower Pink", FVector2D(640.f * 2, Y * 2), FVector2D(640.f, 1920.f), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::18 Tower Blue", FVector2D(640.f * 3, Y * 2), FVector2D(640.f, 1920.f), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::19 Tower Yellow", FVector2D(640.f * 4, Y * 2), FVector2D(640.f, 1920.f), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::20 Tower Green", FVector2D(640.f * 5, Y * 2), FVector2D(640.f, 1920.f), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::21 Tower Grey", FVector2D(640.f * 6, Y * 2), FVector2D(640.f, 1920.f), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::08 Vertical Cyan", FVector2D(X * 0, 480.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::09 Vertical Red", FVector2D(X * 1, 480.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::10 Vertical Pink", FVector2D(X * 2, 480.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::11 Vertical Blue", FVector2D(X * 3, 480.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::12 Vertical Yellow", FVector2D(X * 4, 480.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::13 Vertical Green", FVector2D(X * 5, 480.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::14 Vertical Grey", FVector2D(X * 6, 480.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
 
+	X = 640.f;
+	Y = 2400.f;
 
-	// Effect
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "Stars", FVector2D(4480.f, 1088.f), FVector2D(8.f, 8.f), FVector2D(0.f, 0.f), 3, 3);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::15 Tower Cyan", FVector2D(X * 0, 992.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::16 Tower Red", FVector2D(X * 1, 992.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::17 Tower Pink", FVector2D(X * 2, 992.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::18 Tower Blue", FVector2D(X * 3, 992.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::19 Tower Yellow", FVector2D(X * 4, 992.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::20 Tower Green", FVector2D(X * 5, 992.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::21 Tower Grey", FVector2D(X * 6, 992.f), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
 
 	// Ending Image
-	UImageManager::GetInst().CreateCutSprite("EndingScreen.png", "BackGrounds::23 Ending", FVector2D(0.f, 0.f), FVector2D(640.f, 480.f), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("EndingScreen.png", "BackGrounds::22 Ending", FVector2D(0.f, 0.f), FVector2D(640.f, 480.f), FVector2D(0.f, 0.f), 1, 1);
+
+	// Effect
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "Stars", FVector2D(640.f, 3392.f), FVector2D(8.f, 8.f), FVector2D(0.f, 0.f), 3, 3);
 }
 
 void V6ContentsCore::PlayerImageLoad()

@@ -87,6 +87,7 @@ void USpriteRenderer::SetSprite(std::string_view _Name, int _Index)
 
 	if (Sprite == nullptr)
 		MSGASSERT(nullptr, _Name, "은 로드 되지 않은 Image입니다.");
+	ChangeAnimation(_Name);
 
 	CurIndex = _Index;
 }
@@ -181,7 +182,11 @@ void USpriteRenderer::ChangeAnimation(std::string_view _AnimationName, bool _For
 	string UpperName = UEngineString::ToUpper(_AnimationName);
 
 	if (FrameAnimations.contains(UpperName) == false)
-		MSGASSERT(nullptr, _AnimationName, "이라는 Animation은 없습니다.");
+	{
+		OffAnimation();
+		return;
+	}
+		//MSGASSERT(nullptr, _AnimationName, "이라는 Animation은 없습니다.");
 
 	FrameAnimation* ChangeAnimation = &FrameAnimations[UpperName];
 

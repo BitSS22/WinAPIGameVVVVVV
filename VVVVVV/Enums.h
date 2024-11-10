@@ -32,12 +32,3 @@ enum class EColorType
 	GREY,
 	SIZE
 };
-
-enum class EBackGroundType
-{
-	SPACE,
-	HORIZONTAL,
-	VERTICAL,
-	TOWER,
-	SIZE
-};

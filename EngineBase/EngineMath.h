@@ -217,6 +217,12 @@ public:
 			MSGASSERT(nullptr, "0으로 나눌 수 없습니다.");
 		return FIntPoint(X / _Value, Y / _Value);
 	}
+	FIntPoint operator/ (FIntPoint _Value) const
+	{
+		if (_Value.X == 0 || _Value.Y == 0)
+			MSGASSERT(nullptr, "0으로 나눌 수 없습니다.");
+		return FIntPoint(X / _Value.X, Y / _Value.Y);
+	}
 	bool operator== (FIntPoint _Other) const
 	{
 		return X == _Other.X && Y == _Other.Y;

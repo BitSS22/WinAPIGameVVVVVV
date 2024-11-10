@@ -1,5 +1,15 @@
 #pragma once
 
+enum class EBackGroundType
+{
+	SPACE,
+	HORIZONTAL,
+	VERTICAL,
+	TOWER,
+	ENDING,
+	DEBUG
+};
+
 // Ό³Έν :
 class ABackGround : public AActor
 {
@@ -16,7 +26,9 @@ public:
 
 private:
 	USpriteRenderer* Sprite = nullptr;
+	EBackGroundType CurBackGroundType = EBackGroundType::DEBUG;
 	std::vector<Star> Effects = {};
+	float AnimationSpeed = 160.f;
 	bool EffectValue = false;
 
 public:
@@ -32,10 +44,7 @@ private:
 	}
 
 public:
-	void SetBackGround(std::string_view _Name)
-	{
-		Sprite->SetSprite(_Name, 0);
-	}
+	void SetBackGround(std::string_view _Name);
 
 private:
 	INNER_CLASS struct Star
