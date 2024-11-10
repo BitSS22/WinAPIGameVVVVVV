@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "TileMapEditorMode.h"
 #include "Player.h"
-#include "AnimationManager.h"
 
 ATileMapEditorMode::ATileMapEditorMode()
 {
@@ -16,7 +15,6 @@ void ATileMapEditorMode::BeginPlay()
 	Super::BeginPlay();
 
 	World = GetWorld()->SpawnActor<AWorld>();
-	GetWorld()->SpawnActor<AAnimationManager>();
 
 	// 커서 스프라이트
 	USpriteRenderer* NewSelectSprite = CreateDefaultSubObject<USpriteRenderer>();
@@ -31,10 +29,8 @@ void ATileMapEditorMode::BeginPlay()
 	string SearchName0 = UEngineString::ToUpper("BackGroundTiles::");
 	string SearchName1 = UEngineString::ToUpper("CollisionTiles::");
 	string SearchName2 = UEngineString::ToUpper("SpikeTiles::");
-	string SearchName3 = UEngineString::ToUpper("AnimationTiles::");
-	string SearchName4 = UEngineString::ToUpper("RailTiles::");
 
-	string SearchName5 = UEngineString::ToUpper("BackGrounds::");
+	string SearchName3 = UEngineString::ToUpper("BackGrounds::");
 
 	for (auto& Sprite : SpritesList)
 	{
@@ -45,8 +41,6 @@ void ATileMapEditorMode::BeginPlay()
 		else if (std::string::npos != Sprite.first.find(SearchName2))
 			AddSpikeTileList(Sprite.first);
 		else if (std::string::npos != Sprite.first.find(SearchName3))
-			AddRailTileList(Sprite.first);
-		else if (std::string::npos != Sprite.first.find(SearchName4))
 			AddBackGroundList(Sprite.first);
 	}
 
@@ -72,12 +66,6 @@ void ATileMapEditorMode::Tick()
 	// 마우스 타일 격자 표시
 	FIntPoint TileCursorPos = FIntPoint(CursorPos.X - (CursorPos.X % TileSize.X) + TileSize.X / 2, CursorPos.Y - (CursorPos.Y % TileSize.Y) + TileSize.Y / 2);
 	CurSelectSprite->SetComponentLocation(FVector2D(TileCursorPos.fX(), TileCursorPos.fY()));
-
-	if (KEY_DOWN(VK_SPACE))
-	{
-		USpriteRenderer* Sprite = AAnimationManager::GetInst()->GetTileAnimation("RailTiles::08 Rail Right Cyan");
-		CurSelectSprite->CopySprite(Sprite);
-	}
 
 	if (KEY_PRESS(VK_LBUTTON))
 	{
@@ -151,12 +139,6 @@ void ATileMapEditorMode::Tick()
 		break;
 	case TileList::SpikeTileList:
 		CurTileList = "SpikeTiles";
-		break;
-	case TileList::AnimationTileList:
-		CurTileList = "AnimationTiles";
-		break;
-	case TileList::RailTileList:
-		CurTileList = "RailTiles";
 		break;
 	default:
 		break;
@@ -445,7 +427,6 @@ void ATileMapEditorMode::ChangeTile(bool _AroundTileChange)
 	int MaxIndex = CurSelectSprite->GetMaxIndex();
 
 	CurSelectTileMap[YTileIndex][XTileIndex]->SetSprite(CurSelectSprite->GetCurSpriteName(), CurSelectSprite->GetCurIndex());
-	CurSelectTileMap[YTileIndex][XTileIndex]->CopySprite(CurSelectSprite);
 
 	// Auto Tile은 주변 3X3 타일을 조사한다.
 	if ((_AroundTileChange || CurSelectSprite->GetCurIndex() == 45) && MaxIndex >= 47)
@@ -483,7 +464,6 @@ void ATileMapEditorMode::DeleteTile(bool _AroundTileChange)
 
 	string PrevName = CurSelectTileMap[YTileIndex][XTileIndex]->GetCurSpriteName();
 	int MaxIndex = CurSelectTileMap[YTileIndex][XTileIndex]->GetMaxIndex();
-	CurSelectTileMap[YTileIndex][XTileIndex]->CopySprite(CurSelectSprite);
 
 	// Auto Tile은 주변 3X3 타일을 조사한다.
 	if ((_AroundTileChange || CurSelectSprite->GetCurIndex() == 45) && MaxIndex >= 47)
@@ -508,7 +488,6 @@ void ATileMapEditorMode::NextTileList()
 	++CurSelectTileList;
 	CurSelectSprite->SetSprite(TileLists[static_cast<int>(CurSelectTileList)][0], 0);
 	CurTileSetIndex = 0;
-	CurSelectSprite->OffAnimation();
 }
 
 void ATileMapEditorMode::PrevTileList()
@@ -516,7 +495,6 @@ void ATileMapEditorMode::PrevTileList()
 	--CurSelectTileList;
 	CurSelectSprite->SetSprite(TileLists[static_cast<int>(CurSelectTileList)][0], 0);
 	CurTileSetIndex = 0;
-	CurSelectSprite->OffAnimation();
 }
 
 void ATileMapEditorMode::PrevTileSet()
@@ -532,7 +510,6 @@ void ATileMapEditorMode::PrevTileSet()
 		Curindex = Sprite->GetSpriteCount() - 1;
 
 	CurSelectSprite->SetSprite(TileLists[static_cast<int>(CurSelectTileList)][CurTileSetIndex], Curindex);
-	CurSelectSprite->OffAnimation();
 }
 
 void ATileMapEditorMode::NextTileSet()
@@ -548,7 +525,6 @@ void ATileMapEditorMode::NextTileSet()
 		Curindex = Sprite->GetSpriteCount() - 1;
 
 	CurSelectSprite->SetSprite(TileLists[static_cast<int>(CurSelectTileList)][CurTileSetIndex], Curindex);
-	CurSelectSprite->OffAnimation();
 }
 
 void ATileMapEditorMode::PrevTile()
@@ -600,8 +576,9 @@ void ATileMapEditorMode::PickUpTile()
 	CurSelectSprite->SetSprite(SelectTileMap[TileIndex.Y][TileIndex.X]->GetCurSpriteName(), SelectTileMap[TileIndex.Y][TileIndex.X]->GetCurIndex());
 }
 
-void ATileMapEditorMode::DrawingRect()
+void ATileMapEditorMode::DrawingRect(FIntPoint _Start, FIntPoint _End)
 {
+
 	// TODO. 사각형을 자동으로 그려주는 함수 작성
 }
 

@@ -167,7 +167,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="AnimationManager.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h">
       <SubType>
@@ -212,7 +211,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

@@ -9,8 +9,6 @@ enum class TileList
 	BackGroundTileList,
 	TileList,
 	SpikeTileList,
-	AnimationTileList,
-	RailTileList,
 	BackGroundList,
 	LAST
 };
@@ -51,8 +49,6 @@ private:
 			break;
 		case TileList::TileList:
 		case TileList::SpikeTileList:
-		case TileList::AnimationTileList:
-		case TileList::RailTileList: 
 			return World->GetRoom()->Tiles;
 			break;
 		default:
@@ -75,7 +71,7 @@ private:
 	void ShowBackGroundTiles();
 
 	void PickUpTile();
-	void DrawingRect();
+	void DrawingRect(FIntPoint _Start, FIntPoint _End);
 
 	void MoveRoom(FIntPoint _Index);
 
@@ -93,14 +89,6 @@ private:
 	void AddSpikeTileList(std::string_view _Name)
 	{
 		TileLists[static_cast<int>(TileList::SpikeTileList)].push_back(_Name.data());
-	}
-	void AddAnimationTileList(std::string_view _Name)
-	{
-		TileLists[static_cast<int>(TileList::AnimationTileList)].push_back(_Name.data());
-	}
-	void AddRailTileList(std::string_view _Name)
-	{
-		TileLists[static_cast<int>(TileList::RailTileList)].push_back(_Name.data());
 	}
 	void AddBackGroundList(std::string_view _Name)
 	{
