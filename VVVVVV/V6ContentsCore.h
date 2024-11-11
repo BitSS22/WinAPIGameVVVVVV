@@ -30,7 +30,10 @@ private:
 	void BackGroundImageLoad();
 	void PlayerImageLoad();
 	void FontImageLoad();
+
 	void BackGroundObjectImageLoad();
+
+	void FlatformImageLoad();
 	void InterObjectImageLoad();
 	void EnermyImageLoad();
 

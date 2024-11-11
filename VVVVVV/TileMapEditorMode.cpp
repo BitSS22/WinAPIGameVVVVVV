@@ -23,32 +23,8 @@ void ATileMapEditorMode::BeginPlay()
 	NewSelectSprite->SetOrder(ERenderOrder::EDITOR_CURSOR);
 	CurSelectSprite = NewSelectSprite;
 
-	// 리소스 리스트 만들기
-	const auto& SpritesList = UImageManager::GetInst().ViewSprites();
 
-	string BackGroundTiles = UEngineString::ToUpper("BackGroundTiles::");
-	string CollisionTiles = UEngineString::ToUpper("CollisionTiles::");
-	string SpikeTiles = UEngineString::ToUpper("SpikeTiles::");
-	string AnimationTiles = UEngineString::ToUpper("AnimationTiles::");
-	string RailTiles = UEngineString::ToUpper("RailTiles::");
-
-	string BackGrounds = UEngineString::ToUpper("BackGrounds::");
-
-	for (auto& Sprite : SpritesList)
-	{
-		if (std::string::npos != Sprite.first.find(BackGroundTiles))
-			AddBackGroundTileList(Sprite.first);
-		else if (std::string::npos != Sprite.first.find(CollisionTiles))
-			AddTileList(Sprite.first);
-		else if (std::string::npos != Sprite.first.find(SpikeTiles))
-			AddSpikeTileList(Sprite.first);
-		else if (std::string::npos != Sprite.first.find(AnimationTiles))
-			AddAnimationTileList(Sprite.first);
-		else if (std::string::npos != Sprite.first.find(RailTiles))
-			AddAnimationTileList(Sprite.first);
-		else if (std::string::npos != Sprite.first.find(BackGrounds))
-			AddBackGroundList(Sprite.first);
-	}
+	LoadResourceList();
 
 	// Set Debug
 	UEngineDebug::SetIsDebug(true);
@@ -174,57 +150,7 @@ void ATileMapEditorMode::Tick()
 		MoveRoom(RoomIndex);
 	}
 
-
-
-
-	// DEBUG TEXT
-	string CurTileList = {};
-
-	switch (CurSelectTileList)
-	{
-	case TileList::BackGroundTileList:
-		CurTileList = "BackGroundTiles";
-		break;
-	case TileList::TileList:
-		CurTileList = "Tiles";
-		break;
-	case TileList::SpikeTileList:
-		CurTileList = "SpikeTiles";
-		break;
-	case TileList::AnimationTileList:
-		CurTileList = "AnimationTiles";
-		break;
-	default:
-		break;
-	}
-
-	string str = "Selected Tile List : ";
-	str += CurTileList;
-	UEngineDebug::CoreOutputString(str);
-
-	str = "World Index : ";
-	str += std::to_string(RoomIndex.X);
-	str += ", ";
-	str += std::to_string(RoomIndex.Y);
-	UEngineDebug::CoreOutputString(str);
-
-	str = "Tile Set Index : ";
-	str += std::to_string(CurTileSetIndex);
-	UEngineDebug::CoreOutputString(str);
-
-	str = "Select Tile Name : ";
-	str += CurSelectSprite->GetCurSpriteName();
-	str += ", Index : ";
-	str += std::to_string(CurSelectSprite->GetCurIndex());
-	UEngineDebug::CoreOutputString(str);
-
-	FIntPoint TileCursorIndex = World->GetRoom()->GetOnTileIndex(CursorPos);
-
-	str = "On Tile Name : ";
-	str += GetCurSelectTileMap()[TileCursorIndex.Y][TileCursorIndex.X]->GetCurSpriteName();
-	str += ", Index : ";
-	str += std::to_string(GetCurSelectTileMap()[TileCursorIndex.Y][TileCursorIndex.X]->GetCurIndex());
-	UEngineDebug::CoreOutputString(str);
+	DebugText();
 }
 
 int ATileMapEditorMode::AroundTileChange(const string& _Name, int _X, int _Y)
@@ -692,6 +618,102 @@ void ATileMapEditorMode::LoadRoomData(FIntPoint _Index)
 	World->GetRoom()->BackGround->SetBackGround(World->RoomBackGroundDatas[_Index.Y][_Index.X]);
 }
 
+void ATileMapEditorMode::LoadResourceList()
+{
+	// 리소스 리스트 만들기
+	const auto& SpritesList = UImageManager::GetInst().ViewSprites();
+
+	string BackGroundTiles = UEngineString::ToUpper("BackGroundTiles::");
+	string CollisionTiles = UEngineString::ToUpper("CollisionTiles::");
+	string SpikeTiles = UEngineString::ToUpper("SpikeTiles::");
+	string AnimationTiles = UEngineString::ToUpper("AnimationTiles::");
+	string RailTiles = UEngineString::ToUpper("RailTiles::");
+
+	string BackGrounds = UEngineString::ToUpper("BackGrounds::");
+
+	string Platforms = UEngineString::ToUpper("Platforms::");
+	string InterObjects = UEngineString::ToUpper("InterObjects::");
+	string Enemies = UEngineString::ToUpper("Enemies::");
+
+	for (auto& Sprite : SpritesList)
+	{
+		if (std::string::npos != Sprite.first.find(BackGroundTiles))
+			AddBackGroundTileList(Sprite.first);
+		else if (std::string::npos != Sprite.first.find(CollisionTiles))
+			AddTileList(Sprite.first);
+		else if (std::string::npos != Sprite.first.find(SpikeTiles))
+			AddSpikeTileList(Sprite.first);
+		else if (std::string::npos != Sprite.first.find(AnimationTiles))
+			AddAnimationTileList(Sprite.first);
+		else if (std::string::npos != Sprite.first.find(RailTiles))
+			AddAnimationTileList(Sprite.first);
+		else if (std::string::npos != Sprite.first.find(BackGrounds))
+			AddBackGroundList(Sprite.first);
+
+		else if (std::string::npos != Sprite.first.find(Platforms))
+			AddPlatformList(Sprite.first);
+		else if (std::string::npos != Sprite.first.find(InterObjects))
+			AddInterObjectList(Sprite.first);
+		else if (std::string::npos != Sprite.first.find(Enemies))
+			AddEnermyList(Sprite.first);
+	}
+}
+
+void ATileMapEditorMode::DebugText()
+{
+	FIntPoint CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
+	FIntPoint RoomIndex = World->CurRoomIndex;
+
+	// DEBUG TEXT
+	string CurTileList = {};
+
+	switch (CurSelectTileList)
+	{
+	case TileList::BackGroundTileList:
+		CurTileList = "BackGroundTiles";
+		break;
+	case TileList::TileList:
+		CurTileList = "Tiles";
+		break;
+	case TileList::SpikeTileList:
+		CurTileList = "SpikeTiles";
+		break;
+	case TileList::AnimationTileList:
+		CurTileList = "AnimationTiles";
+		break;
+	default:
+		break;
+	}
+
+	string str = "Selected Tile List : ";
+	str += CurTileList;
+	UEngineDebug::CoreOutputString(str);
+
+	str = "World Index : ";
+	str += std::to_string(RoomIndex.X);
+	str += ", ";
+	str += std::to_string(RoomIndex.Y);
+	UEngineDebug::CoreOutputString(str);
+
+	str = "Tile Set Index : ";
+	str += std::to_string(CurTileSetIndex);
+	UEngineDebug::CoreOutputString(str);
+
+	str = "Select Tile Name : ";
+	str += CurSelectSprite->GetCurSpriteName();
+	str += ", Index : ";
+	str += std::to_string(CurSelectSprite->GetCurIndex());
+	UEngineDebug::CoreOutputString(str);
+
+	FIntPoint TileCursorIndex = World->GetRoom()->GetOnTileIndex(CursorPos);
+
+	str = "On Tile Name : ";
+	str += GetCurSelectTileMap()[TileCursorIndex.Y][TileCursorIndex.X]->GetCurSpriteName();
+	str += ", Index : ";
+	str += std::to_string(GetCurSelectTileMap()[TileCursorIndex.Y][TileCursorIndex.X]->GetCurIndex());
+	UEngineDebug::CoreOutputString(str);
+}
+
 void ATileMapEditorMode::PrevBackGroundImage()
 {
 	--CurBackGroundIndex;
@@ -724,4 +746,20 @@ TileList& operator--(TileList& _List)
 	if (--Value < 0)
 		Value = static_cast<int>(TileList::LAST) - 2;
 	return _List = static_cast<TileList>(Value);
+}
+
+ObjectList& operator++(ObjectList& _List)
+{
+	int Value = static_cast<int>(_List);
+	if (++Value >= static_cast<int>(ObjectList::LAST))
+		Value = 0;
+	return _List = static_cast<ObjectList>(Value);
+}
+
+ObjectList& operator--(ObjectList& _List)
+{
+	int Value = static_cast<int>(_List);
+	if (--Value < 0)
+		Value = static_cast<int>(ObjectList::LAST) - 1;
+	return _List = static_cast<ObjectList>(Value);
 }

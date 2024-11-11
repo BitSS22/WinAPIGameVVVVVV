@@ -67,8 +67,12 @@ void V6ContentsCore::ResourceSpriteLoad()
 	BackGroundImageLoad();
 	PlayerImageLoad();
 	FontImageLoad();
+	
 	BackGroundObjectImageLoad();
+
+	FlatformImageLoad();
 	InterObjectImageLoad();
+	EnermyImageLoad();
 }
 
 void V6ContentsCore::TileImageLoad()
@@ -397,12 +401,31 @@ void V6ContentsCore::BackGroundObjectImageLoad()
 	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "CommsRelayRadar", FVector2D(834.f, 26.f), FVector2D(128.f, 128.f), FVector2D(6.f, 0.f), 4, 4);
 }
 
+void V6ContentsCore::FlatformImageLoad()
+{
+	float X = 64.f;
+	float Y = 16.f;
+
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::01 Platforms Cyan", FVector2D(X * 0, Y * 0), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::02 Platforms Pink", FVector2D(X * 0, Y * 1), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::03 Platforms Red", FVector2D(X * 0, Y * 2), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::04 Platforms Blue", FVector2D(X * 0, Y * 3), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::05 Platforms Yellow", FVector2D(X * 0, Y * 4), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::06 Platforms Green", FVector2D(X * 0, Y * 5), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::07 Platforms Grey", FVector2D(X * 0, Y * 6), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
+
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::08 Platforms Hide Cyan", FVector2D(X * 0, Y * 0), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::09 Platforms Hide Pink", FVector2D(X * 0, Y * 1), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::10 Platforms Hide Red", FVector2D(X * 0, Y * 2), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::11 Platforms Hide Blue", FVector2D(X * 0, Y * 3), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::12 Platforms Hide Yellow", FVector2D(X * 0, Y * 4), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::13 Platforms Hide Green", FVector2D(X * 0, Y * 5), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::14 Platforms Hide Grey", FVector2D(X * 0, Y * 6), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
+}
+
 void V6ContentsCore::InterObjectImageLoad()
 {
-	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "Terminal", FVector2D(8.f, 26.f), FVector2D(32.f, 32.f), FVector2D(6.f, 0.f), 2, 2);
-	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "WarpToken", FVector2D(8.f, 78.f), FVector2D(32.f, 32.f), FVector2D(6.f, 0.f), 2, 2);
-	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "CheckPoint", FVector2D(8.f, 130.f), FVector2D(32.f, 32.f), FVector2D(6.f, 0.f), 2, 2);
-	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "Trinket", FVector2D(162.f, 26.f), FVector2D(32.f, 32.f), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "InterObjects::01 Terminal", FVector2D(8.f, 26.f), FVector2D(32.f, 32.f), FVector2D(6.f, 0.f), 2, 2);
 }
 
 void V6ContentsCore::EnermyImageLoad()
@@ -581,8 +604,8 @@ void V6ContentsCore::EnermyImageLoad()
 	StartPosX = 862.f;
 	StartPosY = 70.f;
 	CuttingSize = FVector2D(64.f, 64.f);
-	UnitXCount = 2;
-	UnitTotalCount = 2;
+	UnitXCount = 1;
+	UnitTotalCount = 1;
 	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::092 TV Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::093 TV Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::094 TV Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
@@ -590,227 +613,227 @@ void V6ContentsCore::EnermyImageLoad()
 	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::096 TV Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::097 TV Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::098 TV Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	
+
+	StartPosX = 932.f;
+	StartPosY = 70.f;
+	CuttingSize = FVector2D(64.f, 64.f);
+	UnitXCount = 1;
+	UnitTotalCount = 1;
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::099 TV Reverse Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::100 TV Reverse Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::101 TV Reverse Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::102 TV Reverse Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::103 TV Reverse Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::104 TV Reverse Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::105 TV Reverse Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+
 	StartPosX = 862.f;
 	StartPosY = 160.f;
 	CuttingSize = FVector2D(88.f, 20.f);
 	UnitXCount = 1;
 	UnitTotalCount = 1;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::099 TRUTH Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::100 TRUTH Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::101 TRUTH Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::102 TRUTH Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::103 TRUTH Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::104 TRUTH Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::105 TRUTH Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::106 TRUTH Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::107 TRUTH Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::108 TRUTH Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::109 TRUTH Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::110 TRUTH Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::111 TRUTH Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::112 TRUTH Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 956.f;
 	StartPosY = 140.f;
 	CuttingSize = FVector2D(54.f, 24.f);
 	UnitXCount = 1;
 	UnitTotalCount = 1;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::106 LIES Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::107 LIES Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::108 LIES Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::109 LIES Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::110 LIES Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::111 LIES Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::112 LIES Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::113 LIES Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::114 LIES Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::115 LIES Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::116 LIES Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::117 LIES Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::118 LIES Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::119 LIES Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 862.f;
 	StartPosY = 170.f;
 	CuttingSize = FVector2D(30.f, 48.f);
 	UnitXCount = 4;
 	UnitTotalCount = 4;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::113 Skull Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::114 Skull Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::115 Skull Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::116 Skull Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::117 Skull Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::118 Skull Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::119 Skull Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::120 Skull Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::121 Skull Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::122 Skull Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::123 Skull Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::124 Skull Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::125 Skull Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::126 Skull Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 330.f;
 	StartPosY = 198.f;
 	CuttingSize = FVector2D(36.f, 50.f);
 	UnitXCount = 2;
 	UnitTotalCount = 2;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::120 Mannequin Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::121 Mannequin Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::122 Mannequin Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::123 Mannequin Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::124 Mannequin Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::125 Mannequin Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::126 Mannequin Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::127 Mannequin Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::128 Mannequin Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::129 Mannequin Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::130 Mannequin Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::131 Mannequin Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::132 Mannequin Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::133 Mannequin Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 414.f;
 	StartPosY = 198.f;
 	CuttingSize = FVector2D(32.f, 32.f);
 	UnitXCount = 4;
 	UnitTotalCount = 4;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::127 Fish Right Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::128 Fish Right Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::129 Fish Right Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::130 Fish Right Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::131 Fish Right Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::132 Fish Right Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::133 Fish Right Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::134 Fish Right Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::135 Fish Right Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::136 Fish Right Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::137 Fish Right Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::138 Fish Right Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::139 Fish Right Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::140 Fish Right Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 414.f;
 	StartPosY = 236.f;
 	CuttingSize = FVector2D(32.f, 32.f);
 	UnitXCount = 4;
 	UnitTotalCount = 4;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::134 Fish Left Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::135 Fish Left Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::136 Fish Left Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::137 Fish Left Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::138 Fish Left Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::139 Fish Left Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::140 Fish Left Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::141 Fish Left Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::142 Fish Left Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::143 Fish Left Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::144 Fish Left Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::145 Fish Left Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::146 Fish Left Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::147 Fish Left Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 566.f;
 	StartPosY = 198.f;
 	CuttingSize = FVector2D(120.f, 32.f);
 	UnitXCount = 1;
 	UnitTotalCount = 1;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::141 0008 Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::142 0008 Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::143 0008 Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::144 0008 Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::145 0008 Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::146 0008 Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::147 0008 Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::148 0008 Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::149 0008 Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::150 0008 Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::151 0008 Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::152 0008 Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::153 0008 Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::154 0008 Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 566.f;
 	StartPosY = 236.f;
 	CuttingSize = FVector2D(120.f, 32.f);
 	UnitXCount = 1;
 	UnitTotalCount = 1;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::148 8000 Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::149 8000 Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::150 8000 Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::151 8000 Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::152 8000 Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::153 8000 Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::154 8000 Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::155 8000 Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::156 8000 Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::157 8000 Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::158 8000 Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::159 8000 Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::160 8000 Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::161 8000 Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 692.f;
 	StartPosY = 198.f;
 	CuttingSize = FVector2D(64.f, 64.f);
 	UnitXCount = 1;
 	UnitTotalCount = 1;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::155 Big Circle Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::156 Big Circle Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::157 Big Circle Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::158 Big Circle Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::159 Big Circle Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::160 Big Circle Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::161 Big Circle Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::162 Big Circle Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::163 Big Circle Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::164 Big Circle Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::165 Big Circle Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::166 Big Circle Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::167 Big Circle Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::168 Big Circle Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 762.f;
 	StartPosY = 198.f;
 	CuttingSize = FVector2D(64.f, 64.f);
 	UnitXCount = 1;
 	UnitTotalCount = 1;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::162 Big Rectangle Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::163 Big Rectangle Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::164 Big Rectangle Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::165 Big Rectangle Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::166 Big Rectangle Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::167 Big Rectangle Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::168 Big Rectangle Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::169 Big Rectangle Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::170 Big Rectangle Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::171 Big Rectangle Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::172 Big Rectangle Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::173 Big Rectangle Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::174 Big Rectangle Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::175 Big Rectangle Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 1002.f;
 	StartPosY = 0.f;
 	CuttingSize = FVector2D(64.f, 42.f);
 	UnitXCount = 1;
 	UnitTotalCount = 1;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::169 Cloud Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::170 Cloud Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::171 Cloud Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::172 Cloud Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::173 Cloud Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::174 Cloud Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::175 Cloud Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::176 Cloud Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::177 Cloud Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::178 Cloud Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::179 Cloud Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::180 Cloud Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::181 Cloud Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::182 Cloud Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 1002.f;
 	StartPosY = 48.f;
 	CuttingSize = FVector2D(48.f, 32.f);
 	UnitXCount = 1;
 	UnitTotalCount = 1;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::176 Chimney Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::177 Chimney Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::178 Chimney Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::179 Chimney Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::180 Chimney Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::181 Chimney Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::182 Chimney Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::183 Chimney Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::184 Chimney Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::185 Chimney Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::186 Chimney Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::187 Chimney Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::188 Chimney Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::189 Chimney Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 1072.f;
 	StartPosY = 0.f;
 	CuttingSize = FVector2D(32.f, 32.f);
 	UnitXCount = 4;
 	UnitTotalCount = 4;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::183 CD Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::184 CD Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::185 CD Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::186 CD Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::187 CD Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::188 CD Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::189 CD Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::190 CD Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::191 CD Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::192 CD Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::193 CD Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::194 CD Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::195 CD Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::196 CD Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 1072.f;
 	StartPosY = 38.f;
 	CuttingSize = FVector2D(32.f, 32.f);
 	UnitXCount = 4;
 	UnitTotalCount = 4;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::190 Shuriken Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::191 Shuriken Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::192 Shuriken Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::193 Shuriken Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::194 Shuriken Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::195 Shuriken Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::196 Shuriken Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::197 Shuriken Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::198 Shuriken Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::199 Shuriken Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::200 Shuriken Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::201 Shuriken Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::202 Shuriken Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::203 Shuriken Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 1072.f;
 	StartPosY = 76.f;
 	CuttingSize = FVector2D(32.f, 32.f);
 	UnitXCount = 4;
 	UnitTotalCount = 4;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::197 Coin Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::198 Coin Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::199 Coin Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::200 Coin Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::201 Coin Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::202 Coin Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::203 Coin Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::204 Coin Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::205 Coin Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::206 Coin Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::207 Coin Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::208 Coin Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::209 Coin Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::210 Coin Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 1072.f;
 	StartPosY = 114.f;
 	CuttingSize = FVector2D(32.f, 32.f);
-	UnitXCount = 2;
-	UnitTotalCount = 2;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::204 RingV Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::205 RingV Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::206 RingV Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::207 RingV Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::208 RingV Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::209 RingV Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::210 RingV Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-
-	StartPosX = 1148.f;
-	StartPosY = 114.f;
-	CuttingSize = FVector2D(32.f, 32.f);
-	UnitXCount = 2;
-	UnitTotalCount = 2;
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::211 RingH Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::212 RingH Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::213 RingH Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::214 RingH Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::215 RingH Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::216 RingH Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::217 RingH Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UnitXCount = 4;
+	UnitTotalCount = 4;
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::211 Ring Cyan", FVector2D(StartPosX, StartPosY + ColorOffsetY * 0), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::212 Ring Pink", FVector2D(StartPosX, StartPosY + ColorOffsetY * 1), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::213 Ring Red", FVector2D(StartPosX, StartPosY + ColorOffsetY * 2), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::214 Ring Blue", FVector2D(StartPosX, StartPosY + ColorOffsetY * 3), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::215 Ring Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::216 Ring Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
+	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::217 Ring Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 1072.f;
 	StartPosY = 152.f;
@@ -889,5 +912,4 @@ void V6ContentsCore::EnermyImageLoad()
 	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::257 Spike Yellow", FVector2D(StartPosX, StartPosY + ColorOffsetY * 4), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::258 Spike Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::259 Spike Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
-
 }
