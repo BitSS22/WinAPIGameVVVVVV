@@ -8,6 +8,7 @@ public:
 	friend class ATileMapEditorMode;
 	INNER_CLASS struct RoomData;
 	INNER_CLASS struct RoomTileData;
+	INNER_CLASS struct EntityData;
 public:
 	AWorld();
 	~AWorld();
@@ -24,6 +25,7 @@ private:
 	std::vector<std::vector<RoomData>> RoomTileDatas = {};
 	std::vector<std::vector<RoomData>> RoomBackGroundTileDatas = {};
 	std::vector<std::vector<std::string>> RoomBackGroundDatas = {};
+	std::vector<std::vector<EntityData>> EntityDatas = {};
 
 public:
 	virtual void BeginPlay() override;
@@ -51,6 +53,14 @@ public:
 	}
 
 public:
+	INNER_CLASS struct EntityData
+	{
+		std::string Name = "Debug Tile";
+		FVector2D Pos = {};
+		FVector2D StartPos = {};
+		FVector2D EndPos = {};
+		float Speed = 0.f;
+	};
 	INNER_CLASS struct RoomTileData
 	{
 	public:

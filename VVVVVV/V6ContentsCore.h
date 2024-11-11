@@ -32,6 +32,7 @@ private:
 	void FontImageLoad();
 	void BackGroundObjectImageLoad();
 	void InterObjectImageLoad();
+	void EnermyImageLoad();
 
 };
 

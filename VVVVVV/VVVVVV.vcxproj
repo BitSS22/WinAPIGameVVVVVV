@@ -159,7 +159,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Entity.h" />
     <ClInclude Include="GameConst.h">
       <SubType>
       </SubType>
@@ -204,7 +203,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameConst.cpp">
       <SubType>
       </SubType>

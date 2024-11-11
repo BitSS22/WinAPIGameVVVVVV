@@ -37,9 +37,6 @@
     <ClInclude Include="Room.h">
       <Filter>ContentsObject\Map\World\Room</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>ContentsObject\Entity</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -78,9 +75,6 @@
     <ClCompile Include="Room.cpp">
       <Filter>ContentsObject\Map\World\Room</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>ContentsObject\Entity</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="pch">
@@ -100,9 +94,6 @@
     </Filter>
     <Filter Include="ContentsObject\Map">
       <UniqueIdentifier>{9cb2d7da-da33-4b2c-a088-a0a5f034b315}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContentsObject\PlayObject">
-      <UniqueIdentifier>{69c0bcfb-ab48-4c33-a387-5e33c48b131c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Define">
       <UniqueIdentifier>{d14c7087-ff09-40ac-9588-44d64ce3bf84}</UniqueIdentifier>

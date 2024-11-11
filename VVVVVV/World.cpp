@@ -35,4 +35,10 @@ void AWorld::BeginPlay()
 			RoomBackGroundDatas[y][x] = "Debug BackGround.png";
 		}
 	}
+
+	EntityDatas.resize(WorldMaxIndex.X);
+	for (size_t y = 0; y < EntityDatas.size(); ++y)
+	{
+		EntityDatas[y].resize(WorldMaxIndex.X);
+	}
 }
