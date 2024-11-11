@@ -159,6 +159,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Enermy.h" />
     <ClInclude Include="GameConst.h">
       <SubType>
       </SubType>
@@ -207,6 +208,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Enermy.cpp" />
     <ClCompile Include="GameConst.cpp">
       <SubType>
       </SubType>

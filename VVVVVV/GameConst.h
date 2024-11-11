@@ -21,6 +21,7 @@ public:
 	static const FIntPoint TileCount;
 
 	static const float AnimationTime;
+	static const float DefualtSpeed;
 
 };
 

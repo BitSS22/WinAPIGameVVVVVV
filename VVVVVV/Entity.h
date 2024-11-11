@@ -13,10 +13,19 @@ public:
 	AEntity& operator=(AEntity&& _Other) noexcept = delete;
 
 private:
+	USpriteRenderer* Renderer = nullptr;
 
 public:
+	virtual void BeginPlay() override;
 
 private:
+
+public:
+	USpriteRenderer* GetRenderer()
+	{
+		return Renderer;
+	}
+	void EntityDefaultSetUp(std::string_view _Name);
 
 };
 

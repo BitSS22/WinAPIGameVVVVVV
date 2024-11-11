@@ -40,6 +40,9 @@
     <ClInclude Include="Entity.h">
       <Filter>ContentsObject\Entity</Filter>
     </ClInclude>
+    <ClInclude Include="Enermy.h">
+      <Filter>ContentsObject\Entity\Enermy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -80,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>ContentsObject\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Enermy.cpp">
+      <Filter>ContentsObject\Entity\Enermy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

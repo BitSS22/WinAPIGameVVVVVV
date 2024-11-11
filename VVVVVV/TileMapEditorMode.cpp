@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "TileMapEditorMode.h"
 #include "Player.h"
+#include "Enermy.h"
 #include "Entity.h"
 
 ATileMapEditorMode::ATileMapEditorMode()
@@ -15,18 +16,25 @@ void ATileMapEditorMode::BeginPlay()
 {
 	Super::BeginPlay();
 
+	LoadResourceList();
+
 	World = GetWorld()->SpawnActor<AWorld>();
 
 	// 커서 스프라이트
-	USpriteRenderer* NewSelectSprite = CreateDefaultSubObject<USpriteRenderer>();
-	NewSelectSprite->SetSprite("CollisionTiles::01 Type00 Cyan", 45);
-	NewSelectSprite->SetComponentScale(EGameConst::TileScale);
-	NewSelectSprite->SetOrder(ERenderOrder::EDITOR_CURSOR);
-	CurSelectSprite = NewSelectSprite;
+	CurSelectSprite = CreateDefaultSubObject<USpriteRenderer>();
+	CurSelectSprite->SetSprite("CollisionTiles::01 Type00 Cyan", 45);
+	CurSelectSprite->SetComponentScale(EGameConst::TileScale);
+	CurSelectSprite->SetOrder(ERenderOrder::EDITOR_CURSOR);
 
-	GetWorld()->SpawnActor<AEntity>();
-
-	LoadResourceList();
+	CurSelectEntityType = GetWorld()->SpawnActor<AEntity>();
+	USpriteRenderer* NewSpriteRenderer  = CurSelectEntityType->CreateDefaultSubObject<USpriteRenderer>();
+	NewSpriteRenderer->SetSprite("Enemies::001 Stop Cyan", 0);
+	FVector2D SpriteSize = UImageManager::GetInst().FindSprite("Enemies::001 Stop Cyan")->GetSpriteData(0).Transform.Scale;
+	CurSelectEntityType->SetActorScale(SpriteSize);
+	CurSelectEntityType->SetActorLocation(FVector2D::ZERO);
+	NewSpriteRenderer->SetComponentScale(SpriteSize);
+	NewSpriteRenderer->SetComponentLocation(CurSelectEntityType->GetActorScale().Half());
+	NewSpriteRenderer->SetOrder(ERenderOrder::EDITOR_CURSOR);
 
 	// Set Debug
 	UEngineDebug::SetIsDebug(true);
@@ -101,6 +109,9 @@ void ATileMapEditorMode::Tick()
 	}
 
 	if (KEY_DOWN('1'))
+		PrevTileList();
+
+	if (KEY_DOWN('2'))
 		NextTileList();
 
 	if (KEY_DOWN('Q'))
@@ -665,6 +676,14 @@ void ATileMapEditorMode::NextBackGroundImage()
 	World->GetRoom()->BackGround->SetBackGround(TileLists[static_cast<int>(TileList::BackGroundList)][CurBackGroundIndex]);
 }
 
+void ATileMapEditorMode::CreateEntity()
+{
+	AEntity* NewEntity = GetWorld()->SpawnActor<AEnermy>();
+	//NewEntity->CreateDefaultSubObject<USpriteRenderer>();
+
+	CurSelectEntityType;
+}
+
 TileList& operator++(TileList& _List)
 {
 	int Value = static_cast<int>(_List);
@@ -681,18 +700,18 @@ TileList& operator--(TileList& _List)
 	return _List = static_cast<TileList>(Value);
 }
 
-ObjectList& operator++(ObjectList& _List)
+EntityList& operator++(EntityList& _List)
 {
 	int Value = static_cast<int>(_List);
-	if (++Value >= static_cast<int>(ObjectList::LAST))
+	if (++Value >= static_cast<int>(EntityList::LAST))
 		Value = 0;
-	return _List = static_cast<ObjectList>(Value);
+	return _List = static_cast<EntityList>(Value);
 }
 
-ObjectList& operator--(ObjectList& _List)
+EntityList& operator--(EntityList& _List)
 {
 	int Value = static_cast<int>(_List);
 	if (--Value < 0)
-		Value = static_cast<int>(ObjectList::LAST) - 1;
-	return _List = static_cast<ObjectList>(Value);
+		Value = static_cast<int>(EntityList::LAST) - 1;
+	return _List = static_cast<EntityList>(Value);
 }

@@ -13,7 +13,7 @@ enum class TileList
 	BackGroundList,
 	LAST
 };
-enum class ObjectList
+enum class EntityList
 {
 	Platforms,
 	InterObjects,
@@ -34,15 +34,17 @@ public:
 
 private:
 	std::vector<std::string> TileLists[static_cast<int>(TileList::LAST)] = {};
-	std::vector<std::string> ObjectLists[static_cast<int>(ObjectList::LAST)] = {};
+	std::vector<std::string> ObjectLists[static_cast<int>(EntityList::LAST)] = {};
 	TileList CurSelectTileList = TileList::TileList;
-	ObjectList CurSelectObjectList = ObjectList::Enemies;
+	EntityList CurSelectObjectList = EntityList::Enemies;
 	int CurTileSetIndex = 0;
 	int CurObjectIndex = 0;
 	int CurBackGroundIndex = 0;
 	AWorld* World = nullptr;
 	USpriteRenderer* CurSelectSprite = nullptr;
-	AActor* CurSelectObject = nullptr;
+	AEntity* CurSelectEntityType = nullptr;
+	AEntity* CurAdjustmentEntity = nullptr;
+	size_t CurAdjustmentEntityIndex = 0;
 
 public:
 	virtual void BeginPlay() override;
@@ -74,9 +76,6 @@ private:
 	void ChangeTile(bool _AroundTileChange, FIntPoint _Index);
 	void DeleteTile(bool _AroundTileChange, FIntPoint _Index);
 
-	void CreateObject();
-	void DeleteObject();
-
 	void NextTileList();
 	void PrevTileList();
 	void PrevTileSet();
@@ -86,11 +85,23 @@ private:
 	void PrevBackGroundImage();
 	void NextBackGroundImage();
 
+	void CreateEntity();
+	void DeleteEntity();
+
+	void PrevEntityList();
+	void NextEntityList();
+	void PrevEntityType(int _AddIndex);
+	void NextEntityType(int _AddIndex);
+
+	void AddEntityLocation(FVector2D _AddPos);
+	void AddEntitySpeed(float _Speed);
+	void AddEntityStartPos(FVector2D _StartPos);
+	void AddEntityEndPos(FVector2D _EndPos);
+
 	void ShowTiles();
 	void ShowBackGroundTiles();
 
 	void PickUpTile();
-
 
 	void LoadResourceList();
 	void AddTileList(std::string_view _Name)
@@ -115,15 +126,15 @@ private:
 	}
 	void AddPlatformList(std::string_view _Name)
 	{
-		ObjectLists[static_cast<int>(ObjectList::Platforms)].push_back(_Name.data());
+		ObjectLists[static_cast<int>(EntityList::Platforms)].push_back(_Name.data());
 	}
 	void AddInterObjectList(std::string_view _Name)
 	{
-		ObjectLists[static_cast<int>(ObjectList::InterObjects)].push_back(_Name.data());
+		ObjectLists[static_cast<int>(EntityList::InterObjects)].push_back(_Name.data());
 	}
 	void AddEnermyList(std::string_view _Name)
 	{
-		ObjectLists[static_cast<int>(ObjectList::Enemies)].push_back(_Name.data());
+		ObjectLists[static_cast<int>(EntityList::Enemies)].push_back(_Name.data());
 	}
 
 
@@ -136,5 +147,5 @@ public:
 
 TileList& operator++(TileList& _List);
 TileList& operator--(TileList& _List);
-ObjectList& operator++(ObjectList& _List);
-ObjectList& operator--(ObjectList& _List);
+EntityList& operator++(EntityList& _List);
+EntityList& operator--(EntityList& _List);

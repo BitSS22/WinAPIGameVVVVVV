@@ -33,7 +33,7 @@ public:
 	{
 		return Transform.Scale;
 	}
-	FVector2D GetComponentOffset() const
+	FVector2D GetComponentOffsetLocation() const
 	{
 		return GetActor()->GetActorLocation() + Transform.Location;
 	}
