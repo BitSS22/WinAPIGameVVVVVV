@@ -74,6 +74,9 @@ private:
 	void ChangeTile(bool _AroundTileChange, FIntPoint _Index);
 	void DeleteTile(bool _AroundTileChange, FIntPoint _Index);
 
+	void CreateObject();
+	void DeleteObject();
+
 	void NextTileList();
 	void PrevTileList();
 	void PrevTileSet();
@@ -87,11 +90,6 @@ private:
 	void ShowBackGroundTiles();
 
 	void PickUpTile();
-
-	void MoveRoom(FIntPoint _Index);
-
-	void SaveRoomData();
-	void LoadRoomData(FIntPoint _Index);
 
 
 	void LoadResourceList();

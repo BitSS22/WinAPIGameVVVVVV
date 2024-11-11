@@ -1,12 +1,14 @@
 #pragma once
 #include <EnginePlatform/EngineWindowImage.h>
 
+class AEntity;
 class ABackGround;
 
 class ARoom : public AActor
 {
 public:
 	friend class ATileMapEditorMode;
+	friend class AWorld;
 public:
 	ARoom();
 	ARoom(FIntPoint _TileCount, FIntPoint _TileScale);
@@ -23,7 +25,7 @@ private:
 	std::vector<std::vector<USpriteRenderer*>> Tiles = {};
 	std::vector<std::vector<USpriteRenderer*>> BackGroundTiles = {};
 	ABackGround* BackGround = nullptr;
-	std::vector<AActor*> Entitys = {};
+	std::vector<AEntity*> Entitys = {};
 
 public:
 	virtual void BeginPlay() override;

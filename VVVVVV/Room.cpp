@@ -27,7 +27,6 @@ void ARoom::BeginPlay()
 		Tiles[y].reserve(TileCount.X);
 		for (int x = 0; x < TileCount.X; ++x)
 		{
-			// TODO. 파일을 로드하는 내용으로 변경
 			USpriteRenderer* NewSprite = CreateDefaultSubObject<USpriteRenderer>();
 			NewSprite->SetComponentScale(FVector2D(TileScale.X, TileScale.Y));
 			NewSprite->SetComponentLocation(FVector2D(TileScale.X * x + TileScale.X / 2, TileScale.Y * y + TileScale.Y / 2));
@@ -42,7 +41,6 @@ void ARoom::BeginPlay()
 		BackGroundTiles[y].reserve(TileCount.X);
 		for (int x = 0; x < TileCount.X; ++x)
 		{
-			// TODO. 파일을 로드하는 내용으로 변경
 			USpriteRenderer* NewSprite = CreateDefaultSubObject<USpriteRenderer>();
 			NewSprite->SetComponentScale(FVector2D(TileScale.X, TileScale.Y));
 			NewSprite->SetComponentLocation(FVector2D(TileScale.X * x + TileScale.X / 2, TileScale.Y * y + TileScale.Y / 2));

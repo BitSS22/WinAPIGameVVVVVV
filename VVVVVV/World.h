@@ -22,17 +22,17 @@ private:
 	FIntPoint WorldMaxIndex = EGameConst::WorldMaxIndex;
 	FIntPoint CurRoomIndex = { 0, 0 };
 	ARoom* Room = {};
-	std::vector<std::vector<RoomData>> RoomTileDatas = {};
-	std::vector<std::vector<RoomData>> RoomBackGroundTileDatas = {};
-	std::vector<std::vector<std::string>> RoomBackGroundDatas = {};
-	std::vector<std::vector<EntityData>> EntityDatas = {};
+	std::vector<std::vector<RoomData>> RoomDatas = {};
+	bool EditMode = true;
 
 public:
 	virtual void BeginPlay() override;
 
-private:
+	void MoveRoom(FIntPoint _Index);
+	void SaveRoomData();
 	void LoadRoomData(FIntPoint _Index);
-	void ChangeRoom(FIntPoint _Index);
+
+private:
 
 public:
 	ARoom* GetRoom()
@@ -61,13 +61,15 @@ public:
 		FVector2D EndPos = {};
 		float Speed = 0.f;
 	};
+
 	INNER_CLASS struct RoomTileData
 	{
 	public:
-		std::string Name = "Debug Tile";
+		std::string Name = "None Tile";
 		int SpriteIndex = 0;
-
+		bool ShowTile = true;
 	};
+
 	INNER_CLASS struct RoomBackGroundData
 	{
 	public:
@@ -75,6 +77,7 @@ public:
 		int SpriteIndex = 0;
 		bool Effect = false;
 	};
+
 	INNER_CLASS struct RoomData
 	{
 		RoomData()
@@ -84,15 +87,20 @@ public:
 			{
 				RoomTileDatas[y].resize(TileCount.X);
 			}
+
 			RoomBackGroundTileDatas.resize(TileCount.Y);
 			for (size_t y = 0; y < RoomBackGroundTileDatas.size(); ++y)
 			{
 				RoomBackGroundTileDatas[y].resize(TileCount.X);
 			}
 		}
+
 	public:
 		std::vector<std::vector<RoomTileData>> RoomTileDatas = {};
 		std::vector<std::vector<RoomTileData>> RoomBackGroundTileDatas = {};
+		std::string RoomBackGroundData = "Debug BackGround.png";
+		std::vector<EntityData> EntityDatas = {};
+
 		FIntPoint TileCount = EGameConst::TileCount;
 		FIntPoint TileScale = EGameConst::TileScale;
 	};
