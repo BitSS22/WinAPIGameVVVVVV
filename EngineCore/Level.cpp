@@ -4,6 +4,8 @@
 #include <EngineCore/SpriteRenderer.h>
 #include "2DCollision.h"
 
+std::vector<CollisionLinkData> ULevel::CollisionLink = {};
+
 ULevel::ULevel()
 {
 }
@@ -74,6 +76,17 @@ void ULevel::Realease()
 		}
 	}
 
+	for (auto iter = CheckCollisions.begin(); iter != CheckCollisions.end(); ++iter)
+	{
+		for (auto Seconditer = iter->second.begin(); Seconditer != iter->second.end();)
+		{
+			if ((*Seconditer)->IsDestroy() == false)
+				++Seconditer;
+			else
+				Seconditer = iter->second.erase(Seconditer);
+		}
+	}
+
 	for (auto iter = Renderers.begin(); iter != Renderers.end(); ++iter)
 	{
 		for (auto Seconditer = iter->second.begin(); Seconditer != iter->second.end();)
@@ -100,6 +113,32 @@ void ULevel::Realease()
 	}
 }
 
+void ULevel::Collision()
+{
+	for (size_t i = 0; i < CollisionLink.size(); ++i)
+	{
+		int Left = CollisionLink[i].Left;
+		int Right = CollisionLink[i].Right;
+
+		const auto& LeftList = CheckCollisions[Left];
+		const auto& RightList = Collisions[Right];
+
+		for (const auto& LeftCollision : LeftList)
+		{
+			if (LeftCollision->IsActive() == false)
+				continue;
+
+			for (const auto& RightCollision : RightList)
+			{
+				if (RightCollision->IsActive() == false)
+					continue;
+
+				LeftCollision->CollisionEventCheck(RightCollision);
+			}
+		}
+	}
+}
+
 void ULevel::LevelChangeStart()
 {
 	for (const auto& CurActor : BeginPlayList)
@@ -116,10 +155,8 @@ void ULevel::LevelChangeEnd()
 		CurActor->LevelChangeEnd();
 }
 
-void ULevel::PushCollision(U2DCollision* _Collision)
+void ULevel::CollisionEventCheck(U2DCollision* _Left, U2DCollision* _Right)
 {
-	int Order = _Collision->GetCollisionGroup();
-	Collisions[Order].push_back(_Collision);
 }
 
 void ULevel::DoubleBuffering()

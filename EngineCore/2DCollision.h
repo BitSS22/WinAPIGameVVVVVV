@@ -1,9 +1,13 @@
 #pragma once
+#include <set>
 #include "SceneComponent.h"
+#include <EngineCore/Level.h>
+#include <EngineCore/Actor.h>
 
-// Ό³Έν :
 class U2DCollision : public USceneComponent
 {
+public:
+	friend class ULevel;
 public:
 	U2DCollision();
 	~U2DCollision();
@@ -16,6 +20,11 @@ public:
 private:
 	ECollisionType CollisionType = ECollisionType::Circle;
 	int CollisionGroup = -1;
+
+	std::set<U2DCollision*> CollisionCheckSet = {};
+	std::function<void(AActor*)> Enter = {};
+	std::function<void(AActor*)> Stay = {};
+	std::function<void(AActor*)> End = {};
 
 public:
 	virtual void BeginPlay() override;
@@ -45,6 +54,7 @@ public:
 	}
 
 private:
+	void CollisionEventCheck(U2DCollision* _Other);
 
 public:
 	template<typename EnumType>
@@ -66,11 +76,18 @@ public:
 	{
 		CollisionGroup = _CollisionGroup;
 	}
-
 	void SetCollisionType(ECollisionType _Type)
 	{
 		CollisionType = _Type;
 	}
+	ECollisionType GetCollisionType()
+	{
+		return CollisionType;
+	}
+
+	void SetCollisionEnter(std::function<void(AActor*)> _Function);
+	void SetCollisionStay(std::function<void(AActor*)> _Function);
+	void SetCollisionEnd(std::function<void(AActor*)> _Function);
 
 };
 

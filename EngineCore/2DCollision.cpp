@@ -17,6 +17,9 @@ void U2DCollision::BeginPlay()
 		MSGASSERT(nullptr, "Collision Group은 양수로 지정해 주세요.");
 
 	GetActor()->GetWorld()->PushCollision(this);
+
+	if (Enter != nullptr && Stay != nullptr && End != nullptr)
+		GetActor()->GetWorld()->PushCheckCollision(this);
 }
 
 void U2DCollision::ComponentTick()
@@ -73,5 +76,61 @@ bool U2DCollision::Collision(int _OtherCollisionGroup, std::vector<AActor*>& _Re
 	}
 
 	return _Result.size() != 0;
+}
+
+void U2DCollision::CollisionEventCheck(U2DCollision* _Other)
+{
+	FTransform ThisTrans = GetComponentOffsetTransform();
+	FTransform DestTrans = _Other->GetComponentOffsetTransform();
+
+	ECollisionType ThisType = GetCollisionType();
+	ECollisionType DestType = _Other->GetCollisionType();
+
+	bool Result = FTransform::Collision(ThisType, ThisTrans, DestType, DestTrans);
+
+	if (Result == true)
+	{
+		if (CollisionCheckSet.contains(_Other))
+		{
+			if (Enter != nullptr)
+				Enter(_Other->GetActor());
+			CollisionCheckSet.insert(_Other);
+		}
+		else
+		{
+			if (Stay != nullptr)
+				Stay(_Other->GetActor());
+		}
+	}
+	else
+	{
+		if (CollisionCheckSet.contains(_Other))
+		{
+			if (End != nullptr)
+				End(_Other->GetActor());
+			CollisionCheckSet.erase(_Other);
+		}
+	}
+}
+
+void U2DCollision::SetCollisionEnter(std::function<void(AActor*)> _Function)
+{
+	Enter = _Function;
+	if (GetActor()->GetWorld() != nullptr)
+		GetActor()->GetWorld()->PushCheckCollision(this);
+}
+
+void U2DCollision::SetCollisionStay(std::function<void(AActor*)> _Function)
+{
+	Stay = _Function;
+	if (GetActor()->GetWorld() != nullptr)
+		GetActor()->GetWorld()->PushCheckCollision(this);
+}
+
+void U2DCollision::SetCollisionEnd(std::function<void(AActor*)> _Function)
+{
+	End = _Function;
+	if (GetActor()->GetWorld() != nullptr)
+		GetActor()->GetWorld()->PushCheckCollision(this);
 }
 

@@ -2,6 +2,7 @@
 
 #include <EngineBase/EngineMath.h>
 #include <EngineCore/ImageManager.h>
+#include <EngineCore/Level.h>
 
 class ULevel;
 class UEngineSprite;
