@@ -141,7 +141,7 @@ public:
 	{
 		CameraPos += _Pos;
 	}
-	FVector2D GetCameraPos()
+	FVector2D GetCameraPos() const
 	{
 		return CameraPos;
 	}

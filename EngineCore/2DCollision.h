@@ -62,7 +62,7 @@ public:
 	{
 		return static_cast<EnumType>(CollisionGroup);
 	}
-	int GetCollisionGroup()
+	int GetCollisionGroup() const
 	{
 		return CollisionGroup;
 	}
@@ -80,7 +80,7 @@ public:
 	{
 		CollisionType = _Type;
 	}
-	ECollisionType GetCollisionType()
+	ECollisionType GetCollisionType() const
 	{
 		return CollisionType;
 	}

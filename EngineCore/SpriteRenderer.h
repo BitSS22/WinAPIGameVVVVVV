@@ -49,7 +49,7 @@ public:
 private:
 
 public:
-	int GetOrder()
+	int GetOrder() const
 	{
 		return Order;
 	}

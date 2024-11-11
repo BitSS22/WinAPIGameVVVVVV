@@ -452,7 +452,7 @@ int ATileMapEditorMode::FindAroundTile(uint8_t _Bit) const
 
 bool ATileMapEditorMode::IsSameTileName(const string& _Name, int _x, int _y) const
 {
-	auto CurSelectTileMap = GetCurSelectTileMap();
+	auto& CurSelectTileMap = GetCurSelectTileMap();
 
 	if (_x < 0 || _y < 0 || _x >= World->GetRoom()->TileCount.X || _y >= World->GetRoom()->TileCount.Y)
 		return true;
@@ -696,7 +696,7 @@ void ATileMapEditorMode::PrevBackGroundImage()
 {
 	--CurBackGroundIndex;
 	if (CurBackGroundIndex < 0)
-		CurBackGroundIndex = TileLists[static_cast<int>(TileList::BackGroundList)].size() - 1;
+		CurBackGroundIndex = static_cast<int>(TileLists[static_cast<int>(TileList::BackGroundList)].size() - 1);
 
 	World->GetRoom()->BackGround->SetBackGround(TileLists[static_cast<int>(TileList::BackGroundList)][CurBackGroundIndex]);
 }

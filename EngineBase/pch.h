@@ -15,7 +15,7 @@
 #include "EngineTimer.h"
 #include "Object.h"
 
-#define INNER_CLASS
+#define INNER_CLASS 
 
 using std::vector;
 using std::list;
