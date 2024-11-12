@@ -24,7 +24,8 @@ private:
 
 public:
 	void Destroy(float _Time = 0.f);
-	virtual void ReleaseCheck();
+	virtual void ReleaseCheck() {}
+	virtual void ReleaseTimeCheck();
 
 private:
 

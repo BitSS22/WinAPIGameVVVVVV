@@ -63,3 +63,13 @@ void AActor::ReleaseCheck()
 		iter = Components.erase(iter);
 	}
 }
+
+void AActor::ReleaseTimeCheck()
+{
+	UObject::ReleaseTimeCheck();
+
+	for (auto iter = Components.begin(); iter != Components.end(); ++iter)
+	{
+		(*iter)->ReleaseTimeCheck();
+	}
+}

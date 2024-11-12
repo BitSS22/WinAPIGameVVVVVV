@@ -21,7 +21,7 @@ void UObject::Destroy(float _Time)
 	IsDestroyValue = true;
 }
 
-void UObject::ReleaseCheck()
+void UObject::ReleaseTimeCheck()
 {
 	if (IsDeathTimeCheck == false)
 		return;

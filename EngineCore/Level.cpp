@@ -65,6 +65,11 @@ void ULevel::Render()
 
 void ULevel::Realease()
 {
+	for (auto iter = AllActors.begin(); iter != AllActors.end(); ++iter)
+	{
+		(*iter)->ReleaseTimeCheck();
+	}
+
 	for (auto iter = Collisions.begin(); iter != Collisions.end(); ++iter)
 	{
 		for (auto Seconditer = iter->second.begin(); Seconditer != iter->second.end();)
