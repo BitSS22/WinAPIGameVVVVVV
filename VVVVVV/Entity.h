@@ -25,7 +25,12 @@ public:
 	{
 		return Renderer;
 	}
-	void EntityDefaultSetUp(std::string_view _Name);
+	void EntityDefaultSetUp(std::string_view _Name, FVector2D _Location);
+
+	virtual void AddEntityLocation(FVector2D _Location)
+	{
+		AddActorLocation(_Location);
+	}
 
 };
 

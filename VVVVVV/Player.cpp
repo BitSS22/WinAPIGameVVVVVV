@@ -33,12 +33,6 @@ void APlayer::BeginPlay()
 	// SpriteRenderer->SetAnimationEvent("Teleporter", 3, bind(&UEngineDebug::OutputString, "x3 y1 \n"));
 }
 
-enum class state
-{
-	up = 1,
-	down = -1
-};
-
 void APlayer::Tick()
 {
 	Super::Tick();
@@ -60,10 +54,5 @@ void APlayer::Tick()
 		AddActorLocation(FVector2D::DOWN * GET_DELTA * Speed);
 	}
 
-	if (KEY_DOWN('Q'))
-		SpriteRenderer->SetOrder(state::up);
-	if (KEY_UP('Q'))
-		SpriteRenderer->SetOrder(state::down);
-	
 	SpriteRenderer->SetComponentLocation(GetActorLocation());
 }

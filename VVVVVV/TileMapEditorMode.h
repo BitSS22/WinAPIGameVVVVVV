@@ -42,9 +42,9 @@ private:
 	int CurBackGroundIndex = 0;
 	AWorld* World = nullptr;
 	USpriteRenderer* CurSelectSprite = nullptr;
-	AEntity* CurSelectEntityType = nullptr;
+	USpriteRenderer* CurSelectEntityType = nullptr;
 	AEntity* CurAdjustmentEntity = nullptr;
-	size_t CurAdjustmentEntityIndex = 0;
+	int CurAdjustmentEntityIndex = -1;
 
 public:
 	virtual void BeginPlay() override;
@@ -95,8 +95,9 @@ private:
 
 	void AddEntityLocation(FVector2D _AddPos);
 	void AddEntitySpeed(float _Speed);
-	void AddEntityStartPos(FVector2D _StartPos);
-	void AddEntityEndPos(FVector2D _EndPos);
+	void SetEntityDir(FVector2D _Dir);
+	void AddEntityMoveLenght(float _Lenght);
+	void AddEntityMoveOffSet(float _Offset);
 
 	void ShowTiles();
 	void ShowBackGroundTiles();

@@ -26,15 +26,12 @@ void ATileMapEditorMode::BeginPlay()
 	CurSelectSprite->SetComponentScale(EGameConst::TileScale);
 	CurSelectSprite->SetOrder(ERenderOrder::EDITOR_CURSOR);
 
-	CurSelectEntityType = GetWorld()->SpawnActor<AEntity>();
-	USpriteRenderer* NewSpriteRenderer  = CurSelectEntityType->CreateDefaultSubObject<USpriteRenderer>();
-	NewSpriteRenderer->SetSprite("Enemies::001 Stop Cyan", 0);
+	CurSelectEntityType = CreateDefaultSubObject<USpriteRenderer>();
+	CurSelectEntityType->SetSprite("Enemies::001 Stop Cyan", 0);
 	FVector2D SpriteSize = UImageManager::GetInst().FindSprite("Enemies::001 Stop Cyan")->GetSpriteData(0).Transform.Scale;
-	CurSelectEntityType->SetActorScale(SpriteSize);
-	CurSelectEntityType->SetActorLocation(FVector2D::ZERO);
-	NewSpriteRenderer->SetComponentScale(SpriteSize);
-	NewSpriteRenderer->SetComponentLocation(CurSelectEntityType->GetActorScale().Half());
-	NewSpriteRenderer->SetOrder(ERenderOrder::EDITOR_CURSOR);
+	CurSelectEntityType->SetComponentScale(SpriteSize);
+	CurSelectEntityType->SetOrder(ERenderOrder::EDITOR_CURSOR);
+	
 
 	// Set Debug
 	UEngineDebug::SetIsDebug(true);
@@ -162,6 +159,13 @@ void ATileMapEditorMode::Tick()
 		RoomIndex.X += 1;
 		World->MoveRoom(RoomIndex);
 	}
+
+	if (KEY_DOWN(VK_SPACE))
+		CreateEntity();
+
+	if (KEY_DOWN('N'))
+		AddEntityLocation(FVector2D(16.f, 16.f));
+
 
 	DebugText();
 }
@@ -613,26 +617,8 @@ void ATileMapEditorMode::DebugText()
 	// DEBUG TEXT
 	string CurTileList = {};
 
-	switch (CurSelectTileList)
-	{
-	case TileList::BackGroundTileList:
-		CurTileList = "BackGroundTiles";
-		break;
-	case TileList::TileList:
-		CurTileList = "Tiles";
-		break;
-	case TileList::SpikeTileList:
-		CurTileList = "SpikeTiles";
-		break;
-	case TileList::AnimationTileList:
-		CurTileList = "AnimationTiles";
-		break;
-	default:
-		break;
-	}
-
-	string str = "Selected Tile List : ";
-	str += CurTileList;
+	string str = "Selected Entity : ";
+	str += CurSelectEntityType->GetCurSpriteName();
 	UEngineDebug::CoreOutputString(str);
 
 	str = "World Index : ";
@@ -652,14 +638,43 @@ void ATileMapEditorMode::DebugText()
 	UEngineDebug::CoreOutputString(str);
 
 	FIntPoint TileCursorIndex = World->GetRoom()->GetOnTileIndex(CursorPos);
-	if (TileCursorIndex.X < 0 || TileCursorIndex.X >= World->GetRoom()->TileCount.X || TileCursorIndex.Y < 0 || TileCursorIndex.Y >= World->GetRoom()->TileCount.Y)
-		return;
+	if ((TileCursorIndex.X < 0 || TileCursorIndex.X >= World->GetRoom()->TileCount.X || TileCursorIndex.Y < 0 || TileCursorIndex.Y >= World->GetRoom()->TileCount.Y) == false)
+	{
+		str = "On Tile Name : ";
+		str += GetCurSelectTileMap()[TileCursorIndex.Y][TileCursorIndex.X]->GetCurSpriteName();
+		str += ", Index : ";
+		str += std::to_string(GetCurSelectTileMap()[TileCursorIndex.Y][TileCursorIndex.X]->GetCurIndex());
+		UEngineDebug::CoreOutputString(str);
+	}
+	
+	if (CurAdjustmentEntity != nullptr)
+	{
+		str = "Selected Entity Name : ";
+		str += CurAdjustmentEntity->GetRenderer()->GetCurSpriteName();
+		str += ", List Number : ";
+		str += std::to_string(CurAdjustmentEntityIndex);
+		UEngineDebug::CoreOutputString(str);
 
-	str = "On Tile Name : ";
-	str += GetCurSelectTileMap()[TileCursorIndex.Y][TileCursorIndex.X]->GetCurSpriteName();
-	str += ", Index : ";
-	str += std::to_string(GetCurSelectTileMap()[TileCursorIndex.Y][TileCursorIndex.X]->GetCurIndex());
-	UEngineDebug::CoreOutputString(str);
+		AEnermy* Enermy = dynamic_cast<AEnermy*>(CurAdjustmentEntity);
+		if (Enermy != nullptr)
+		{
+			str = "Location : ";
+			str += std::to_string(Enermy->GetEntityDefualtLocation().X);
+			str += ", ";
+			str += std::to_string(Enermy->GetEntityDefualtLocation().Y);
+			str += ", MoveLenght : ";
+			str += std::to_string(Enermy->GetMoveLenght());
+			UEngineDebug::CoreOutputString(str);
+
+			str = "Speed : ";
+			str += std::to_string(Enermy->GetSpeed());
+			str += ", StartOffset : ";
+			str += std::to_string(Enermy->GetMoveLenghtOffset());
+			UEngineDebug::CoreOutputString(str);
+		}
+	}
+
+
 }
 
 void ATileMapEditorMode::PrevBackGroundImage()
@@ -682,10 +697,14 @@ void ATileMapEditorMode::NextBackGroundImage()
 
 void ATileMapEditorMode::CreateEntity()
 {
-	AEntity* NewEntity = GetWorld()->SpawnActor<AEnermy>();
-	//NewEntity->CreateDefaultSubObject<USpriteRenderer>();
-
-	CurSelectEntityType;
+	if (CurSelectObjectList == EntityList::Enemies)
+	{
+		AEnermy* NewEntity = GetWorld()->SpawnActor<AEnermy>();
+		NewEntity->EnermyDefaultSetUp(CurSelectEntityType->GetCurSpriteName(), CurSelectEntityType->GetComponentLocation(), FVector2D::RIGHT, EGameConst::DefualtSpeed, EGameConst::DefualtMoveLen, 0.f);
+		World->GetRoom()->Enties.push_back(NewEntity);
+		CurAdjustmentEntity = NewEntity;
+		CurAdjustmentEntityIndex = World->GetRoom()->Enties.size() - 1;
+	}
 }
 
 TileList& operator++(TileList& _List)
@@ -718,4 +737,57 @@ EntityList& operator--(EntityList& _List)
 	if (--Value < 0)
 		Value = static_cast<int>(EntityList::LAST) - 1;
 	return _List = static_cast<EntityList>(Value);
+}
+
+void ATileMapEditorMode::AddEntityLocation(FVector2D _AddPos)
+{
+	if (CurAdjustmentEntity == nullptr)
+		return;
+
+	AEnermy* Enermy = dynamic_cast<AEnermy*>(CurAdjustmentEntity);
+
+	if (Enermy != nullptr)
+		Enermy->AddEntityLocation(_AddPos);
+	else
+		CurAdjustmentEntity->AddEntityLocation(_AddPos);
+}
+
+void ATileMapEditorMode::AddEntitySpeed(float _Speed)
+{
+	AEnermy* Enermy = dynamic_cast<AEnermy*>(CurAdjustmentEntity);
+
+	if (Enermy == nullptr)
+		return;
+
+	Enermy->AddSpeed(_Speed);
+}
+
+void ATileMapEditorMode::SetEntityDir(FVector2D _Dir)
+{
+	AEnermy* Enermy = dynamic_cast<AEnermy*>(CurAdjustmentEntity);
+
+	if (Enermy == nullptr)
+		return;
+
+	Enermy->SetDir(_Dir);
+}
+
+void ATileMapEditorMode::AddEntityMoveLenght(float _Lenght)
+{
+	AEnermy* Enermy = dynamic_cast<AEnermy*>(CurAdjustmentEntity);
+
+	if (Enermy == nullptr)
+		return;
+
+	Enermy->AddMoveLenght(_Lenght);
+}
+
+void ATileMapEditorMode::AddEntityMoveOffSet(float _Offset)
+{
+	AEnermy* Enermy = dynamic_cast<AEnermy*>(CurAdjustmentEntity);
+
+	if (Enermy == nullptr)
+		return;
+
+	Enermy->AddMoveLenghtOffset(_Offset);
 }

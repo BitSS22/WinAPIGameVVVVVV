@@ -67,7 +67,7 @@ public:
 	public:
 		std::string Name = "None Tile";
 		int SpriteIndex = 0;
-		bool ShowTile = true;
+		bool ShowTile = false;
 	};
 
 	INNER_CLASS struct RoomBackGroundData

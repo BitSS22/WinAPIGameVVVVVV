@@ -7,3 +7,4 @@ const FIntPoint EGameConst::TileCount = { 40, 30 };
 
 const float EGameConst::AnimationTime = 0.3f;
 const float EGameConst::DefualtSpeed = 200.f;
+const float EGameConst::DefualtMoveLen = 100.f;

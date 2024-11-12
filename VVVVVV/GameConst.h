@@ -22,6 +22,7 @@ public:
 
 	static const float AnimationTime;
 	static const float DefualtSpeed;
+	static const float DefualtMoveLen;
 
 };
 

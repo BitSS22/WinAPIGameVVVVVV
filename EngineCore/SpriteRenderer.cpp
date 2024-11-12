@@ -53,7 +53,7 @@ void USpriteRenderer::Render()
 	
 	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
 
-	FTransform Trans = FTransform(GetComponentLocation(), GetComponentScale());
+	FTransform Trans = GetComponentOffsetTransform();
 	ULevel* Level = GetActor()->GetWorld();
 	
 	if (IsCameraEffect == true)
@@ -161,7 +161,7 @@ void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::stri
 		MSGASSERT(nullptr, _AnimationName, ", 프레임 Start보다 End가 큽니다.");
 
 	vector<int> Indexs = {};
-	vector<float> Times(_End - _Start, _Time);
+	vector<float> Times(_End - _Start + 1, _Time);
 
 	for (size_t i = _Start; i <= _End; ++i)
 	{

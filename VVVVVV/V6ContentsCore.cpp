@@ -30,6 +30,12 @@ void V6ContentsCore::BeginPlay()
 	FVector2D InitWindowScale = FVector2D(640, 480);
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosScale(WindowResolution.Half() - InitWindowScale.Half(), InitWindowScale);
 
+	// Pen, Brush
+	UEngineWindowImage* BackBufferImage = UEngineAPICore::GetCore()->GetMainWindow().GetBackBufferImage();
+	HBRUSH OldBrush = static_cast<HBRUSH>(SelectObject(BackBufferImage->GetDC(), GetStockObject(NULL_BRUSH)));
+	HPEN OldPen = static_cast<HPEN>(SelectObject(BackBufferImage->GetDC(), GetStockObject(WHITE_PEN)));
+	DeleteObject(OldBrush);
+	DeleteObject(OldPen);
 
 	// Create Level
 	UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title");
