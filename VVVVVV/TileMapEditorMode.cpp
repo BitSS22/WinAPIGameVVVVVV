@@ -649,6 +649,10 @@ void ATileMapEditorMode::DebugText()
 	
 	if (CurAdjustmentEntity != nullptr)
 	{
+		FTransform Trans = CurAdjustmentEntity->GetActorTransform();
+		Trans.Scale = FVector2D(Trans.Scale.X * 2, Trans.Scale.X * 2);
+		UEngineDebug::CoreDebugRender(Trans, UEngineDebug::EDebugPosType::Circle);
+
 		str = "Selected Entity Name : ";
 		str += CurAdjustmentEntity->GetRenderer()->GetCurSpriteName();
 		str += ", List Number : ";
@@ -697,7 +701,7 @@ void ATileMapEditorMode::NextBackGroundImage()
 
 void ATileMapEditorMode::CreateEntity()
 {
-	if (CurSelectObjectList == EntityList::Enemies)
+	if (CurSelectEntityList == EntityList::Enemies)
 	{
 		AEnermy* NewEntity = GetWorld()->SpawnActor<AEnermy>();
 		NewEntity->EnermyDefaultSetUp(CurSelectEntityType->GetCurSpriteName(), CurSelectEntityType->GetComponentLocation(), FVector2D::RIGHT, EGameConst::DefualtSpeed, EGameConst::DefualtMoveLen, 0.f);

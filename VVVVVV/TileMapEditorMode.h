@@ -34,11 +34,11 @@ public:
 
 private:
 	std::vector<std::string> TileLists[static_cast<int>(TileList::LAST)] = {};
-	std::vector<std::string> ObjectLists[static_cast<int>(EntityList::LAST)] = {};
+	std::vector<std::string> EntityLists[static_cast<int>(EntityList::LAST)] = {};
 	TileList CurSelectTileList = TileList::TileList;
-	EntityList CurSelectObjectList = EntityList::Enemies;
+	EntityList CurSelectEntityList = EntityList::Enemies;
 	int CurTileSetIndex = 0;
-	int CurObjectIndex = 0;
+	int CurEntityIndex = 0;
 	int CurBackGroundIndex = 0;
 	AWorld* World = nullptr;
 	USpriteRenderer* CurSelectSprite = nullptr;
@@ -127,15 +127,15 @@ private:
 	}
 	void AddPlatformList(std::string_view _Name)
 	{
-		ObjectLists[static_cast<int>(EntityList::Platforms)].push_back(_Name.data());
+		EntityLists[static_cast<int>(EntityList::Platforms)].push_back(_Name.data());
 	}
 	void AddInterObjectList(std::string_view _Name)
 	{
-		ObjectLists[static_cast<int>(EntityList::InterObjects)].push_back(_Name.data());
+		EntityLists[static_cast<int>(EntityList::InterObjects)].push_back(_Name.data());
 	}
 	void AddEnermyList(std::string_view _Name)
 	{
-		ObjectLists[static_cast<int>(EntityList::Enemies)].push_back(_Name.data());
+		EntityLists[static_cast<int>(EntityList::Enemies)].push_back(_Name.data());
 	}
 
 
