@@ -24,7 +24,8 @@ void AEntity::EntityDefaultSetUp(std::string_view _Name, FVector2D _Location)
 	Renderer->SetOrder(ERenderOrder::Entity);
 
 	FVector2D SpriteSize = Sprite->GetSpriteData(0).Transform.Scale;
-	SetActorLocation(_Location);
+	//SetActorLocation(_Location);
+	SetActorLocation(UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half());
 	SetActorScale(SpriteSize);
 	Renderer->SetComponentScale(SpriteSize);
 }

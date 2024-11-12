@@ -126,8 +126,8 @@ public:
 	FVector2D& Nomalize()
 	{
 		float Scalar = Length();
-		if (Scalar > 0.f && isnan(Scalar) == false)
-			MSGASSERT(nullptr, "Scalar 값이 0인 Vector를 Nomalize 할 수 없습니다.");
+		if (Scalar >= 0.f && isnan(Scalar) != false)
+			MSGASSERT(nullptr, "Scalar 값이 0인 Vector를 Nomalize 할 수 없습니다. 혹은 숫자가 아닙니다.");
 		X /= Scalar;
 		Y /= Scalar;
 		return *this;

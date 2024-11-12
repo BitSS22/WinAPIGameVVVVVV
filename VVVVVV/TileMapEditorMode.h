@@ -93,11 +93,15 @@ private:
 	void PrevEntityType(int _AddIndex);
 	void NextEntityType(int _AddIndex);
 
+	void PrevSelectEntity();
+	void NextSelectEntity();
+
 	void AddEntityLocation(FVector2D _AddPos);
 	void AddEntitySpeed(float _Speed);
-	void SetEntityDir(FVector2D _Dir);
 	void AddEntityMoveLenght(float _Lenght);
 	void AddEntityMoveOffSet(float _Offset);
+	void AddEntityDir(FVector2D _Dir);
+	void SetEntityDir(FVector2D _Dir);
 
 	void ShowTiles();
 	void ShowBackGroundTiles();

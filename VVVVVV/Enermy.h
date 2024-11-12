@@ -15,7 +15,7 @@ public:
 
 private:
 	float Speed = EGameConst::DefualtSpeed;
-	FVector2D Dir = FVector2D::RIGHT;
+	FVector2D Dir = FVector2D::ZERO;
 	FVector2D DefualtLocation = {};
 	float MoveLenght = 100.f;
 	float MoveLenghtOffset = 0.f;
@@ -33,11 +33,6 @@ public:
 	{
 		Speed += _Speed;
 	}
-	void SetDir(FVector2D _Dir)
-	{
-		Dir = _Dir;
-		SetActorLocation(DefualtLocation + (Dir * MoveLenghtOffset));
-	}
 	void AddMoveLenght(float _Lenght)
 	{
 		MoveLenght += _Lenght;
@@ -52,6 +47,21 @@ public:
 	{
 		SetActorLocation(DefualtLocation += _Location);
 		DefualtLocation = GetActorLocation();
+		SetActorLocation(DefualtLocation + (Dir * MoveLenghtOffset));
+	}
+
+	void AddDir(FVector2D _Dir)
+	{
+		Dir += _Dir;
+		if (Dir != FVector2D::ZERO)
+			Dir.Nomalize();
+		SetActorLocation(DefualtLocation + (Dir * MoveLenghtOffset));
+	}
+	void SetDir(FVector2D _Dir)
+	{
+		Dir = _Dir;
+		if (Dir != FVector2D::ZERO)
+			Dir.Nomalize();
 		SetActorLocation(DefualtLocation + (Dir * MoveLenghtOffset));
 	}
 

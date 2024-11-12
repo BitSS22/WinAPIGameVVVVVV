@@ -179,7 +179,8 @@ void ATileMapEditorMode::Tick()
 	if (KEY_PRESS(VK_SHIFT))
 		Dir = Dir * 8;
 	else if (KEY_PRESS(VK_CONTROL))
-		Dir = Dir * 16;
+		Dir = Dir * 64;
+
 	if (Dir != FVector2D::ZERO)
 		AddEntityLocation(Dir);
 
@@ -199,7 +200,44 @@ void ATileMapEditorMode::Tick()
 	if (KEY_DOWN('0'))
 		AddEntityMoveOffSet(8.f);
 
-	
+	if (KEY_DOWN('N'))
+		PrevSelectEntity();
+	if (KEY_DOWN('M'))
+		NextSelectEntity();
+
+	if (KEY_DOWN('3'))
+	{
+		if (KEY_PRESS(VK_CONTROL))
+			PrevEntityType(7);
+		else
+			PrevEntityType(1);
+	}
+	if (KEY_DOWN('4'))
+	{
+		if (KEY_PRESS(VK_CONTROL))
+			NextEntityType(7);
+		else
+			NextEntityType(1);
+	}
+
+	Dir = FVector2D::ZERO;
+	if (KEY_DOWN('U'))
+		Dir += FVector2D::UP;
+	else if (KEY_DOWN('J'))
+		Dir += FVector2D::DOWN;
+	else if (KEY_DOWN('H'))
+		Dir += FVector2D::LEFT;
+	else if (KEY_DOWN('K'))
+		Dir += FVector2D::RIGHT;
+
+	if (Dir != FVector2D::ZERO)
+	{
+		if (KEY_PRESS(VK_CONTROL))
+			SetEntityDir(Dir);
+		else
+			AddEntityDir(Dir);
+	}
+
 
 	DebugText();
 }
@@ -743,7 +781,7 @@ void ATileMapEditorMode::CreateEntity()
 		NewEntity->EnermyDefaultSetUp(CurSelectEntityType->GetCurSpriteName(), CurSelectEntityType->GetComponentLocation(), FVector2D::RIGHT, EGameConst::DefualtSpeed, EGameConst::DefualtMoveLen, 0.f);
 		World->GetRoom()->Enties.push_back(NewEntity);
 		CurAdjustmentEntity = NewEntity;
-		CurAdjustmentEntityIndex = World->GetRoom()->Enties.size() - 1;
+		CurAdjustmentEntityIndex = static_cast<int>(World->GetRoom()->Enties.size() - 1);
 	}
 }
 
@@ -794,6 +832,60 @@ EntityList& operator--(EntityList& _List)
 	return _List = static_cast<EntityList>(Value);
 }
 
+void ATileMapEditorMode::PrevEntityType(int _AddIndex)
+{
+	CurEntityIndex -= _AddIndex;
+	if (CurEntityIndex < 0 || CurEntityIndex >= EntityLists[static_cast<int>(CurSelectEntityList)].size())
+		CurEntityIndex = static_cast<int>(EntityLists[static_cast<int>(CurSelectEntityList)].size()) - 1;
+
+	int Curindex = CurSelectEntityType->GetCurIndex();
+	UEngineSprite* Sprite = UImageManager::GetInst().FindSprite(EntityLists[static_cast<int>(CurSelectEntityList)][CurEntityIndex]);
+
+	if (Curindex >= Sprite->GetSpriteCount())
+		Curindex = Sprite->GetSpriteCount() - 1;
+
+	CurSelectEntityType->SetSprite(EntityLists[static_cast<int>(CurSelectEntityList)][CurEntityIndex], Curindex);
+}
+
+void ATileMapEditorMode::NextEntityType(int _AddIndex)
+{
+	CurEntityIndex += _AddIndex;
+	if (CurEntityIndex < 0 || CurEntityIndex >= EntityLists[static_cast<int>(CurSelectEntityList)].size())
+		CurEntityIndex = 0;
+
+	int Curindex = CurSelectEntityType->GetCurIndex();
+	UEngineSprite* Sprite = UImageManager::GetInst().FindSprite(EntityLists[static_cast<int>(CurSelectEntityList)][CurEntityIndex]);
+
+	if (Curindex >= Sprite->GetSpriteCount())
+		Curindex = Sprite->GetSpriteCount() - 1;
+
+	CurSelectEntityType->SetSprite(EntityLists[static_cast<int>(CurSelectEntityList)][CurEntityIndex], Curindex);
+}
+
+void ATileMapEditorMode::PrevSelectEntity()
+{
+	if (World->GetRoom()->Enties.empty() == true)
+		return;
+
+	--CurAdjustmentEntityIndex;
+	if (CurAdjustmentEntityIndex < 0)
+		CurAdjustmentEntityIndex = static_cast<int>(World->GetRoom()->Enties.size() - 1);
+	
+	CurAdjustmentEntity = World->GetRoom()->Enties[CurAdjustmentEntityIndex];
+}
+
+void ATileMapEditorMode::NextSelectEntity()
+{
+	if (World->GetRoom()->Enties.empty() == true)
+		return;
+
+	++CurAdjustmentEntityIndex;
+	if (CurAdjustmentEntityIndex >= World->GetRoom()->Enties.size())
+		CurAdjustmentEntityIndex = 0;
+
+	CurAdjustmentEntity = World->GetRoom()->Enties[CurAdjustmentEntityIndex];
+}
+
 void ATileMapEditorMode::AddEntityLocation(FVector2D _AddPos)
 {
 	if (CurAdjustmentEntity == nullptr)
@@ -817,16 +909,6 @@ void ATileMapEditorMode::AddEntitySpeed(float _Speed)
 	Enermy->AddSpeed(_Speed);
 }
 
-void ATileMapEditorMode::SetEntityDir(FVector2D _Dir)
-{
-	AEnermy* Enermy = dynamic_cast<AEnermy*>(CurAdjustmentEntity);
-
-	if (Enermy == nullptr)
-		return;
-
-	Enermy->SetDir(_Dir);
-}
-
 void ATileMapEditorMode::AddEntityMoveLenght(float _Lenght)
 {
 	AEnermy* Enermy = dynamic_cast<AEnermy*>(CurAdjustmentEntity);
@@ -845,4 +927,24 @@ void ATileMapEditorMode::AddEntityMoveOffSet(float _Offset)
 		return;
 
 	Enermy->AddMoveLenghtOffset(_Offset);
+}
+
+void ATileMapEditorMode::AddEntityDir(FVector2D _Dir)
+{
+	AEnermy* Enermy = dynamic_cast<AEnermy*>(CurAdjustmentEntity);
+
+	if (Enermy == nullptr)
+		return;
+
+	Enermy->AddDir(_Dir);
+}
+
+void ATileMapEditorMode::SetEntityDir(FVector2D _Dir)
+{
+	AEnermy* Enermy = dynamic_cast<AEnermy*>(CurAdjustmentEntity);
+
+	if (Enermy == nullptr)
+		return;
+
+	Enermy->SetDir(_Dir);
 }
