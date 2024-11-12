@@ -76,6 +76,8 @@ private:
 	void ChangeTile(bool _AroundTileChange, FIntPoint _Index);
 	void DeleteTile(bool _AroundTileChange, FIntPoint _Index);
 
+	void MoveRoom(FIntPoint _Index);
+
 	void NextTileList();
 	void PrevTileList();
 	void PrevTileSet();
@@ -142,7 +144,7 @@ private:
 		EntityLists[static_cast<int>(EntityList::Enemies)].push_back(_Name.data());
 	}
 
-
+	void EditorKeyCheck();
 	void DebugText();
 
 public:

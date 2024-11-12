@@ -56,10 +56,11 @@ public:
 	INNER_CLASS struct EntityData
 	{
 		std::string Name = "Debug Tile";
-		FVector2D Pos = {};
-		FVector2D StartPos = {};
-		FVector2D EndPos = {};
-		float Speed = 0.f;
+		FVector2D DefualtLocation = {};
+		FVector2D DefualtDir = FVector2D::ZERO;
+		float Speed = EGameConst::DefualtSpeed;
+		float MoveLenght = EGameConst::DefualtMoveLen;
+		float MoveLenghtOffset = 0.f;
 	};
 
 	INNER_CLASS struct RoomTileData

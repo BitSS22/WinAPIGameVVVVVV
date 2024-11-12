@@ -10,9 +10,6 @@
     <ClInclude Include="PlayGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>ContentsObject\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="TitleGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
@@ -40,8 +37,14 @@
     <ClInclude Include="Entity.h">
       <Filter>ContentsObject\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Enermy.h">
+    <ClInclude Include="MoveEntity.h">
       <Filter>ContentsObject\Entity\Enermy</Filter>
+    </ClInclude>
+    <ClInclude Include="Guy.h">
+      <Filter>ContentsObject\Entity\Guy</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ContentsObject\Entity\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -53,9 +56,6 @@
     </ClCompile>
     <ClCompile Include="PlayGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ContentsObject\Entity</Filter>
     </ClCompile>
     <ClCompile Include="TitleGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
@@ -84,8 +84,14 @@
     <ClCompile Include="Entity.cpp">
       <Filter>ContentsObject\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Enermy.cpp">
+    <ClCompile Include="MoveEntity.cpp">
       <Filter>ContentsObject\Entity\Enermy</Filter>
+    </ClCompile>
+    <ClCompile Include="Guy.cpp">
+      <Filter>ContentsObject\Entity\Guy</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ContentsObject\Entity\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +136,9 @@
     </Filter>
     <Filter Include="ContentsObject\Entity\InterObject">
       <UniqueIdentifier>{89ce6dd6-d671-4c5b-b625-d948fe2f71c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Entity\Player">
+      <UniqueIdentifier>{278c257d-048b-4beb-99bb-3d1657f2ea14}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

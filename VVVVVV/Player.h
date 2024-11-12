@@ -1,8 +1,9 @@
 #pragma once
+#include "Entity.h"
 
 class USpriteRenderer;
-// Ό³Έν :
-class APlayer : public AActor
+
+class APlayer : public AEntity
 {
 public:
 	APlayer();

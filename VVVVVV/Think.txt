@@ -3,3 +3,80 @@
 AEntity class -> 관리하기 위한 추상 클래스
 AEnermy class -> Collider를 가지고 있으며 닿으면 플레이어가 사망하는 class
 AInterObject class -> player와 특정한 상호작용이 가능한 class
+
+
+타일맵 에디터 조작키
+
+
+// Tile
+
+ESC - 디버그 창 해제
+
+KEY F1 - 배경타일 숨기기
+KEY F2 - 타일 숨기기
+
+좌클릭 - 타일 배치
+Shift  - 3X3 타일 배치
+Ctrl  - 주변 자동 정리 타일 배치
+
+우클릭 - 타일 제거
+Shift  - 3X3 타일 제거
+Ctrl  - 주변 자동 정리 타일 제거
+
+마우스 3번버튼 - 타일 따오기
+마우스 4번버튼 - 다음 타일셋
+
+KEY 1 - 이전 타일셋
+KEY 2 - 다음 타일셋
+KEY Q - 이전 타일 인덱스
+KEY E - 다음 타일 인덱스
+
+KEY O - 이전 배경
+KEY P - 다음 배경
+
+KEY W - 위쪽 방으로 이동
+KEY A - 왼쪽 방으로 이동
+KEY S - 아래쪽 방으로 이동
+KEY D - 오른쪽 방으로 이동
+KEY R - 타일셋 저장하고 새로고침
+
+
+// Entity
+
+KEY 3 - 이전 Entity 셋
+KEY 4 - 다음 Entity 타일셋
+
+KEY ENTER - 현재 선택된 Entity 생성
+KEY DELETE - 현재 선택된 Entity 제거
+
+KEY N - 이전 Entity 선택
+KEY M - 다음 Entity 선택
+
+커서키 - Entity 위치 1Pixel 이동
+Shift - 타일 절반 (8Pixel) 이동
+Ctrl - 타일 4개 (64Pixel) 이동
+
+KEY - - Entity 속도 1/s 감소
+KEY + - Entity 속도 1/s 증가
+Shift - 변경치 8
+Ctrl - 변경치 64
+
+KEY [ - Entity 움직임 범위 1/s 감소
+KEY ] - Entity 움직임 범위 1/s 증가
+Shift - 변경치 8
+Ctrl - 변경치 64
+
+KEY 9 - Entity 움직임 오프셋 1/s 감소
+KEY 0 - Entity 움직임 오프셋 1/s 증가
+Shift - 변경치 8
+Ctrl - 변경치 64
+
+KEY Z - 이전 Entity
+KEY C - 다음 Entity
+Ctrl - 변경치 7
+
+KEY U - Entity 이동 방향 위쪽 추가
+KEY H - Entity 이동 방향 왼쪽 추가
+KEY J - Entity 이동 방향 아래쪽 추가
+KEY K - Entity 이동 방향 오른쪽 추가
+Ctrl - 방향으로 설정

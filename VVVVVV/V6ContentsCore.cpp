@@ -71,11 +71,10 @@ void V6ContentsCore::ResourceSpriteLoad()
 {
 	TileImageLoad();
 	BackGroundImageLoad();
-	PlayerImageLoad();
 	FontImageLoad();
 	
+	PlayerImageLoad();
 	BackGroundObjectImageLoad();
-
 	FlatformImageLoad();
 	InterObjectImageLoad();
 	EnermyImageLoad();
@@ -297,6 +296,7 @@ void V6ContentsCore::PlayerImageLoad()
 {
 	float X = 48.f;
 	float Y = 42.f;
+
 	// 비리디언(Viridian) - 선장(Captain)
 	UImageManager::GetInst().CreateCutSprite("Player.png", "Guys:: Cyan Right", FVector2D(X * 0, Y * 0), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
 	UImageManager::GetInst().CreateCutSprite("Player.png", "Guys:: Cyan Left", FVector2D(X * 1, Y * 0), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);

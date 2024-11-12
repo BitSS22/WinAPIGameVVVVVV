@@ -159,7 +159,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Enermy.h" />
+    <ClInclude Include="MoveEntity.h" />
     <ClInclude Include="GameConst.h">
       <SubType>
       </SubType>
@@ -172,6 +172,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Guy.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h">
       <SubType>
@@ -208,7 +209,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Enermy.cpp" />
+    <ClCompile Include="MoveEntity.cpp" />
     <ClCompile Include="GameConst.cpp">
       <SubType>
       </SubType>
@@ -221,6 +222,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Guy.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

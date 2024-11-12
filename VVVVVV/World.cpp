@@ -2,6 +2,8 @@
 #include "World.h"
 #include "Room.h"
 #include "BackGround.h"
+#include "Entity.h"
+#include "MoveEntity.h"
 
 AWorld::AWorld()
 {
@@ -18,6 +20,8 @@ void AWorld::BeginPlay()
 	RoomDatas.resize(WorldMaxIndex.Y);
 	for (size_t y = 0; y < RoomDatas.size(); ++y)
 		RoomDatas[y].resize(WorldMaxIndex.X);
+
+	GetWorld()->SetCameraToMainPawn(false);
 }
 
 void AWorld::MoveRoom(FIntPoint _Index)
@@ -70,6 +74,34 @@ void AWorld::SaveRoomData()
 	}
 
 	CurRoomDatas.RoomBackGroundData = Room->BackGround->Sprite->GetCurSpriteName();
+
+	CurRoomDatas.EntityDatas.clear();
+
+	for (size_t i = 0; i < GetRoom()->Entites.size(); ++i)
+	{
+		EntityData EntityData = {};
+		AEntity* Entity = GetRoom()->Entites[i];
+
+		EntityData.Name = Entity->GetRenderer()->GetCurSpriteName();
+		EntityData.DefualtLocation = Entity->GetActorLocation();
+
+		AMoveEntity* MoveEntity = dynamic_cast<AMoveEntity*>(Entity);
+		
+		if (MoveEntity != nullptr)
+		{
+			EntityData.DefualtLocation = MoveEntity->GetEntityDefualtLocation();
+			EntityData.DefualtDir = MoveEntity->GetEntityDefualtDir();
+			EntityData.Speed = MoveEntity->GetSpeed();
+			EntityData.MoveLenght = MoveEntity->GetMoveLenght();
+			EntityData.MoveLenghtOffset = MoveEntity->GetMoveLenghtOffset();
+		}
+
+		CurRoomDatas.EntityDatas.push_back(EntityData);
+
+		Entity->Destroy();
+	}
+
+	GetRoom()->Entites.clear();
 }
 
 void AWorld::LoadRoomData(FIntPoint _Index)
@@ -86,8 +118,6 @@ void AWorld::LoadRoomData(FIntPoint _Index)
 			Room->BackGroundTiles[y][x]->SetActive(ChangeRoomDatas.RoomBackGroundTileDatas[y][x].ShowTile);
 		}
 	}
-	
-	Room->BackGround->SetBackGround(ChangeRoomDatas.RoomBackGroundData);
 
 	if (EditMode == true)
 	{
@@ -99,5 +129,27 @@ void AWorld::LoadRoomData(FIntPoint _Index)
 				Room->BackGroundTiles[y][x]->SetActive(true);
 			}
 		}
+	}
+
+	GetRoom()->BackGround->SetBackGround(ChangeRoomDatas.RoomBackGroundData);
+
+	for (size_t i = 0; i < ChangeRoomDatas.EntityDatas.size(); ++i)
+	{
+		EntityData Data = ChangeRoomDatas.EntityDatas[i];
+
+		if (ChangeRoomDatas.EntityDatas[i].Name.find("ENEMIES::") != std::string::npos || ChangeRoomDatas.EntityDatas[i].Name.find("PLATFORMS::") != std::string::npos)
+		{
+			AMoveEntity* NewEntity = GetWorld()->SpawnActor<AMoveEntity>();
+			NewEntity->MoveEntityDefaultSetUp(Data.Name, Data.DefualtLocation, Data.DefualtDir, Data.Speed, Data.MoveLenght, Data.MoveLenghtOffset);
+			GetRoom()->Entites.push_back(NewEntity);
+		}
+		else if (ChangeRoomDatas.EntityDatas[i].Name.find("INTEROBJECT::") != std::string::npos)
+		{
+			AEntity* NewEntity = GetWorld()->SpawnActor<AEntity>();
+			NewEntity->EntityDefaultSetUp(Data.Name, Data.DefualtLocation);
+			GetRoom()->Entites.push_back(NewEntity);
+		}
+		else
+			MSGASSERT(nullptr, Data.Name, "의 Entity Data를 제대로 로드하지 못했습니다.");
 	}
 }
