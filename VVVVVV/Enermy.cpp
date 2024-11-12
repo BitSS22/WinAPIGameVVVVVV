@@ -36,7 +36,7 @@ void AEnermy::Tick()
 	// 액터 위치
 	UEngineDebug::CoreDebugRender(GetActorTransform(), UEngineDebug::EDebugPosType::Rect);
 	// 액터 기준 위치
-	UEngineDebug::CoreDebugRender(FTransform(DefualtLocation + Dir * MoveLenghtOffset, GetActorScale()), UEngineDebug::EDebugPosType::Rect);
+	UEngineDebug::CoreDebugRender(FTransform(DefualtLocation + FVector2D::RIGHT * MoveLenghtOffset, GetActorScale()), UEngineDebug::EDebugPosType::Rect);
 	UEngineDebug::CoreDebugRender(FTransform(DefualtLocation + Dir * MoveLenght, FVector2D(5.f, 5.f)), UEngineDebug::EDebugPosType::Circle);
 	UEngineDebug::CoreDebugRender(FTransform(DefualtLocation + -Dir * MoveLenght, FVector2D(5.f, 5.f)), UEngineDebug::EDebugPosType::Circle);
 }

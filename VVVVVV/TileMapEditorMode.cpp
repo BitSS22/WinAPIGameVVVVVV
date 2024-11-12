@@ -31,6 +31,7 @@ void ATileMapEditorMode::BeginPlay()
 	FVector2D SpriteSize = UImageManager::GetInst().FindSprite("Enemies::001 Stop Cyan")->GetSpriteData(0).Transform.Scale;
 	CurSelectEntityType->SetComponentScale(SpriteSize);
 	CurSelectEntityType->SetOrder(ERenderOrder::EDITOR_CURSOR);
+	CurSelectEntityType->SetActive(false);
 	
 
 	// Set Debug
@@ -105,67 +106,100 @@ void ATileMapEditorMode::Tick()
 			DeleteTile(Around, CurTileIndex);
 	}
 
-	if (KEY_DOWN('1'))
-		PrevTileList();
+	// Tile 관련
 
-	if (KEY_DOWN('2'))
+	if (KEY_DOWN(VK_XBUTTON1))
+		PickUpTile();
+	if (KEY_DOWN(VK_XBUTTON2))
 		NextTileList();
 
-	if (KEY_DOWN('Q'))
+	if (KEY_DOWN('1'))
 		PrevTileSet();
-
-	if (KEY_DOWN('W'))
+	if (KEY_DOWN('2'))
 		NextTileSet();
 
-	if (KEY_DOWN('A'))
+	if (KEY_DOWN('Q'))
 		PrevTile();
-
-	if (KEY_DOWN('S'))
+	if (KEY_DOWN('E'))
 		NextTile();
-
-	if (KEY_DOWN('X'))
-		ShowTiles();
 
 	if (KEY_DOWN('Z'))
 		ShowBackGroundTiles();
+	if (KEY_DOWN('X'))
+		ShowTiles();
 
-	if (KEY_DOWN('D'))
-		PickUpTile();
-
+	// 배경화면
 	if (KEY_DOWN('O'))
 		PrevBackGroundImage();
-
 	if (KEY_DOWN('P'))
 		NextBackGroundImage();
 
+	// 방 이동, 세이브
 	FIntPoint RoomIndex = World->CurRoomIndex;
-	if (KEY_DOWN(VK_UP))
+	if (KEY_DOWN('W'))
 	{
 		RoomIndex.Y -= 1;
 		World->MoveRoom(RoomIndex);
 	}
-	if (KEY_DOWN(VK_DOWN))
+	if (KEY_DOWN('S'))
 	{
 		RoomIndex.Y += 1;
 		World->MoveRoom(RoomIndex);
 	}
-	if (KEY_DOWN(VK_LEFT))
+	if (KEY_DOWN('A'))
 	{
 		RoomIndex.X -= 1;
 		World->MoveRoom(RoomIndex);
 	}
-	if (KEY_DOWN(VK_RIGHT))
+	if (KEY_DOWN('D'))
 	{
 		RoomIndex.X += 1;
 		World->MoveRoom(RoomIndex);
 	}
+	if (KEY_DOWN('R'))
+		World->MoveRoom(RoomIndex);
 
-	if (KEY_DOWN(VK_SPACE))
+	// Entity 관련
+	if (KEY_DOWN(VK_RETURN))
 		CreateEntity();
+	if (KEY_DOWN(VK_DELETE))
+		DeleteEntity();
 
-	if (KEY_DOWN('N'))
-		AddEntityLocation(FVector2D(16.f, 16.f));
+	FVector2D Dir = FVector2D::ZERO;
 
+	if (KEY_DOWN(VK_UP))
+		Dir += FVector2D::UP;
+	if (KEY_DOWN(VK_DOWN))
+		Dir += FVector2D::DOWN;
+	if (KEY_DOWN(VK_LEFT))
+		Dir += FVector2D::LEFT;
+	if (KEY_DOWN(VK_RIGHT))
+		Dir += FVector2D::RIGHT;
+	
+	if (KEY_PRESS(VK_SHIFT))
+		Dir = Dir * 8;
+	else if (KEY_PRESS(VK_CONTROL))
+		Dir = Dir * 16;
+	if (Dir != FVector2D::ZERO)
+		AddEntityLocation(Dir);
+
+
+	if (KEY_DOWN(VK_OEM_MINUS))
+		AddEntitySpeed(-8.f);
+	if (KEY_DOWN(VK_OEM_PLUS))
+		AddEntitySpeed(8.f);
+
+	if (KEY_DOWN(VK_OEM_4))
+		AddEntityMoveLenght(-8.f);
+	if (KEY_DOWN(VK_OEM_6))
+		AddEntityMoveLenght(8.f);
+
+	if (KEY_DOWN('9'))
+		AddEntityMoveOffSet(-8.f);
+	if (KEY_DOWN('0'))
+		AddEntityMoveOffSet(8.f);
+
+	
 
 	DebugText();
 }
@@ -674,11 +708,13 @@ void ATileMapEditorMode::DebugText()
 			str += std::to_string(Enermy->GetSpeed());
 			str += ", StartOffset : ";
 			str += std::to_string(Enermy->GetMoveLenghtOffset());
+			str += ", Direction : ";
+			str += std::to_string(Enermy->GetDir().X);
+			str += ", ";
+			str += std::to_string(Enermy->GetDir().Y);
 			UEngineDebug::CoreOutputString(str);
 		}
 	}
-
-
 }
 
 void ATileMapEditorMode::PrevBackGroundImage()
@@ -709,6 +745,21 @@ void ATileMapEditorMode::CreateEntity()
 		CurAdjustmentEntity = NewEntity;
 		CurAdjustmentEntityIndex = World->GetRoom()->Enties.size() - 1;
 	}
+}
+
+void ATileMapEditorMode::DeleteEntity()
+{
+	if (CurAdjustmentEntity == nullptr)
+		return;
+
+	auto& Entites = World->GetRoom()->Enties;
+	CurAdjustmentEntity->Destroy();
+	Entites.erase(Entites.begin() + CurAdjustmentEntityIndex);
+	--CurAdjustmentEntityIndex;
+	if (CurAdjustmentEntityIndex == -1)
+		CurAdjustmentEntity = nullptr;
+	else
+		CurAdjustmentEntity = Entites[CurAdjustmentEntityIndex];
 }
 
 TileList& operator++(TileList& _List)
