@@ -851,7 +851,7 @@ void ATileMapEditorMode::NextBackGroundImage()
 
 void ATileMapEditorMode::CreateEntity()
 {
-	if (CurSelectEntityList == EntityList::Enemies)
+	if (CurSelectEntityList == EntityList::Enemies || CurSelectEntityList == EntityList::Platforms)
 	{
 		AMoveEntity* NewEntity = GetWorld()->SpawnActor<AMoveEntity>();
 		NewEntity->MoveEntityDefaultSetUp(CurSelectEntityType->GetCurSpriteName(), CurSelectEntityType->GetComponentLocation(), FVector2D::RIGHT, EGameConst::DefualtSpeed, EGameConst::DefualtMoveLen, 0.f);
@@ -862,10 +862,6 @@ void ATileMapEditorMode::CreateEntity()
 	else if (CurSelectEntityList == EntityList::InterObjects)
 	{
 		// TODO. 
-	}
-	else if (CurSelectEntityList == EntityList::Platforms)
-	{
-		// TODO.
 	}
 }
 
