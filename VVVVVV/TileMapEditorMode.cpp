@@ -558,6 +558,8 @@ void ATileMapEditorMode::ShowBackGroundTiles()
 void ATileMapEditorMode::PickUpTile()
 {
 	FIntPoint TileIndex = World->GetRoom()->GetOnTileIndex(UEngineAPICore::GetCore()->GetMainWindow().GetMousePos());
+	if (TileIndex.X < 0 || TileIndex.X >= World->GetRoom()->TileCount.X || TileIndex.Y < 0 || TileIndex.Y >= World->GetRoom()->TileCount.Y)
+		return;
 	auto& SelectTileMap = GetCurSelectTileMap();
 	CurSelectSprite->SetSprite(SelectTileMap[TileIndex.Y][TileIndex.X]->GetCurSpriteName(), SelectTileMap[TileIndex.Y][TileIndex.X]->GetCurIndex());
 }
@@ -650,6 +652,8 @@ void ATileMapEditorMode::DebugText()
 	UEngineDebug::CoreOutputString(str);
 
 	FIntPoint TileCursorIndex = World->GetRoom()->GetOnTileIndex(CursorPos);
+	if (TileCursorIndex.X < 0 || TileCursorIndex.X >= World->GetRoom()->TileCount.X || TileCursorIndex.Y < 0 || TileCursorIndex.Y >= World->GetRoom()->TileCount.Y)
+		return;
 
 	str = "On Tile Name : ";
 	str += GetCurSelectTileMap()[TileCursorIndex.Y][TileCursorIndex.X]->GetCurSpriteName();

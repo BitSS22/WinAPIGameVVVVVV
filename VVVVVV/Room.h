@@ -37,16 +37,7 @@ private:
 public:
 	FIntPoint GetOnTileIndex(FIntPoint _Pos)
 	{
-		FIntPoint Result = FIntPoint(_Pos.X / TileScale.X, _Pos.Y / TileScale.Y);
-		if (Result.X < 0)
-			Result.X = 0;
-		else if (Result.X >= TileCount.X)
-			Result.X = TileCount.X - 1;
-		if (Result.Y < 0)
-			Result.Y = 0;
-		else if (Result.Y >= TileCount.Y)
-			Result.Y = TileCount.Y - 1;
-		return Result;
+		return FIntPoint(_Pos.X / TileScale.X, _Pos.Y / TileScale.Y);
 	}
 
 };
