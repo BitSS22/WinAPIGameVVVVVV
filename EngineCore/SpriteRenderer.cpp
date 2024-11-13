@@ -14,6 +14,8 @@ void USpriteRenderer::Render()
 {
 	if (CurAnimation != nullptr)
 	{
+		CurAnimation->IsEnd = false;
+
 		vector<int>& Indexs = CurAnimation->FrameIndex;
 		vector<float>& Times = CurAnimation->FrameTime;
 
@@ -32,6 +34,9 @@ void USpriteRenderer::Render()
 				CurAnimation->Events[CurAnimation->CurIndex]();
 
 			if (CurAnimation->CurIndex >= Indexs.size())
+				CurAnimation->IsEnd = true;
+
+			if (CurAnimation->CurIndex >= Indexs.size())
 			{
 				if (CurAnimation->Loop == true)
 				{
@@ -40,7 +45,10 @@ void USpriteRenderer::Render()
 						CurAnimation->Events[CurAnimation->CurIndex]();
 				}
 				else
+				{
+					CurAnimation->IsEnd = true;
 					--CurAnimation->CurIndex;
+				}
 			}
 		}
 

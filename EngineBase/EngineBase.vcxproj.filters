@@ -64,6 +64,7 @@
       <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="FSMStateManager.cpp" />
+    <ClCompile Include="TimeEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineDebug.h">
@@ -103,5 +104,6 @@
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="FSMStateManager.h" />
+    <ClInclude Include="TimeEvent.h" />
   </ItemGroup>
 </Project>

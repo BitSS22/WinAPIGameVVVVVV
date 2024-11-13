@@ -69,6 +69,10 @@ public:
 		KeyIndexInvalidCheck(_KeyIndex);
 		return Keys[_KeyIndex].PressTime;
 	}
+	bool IsDoubleClick(int _KeyIndex, float _Time)
+	{
+		return Keys[_KeyIndex].IsDown && Keys[_KeyIndex].FreeTime < _Time;
+	}
 
 private:
 	INNER_CLASS	class UEngineKey
@@ -87,6 +91,7 @@ private:
 		bool IsUp = false;
 		bool IsFree = false;
 		float PressTime = 0.f;
+		float FreeTime = 0.f;
 		vector<function<void()>> DownEvents = {};
 		vector<function<void()>> PressEvents = {};
 		vector<function<void()>> UpEvents = {};

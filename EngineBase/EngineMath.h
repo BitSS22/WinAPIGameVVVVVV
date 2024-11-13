@@ -18,6 +18,27 @@ public:
 	{
 		return ::sqrtf(_Value);
 	}
+
+	template <typename DataType>
+	DataType ClampMax(DataType _Value, DataType _MaxValue)
+	{
+		return _Value > _MaxValue ? _MaxValue : _Value;
+	}
+	template <typename DataType>
+	DataType ClampMax(DataType _Value, DataType _MinValue)
+	{
+		return _Value < _MinValue ? _MinValue : _Value;
+	}
+	template <typename DataType>
+	DataType Clamp(DataType _Value, DataType _MinValue, DataType _MaxValue)
+	{
+		if (_Value < _MinValue)
+			return _MinValue;
+		else if (_Value > _MaxValue)
+			return _MaxValue;
+		else
+			return _Value;
+	}
 };
 
 struct FVector2D

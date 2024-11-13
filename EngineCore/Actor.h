@@ -3,6 +3,7 @@
 #include <EngineBase/EngineMath.h>
 #include <EngineCore/ImageManager.h>
 #include <EngineCore/Level.h>
+#include <EngineBase/TimeEvent.h>
 
 class ULevel;
 class UEngineSprite;
@@ -28,6 +29,8 @@ private:
 	static std::list<UActorComponent*> ComponentBeginList;
 	std::list<UActorComponent*> Components = {};
 
+protected:
+	UTimeEvent TimeEventer = {};
 
 public:
 	virtual void BeginPlay()

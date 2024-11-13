@@ -88,6 +88,10 @@ public:
 	{
 		CurAnimation = nullptr;
 	}
+	bool IsCurAnimationEnd()
+	{
+		return CurAnimation->IsEnd;
+	}
 
 public:
 	INNER_CLASS struct FrameAnimation
@@ -99,6 +103,7 @@ public:
 		int CurIndex = 0;
 		float CurTime = 0.f;
 		bool Loop = true;
+		bool IsEnd = false;
 		std::map<int, UEngineDelegate> Events = {};
 
 	public:

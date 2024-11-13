@@ -33,6 +33,8 @@ void AActor::Tick()
 		UEngineDebug::CoreDebugRender(Trans, UEngineDebug::EDebugPosType::Circle);
 	}
 
+	TimeEventer.Update();
+
 	for (const auto& Component : Components)
 		Component->ComponentTick();
 }

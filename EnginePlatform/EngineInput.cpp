@@ -53,16 +53,18 @@ void UEngineInput::UEngineKey::KeyCheck()
 {
 	if (GetAsyncKeyState(Key) & 0x8000) // 이번 프레임 키가 눌림
 	{
-		PressTime += UEngineTimer::GetInst()->GetDeltaTime();
+		if (IsPress == true)
+			PressTime += UEngineTimer::GetInst()->GetDeltaTime();
 
-		if (IsPress == true) // 이전 프레임 키가 눌림
+		if (IsDown == true) // 이전 프레임 키가 눌림
 		{
+			FreeTime = 0.f;
 			IsDown = false;
 			IsPress = true;
 			IsUp = false;
 			IsFree = false;
 		}
-		else if (IsPress == false)  // 이전 프레임 키가 안 눌림
+		else if (IsFree == true)  // 이전 프레임 키가 안 눌림
 		{
 			IsDown = true;
 			IsPress = true;
@@ -72,7 +74,8 @@ void UEngineInput::UEngineKey::KeyCheck()
 	}
 	else  // 이번 프레임 키가 안 눌림
 	{
-		PressTime = 0.f;
+		if (IsFree == true)
+			FreeTime += UEngineTimer::GetInst()->GetDeltaTime();
 
 		if (IsPress == true) // 이전 프레임 키가 눌림
 		{
@@ -81,8 +84,9 @@ void UEngineInput::UEngineKey::KeyCheck()
 			IsUp = true;
 			IsFree = true;
 		}
-		else if (IsPress == false)  // 이전 프레임 키가 안 눌림
+		else if (IsUp == true)  // 이전 프레임 키가 안 눌림
 		{
+			PressTime = 0.f;
 			IsDown = false;
 			IsPress = false;
 			IsUp = false;
