@@ -35,6 +35,7 @@ private:
 	float CameraEffectScale = 1.f;
 	std::map<std::string, FrameAnimation> FrameAnimations = {};
 	FrameAnimation* CurAnimation = nullptr;
+	unsigned char Alpha = 255;
 
 public:
 	virtual void BeginPlay() override;
@@ -84,6 +85,14 @@ public:
 		Pivot = _Pivot;
 	}
 	void SetPivotType(PivotType _Type);
+	void SetAlphaChar(unsigned char _Value)
+	{
+		Alpha = _Value;
+	}
+	void SetAlphaFloat(float _Value)
+	{
+		Alpha = static_cast<unsigned char>(UEngineMath::Clamp(_Value, 0.f, 1.f));
+	}
 	void OffAnimation()
 	{
 		CurAnimation = nullptr;

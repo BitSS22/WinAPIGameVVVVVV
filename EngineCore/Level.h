@@ -123,6 +123,7 @@ private:
 
 	void DoubleBuffering();
 	void ScreenClear();
+	void BeginPlayCheck();
 
 public:
 	void SetCameraToMainPawn(bool _IsCameraToMainPawn)

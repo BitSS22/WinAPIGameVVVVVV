@@ -23,15 +23,7 @@ ULevel::~ULevel()
 
 void ULevel::Tick()
 {
-	for (const auto& CurActor : BeginPlayList)
-	{
-		CurActor->BeginPlay();
-		AllActors.push_back(CurActor);
-	}
-
-	BeginPlayList.clear();
-
-	AActor::ComponentBeginPlay();
+	BeginPlayCheck();
 
 	for (const auto& CurActor : AllActors)
 	{
@@ -146,6 +138,8 @@ void ULevel::Collision()
 
 void ULevel::LevelChangeStart()
 {
+	BeginPlayCheck();
+
 	for (const auto& CurActor : BeginPlayList)
 		CurActor->LevelChangeStart();
 	for (const auto& CurActor : AllActors)
@@ -185,5 +179,18 @@ void ULevel::ScreenClear()
 	FVector2D size = MainWindow.GetWindowSize();
 
 	Rectangle(BackBufferImage->GetDC(), -1, -1, size.iX() + 1, size.iY() + 1);
+}
+
+void ULevel::BeginPlayCheck()
+{
+	for (const auto& CurActor : BeginPlayList)
+	{
+		CurActor->BeginPlay();
+		AllActors.push_back(CurActor);
+	}
+
+	BeginPlayList.clear();
+
+	AActor::ComponentBeginPlay();
 }
 

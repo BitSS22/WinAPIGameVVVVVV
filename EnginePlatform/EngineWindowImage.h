@@ -28,6 +28,7 @@ public:
 	void CopyToBit(UEngineWindowImage* _TargetImage, const FTransform& _transform);
 	void CopyTrans(UEngineWindowImage* _TargetImage, const FTransform& _RenderTrans, const FTransform& _LTImageTrans, UColor _Color = UColor(0, 0, 0, 0));
 	void CopyToTrans(UEngineWindowImage* _TargetImage, const FTransform& _RenderTrans, const FTransform& _LTImageTrans, UColor _Color = UColor(0, 0, 0, 0));
+	void CopyToAlpha(UEngineWindowImage* _TargetImage, const FTransform& _RenderTrans, const FTransform& _LTImageTrans, unsigned char _Alpha);
 	void Load(UEngineWindowImage* _TargetImage, string_view _Path);
 
 private:

@@ -7,6 +7,7 @@ public:
 	float Time = 0.f;
 	float MaxTime = 0.f;
 	std::function<void()> Event = {};
+	bool IsUpdate = false;
 	bool Loop = false;
 };
 // Ό³Έν :
@@ -25,9 +26,9 @@ private:
 	std::list<TimeEventFunction> Events = {};
 
 public:
-	void PushEvent(float _Time, std::function<void()> _Function, bool _Loop = false)
+	void PushEvent(float _Time, std::function<void()> _Function, bool _IsUpdate = false, bool _Loop = false)
 	{
-		Events.push_front({ _Time, _Time, _Function, _Loop });
+		Events.push_front({ _Time, _Time, _Function, _IsUpdate, _Loop });
 	}
 	void Update()
 	{
@@ -35,6 +36,9 @@ public:
 		{
 			TimeEventFunction& TimeEvent = *iter;
 			TimeEvent.Time -= GET_DELTA;
+
+			if (TimeEvent.IsUpdate == true && TimeEvent.Time > 0.f)
+				TimeEvent.Event();
 
 			if (TimeEvent.Time < 0.f)
 			{

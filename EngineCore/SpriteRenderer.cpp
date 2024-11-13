@@ -69,7 +69,10 @@ void USpriteRenderer::Render()
 
 	Trans.Location += Pivot;
 
-	CurData.Image->CopyToTrans(UEngineAPICore::GetCore()->GetMainWindow().GetBackBufferImage(), Trans, CurData.Transform);
+	if (Alpha == 255)
+		CurData.Image->CopyToTrans(UEngineAPICore::GetCore()->GetMainWindow().GetBackBufferImage(), Trans, CurData.Transform);
+	else
+		CurData.Image->CopyToAlpha(UEngineAPICore::GetCore()->GetMainWindow().GetBackBufferImage(), Trans, CurData.Transform, Alpha);
 }
 
 void USpriteRenderer::BeginPlay()
