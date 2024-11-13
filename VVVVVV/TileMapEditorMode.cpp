@@ -34,8 +34,8 @@ void ATileMapEditorMode::BeginPlay()
 	CurSelectEntityType->SetComponentLocation(UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half());
 	CurSelectEntityType->SetOrder(ERenderOrder::EDITOR_CURSOR);
 	CurSelectEntityType->SetActive(false);
-	
 
+	World->SetEditMode(true);
 	// Set Debug
 	UEngineDebug::SetIsDebug(true);
 }
@@ -361,7 +361,7 @@ void ATileMapEditorMode::MoveRoom(FIntPoint _Index)
 	CurAdjustmentEntity = nullptr;
 	CurAdjustmentEntityIndex = -1;
 
-	World->MoveRoom(_Index);
+	MoveRoom(_Index);
 }
 
 void ATileMapEditorMode::SwitchLoopRoom()

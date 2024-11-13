@@ -26,9 +26,14 @@ private:
 	std::vector<std::vector<USpriteRenderer*>> BackGroundTiles = {};
 	ABackGround* BackGround = nullptr;
 	std::vector<AEntity*> Entites = {};
+	AWorld* World = nullptr;
 
 public:
 	virtual void BeginPlay() override;
+
+	void MoveRoom(FIntPoint _Index);
+	void SaveRoomData();
+	void LoadRoomData(FIntPoint _Index);
 
 	void SetupAnimationTiles();
 

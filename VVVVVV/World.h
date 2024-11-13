@@ -7,6 +7,7 @@ class AWorld : public AActor
 {
 public:
 	friend class ATileMapEditorMode;
+	friend class ARoom;
 	INNER_CLASS struct RoomData;
 	INNER_CLASS struct RoomTileData;
 	INNER_CLASS struct EntityData;
@@ -29,10 +30,6 @@ private:
 public:
 	virtual void BeginPlay() override;
 
-	void MoveRoom(FIntPoint _Index);
-	void SaveRoomData();
-	void LoadRoomData(FIntPoint _Index);
-
 	void SaveFile();
 	void LoadFile();
 
@@ -54,6 +51,10 @@ public:
 	void SetCurRoomIndex(FIntPoint _Index)
 	{
 		CurRoomIndex = _Index;
+	}
+	void SetEditMode(bool _Value)
+	{
+		EditMode = _Value;
 	}
 
 public:

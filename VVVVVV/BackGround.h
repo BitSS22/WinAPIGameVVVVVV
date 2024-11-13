@@ -10,6 +10,7 @@ enum class EBackGroundType
 	DEBUG
 };
 
+
 // Ό³Έν :
 class ABackGround : public AActor
 {
@@ -34,6 +35,7 @@ private:
 	std::vector<Star> Effects = {};
 	float AnimationSpeed = 320.f;
 	bool EffectValue = false;
+	ARoom* Room = nullptr;
 
 public:
 	virtual void BeginPlay() override;

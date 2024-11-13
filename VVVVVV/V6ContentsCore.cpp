@@ -46,7 +46,7 @@ void V6ContentsCore::BeginPlay()
 	ResourceLoad();
 
 	// Open Level
-	UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
+	UEngineAPICore::GetCore()->OpenLevel("Play");
 }
 
 void V6ContentsCore::Tick()

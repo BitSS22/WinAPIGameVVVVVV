@@ -89,7 +89,7 @@ private:
 		bool IsDown = false;
 		bool IsPress = false;
 		bool IsUp = false;
-		bool IsFree = false;
+		bool IsFree = true;
 		float PressTime = 0.f;
 		float FreeTime = 0.f;
 		vector<function<void()>> DownEvents = {};

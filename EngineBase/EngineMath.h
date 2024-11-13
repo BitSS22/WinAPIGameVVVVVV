@@ -25,7 +25,7 @@ public:
 		return _Value > _MaxValue ? _MaxValue : _Value;
 	}
 	template <typename DataType>
-	static DataType ClampMax(DataType _Value, DataType _MinValue)
+	static DataType ClampMin(DataType _Value, DataType _MinValue)
 	{
 		return _Value < _MinValue ? _MinValue : _Value;
 	}
