@@ -15,8 +15,8 @@ public:
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
 private:
-	float Speed = 800.f;
-	USpriteRenderer* SpriteRenderer = nullptr;
+	float Speed = 500.f;
+	bool Flip = false;
 
 public:
 	void BeginPlay() override;

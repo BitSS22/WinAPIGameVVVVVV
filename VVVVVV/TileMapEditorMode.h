@@ -2,7 +2,7 @@
 #include <EngineCore/SpriteRenderer.h>
 #include "BackGround.h"
 #include "Room.h"
-#include "World.h"
+#include "GameWorld.h"
 
 enum class TileList
 {
@@ -40,7 +40,7 @@ private:
 	int CurTileSetIndex = 0;
 	int CurEntityIndex = 0;
 	int CurBackGroundIndex = 0;
-	AWorld* World = nullptr;
+	AGameWorld* GameWorld = nullptr;
 	USpriteRenderer* CurSelectSprite = nullptr;
 	USpriteRenderer* CurSelectEntityType = nullptr;
 	AEntity* CurAdjustmentEntity = nullptr;
@@ -59,18 +59,18 @@ private:
 		switch (CurSelectTileList)
 		{
 		case TileList::BackGroundTileList:
-			return World->GetRoom()->BackGroundTiles;
+			return GameWorld->GetRoom()->BackGroundTiles;
 			break;
 		case TileList::TileList:
 		case TileList::SpikeTileList:
 		case TileList::AnimationTileList:
-			return World->GetRoom()->Tiles;
+			return GameWorld->GetRoom()->Tiles;
 			break;
 		default:
 			MSGASSERT(nullptr, "타일 리스트가 제대로 선택되지 않았습니다.");
 			break;
 		}
-		return World->GetRoom()->Tiles;
+		return GameWorld->GetRoom()->Tiles;
 	}
 
 	void ChangeTile(bool _AroundTileChange, FIntPoint _Index);
@@ -149,6 +149,10 @@ private:
 	void DebugText();
 
 public:
+	AGameWorld* GetGameWorld()
+	{
+		return GameWorld;
+	}
 
 };
 

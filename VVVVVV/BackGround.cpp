@@ -49,9 +49,9 @@ void ABackGround::BeginPlay()
 	}
 
 	Sprite = CreateDefaultSubObject<USpriteRenderer>();
-	FIntPoint CurRoomIndex = Room->World->CurRoomIndex;
-	if (Room->World->RoomDatas[CurRoomIndex.Y][CurRoomIndex.X].RoomBackGroundData != "Debug BackGround.png")
-		SetBackGround(Room->World->RoomDatas[CurRoomIndex.Y][CurRoomIndex.X].RoomBackGroundData);
+	FIntPoint CurRoomIndex = Room->GameWorld->CurRoomIndex;
+	if (Room->GameWorld->RoomDatas[CurRoomIndex.Y][CurRoomIndex.X].RoomBackGroundData != "Debug BackGround.png")
+		SetBackGround(Room->GameWorld->RoomDatas[CurRoomIndex.Y][CurRoomIndex.X].RoomBackGroundData);
 	else
 		SetBackGround("Debug BackGround.png");
 	Sprite->SetSpriteScale(1.f, Sprite->GetCurIndex());

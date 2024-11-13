@@ -16,16 +16,18 @@ void AEntity::BeginPlay()
 
 void AEntity::EntityDefaultSetUp(std::string_view _Name, FVector2D _Location)
 {
-	Renderer = CreateDefaultSubObject<USpriteRenderer>();
-	Renderer->SetSprite(_Name, 0);
+	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+	SpriteRenderer->SetSprite(_Name, 0);
 	UEngineSprite* Sprite = UImageManager::GetInst().FindSprite(_Name);
-	Renderer->CreateAnimation(Sprite->GetNameView(), Sprite->GetNameView(), 0, Sprite->GetSpriteCount() - 1, EGameConst::AnimationTime, true);
-	Renderer->ChangeAnimation(Sprite->GetNameView());
-	Renderer->SetOrder(ERenderOrder::Entity);
+	if (Sprite->GetSpriteCount() > 2)
+	{
+		SpriteRenderer->CreateAnimation(Sprite->GetNameView(), Sprite->GetNameView(), 0, Sprite->GetSpriteCount() - 1, EGameConst::AnimationTime, true);
+		SpriteRenderer->ChangeAnimation(Sprite->GetNameView());
+	}
+	SpriteRenderer->SetOrder(ERenderOrder::Entity);
 
 	FVector2D SpriteSize = Sprite->GetSpriteData(0).Transform.Scale;
-	//SetActorLocation(_Location);
 	SetActorLocation(UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half());
 	SetActorScale(SpriteSize);
-	Renderer->SetComponentScale(SpriteSize);
+	SpriteRenderer->SetComponentScale(SpriteSize);
 }

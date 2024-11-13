@@ -17,7 +17,7 @@ class ABackGround : public AActor
 public:
 	friend class ATileMapEditorMode;
 	friend class ARoom;
-	friend class AWorld;
+	friend class AGameWorld;
 private:
 	INNER_CLASS struct Star;
 public:

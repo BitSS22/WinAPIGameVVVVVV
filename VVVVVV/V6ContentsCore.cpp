@@ -39,7 +39,7 @@ void V6ContentsCore::BeginPlay()
 
 	// Create Level
 	UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, AActor>("Play");
 	UEngineAPICore::GetCore()->CreateLevel<AEndingGameMode, AActor>("End");
 	UEngineAPICore::GetCore()->CreateLevel<ATileMapEditorMode, AActor>("TileMapEditor");
 

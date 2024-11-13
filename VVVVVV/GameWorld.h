@@ -3,7 +3,7 @@
 #include <EngineBase/EngineSerializer.h>
 
 // Ό³Έν :
-class AWorld : public AActor
+class AGameWorld : public AActor
 {
 public:
 	friend class ATileMapEditorMode;
@@ -13,17 +13,17 @@ public:
 	INNER_CLASS struct RoomTileData;
 	INNER_CLASS struct EntityData;
 public:
-	AWorld();
-	~AWorld();
+	AGameWorld();
+	~AGameWorld();
 
-	AWorld(const AWorld& _Other) = delete;
-	AWorld(AWorld&& _Other) noexcept = delete;
-	AWorld& operator=(const AWorld& _Other) = delete;
-	AWorld& operator=(AWorld&& _Other) noexcept = delete;
+	AGameWorld(const AGameWorld& _Other) = delete;
+	AGameWorld(AGameWorld&& _Other) noexcept = delete;
+	AGameWorld& operator=(const AGameWorld& _Other) = delete;
+	AGameWorld& operator=(AGameWorld&& _Other) noexcept = delete;
 
 private:
 	FIntPoint WorldMaxIndex = EGameConst::WorldMaxIndex;
-	FIntPoint CurRoomIndex = { 0, 0 };
+	FIntPoint CurRoomIndex = { 3, 4 };
 	ARoom* Room = {};
 	std::vector<std::vector<RoomData>> RoomDatas = {};
 	bool EditMode = true;

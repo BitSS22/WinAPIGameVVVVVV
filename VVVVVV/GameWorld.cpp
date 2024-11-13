@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "World.h"
+#include "GameWorld.h"
 #include "Room.h"
 #include "BackGround.h"
 #include "Entity.h"
@@ -7,18 +7,18 @@
 #include "EngineBase/EngineDirectory.h"
 #include <EngineBase/EngineFile.h>
 
-AWorld::AWorld()
+AGameWorld::AGameWorld()
 {
 }
 
-AWorld::~AWorld()
+AGameWorld::~AGameWorld()
 {
 }
 
-void AWorld::BeginPlay()
+void AGameWorld::BeginPlay()
 {
 	Room = GetWorld()->SpawnActor<ARoom>();
-	Room->World = this;
+	Room->GameWorld = this;
 
 	RoomDatas.resize(WorldMaxIndex.Y);
 	for (size_t y = 0; y < RoomDatas.size(); ++y)
@@ -28,7 +28,7 @@ void AWorld::BeginPlay()
 }
 
 
-void AWorld::SaveFile()
+void AGameWorld::SaveFile()
 {
 	Room->SaveRoomData();
 
@@ -45,7 +45,7 @@ void AWorld::SaveFile()
 	NewFile.Write(Ser);
 }
 
-void AWorld::LoadFile()
+void AGameWorld::LoadFile()
 {
 	UEngineSerializer Ser = {};
 
@@ -60,7 +60,7 @@ void AWorld::LoadFile()
 	Ser >> RoomDatas;
 }
 
-void AWorld::RoomData::Serialize(UEngineSerializer& _Class)
+void AGameWorld::RoomData::Serialize(UEngineSerializer& _Class)
 {
 	_Class << RoomTileDatas;
 	_Class << RoomBackGroundTileDatas;
@@ -71,7 +71,7 @@ void AWorld::RoomData::Serialize(UEngineSerializer& _Class)
 	_Class << TileScale;
 }
 
-void AWorld::RoomData::DeSerialize(UEngineSerializer& _Class)
+void AGameWorld::RoomData::DeSerialize(UEngineSerializer& _Class)
 {
 	_Class >> RoomTileDatas;
 	_Class >> RoomBackGroundTileDatas;
@@ -82,7 +82,7 @@ void AWorld::RoomData::DeSerialize(UEngineSerializer& _Class)
 	_Class >> TileScale;
 }
 
-void AWorld::EntityData::Serialize(UEngineSerializer& _Class)
+void AGameWorld::EntityData::Serialize(UEngineSerializer& _Class)
 {
 	_Class << Name;
 	_Class << DefualtLocation;
@@ -92,7 +92,7 @@ void AWorld::EntityData::Serialize(UEngineSerializer& _Class)
 	_Class << MoveLenghtOffset;
 }
 
-void AWorld::EntityData::DeSerialize(UEngineSerializer& _Class)
+void AGameWorld::EntityData::DeSerialize(UEngineSerializer& _Class)
 {
 	_Class >> Name;
 	_Class >> DefualtLocation;
@@ -102,28 +102,28 @@ void AWorld::EntityData::DeSerialize(UEngineSerializer& _Class)
 	_Class >> MoveLenghtOffset;
 }
 
-void AWorld::RoomTileData::Serialize(UEngineSerializer& _Class)
+void AGameWorld::RoomTileData::Serialize(UEngineSerializer& _Class)
 {
 	_Class << Name;
 	_Class << SpriteIndex;
 	_Class << ShowTile;
 }
 
-void AWorld::RoomTileData::DeSerialize(UEngineSerializer& _Class)
+void AGameWorld::RoomTileData::DeSerialize(UEngineSerializer& _Class)
 {
 	_Class >> Name;
 	_Class >> SpriteIndex;
 	_Class >> ShowTile;
 }
 
-void AWorld::RoomBackGroundData::Serialize(UEngineSerializer& _Class)
+void AGameWorld::RoomBackGroundData::Serialize(UEngineSerializer& _Class)
 {
 	_Class << Name;
 	_Class << SpriteIndex;
 	_Class << Effect;
 }
 
-void AWorld::RoomBackGroundData::DeSerialize(UEngineSerializer& _Class)
+void AGameWorld::RoomBackGroundData::DeSerialize(UEngineSerializer& _Class)
 {
 	_Class >> Name;
 	_Class >> SpriteIndex;

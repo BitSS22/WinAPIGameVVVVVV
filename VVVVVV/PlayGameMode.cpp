@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "PlayGameMode.h"
 #include "BackGround.h"
-#include "World.h"
+#include "GameWorld.h"
 
 #include <EngineCore/Level.h>
 
@@ -17,18 +17,14 @@ void APlayGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	World = GetWorld()->SpawnActor<AWorld>();
-	World->SetEditMode(false);
+	GameWorld = GetWorld()->SpawnActor<AGameWorld>();
+	GameWorld->SetEditMode(false);
 
-	World->LoadFile();
+	GameWorld->LoadFile();
 }
 
 void APlayGameMode::Tick()
 {
-	if (KEY_DOWN('L'))
-	{
-	}
-
 	Super::Tick();
 
 	UINT frame = UEngineAPICore::GetCore()->GetFrame();

@@ -195,7 +195,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="World.h">
+    <ClInclude Include="GameWorld.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -248,7 +248,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="World.cpp">
+    <ClCompile Include="GameWorld.cpp">
       <SubType>
       </SubType>
     </ClCompile>

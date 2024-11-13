@@ -24,7 +24,7 @@ public:
 	AActor& operator=(AActor&& _Other) noexcept = delete;
 
 private:
-	ULevel* World = nullptr;
+	ULevel* GameWorld = nullptr;
 	FTransform Transform = {};
 	static std::list<UActorComponent*> ComponentBeginList;
 	std::list<UActorComponent*> Components = {};
@@ -63,7 +63,7 @@ private:
 public:
 	ULevel* GetWorld() const
 	{
-		return World;
+		return GameWorld;
 	}
 	FVector2D GetActorLocation() const
 	{

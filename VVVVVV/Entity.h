@@ -1,6 +1,8 @@
 #pragma once
 
-// Ό³Έν :
+class AGameWorld;
+class ARoom;
+
 class AEntity : public AActor
 {
 public:
@@ -13,23 +15,34 @@ public:
 	AEntity& operator=(AEntity&& _Other) noexcept = delete;
 
 private:
-	USpriteRenderer* Renderer = nullptr;
+	ARoom* Room = nullptr;
+protected:
+	USpriteRenderer* SpriteRenderer = nullptr;
 
 public:
 	virtual void BeginPlay() override;
+	void EntityDefaultSetUp(std::string_view _Name, FVector2D _Location);
 
 private:
 
 public:
 	USpriteRenderer* GetRenderer()
 	{
-		return Renderer;
+		return SpriteRenderer;
 	}
-	void EntityDefaultSetUp(std::string_view _Name, FVector2D _Location);
 
 	virtual void AddEntityLocation(FVector2D _Location)
 	{
 		AddActorLocation(_Location);
+	}
+
+	void SetRoom(ARoom* _Room)
+	{
+		Room = _Room;
+	}
+	ARoom* GetRoom()
+	{
+		return Room;
 	}
 
 };

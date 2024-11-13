@@ -25,7 +25,7 @@
     <ClInclude Include="Enums.h">
       <Filter>Define</Filter>
     </ClInclude>
-    <ClInclude Include="World.h">
+    <ClInclude Include="GameWorld.h">
       <Filter>ContentsObject\Map\World</Filter>
     </ClInclude>
     <ClInclude Include="BackGround.h">
@@ -72,7 +72,7 @@
     <ClCompile Include="Enums.cpp">
       <Filter>Define</Filter>
     </ClCompile>
-    <ClCompile Include="World.cpp">
+    <ClCompile Include="GameWorld.cpp">
       <Filter>ContentsObject\Map\World</Filter>
     </ClCompile>
     <ClCompile Include="BackGround.cpp">

@@ -1,7 +1,7 @@
 #pragma once
 #include <EngineCore/GameMode.h>
 
-class AWorld;
+class AGameWorld;
 // Ό³Έν :
 class APlayGameMode : public AGameMode
 {
@@ -15,7 +15,7 @@ public:
 	APlayGameMode& operator=(APlayGameMode&& _Other) noexcept = delete;
 
 private:
-	AWorld* World = nullptr;
+	AGameWorld* GameWorld = nullptr;
 
 public:
 	virtual void BeginPlay() override;
@@ -24,6 +24,12 @@ public:
 	virtual void LevelChangeEnd() override {};
 
 private:
+
+public:
+	AGameWorld* GetGameWorld()
+	{
+		return GameWorld;
+	}
 
 };
 

@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "MoveEntity.h"
 #include "Entity.h"
-#include "World.h"
+#include "GameWorld.h"
 
 ATileMapEditorMode::ATileMapEditorMode()
 {
@@ -19,7 +19,7 @@ void ATileMapEditorMode::BeginPlay()
 
 	LoadResourceList();
 
-	World = GetWorld()->SpawnActor<AWorld>();
+	GameWorld = GetWorld()->SpawnActor<AGameWorld>();
 
 	// 커서 스프라이트
 	CurSelectSprite = CreateDefaultSubObject<USpriteRenderer>();
@@ -35,7 +35,9 @@ void ATileMapEditorMode::BeginPlay()
 	CurSelectEntityType->SetOrder(ERenderOrder::EDITOR_CURSOR);
 	CurSelectEntityType->SetActive(false);
 
-	World->SetEditMode(true);
+	GameWorld->SetEditMode(true);
+	GameWorld->LoadFile();
+
 	// Set Debug
 	UEngineDebug::SetIsDebug(true);
 }
@@ -280,7 +282,7 @@ bool ATileMapEditorMode::IsSameTileName(const string& _Name, int _x, int _y) con
 {
 	auto& CurSelectTileMap = GetCurSelectTileMap();
 
-	if (_x < 0 || _y < 0 || _x >= World->GetRoom()->TileCount.X || _y >= World->GetRoom()->TileCount.Y)
+	if (_x < 0 || _y < 0 || _x >= GameWorld->GetRoom()->TileCount.X || _y >= GameWorld->GetRoom()->TileCount.Y)
 		return true;
 	else if (CurSelectTileMap[_y][_x]->GetCurSpriteName() == _Name)
 		return true;
@@ -292,7 +294,7 @@ void ATileMapEditorMode::ChangeTile(bool _AroundTileChange, FIntPoint _Index)
 {
 	auto& CurSelectTileMap = GetCurSelectTileMap();
 
-	FIntPoint TileCount = World->GetRoom()->TileCount;
+	FIntPoint TileCount = GameWorld->GetRoom()->TileCount;
 
 	FIntPoint CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
 	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
@@ -326,7 +328,7 @@ void ATileMapEditorMode::DeleteTile(bool _AroundTileChange, FIntPoint _Index)
 {
 	auto& CurSelectTileMap = GetCurSelectTileMap();
 
-	FIntPoint TileCount = World->GetRoom()->TileCount;
+	FIntPoint TileCount = GameWorld->GetRoom()->TileCount;
 
 	FIntPoint CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
 	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
@@ -361,13 +363,13 @@ void ATileMapEditorMode::MoveRoom(FIntPoint _Index)
 	CurAdjustmentEntity = nullptr;
 	CurAdjustmentEntityIndex = -1;
 
-	MoveRoom(_Index);
+	GameWorld->GetRoom()->MoveRoom(_Index);
 }
 
 void ATileMapEditorMode::SwitchLoopRoom()
 {
-	FIntPoint Index = World->CurRoomIndex;
-	bool& IsLoop = World->RoomDatas[Index.Y][Index.X].LoopRoom;
+	FIntPoint Index = GameWorld->CurRoomIndex;
+	bool& IsLoop = GameWorld->RoomDatas[Index.Y][Index.X].LoopRoom;
 	IsLoop = !IsLoop;
 }
 
@@ -435,7 +437,7 @@ void ATileMapEditorMode::NextTile()
 
 void ATileMapEditorMode::ShowTiles()
 {
-	auto& room = World->GetRoom()->Tiles;
+	auto& room = GameWorld->GetRoom()->Tiles;
 	for (size_t y = 0; y < room.size(); ++y)
 	{
 		for (size_t x = 0; x < room[y].size(); ++x)
@@ -447,7 +449,7 @@ void ATileMapEditorMode::ShowTiles()
 
 void ATileMapEditorMode::ShowBackGroundTiles()
 {
-	auto& room = World->GetRoom()->BackGroundTiles;
+	auto& room = GameWorld->GetRoom()->BackGroundTiles;
 	for (size_t y = 0; y < room.size(); ++y)
 	{
 		for (size_t x = 0; x < room[y].size(); ++x)
@@ -459,8 +461,8 @@ void ATileMapEditorMode::ShowBackGroundTiles()
 
 void ATileMapEditorMode::PickUpTile()
 {
-	FIntPoint TileIndex = World->GetRoom()->GetOnTileIndex(UEngineAPICore::GetCore()->GetMainWindow().GetMousePos());
-	if (TileIndex.X < 0 || TileIndex.X >= World->GetRoom()->TileCount.X || TileIndex.Y < 0 || TileIndex.Y >= World->GetRoom()->TileCount.Y)
+	FIntPoint TileIndex = GameWorld->GetRoom()->GetOnTileIndex(UEngineAPICore::GetCore()->GetMainWindow().GetMousePos());
+	if (TileIndex.X < 0 || TileIndex.X >= GameWorld->GetRoom()->TileCount.X || TileIndex.Y < 0 || TileIndex.Y >= GameWorld->GetRoom()->TileCount.Y)
 		return;
 	auto& SelectTileMap = GetCurSelectTileMap();
 	CurSelectSprite->SetSprite(SelectTileMap[TileIndex.Y][TileIndex.X]->GetCurSpriteName(), SelectTileMap[TileIndex.Y][TileIndex.X]->GetCurIndex());
@@ -513,8 +515,8 @@ void ATileMapEditorMode::EditorKeyCheck()
 	FIntPoint CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
 
 	// 타일 크기와 사이즈
-	FIntPoint TileSize = World->GetRoom()->TileScale;
-	FIntPoint TileCount = World->GetRoom()->TileCount;
+	FIntPoint TileSize = GameWorld->GetRoom()->TileScale;
+	FIntPoint TileCount = GameWorld->GetRoom()->TileCount;
 
 	// 마우스 타일 격자 표시
 	FIntPoint TileCursorPos = FIntPoint(CursorPos.X - (CursorPos.X % TileSize.X) + TileSize.X / 2, CursorPos.Y - (CursorPos.Y % TileSize.Y) + TileSize.Y / 2);
@@ -598,7 +600,7 @@ void ATileMapEditorMode::EditorKeyCheck()
 		NextBackGroundImage();
 
 	// 방 이동, 세이브
-	FIntPoint RoomIndex = World->CurRoomIndex;
+	FIntPoint RoomIndex = GameWorld->CurRoomIndex;
 	if (KEY_DOWN('W'))
 	{
 		RoomIndex.Y -= 1;
@@ -749,10 +751,10 @@ void ATileMapEditorMode::EditorKeyCheck()
 	}
 
 	if (KEY_DOWN(VK_F3))
-		World->SaveFile();
+		GameWorld->SaveFile();
 
 	if (KEY_DOWN(VK_F4))
-		World->LoadFile();
+		GameWorld->LoadFile();
 
 	if (KEY_DOWN(VK_TAB))
 		SwitchLoopRoom();
@@ -761,7 +763,7 @@ void ATileMapEditorMode::EditorKeyCheck()
 void ATileMapEditorMode::DebugText()
 {
 	FIntPoint CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
-	FIntPoint RoomIndex = World->CurRoomIndex;
+	FIntPoint RoomIndex = GameWorld->CurRoomIndex;
 
 	// DEBUG TEXT
 	string CurTileList = {};
@@ -775,7 +777,7 @@ void ATileMapEditorMode::DebugText()
 	str += ",";
 	str += std::to_string(RoomIndex.Y);
 	str += ", RoomLoop : ";
-	if (World->RoomDatas[World->CurRoomIndex.Y][World->CurRoomIndex.X].LoopRoom == true)
+	if (GameWorld->RoomDatas[GameWorld->CurRoomIndex.Y][GameWorld->CurRoomIndex.X].LoopRoom == true)
 		str += "True";
 	else
 		str += "False";
@@ -791,8 +793,8 @@ void ATileMapEditorMode::DebugText()
 	str += std::to_string(CurSelectSprite->GetCurIndex());
 	UEngineDebug::CoreOutputString(str);
 
-	FIntPoint TileCursorIndex = World->GetRoom()->GetOnTileIndex(CursorPos);
-	if ((TileCursorIndex.X < 0 || TileCursorIndex.X >= World->GetRoom()->TileCount.X || TileCursorIndex.Y < 0 || TileCursorIndex.Y >= World->GetRoom()->TileCount.Y) == false)
+	FIntPoint TileCursorIndex = GameWorld->GetRoom()->GetOnTileIndex(CursorPos);
+	if ((TileCursorIndex.X < 0 || TileCursorIndex.X >= GameWorld->GetRoom()->TileCount.X || TileCursorIndex.Y < 0 || TileCursorIndex.Y >= GameWorld->GetRoom()->TileCount.Y) == false)
 	{
 		str = "On Tile Name : ";
 		str += GetCurSelectTileMap()[TileCursorIndex.Y][TileCursorIndex.X]->GetCurSpriteName();
@@ -859,7 +861,7 @@ void ATileMapEditorMode::PrevBackGroundImage()
 	if (CurBackGroundIndex < 0)
 		CurBackGroundIndex = static_cast<int>(TileLists[static_cast<int>(TileList::BackGroundList)].size() - 1);
 
-	World->GetRoom()->BackGround->SetBackGround(TileLists[static_cast<int>(TileList::BackGroundList)][CurBackGroundIndex]);
+	GameWorld->GetRoom()->BackGround->SetBackGround(TileLists[static_cast<int>(TileList::BackGroundList)][CurBackGroundIndex]);
 }
 
 void ATileMapEditorMode::NextBackGroundImage()
@@ -868,7 +870,7 @@ void ATileMapEditorMode::NextBackGroundImage()
 	if (CurBackGroundIndex >= TileLists[static_cast<int>(TileList::BackGroundList)].size())
 		CurBackGroundIndex = 0;
 
-	World->GetRoom()->BackGround->SetBackGround(TileLists[static_cast<int>(TileList::BackGroundList)][CurBackGroundIndex]);
+	GameWorld->GetRoom()->BackGround->SetBackGround(TileLists[static_cast<int>(TileList::BackGroundList)][CurBackGroundIndex]);
 }
 
 void ATileMapEditorMode::CreateEntity()
@@ -877,9 +879,10 @@ void ATileMapEditorMode::CreateEntity()
 	{
 		AMoveEntity* NewEntity = GetWorld()->SpawnActor<AMoveEntity>();
 		NewEntity->MoveEntityDefaultSetUp(CurSelectEntityType->GetCurSpriteName(), CurSelectEntityType->GetComponentLocation(), FVector2D::RIGHT, EGameConst::DefualtSpeed, EGameConst::DefualtMoveLen, 0.f);
-		World->GetRoom()->Entites.push_back(NewEntity);
+		NewEntity->SetRoom(GameWorld->GetRoom());
+		GameWorld->GetRoom()->Entites.push_back(NewEntity);
 		CurAdjustmentEntity = NewEntity;
-		CurAdjustmentEntityIndex = static_cast<int>(World->GetRoom()->Entites.size() - 1);
+		CurAdjustmentEntityIndex = static_cast<int>(GameWorld->GetRoom()->Entites.size() - 1);
 	}
 	else if (CurSelectEntityList == EntityList::InterObjects)
 	{
@@ -892,7 +895,7 @@ void ATileMapEditorMode::DeleteEntity()
 	if (CurAdjustmentEntity == nullptr)
 		return;
 
-	auto& Entites = World->GetRoom()->Entites;
+	auto& Entites = GameWorld->GetRoom()->Entites;
 	CurAdjustmentEntity->Destroy();
 	Entites.erase(Entites.begin() + CurAdjustmentEntityIndex);
 	--CurAdjustmentEntityIndex;
@@ -980,26 +983,26 @@ void ATileMapEditorMode::NextEntityType(int _AddIndex)
 
 void ATileMapEditorMode::PrevSelectEntity()
 {
-	if (World->GetRoom()->Entites.empty() == true)
+	if (GameWorld->GetRoom()->Entites.empty() == true)
 		return;
 
 	--CurAdjustmentEntityIndex;
 	if (CurAdjustmentEntityIndex < 0)
-		CurAdjustmentEntityIndex = static_cast<int>(World->GetRoom()->Entites.size() - 1);
+		CurAdjustmentEntityIndex = static_cast<int>(GameWorld->GetRoom()->Entites.size() - 1);
 	
-	CurAdjustmentEntity = World->GetRoom()->Entites[CurAdjustmentEntityIndex];
+	CurAdjustmentEntity = GameWorld->GetRoom()->Entites[CurAdjustmentEntityIndex];
 }
 
 void ATileMapEditorMode::NextSelectEntity()
 {
-	if (World->GetRoom()->Entites.empty() == true)
+	if (GameWorld->GetRoom()->Entites.empty() == true)
 		return;
 
 	++CurAdjustmentEntityIndex;
-	if (CurAdjustmentEntityIndex >= World->GetRoom()->Entites.size())
+	if (CurAdjustmentEntityIndex >= GameWorld->GetRoom()->Entites.size())
 		CurAdjustmentEntityIndex = 0;
 
-	CurAdjustmentEntity = World->GetRoom()->Entites[CurAdjustmentEntityIndex];
+	CurAdjustmentEntity = GameWorld->GetRoom()->Entites[CurAdjustmentEntityIndex];
 }
 
 void ATileMapEditorMode::AddEntityLocation(FVector2D _AddPos)
