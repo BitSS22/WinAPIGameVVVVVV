@@ -99,11 +99,7 @@ void AWorld::SaveRoomData()
 		}
 
 		CurRoomDatas.EntityDatas.push_back(EntityData);
-
-		Entity->Destroy();
 	}
-
-	GetRoom()->Entites.clear();
 }
 
 void AWorld::LoadRoomData(FIntPoint _Index)
@@ -133,6 +129,11 @@ void AWorld::LoadRoomData(FIntPoint _Index)
 		}
 	}
 
+
+	for (size_t i = 0; i < GetRoom()->Entites.size(); ++i)
+		GetRoom()->Entites[i]->Destroy();
+	GetRoom()->Entites.clear();
+	
 	GetRoom()->BackGround->SetBackGround(ChangeRoomDatas.RoomBackGroundData);
 
 	for (size_t i = 0; i < ChangeRoomDatas.EntityDatas.size(); ++i)

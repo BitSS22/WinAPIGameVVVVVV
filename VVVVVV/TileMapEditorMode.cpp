@@ -23,7 +23,7 @@ void ATileMapEditorMode::BeginPlay()
 
 	// 커서 스프라이트
 	CurSelectSprite = CreateDefaultSubObject<USpriteRenderer>();
-	CurSelectSprite->SetSprite("CollisionTiles::01 Type00 Cyan", 45);
+	CurSelectSprite->SetSprite("CollisionTiles::Type00-1 Cyan", 44);
 	CurSelectSprite->SetComponentScale(EGameConst::TileScale);
 	CurSelectSprite->SetOrder(ERenderOrder::EDITOR_CURSOR);
 
