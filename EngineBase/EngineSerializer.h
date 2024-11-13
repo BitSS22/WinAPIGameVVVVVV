@@ -15,6 +15,7 @@ public:
 	UEngineSerializer& operator=(UEngineSerializer&& _Other) noexcept = delete;
 
 	void operator<< (ISerializObject& _Data);
+
 	void operator<< (int _Data)
 	{
 		Write(&_Data, sizeof(int));
@@ -23,6 +24,10 @@ public:
 	{
 		Write(&_Data, sizeof(size_t));
 	}
+	void operator<< (float _Data)
+	{
+		Write(&_Data, sizeof(float));
+	}
 	void operator<< (bool _Data)
 	{
 		Write(&_Data, sizeof(bool));
@@ -30,6 +35,10 @@ public:
 	void operator<< (FVector2D& _Data)
 	{
 		Write(&_Data, sizeof(FVector2D));
+	}
+	void operator<< (FIntPoint& _Data)
+	{
+		Write(&_Data, sizeof(FIntPoint));
 	}
 	void operator<< (std::string& _Data)
 	{
@@ -46,6 +55,7 @@ public:
 	}
 
 	void operator>> (ISerializObject& _Data);
+
 	void operator>> (int _Data)
 	{
 		Read(&_Data, sizeof(int));
@@ -54,6 +64,10 @@ public:
 	{
 		Read(&_Data, sizeof(size_t));
 	}
+	void operator>> (float _Data)
+	{
+		Read(&_Data, sizeof(float));
+	}
 	void operator>> (bool _Data)
 	{
 		Read(&_Data, sizeof(bool));
@@ -61,6 +75,10 @@ public:
 	void operator>> (FVector2D& _Data)
 	{
 		Read(&_Data, sizeof(FVector2D));
+	}
+	void operator>> (FIntPoint& _Data)
+	{
+		Read(&_Data, sizeof(FIntPoint));
 	}
 	void operator>> (std::string& _Data)
 	{
@@ -110,6 +128,6 @@ public:
 class ISerializObject
 {
 public:
-	virtual void Serialize(const UEngineSerializer& _Class) const = 0;
+	virtual void Serialize(UEngineSerializer& _Class) = 0;
 	virtual void DeSerialize(UEngineSerializer& _Class) = 0;
 };

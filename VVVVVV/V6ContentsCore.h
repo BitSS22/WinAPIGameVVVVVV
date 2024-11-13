@@ -24,7 +24,7 @@ private:
 
 	void ResourceLoad();
 
-	void ResourceSpriteLoad();
+	void SpriteLoad();
 
 	void TileImageLoad();
 	void BackGroundImageLoad();

@@ -4,6 +4,8 @@
 #include "BackGround.h"
 #include "Entity.h"
 #include "MoveEntity.h"
+#include "EngineBase/EngineDirectory.h"
+#include <EngineBase/EngineFile.h>
 
 AWorld::AWorld()
 {
@@ -86,7 +88,7 @@ void AWorld::SaveRoomData()
 		EntityData.DefualtLocation = Entity->GetActorLocation();
 
 		AMoveEntity* MoveEntity = dynamic_cast<AMoveEntity*>(Entity);
-		
+
 		if (MoveEntity != nullptr)
 		{
 			EntityData.DefualtLocation = MoveEntity->GetEntityDefualtLocation();
@@ -152,4 +154,100 @@ void AWorld::LoadRoomData(FIntPoint _Index)
 		else
 			MSGASSERT(nullptr, Data.Name, "의 Entity Data를 제대로 로드하지 못했습니다.");
 	}
+}
+
+void AWorld::SaveFile()
+{
+	UEngineSerializer Ser = {};
+
+	Ser << RoomDatas;
+
+	UEngineDirectory Dir = {};
+	Dir.MoveParentToDirectory("Resources");
+	Dir.Append("MapData");
+	string SaveFileName = Dir.GetPathToString() + "\\MapData.data";
+	UEngineFile NewFile = SaveFileName;
+	NewFile.FileOpen("wb");
+	NewFile.Write(Ser);
+}
+
+void AWorld::LoadFile()
+{
+	UEngineSerializer Ser = {};
+
+	UEngineDirectory Dir = {};
+	Dir.MoveParentToDirectory("Resources");
+	Dir.Append("MapData");
+	string LoadFileName = Dir.GetPathToString() + "\\MapData.data";
+	UEngineFile NewFile = LoadFileName;
+	NewFile.FileOpen("rb");
+	NewFile.Read(Ser);
+
+	Ser >> RoomDatas;
+}
+
+void AWorld::RoomData::Serialize(UEngineSerializer& _Class)
+{
+	_Class << RoomTileDatas;
+	_Class << RoomBackGroundTileDatas;
+	_Class << RoomBackGroundData;
+	_Class << EntityDatas;
+	_Class << TileCount;
+	_Class << TileScale;
+}
+
+void AWorld::RoomData::DeSerialize(UEngineSerializer& _Class)
+{
+	_Class >> RoomTileDatas;
+	_Class >> RoomBackGroundTileDatas;
+	_Class >> RoomBackGroundData;
+	_Class >> EntityDatas;
+}
+
+void AWorld::EntityData::Serialize(UEngineSerializer& _Class)
+{
+	_Class << Name;
+	_Class << DefualtLocation;
+	_Class << DefualtDir;
+	_Class << Speed;
+	_Class << MoveLenght;
+	_Class << MoveLenghtOffset;
+}
+
+void AWorld::EntityData::DeSerialize(UEngineSerializer& _Class)
+{
+	_Class >> Name;
+	_Class >> DefualtLocation;
+	_Class >> DefualtDir;
+	_Class >> Speed;
+	_Class >> MoveLenght;
+	_Class >> MoveLenghtOffset;
+}
+
+void AWorld::RoomTileData::Serialize(UEngineSerializer& _Class)
+{
+	_Class << Name;
+	_Class << SpriteIndex;
+	_Class << ShowTile;
+}
+
+void AWorld::RoomTileData::DeSerialize(UEngineSerializer& _Class)
+{
+	_Class >> Name;
+	_Class >> SpriteIndex;
+	_Class >> ShowTile;
+}
+
+void AWorld::RoomBackGroundData::Serialize(UEngineSerializer& _Class)
+{
+	_Class << Name;
+	_Class << SpriteIndex;
+	_Class << Effect;
+}
+
+void AWorld::RoomBackGroundData::DeSerialize(UEngineSerializer& _Class)
+{
+	_Class >> Name;
+	_Class >> SpriteIndex;
+	_Class >> Effect;
 }

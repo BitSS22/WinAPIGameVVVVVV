@@ -1,5 +1,6 @@
 #pragma once
 #include "Room.h"
+#include <EngineBase/EngineSerializer.h>
 
 // Ό³Έν :
 class AWorld : public AActor
@@ -32,6 +33,9 @@ public:
 	void SaveRoomData();
 	void LoadRoomData(FIntPoint _Index);
 
+	void SaveFile();
+	void LoadFile();
+
 private:
 
 public:
@@ -53,7 +57,7 @@ public:
 	}
 
 public:
-	INNER_CLASS struct EntityData
+	INNER_CLASS struct EntityData : public ISerializObject
 	{
 		std::string Name = "Debug Tile";
 		FVector2D DefualtLocation = {};
@@ -61,25 +65,37 @@ public:
 		float Speed = EGameConst::DefualtSpeed;
 		float MoveLenght = EGameConst::DefualtMoveLen;
 		float MoveLenghtOffset = 0.f;
+
+	public:
+		void Serialize(UEngineSerializer& _Class) override;
+		void DeSerialize(UEngineSerializer& _Class) override;
 	};
 
-	INNER_CLASS struct RoomTileData
+	INNER_CLASS struct RoomTileData : public ISerializObject
 	{
 	public:
 		std::string Name = "None Tile";
 		int SpriteIndex = 0;
 		bool ShowTile = false;
+
+	public:
+		void Serialize(UEngineSerializer& _Class) override;
+		void DeSerialize(UEngineSerializer& _Class) override;
 	};
 
-	INNER_CLASS struct RoomBackGroundData
+	INNER_CLASS struct RoomBackGroundData : public ISerializObject
 	{
 	public:
 		std::string Name = "Debug BackGround.png";
 		int SpriteIndex = 0;
 		bool Effect = false;
+
+	public:
+		void Serialize(UEngineSerializer& _Class) override;
+		void DeSerialize(UEngineSerializer& _Class) override;
 	};
 
-	INNER_CLASS struct RoomData
+	INNER_CLASS struct RoomData : public ISerializObject
 	{
 		RoomData()
 		{
@@ -104,6 +120,11 @@ public:
 
 		FIntPoint TileCount = EGameConst::TileCount;
 		FIntPoint TileScale = EGameConst::TileScale;
+
+	public:
+		virtual void Serialize(UEngineSerializer& _Class) override;
+		virtual void DeSerialize(UEngineSerializer& _Class) override;
 	};
+
 };
 

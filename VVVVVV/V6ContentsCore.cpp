@@ -56,19 +56,19 @@ void V6ContentsCore::Tick()
 
 void V6ContentsCore::ResourceLoad()
 {
+	SpriteLoad();
+}
+
+void V6ContentsCore::SpriteLoad()
+{
 	UEngineDirectory Dir = {};
 	Dir.MoveParentToDirectory("Resources");
+	Dir.Append("Image");
 	vector<UEngineFile> ImageFiles = Dir.GetAllFile();
 
 	for (const auto& image : ImageFiles)
 		UImageManager::GetInst().Load(image.GetPathToString());
 
-	ResourceSpriteLoad();
-
-}
-
-void V6ContentsCore::ResourceSpriteLoad()
-{
 	TileImageLoad();
 	BackGroundImageLoad();
 	FontImageLoad();
