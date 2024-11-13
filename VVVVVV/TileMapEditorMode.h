@@ -77,6 +77,7 @@ private:
 	void DeleteTile(bool _AroundTileChange, FIntPoint _Index);
 
 	void MoveRoom(FIntPoint _Index);
+	void SwitchLoopRoom();
 
 	void NextTileList();
 	void PrevTileList();

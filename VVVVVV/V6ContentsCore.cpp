@@ -89,25 +89,19 @@ void V6ContentsCore::TileImageLoad()
 
 
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::01 Type00 Cyan", FVector2D(X * 0, Y * 11), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::02 Type01 Cyan", FVector2D(X * 0, Y * 12), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::02 Type00 Pink", FVector2D(X * 1, Y * 11), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::03 Type00 Red", FVector2D(X * 2, Y * 11), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::04 Type00 Blue", FVector2D(X * 3, Y * 11), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::05 Type00 Yellow", FVector2D(X * 4, Y * 11), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::06 Type00 Green", FVector2D(X * 5, Y * 11), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::07 Type00 Gray", FVector2D(X * 6, Y * 11), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
 
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::03 Type00 Pink", FVector2D(X * 1, Y * 11), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::04 Type01 Pink", FVector2D(X * 1, Y * 12), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
-
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::05 Type00 Red", FVector2D(X * 2, Y * 11), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::06 Type01 Red", FVector2D(X * 2, Y * 12), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
-
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::07 Type00 Blue", FVector2D(X * 3, Y * 11), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::08 Type01 Blue", FVector2D(X * 3, Y * 12), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
-
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::09 Type00 Yellow", FVector2D(X * 4, Y * 11), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::10 Type01 Yellow", FVector2D(X * 4, Y * 12), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
-
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::11 Type00 Green", FVector2D(X * 5, Y * 11), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::12 Type01 Green", FVector2D(X * 5, Y * 12), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
-
-	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::13 Type00 Gray", FVector2D(X * 6, Y * 11), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
-
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::08 Type01 Cyan", FVector2D(X * 0, Y * 12), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::09 Type01 Pink", FVector2D(X * 1, Y * 12), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::10 Type01 Red", FVector2D(X * 2, Y * 12), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::11 Type01 Blue", FVector2D(X * 3, Y * 12), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::12 Type01 Yellow", FVector2D(X * 4, Y * 12), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
+	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::13 Type01 Green", FVector2D(X * 5, Y * 12), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 12, 48);
 
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::14 Bridge Cyan", FVector2D(128.f, 832.f + 16.f * 0), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 3, 3);
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::15 Bridge Pink", FVector2D(128.f, 832.f + 16.f * 1), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 3, 3);
@@ -116,7 +110,6 @@ void V6ContentsCore::TileImageLoad()
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::18 Bridge Yellow", FVector2D(128.f, 832.f + 16.f * 4), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 3, 3);
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::19 Bridge Green", FVector2D(128.f, 832.f + 16.f * 5), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 3, 3);
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::20 Bridge Grey", FVector2D(128.f, 832.f + 16.f * 6), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 3, 3);
-
 
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::21 Tower Cyan", FVector2D(384.f + 16.f * 0, 832.f), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 1, 1);
 	UImageManager::GetInst().CreateCutSprite("Tileset.png", "BackGroundTiles::22 Tower Pink", FVector2D(384.f + 16.f * 1, 832.f), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 1, 1);

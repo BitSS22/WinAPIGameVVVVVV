@@ -158,6 +158,8 @@ void AWorld::LoadRoomData(FIntPoint _Index)
 
 void AWorld::SaveFile()
 {
+	SaveRoomData();
+
 	UEngineSerializer Ser = {};
 
 	Ser << RoomDatas;
@@ -184,6 +186,8 @@ void AWorld::LoadFile()
 	NewFile.Read(Ser);
 
 	Ser >> RoomDatas;
+
+	LoadRoomData(CurRoomIndex);
 }
 
 void AWorld::RoomData::Serialize(UEngineSerializer& _Class)
@@ -192,6 +196,7 @@ void AWorld::RoomData::Serialize(UEngineSerializer& _Class)
 	_Class << RoomBackGroundTileDatas;
 	_Class << RoomBackGroundData;
 	_Class << EntityDatas;
+	_Class << LoopRoom;
 	_Class << TileCount;
 	_Class << TileScale;
 }
@@ -202,6 +207,9 @@ void AWorld::RoomData::DeSerialize(UEngineSerializer& _Class)
 	_Class >> RoomBackGroundTileDatas;
 	_Class >> RoomBackGroundData;
 	_Class >> EntityDatas;
+	_Class >> LoopRoom;
+	_Class >> TileCount;
+	_Class >> TileScale;
 }
 
 void AWorld::EntityData::Serialize(UEngineSerializer& _Class)

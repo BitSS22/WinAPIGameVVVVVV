@@ -16,19 +16,15 @@ public:
 
 	void operator<< (ISerializObject& _Data);
 
-	void operator<< (int _Data)
+	void operator<< (int& _Data)
 	{
 		Write(&_Data, sizeof(int));
 	}
-	void operator<< (size_t _Data)
-	{
-		Write(&_Data, sizeof(size_t));
-	}
-	void operator<< (float _Data)
+	void operator<< (float& _Data)
 	{
 		Write(&_Data, sizeof(float));
 	}
-	void operator<< (bool _Data)
+	void operator<< (bool& _Data)
 	{
 		Write(&_Data, sizeof(bool));
 	}
@@ -42,13 +38,15 @@ public:
 	}
 	void operator<< (std::string& _Data)
 	{
-		*this << _Data.size();
-		Write(_Data.data(), _Data.size());
+		int Size = static_cast<int>(_Data.size());
+		*this << Size;
+		Write(_Data.data(), static_cast<int>(_Data.size()));
 	}
 	template<typename T>
 	void operator<< (std::vector<T>& _Vec)
 	{
-		*this << _Vec.size();
+		int Size = static_cast<int>(_Vec.size());
+		*this << Size;
 
 		for (size_t i = 0; i < _Vec.size(); ++i)
 			*this << _Vec[i];
@@ -56,19 +54,15 @@ public:
 
 	void operator>> (ISerializObject& _Data);
 
-	void operator>> (int _Data)
+	void operator>> (int& _Data)
 	{
 		Read(&_Data, sizeof(int));
 	}
-	void operator>> (size_t _Data)
-	{
-		Read(&_Data, sizeof(size_t));
-	}
-	void operator>> (float _Data)
+	void operator>> (float& _Data)
 	{
 		Read(&_Data, sizeof(float));
 	}
-	void operator>> (bool _Data)
+	void operator>> (bool& _Data)
 	{
 		Read(&_Data, sizeof(bool));
 	}
@@ -85,7 +79,7 @@ public:
 		int Size = 0;
 		*this >> Size;
 		_Data.resize(Size);
-		Read(_Data.data(), _Data.size());
+		Read(_Data.data(), static_cast<int>(_Data.size()));
 	}
 	template<typename T>
 	void operator>> (std::vector<T>& _Vec)
@@ -100,12 +94,12 @@ public:
 
 private:
 	std::vector<char> Data = {};
-	size_t WriteOffset = 0;
-	size_t ReadOffset = 0;
+	int WriteOffset = 0;
+	int ReadOffset = 0;
 
 public:
-	void Write(void* _Data, size_t _Size);
-	void Read(void* _Data, size_t _Size);
+	void Write(void* _Data, int _Size);
+	void Read(void* _Data, int _Size);
 
 private:
 

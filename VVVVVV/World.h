@@ -117,6 +117,7 @@ public:
 		std::vector<std::vector<RoomTileData>> RoomBackGroundTileDatas = {};
 		std::string RoomBackGroundData = "Debug BackGround.png";
 		std::vector<EntityData> EntityDatas = {};
+		bool LoopRoom = false;
 
 		FIntPoint TileCount = EGameConst::TileCount;
 		FIntPoint TileScale = EGameConst::TileScale;

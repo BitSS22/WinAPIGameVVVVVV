@@ -50,16 +50,6 @@ void ATileMapEditorMode::Tick()
 
 	EditorKeyCheck();
 
-	if (KEY_DOWN(VK_F9))
-	{
-		World->SaveFile();
-	}
-
-	if (KEY_DOWN(VK_F10))
-	{
-		World->LoadFile();
-	}
-
 	DebugText();
 }
 
@@ -372,6 +362,13 @@ void ATileMapEditorMode::MoveRoom(FIntPoint _Index)
 	CurAdjustmentEntityIndex = -1;
 
 	World->MoveRoom(_Index);
+}
+
+void ATileMapEditorMode::SwitchLoopRoom()
+{
+	FIntPoint Index = World->CurRoomIndex;
+	bool& IsLoop = World->RoomDatas[Index.Y][Index.X].LoopRoom;
+	IsLoop = !IsLoop;
 }
 
 void ATileMapEditorMode::NextTileList()
@@ -750,6 +747,15 @@ void ATileMapEditorMode::EditorKeyCheck()
 		else
 			AddEntityDir(Dir);
 	}
+
+	if (KEY_DOWN(VK_F3))
+		World->SaveFile();
+
+	if (KEY_DOWN(VK_F4))
+		World->LoadFile();
+
+	if (KEY_DOWN(VK_TAB))
+		SwitchLoopRoom();
 }
 
 void ATileMapEditorMode::DebugText()
@@ -768,6 +774,11 @@ void ATileMapEditorMode::DebugText()
 	str += std::to_string(RoomIndex.X);
 	str += ",";
 	str += std::to_string(RoomIndex.Y);
+	str += ", RoomLoop : ";
+	if (World->RoomDatas[World->CurRoomIndex.Y][World->CurRoomIndex.X].LoopRoom == true)
+		str += "True";
+	else
+		str += "False";
 	UEngineDebug::CoreOutputString(str);
 
 	str = "Tile Set Index : ";
