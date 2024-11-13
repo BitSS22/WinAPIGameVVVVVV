@@ -200,7 +200,8 @@ void ARoom::LoadRoomData(FIntPoint _Index)
 		Entites[i]->Destroy();
 	Entites.clear();
 
-	BackGround->SetBackGround(ChangeRoomDatas.RoomBackGroundData);
+	if (BackGround->Sprite != nullptr)
+		BackGround->SetBackGround(ChangeRoomDatas.RoomBackGroundData);
 
 	for (size_t i = 0; i < ChangeRoomDatas.EntityDatas.size(); ++i)
 	{

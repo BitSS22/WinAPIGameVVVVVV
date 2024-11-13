@@ -8,6 +8,7 @@ class AWorld : public AActor
 public:
 	friend class ATileMapEditorMode;
 	friend class ARoom;
+	friend class ABackGround;
 	INNER_CLASS struct RoomData;
 	INNER_CLASS struct RoomTileData;
 	INNER_CLASS struct EntityData;

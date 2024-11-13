@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BackGround.h"
+#include "Room.h"
 
 ABackGround::ABackGround()
 {
@@ -11,12 +12,6 @@ ABackGround::~ABackGround()
 
 void ABackGround::BeginPlay()
 {
-	Sprite = CreateDefaultSubObject<USpriteRenderer>();
-	Sprite->SetSprite("Debug BackGround.png", 0);
-	Sprite->SetSpriteScale(1.f, Sprite->GetCurIndex());
-	Sprite->SetOrder(ERenderOrder::BACKGROUND);
-	Sprite->SetComponentLocation(UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half());
-
 	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 
 	for (size_t i = 0; i < 6; ++i)
@@ -52,6 +47,17 @@ void ABackGround::BeginPlay()
 		float RandNumber = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(-600.f, -440.f);
 		Effects.push_back(Star(StarSprite, RandNumber));
 	}
+
+	Sprite = CreateDefaultSubObject<USpriteRenderer>();
+	FIntPoint CurRoomIndex = Room->World->CurRoomIndex;
+	if (Room->World->RoomDatas[CurRoomIndex.Y][CurRoomIndex.X].RoomBackGroundData != "Debug BackGround.png")
+		SetBackGround(Room->World->RoomDatas[CurRoomIndex.Y][CurRoomIndex.X].RoomBackGroundData);
+	else
+		SetBackGround("Debug BackGround.png");
+	Sprite->SetSpriteScale(1.f, Sprite->GetCurIndex());
+	Sprite->SetOrder(ERenderOrder::BACKGROUND);
+	Sprite->SetComponentLocation(WindowSize.Half());
+
 }
 
 void ABackGround::Tick()

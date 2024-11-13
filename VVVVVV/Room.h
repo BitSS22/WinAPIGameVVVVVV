@@ -1,14 +1,17 @@
 #pragma once
 #include <EnginePlatform/EngineWindowImage.h>
+#include "World.h"
 
 class AEntity;
 class ABackGround;
+class AWorld;
 
 class ARoom : public AActor
 {
 public:
 	friend class ATileMapEditorMode;
 	friend class AWorld;
+	friend class ABackGround;
 public:
 	ARoom();
 	ARoom(FIntPoint _TileCount, FIntPoint _TileScale);

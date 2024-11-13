@@ -10,7 +10,7 @@ enum class EBackGroundType
 	DEBUG
 };
 
-
+class ARoom;
 // Ό³Έν :
 class ABackGround : public AActor
 {
