@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "MoveEntity.h"
 #include "Entity.h"
+#include "World.h"
 
 ATileMapEditorMode::ATileMapEditorMode()
 {
@@ -48,6 +49,18 @@ void ATileMapEditorMode::Tick()
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("VVVVVV / FPS : " + std::to_string(frame));
 
 	EditorKeyCheck();
+
+	if (KEY_DOWN(VK_F9))
+	{
+		// 이거 내용 전부 세이브
+		std::vector<std::vector<AWorld::RoomData>>& temp = World->RoomDatas;
+	}
+
+	if (KEY_DOWN(VK_F10))
+	{
+		// 로드하면 여기에 전부 덮어쓰기
+		std::vector<std::vector<AWorld::RoomData>>& temp = World->RoomDatas;
+	}
 
 	DebugText();
 }
