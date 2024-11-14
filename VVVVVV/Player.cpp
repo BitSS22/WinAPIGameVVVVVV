@@ -30,72 +30,49 @@ void APlayer::BeginPlay()
 void APlayer::Tick()
 {
 	Super::Tick();
-	
+
 	if (KEY_DOWN(VK_SPACE) && OnGround == true)
 	{
 		Flip = !Flip;
 		OnGround = false;
 	}
-
-	if (Flip == false)
-	{
-		Points[static_cast<int>(PixelPoint::LeftBottom)] = GetActorTransform().CenterLeftBottom();
-		Points[static_cast<int>(PixelPoint::RightBottom)] = GetActorTransform().CenterRightBottom();
-		Points[static_cast<int>(PixelPoint::LeftTop)] = GetActorTransform().CenterLeftTop();
-		Points[static_cast<int>(PixelPoint::RightTop)] = GetActorTransform().CenterRightTop();
-	}
-	else
-	{
-		Points[static_cast<int>(PixelPoint::LeftBottom)] = GetActorTransform().CenterLeftTop();
-		Points[static_cast<int>(PixelPoint::RightBottom)] = GetActorTransform().CenterRightTop();
-		Points[static_cast<int>(PixelPoint::LeftTop)] = GetActorTransform().CenterLeftBottom();
-		Points[static_cast<int>(PixelPoint::RightTop)] = GetActorTransform().CenterRightBottom();
-	}
-
+	
 	FVector2D MoveValue = FVector2D::ZERO;
 
-	if (OnGround == false)
-	{
-		if (Flip == false)
-			MoveValue.Y += GravitySpeed * GET_DELTA;
-		else
-			MoveValue.Y -= GravitySpeed * GET_DELTA;
-	}
+	if (Flip == false)
+		MoveValue.Y += GravitySpeed * GET_DELTA;
+	else
+		MoveValue.Y -= GravitySpeed * GET_DELTA;
 
 	if (UEngineInput::GetInst().IsPress('A'))
 		MoveValue.X += FVector2D::LEFT.X * Speed * GET_DELTA;
 	if (UEngineInput::GetInst().IsPress('D'))
 		MoveValue.X += FVector2D::RIGHT.X * Speed * GET_DELTA;
 
-	FVector2D NextLocation = Points[static_cast<int>(PixelPoint::LeftBottom)] + MoveValue;
-	FVector2D TileIndex = GetRoom()->GetOnTileIndex(NextLocation);
-	string NextTileName = GetRoom()->GetTileName(TileIndex);
 
-	if (NextTileName.find("COLLISIONTILES::") != std::string::npos && OnGround == false)
-	{
-		if (Flip == false)
-		{
-			float PosY = (TileIndex.Y) * GetRoom()->GetTileScale().Y;
-			PosY -= GetActorScale().HalfY();
-			SetActorLocation({ GetActorLocation().X, PosY });
-		}
-		else
-		{
-			float PosY = (TileIndex.Y + 1) * GetRoom()->GetTileScale().Y;
-			PosY += GetActorScale().HalfY();
-			SetActorLocation({ GetActorLocation().X, PosY });
-		}
 
-		MoveValue.Y = 0.f;
-		OnGround = true;
-	}
-		
+
+
+
+
+
+
+
+
+
+
+
+
+
+	FVector2D NextLocation = GetActorLocation() + MoveValue;
+	
+
 	AddActorLocation(MoveValue);
 
-	
 
 
-	
+
+
 
 	// Move Room
 	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
@@ -131,5 +108,17 @@ void APlayer::Tick()
 	str += std::to_string(GetActorLocation().X);
 	str += ",";
 	str += std::to_string(GetActorLocation().Y);
+	UEngineDebug::CoreOutputString(str);
+
+	str = "Flip : ";
+	if (Flip)
+		str += "true";
+	else
+		str += "false";
+	str += ", OnGround : ";
+	if (OnGround)
+		str += "true";
+	else
+		str += "false";
 	UEngineDebug::CoreOutputString(str);
 }

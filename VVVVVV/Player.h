@@ -1,15 +1,6 @@
 #pragma once
 #include "Entity.h"
 
-enum class PixelPoint
-{
-	LeftTop,
-	RightTop,
-	LeftBottom,
-	RightBottom,
-	LAST
-};
-
 class USpriteRenderer;
 
 class APlayer : public AEntity
@@ -24,11 +15,10 @@ public:
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
 private:
-	float Speed = 500.f;
+	float Speed = 800.f;
 	bool Flip = false;
 	bool OnGround = false;
-	float GravitySpeed = 500.f;
-	FVector2D Points[static_cast<int>(PixelPoint::LAST)] = {};
+	float GravitySpeed = 1000.f;
 
 public:
 	void BeginPlay() override;
