@@ -46,7 +46,7 @@ public:
 private:
 
 public:
-	FIntPoint GetOnTileIndex(FIntPoint _Pos)
+	FIntPoint GetOnTileIndex(FVector2D _Pos)
 	{
 		return FIntPoint(_Pos.X / TileScale.X, _Pos.Y / TileScale.Y);
 	}

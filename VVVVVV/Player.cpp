@@ -37,69 +37,52 @@ void APlayer::Tick()
 		OnGround = false;
 	}
 
-	if (Flip == false)
-	{
-		Points[static_cast<int>(PixelPoint::LeftBottom)] = GetActorTransform().CenterLeftBottom();
-		Points[static_cast<int>(PixelPoint::RightBottom)] = GetActorTransform().CenterRightBottom();
-		Points[static_cast<int>(PixelPoint::LeftTop)] = GetActorTransform().CenterLeftTop();
-		Points[static_cast<int>(PixelPoint::RightTop)] = GetActorTransform().CenterRightTop();
-	}
-	else
-	{
-		Points[static_cast<int>(PixelPoint::LeftBottom)] = GetActorTransform().CenterLeftTop();
-		Points[static_cast<int>(PixelPoint::RightBottom)] = GetActorTransform().CenterRightTop();
-		Points[static_cast<int>(PixelPoint::LeftTop)] = GetActorTransform().CenterLeftBottom();
-		Points[static_cast<int>(PixelPoint::RightTop)] = GetActorTransform().CenterRightBottom();
-	}
-
 	FVector2D MoveValue = FVector2D::ZERO;
+
 	if (OnGround == false)
 	{
 		if (Flip == false)
-			MoveValue.Y += GravitySpeed * GET_DELTA;
+			MoveValue.Y += GravitySpeed;
 		else
-			MoveValue.Y -= GravitySpeed * GET_DELTA;
+			MoveValue.Y -= GravitySpeed;
 	}
 
 	if (UEngineInput::GetInst().IsPress('A'))
-		MoveValue.X += FVector2D::LEFT.X * Speed * GET_DELTA;
+		MoveValue.X += FVector2D::LEFT.X * Speed;
 	if (UEngineInput::GetInst().IsPress('D'))
-		MoveValue.X += FVector2D::RIGHT.X * Speed * GET_DELTA;
+		MoveValue.X += FVector2D::RIGHT.X * Speed;
 
-	FVector2D NextLocation = GetActorLocation() + MoveValue;
-	FTransform NextTransform = FTransform(NextLocation, GetActorScale());
-	
-	string NextTileName = GetRoom()->GetTileName(GetRoom()->GetOnTileIndex(Points[static_cast<int>(PixelPoint::LeftBottom)]));
-	//string NextCenterLeftBottomTileName = GetRoom()->GetTileName(GetRoom()->GetOnTileIndex(NextTransform.CenterLeftBottom()));
-	//string NextCenterLeftBottomTileName = GetRoom()->GetTileName(GetRoom()->GetOnTileIndex(NextTransform.CenterLeftBottom()));
-	//string NextCenterLeftBottomTileName = GetRoom()->GetTileName(GetRoom()->GetOnTileIndex(NextTransform.CenterLeftBottom()));
+	FVector2D NextLocation = GetActorLocation() + MoveValue * GET_DELTA;
+	FVector2D TileIndex = GetRoom()->GetOnTileIndex(NextLocation);
+	string NextTileName = GetRoom()->GetTileName(TileIndex);
 
-	if (NextTileName.find("NONE TILE") == std::string::npos && OnGround == false)
+	if (NextTileName.find("COLLISIONTILES::") != std::string::npos && OnGround == false)
 	{
-		FVector2D Location = GetActorLocation();
-		FIntPoint TileIndex = GetRoom()->GetOnTileIndex(Points[static_cast<int>(PixelPoint::LeftBottom)]);
 		if (Flip == false)
 		{
-			int GroundLine = (TileIndex.Y + 1) * GetRoom()->GetTileScale().Y;
-			SetActorLocation({ GetActorLocation().X, float(GroundLine - GetRoom()->GetTileScale().Y - GetActorScale().HalfY()) });
+			float PosY = (TileIndex.Y) * GetRoom()->GetTileScale().Y;
+			PosY -= GetActorScale().HalfY();
+			SetActorLocation({ GetActorLocation().X, PosY });
 		}
 		else
 		{
-			int GroundLine = (TileIndex.Y) * GetRoom()->GetTileScale().Y;
-			SetActorLocation({ GetActorLocation().X, float(GroundLine + GetRoom()->GetTileScale().Y + GetActorScale().HalfY()) });
+			float PosY = (TileIndex.Y + 1) * GetRoom()->GetTileScale().Y;
+			PosY += GetActorScale().HalfY();
+			SetActorLocation({ GetActorLocation().X, PosY });
 		}
+
 		MoveValue.Y = 0.f;
 		OnGround = true;
 	}
-
-	AddActorLocation(MoveValue);
-
-	
-
+		
+	AddActorLocation(MoveValue * GET_DELTA);
 
 	
 
-	// ¹æ ÀÌµ¿
+
+	
+
+	// Move Room
 	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 	FIntPoint CurRoomIndex = GetRoom()->GetGameWorld()->GetCurRoomIndex();
 
@@ -125,6 +108,13 @@ void APlayer::Tick()
 	}
 
 	//DEBUG
-	UEngineDebug::CoreDebugRender(GetActorTransform(), UEngineDebug::EDebugPosType::Rect);
+	if (KEY_DOWN(VK_F1))
+		UEngineDebug::SwitchIsDebug();
 
+	UEngineDebug::CoreDebugRender(GetActorTransform(), UEngineDebug::EDebugPosType::Rect);
+	string str = "Location : ";
+	str += std::to_string(GetActorLocation().X);
+	str += ",";
+	str += std::to_string(GetActorLocation().Y);
+	UEngineDebug::CoreOutputString(str);
 }

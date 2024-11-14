@@ -47,7 +47,7 @@ bool FTransform::PointToCircle(const FTransform& _Left, const FTransform& _Right
 	float Lenght = (_Left.Location - _Right.Location).Length();
 	if (_Right.Scale.X <= Lenght)
 		return true;
-	else false;
+	return false;
 }
 
 bool FTransform::PointToRect(const FTransform& _Left, const FTransform& _Right)

@@ -27,7 +27,7 @@ private:
 	float Speed = 500.f;
 	bool Flip = false;
 	bool OnGround = false;
-	float GravitySpeed = 300.f;
+	float GravitySpeed = 500.f;
 	FVector2D Points[static_cast<int>(PixelPoint::LAST)] = {};
 
 public:
