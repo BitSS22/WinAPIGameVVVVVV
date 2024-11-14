@@ -3,6 +3,8 @@
 
 enum class PixelPoint
 {
+	LeftTop,
+	RightTop,
 	LeftBottom,
 	RightBottom,
 	LAST
@@ -22,11 +24,11 @@ public:
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
 private:
-	AActor* OnTilePoint[static_cast<int>(PixelPoint::LAST)] = {};
 	float Speed = 500.f;
 	bool Flip = false;
 	bool OnGround = false;
-	float GravitySpeed = 800.f;
+	float GravitySpeed = 300.f;
+	FVector2D Points[static_cast<int>(PixelPoint::LAST)] = {};
 
 public:
 	void BeginPlay() override;

@@ -21,9 +21,6 @@ void APlayer::BeginPlay()
 	SpriteRenderer->SetSpriteScale(1.f, 0);
 	SpriteRenderer->SetOrder(ERenderOrder::PLAYER);
 
-	for (int i = 0; i < static_cast<int>(PixelPoint::LAST); ++i)
-		OnTilePoint[i] = GetWorld()->SpawnActor<AActor>();
-
 	SetActorLocation(UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half());
 	SetActorScale(SpriteRenderer->GetComponentScale());
 
@@ -33,23 +30,26 @@ void APlayer::BeginPlay()
 void APlayer::Tick()
 {
 	Super::Tick();
-
-	FTransform Trans = GetActorTransform();
-	if (Flip == false)
-	{
-		OnTilePoint[static_cast<int>(PixelPoint::LeftBottom)]->SetActorLocation(Trans.CenterLeftBottom());
-		OnTilePoint[static_cast<int>(PixelPoint::RightBottom)]->SetActorLocation(Trans.CenterRightBottom());
-	}
-	else
-	{
-		OnTilePoint[static_cast<int>(PixelPoint::LeftBottom)]->SetActorLocation(Trans.CenterLeftTop());
-		OnTilePoint[static_cast<int>(PixelPoint::RightBottom)]->SetActorLocation(Trans.CenterRightTop());
-	}
-
+	
 	if (KEY_DOWN(VK_SPACE) && OnGround == true)
 	{
 		Flip = !Flip;
 		OnGround = false;
+	}
+
+	if (Flip == false)
+	{
+		Points[static_cast<int>(PixelPoint::LeftBottom)] = GetActorTransform().CenterLeftBottom();
+		Points[static_cast<int>(PixelPoint::RightBottom)] = GetActorTransform().CenterRightBottom();
+		Points[static_cast<int>(PixelPoint::LeftTop)] = GetActorTransform().CenterLeftTop();
+		Points[static_cast<int>(PixelPoint::RightTop)] = GetActorTransform().CenterRightTop();
+	}
+	else
+	{
+		Points[static_cast<int>(PixelPoint::LeftBottom)] = GetActorTransform().CenterLeftTop();
+		Points[static_cast<int>(PixelPoint::RightBottom)] = GetActorTransform().CenterRightTop();
+		Points[static_cast<int>(PixelPoint::LeftTop)] = GetActorTransform().CenterLeftBottom();
+		Points[static_cast<int>(PixelPoint::RightTop)] = GetActorTransform().CenterRightBottom();
 	}
 
 	FVector2D MoveValue = FVector2D::ZERO;
@@ -66,21 +66,30 @@ void APlayer::Tick()
 	if (UEngineInput::GetInst().IsPress('D'))
 		MoveValue.X += FVector2D::RIGHT.X * Speed * GET_DELTA;
 
+	FVector2D NextLocation = GetActorLocation() + MoveValue;
+	FTransform NextTransform = FTransform(NextLocation, GetActorScale());
+	
+	string NextTileName = GetRoom()->GetTileName(GetRoom()->GetOnTileIndex(Points[static_cast<int>(PixelPoint::LeftBottom)]));
+	//string NextCenterLeftBottomTileName = GetRoom()->GetTileName(GetRoom()->GetOnTileIndex(NextTransform.CenterLeftBottom()));
+	//string NextCenterLeftBottomTileName = GetRoom()->GetTileName(GetRoom()->GetOnTileIndex(NextTransform.CenterLeftBottom()));
+	//string NextCenterLeftBottomTileName = GetRoom()->GetTileName(GetRoom()->GetOnTileIndex(NextTransform.CenterLeftBottom()));
 
-	for (int i = 0; i < static_cast<int>(PixelPoint::LAST); ++i)
+	if (NextTileName.find("NONE TILE") == std::string::npos && OnGround == false)
 	{
-		FVector2D NextPointPos = OnTilePoint[i]->GetActorLocation() + MoveValue;
-		FIntPoint NextPointTileIndex = GetRoom()->GetOnTileIndex(NextPointPos);
-		string NextPointTileName = GetRoom()->GetTileName(NextPointTileIndex);
-
-		if (NextPointTileName.find("COLLISIONTILES::") != std::string::npos && OnGround == false)
+		FVector2D Location = GetActorLocation();
+		FIntPoint TileIndex = GetRoom()->GetOnTileIndex(Points[static_cast<int>(PixelPoint::LeftBottom)]);
+		if (Flip == false)
 		{
-			OnGround = true;
-			if (Flip == false)
-				MoveValue = FVector2D(MoveValue.X, NextPointPos.Y - (GetActorLocation() + NextPointPos).Y);
-			else
-				MoveValue = FVector2D(MoveValue.X, -(NextPointPos.Y - (GetActorLocation() + NextPointPos).Y));
+			int GroundLine = (TileIndex.Y + 1) * GetRoom()->GetTileScale().Y;
+			SetActorLocation({ GetActorLocation().X, float(GroundLine - GetRoom()->GetTileScale().Y - GetActorScale().HalfY()) });
 		}
+		else
+		{
+			int GroundLine = (TileIndex.Y) * GetRoom()->GetTileScale().Y;
+			SetActorLocation({ GetActorLocation().X, float(GroundLine + GetRoom()->GetTileScale().Y + GetActorScale().HalfY()) });
+		}
+		MoveValue.Y = 0.f;
+		OnGround = true;
 	}
 
 	AddActorLocation(MoveValue);
@@ -116,8 +125,6 @@ void APlayer::Tick()
 	}
 
 	//DEBUG
-	for (int i = 0; i < static_cast<int>(PixelPoint::LAST); ++i)
-		UEngineDebug::CoreDebugRender(FTransform(OnTilePoint[i]->GetActorLocation(), FVector2D(5.f, 5.f)), UEngineDebug::EDebugPosType::Circle);
 	UEngineDebug::CoreDebugRender(GetActorTransform(), UEngineDebug::EDebugPosType::Rect);
 
 }
