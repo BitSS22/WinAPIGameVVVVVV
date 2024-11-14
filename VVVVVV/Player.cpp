@@ -37,22 +37,37 @@ void APlayer::Tick()
 		OnGround = false;
 	}
 
+	if (Flip == false)
+	{
+		Points[static_cast<int>(PixelPoint::LeftBottom)] = GetActorTransform().CenterLeftBottom();
+		Points[static_cast<int>(PixelPoint::RightBottom)] = GetActorTransform().CenterRightBottom();
+		Points[static_cast<int>(PixelPoint::LeftTop)] = GetActorTransform().CenterLeftTop();
+		Points[static_cast<int>(PixelPoint::RightTop)] = GetActorTransform().CenterRightTop();
+	}
+	else
+	{
+		Points[static_cast<int>(PixelPoint::LeftBottom)] = GetActorTransform().CenterLeftTop();
+		Points[static_cast<int>(PixelPoint::RightBottom)] = GetActorTransform().CenterRightTop();
+		Points[static_cast<int>(PixelPoint::LeftTop)] = GetActorTransform().CenterLeftBottom();
+		Points[static_cast<int>(PixelPoint::RightTop)] = GetActorTransform().CenterRightBottom();
+	}
+
 	FVector2D MoveValue = FVector2D::ZERO;
 
 	if (OnGround == false)
 	{
 		if (Flip == false)
-			MoveValue.Y += GravitySpeed;
+			MoveValue.Y += GravitySpeed * GET_DELTA;
 		else
-			MoveValue.Y -= GravitySpeed;
+			MoveValue.Y -= GravitySpeed * GET_DELTA;
 	}
 
 	if (UEngineInput::GetInst().IsPress('A'))
-		MoveValue.X += FVector2D::LEFT.X * Speed;
+		MoveValue.X += FVector2D::LEFT.X * Speed * GET_DELTA;
 	if (UEngineInput::GetInst().IsPress('D'))
-		MoveValue.X += FVector2D::RIGHT.X * Speed;
+		MoveValue.X += FVector2D::RIGHT.X * Speed * GET_DELTA;
 
-	FVector2D NextLocation = GetActorLocation() + MoveValue * GET_DELTA;
+	FVector2D NextLocation = Points[static_cast<int>(PixelPoint::LeftBottom)] + MoveValue;
 	FVector2D TileIndex = GetRoom()->GetOnTileIndex(NextLocation);
 	string NextTileName = GetRoom()->GetTileName(TileIndex);
 
@@ -75,7 +90,7 @@ void APlayer::Tick()
 		OnGround = true;
 	}
 		
-	AddActorLocation(MoveValue * GET_DELTA);
+	AddActorLocation(MoveValue);
 
 	
 
