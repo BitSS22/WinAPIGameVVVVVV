@@ -74,7 +74,7 @@ public:
 		}
 
 		auto iter = Levels.find(UpperName);
-		Level.erase(iter);
+		Levels.erase(iter);
 		NextLevel = CreateLevel<GameModeType, MainPawnType>(UpperName);
 		IsCurLevelReset = true;
 	}
