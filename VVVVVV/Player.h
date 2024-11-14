@@ -1,6 +1,13 @@
 #pragma once
 #include "Entity.h"
 
+enum class PixelPoint
+{
+	LeftBottom,
+	RightBottom,
+	LAST
+};
+
 class USpriteRenderer;
 
 class APlayer : public AEntity
@@ -15,8 +22,11 @@ public:
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
 private:
+	AActor* OnTilePoint[static_cast<int>(PixelPoint::LAST)] = {};
 	float Speed = 500.f;
 	bool Flip = false;
+	bool OnGround = false;
+	float GravitySpeed = 800.f;
 
 public:
 	void BeginPlay() override;
