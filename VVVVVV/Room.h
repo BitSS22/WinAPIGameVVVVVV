@@ -48,7 +48,12 @@ private:
 public:
 	FIntPoint GetOnTileIndex(FVector2D _Pos)
 	{
-		return FIntPoint(_Pos.X / TileScale.X, _Pos.Y / TileScale.Y);
+		FIntPoint Result = FIntPoint(_Pos.X / TileScale.X, _Pos.Y / TileScale.Y);
+		if (_Pos.X < 0)
+			Result.X -= 1;
+		if (_Pos.Y < 0)
+			Result.Y -= 1;
+		return Result;
 	}
 	AGameWorld* GetGameWorld()
 	{

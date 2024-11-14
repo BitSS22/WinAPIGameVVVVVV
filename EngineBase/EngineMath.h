@@ -351,22 +351,6 @@ public:
 	{
 		return Location.Y + Scale.HalfY();
 	}
-	float Left() const
-	{
-		return Location.X - Scale.X;
-	}
-	float Right() const
-	{
-		return Location.X + Scale.X;
-	}
-	float Top() const
-	{
-		return Location.Y - Scale.Y;
-	}
-	float Bottom() const
-	{
-		return Location.Y + Scale.Y;
-	}
 
 };
 

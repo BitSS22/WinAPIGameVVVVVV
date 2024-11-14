@@ -54,7 +54,7 @@ bool FTransform::PointToRect(const FTransform& _Left, const FTransform& _Right)
 {
 	FVector2D LeftLocation = _Left.Location;
 
-	if (LeftLocation.X >= _Right.Left() && LeftLocation.X <= _Right.Right() && LeftLocation.Y >= _Right.Top() && LeftLocation.Y <= _Right.Bottom())
+	if (LeftLocation.X >= _Right.CenterLeft() && LeftLocation.X <= _Right.CenterRight() && LeftLocation.Y >= _Right.CenterTop() && LeftLocation.Y <= _Right.CenterBottom())
 		return true;
 	return false;
 }
