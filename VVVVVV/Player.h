@@ -1,12 +1,25 @@
 #pragma once
 #include "Entity.h"
 
-enum class PixelPoint
+enum class PixelPointY
 {
-	LeftTop,
-	RightTop,
 	LeftBottom,
+	Bottom,
 	RightBottom,
+	LAST
+};
+
+enum class PixelPointX
+{
+	Left1,
+	Left2,
+	Left3,
+	Left4,
+	AND,
+	Right1,
+	Right2,
+	Right3,
+	Right4,
 	LAST
 };
 
@@ -28,7 +41,8 @@ private:
 	bool Flip = false;
 	bool OnGround = false;
 	float GravitySpeed = 500.f;
-	FVector2D Points[static_cast<int>(PixelPoint::LAST)] = {};
+	FVector2D PointsY[static_cast<int>(PixelPointY::LAST)] = {};
+	FVector2D PointsX[static_cast<int>(PixelPointX::LAST)] = {};
 
 public:
 	void BeginPlay() override;
