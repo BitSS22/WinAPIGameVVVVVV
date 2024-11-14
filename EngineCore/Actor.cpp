@@ -36,7 +36,11 @@ void AActor::Tick()
 	TimeEventer.Update();
 
 	for (const auto& Component : Components)
+	{
+		if (Component->IsActive() == false)
+			continue;
 		Component->ComponentTick();
+	}
 }
 
 void AActor::ComponentBeginPlay()

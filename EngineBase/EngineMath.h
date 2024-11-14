@@ -311,12 +311,25 @@ public:
 
 public:
 	static bool Collision(ECollisionType _LeftType, const FTransform& _Left, ECollisionType _RightType, const FTransform& _Right);
-	static bool RectToTect(const FTransform& _Left, const FTransform& _Right);
+
+	static bool PointToCircle(const FTransform& _Left, const FTransform& _Right);
+	static bool PointToRect(const FTransform& _Left, const FTransform& _Right);
+	static bool RectToRect(const FTransform& _Left, const FTransform& _Right);
+	static bool RectToCircle(const FTransform& _Left, const FTransform& _Right);
 	static bool CircleToCircle(const FTransform& _Left, const FTransform& _Right);
+	static bool CircleToRect(const FTransform& _Left, const FTransform& _Right);
 
 	FVector2D CenterLeftTop() const
 	{
 		return Location - Scale.Half();
+	}
+	FVector2D CenterRightTop() const
+	{
+		return FVector2D(Location.X + Scale.HalfX(), Location.Y - Scale.HalfY());
+	}
+	FVector2D CenterLeftBottom() const
+	{
+		return FVector2D(Location.X - Scale.HalfX(), Location.Y + Scale.HalfY());
 	}
 	FVector2D CenterRightBottom() const
 	{
@@ -338,7 +351,22 @@ public:
 	{
 		return Location.Y + Scale.HalfY();
 	}
-
+	float Left() const
+	{
+		return Location.X - Scale.X;
+	}
+	float Right() const
+	{
+		return Location.X + Scale.X;
+	}
+	float Top() const
+	{
+		return Location.Y - Scale.Y;
+	}
+	float Bottom() const
+	{
+		return Location.Y + Scale.Y;
+	}
 
 };
 

@@ -23,8 +23,10 @@ class CollisionFunctionInit
 public:
 	CollisionFunctionInit()
 	{
-		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::Rect)][static_cast<int>(ECollisionType::Rect)] = FTransform::RectToTect;
+		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::Rect)][static_cast<int>(ECollisionType::Rect)] = FTransform::RectToRect;
 		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::Circle)][static_cast<int>(ECollisionType::Circle)] = FTransform::CircleToCircle;
+		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::Rect)][static_cast<int>(ECollisionType::Circle)] = FTransform::RectToCircle;
+		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::Circle)][static_cast<int>(ECollisionType::Rect)] = FTransform::CircleToRect;
 	}
 };
 
@@ -35,12 +37,29 @@ FVector2D::FVector2D(FIntPoint _Value)
 	, Y(static_cast<float>(_Value.Y))
 {}
 
-bool FTransform::Collision(ECollisionType _LeftType, const FTransform & _Left, ECollisionType _RightType, const FTransform & _Right)
+bool FTransform::Collision(ECollisionType _LeftType, const FTransform& _Left, ECollisionType _RightType, const FTransform& _Right)
 {
 	return FTransform::AllCollisionFunction[static_cast<int>(_LeftType)][static_cast<int>(_RightType)](_Left, _Right);
 }
 
-bool FTransform::RectToTect(const FTransform& _Left, const FTransform& _Right)
+bool FTransform::PointToCircle(const FTransform& _Left, const FTransform& _Right)
+{
+	float Lenght = (_Left.Location - _Right.Location).Length();
+	if (_Right.Scale.X <= Lenght)
+		return true;
+	else false;
+}
+
+bool FTransform::PointToRect(const FTransform& _Left, const FTransform& _Right)
+{
+	FVector2D LeftLocation = _Left.Location;
+
+	if (LeftLocation.X >= _Right.Left() && LeftLocation.X <= _Right.Right() && LeftLocation.Y >= _Right.Top() && LeftLocation.Y <= _Right.Bottom())
+		return true;
+	return false;
+}
+
+bool FTransform::RectToRect(const FTransform& _Left, const FTransform& _Right)
 {
 	if (_Left.CenterLeft() > _Right.CenterRight())
 		return false;
@@ -53,11 +72,43 @@ bool FTransform::RectToTect(const FTransform& _Left, const FTransform& _Right)
 	return true;
 }
 
+bool FTransform::RectToCircle(const FTransform& _Left, const FTransform& _Right)
+{
+	return CircleToRect(_Right, _Left);
+}
+
 bool FTransform::CircleToCircle(const FTransform& _Left, const FTransform& _Right)
 {
-	FVector2D Lenght = _Left.Location - _Right.Location;
+	FVector2D Diff = _Left.Location - _Right.Location;
 
-	if (Lenght.Length() < _Left.Scale.HalfX() + _Right.Scale.HalfX())
+	if (Diff.Length() < _Left.Scale.HalfX() + _Right.Scale.HalfX())
 		return true;
 	return false;
 }
+
+bool FTransform::CircleToRect(const FTransform& _Left, const FTransform& _Right)
+{
+	float LeftHLen = _Left.Scale.HalfX();
+
+	if ((_Left.Location - _Right.CenterLeftTop()).Length() < LeftHLen)
+		return true;
+	if ((_Left.Location - _Right.CenterRightTop()).Length() < LeftHLen)
+		return true;
+	if ((_Left.Location - _Right.CenterLeftBottom()).Length() < LeftHLen)
+		return true;
+	if ((_Left.Location - _Right.CenterRightBottom()).Length() < LeftHLen)
+		return true;
+
+	FTransform Rect1 = _Right;
+	FTransform Rect2 = _Right;
+	Rect1.Scale.X += LeftHLen;
+	Rect2.Scale.Y += LeftHLen;
+
+	if (PointToRect(_Left, Rect1))
+		return true;
+	if (PointToRect(_Left, Rect2))
+		return true;
+
+	return false;
+}
+`

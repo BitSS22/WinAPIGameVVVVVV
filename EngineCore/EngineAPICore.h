@@ -40,6 +40,7 @@ private:
 	ULevel* NextLevel = nullptr;
 	UEngineTimer DeltaTimer = {};
 	UEngineRandom Random = {};
+	bool IsCurLevelReset = false;
 
 public:
 	static int EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore);
@@ -48,13 +49,54 @@ public:
 	template<typename GameModeType, typename MainPawnType>
 	ULevel* CreateLevel(string_view _LevelName)
 	{
+		std::string UpperName = UEngineString::ToUpper(_LevelName);
+
+		if (Levels.contains(UpperName) == true)
+			MSGASSERT(nullptr, _LevelName, "이라는 이름의 Level은 이미 존재합니다.");
+
 		ULevel* NewLevel = new ULevel();
 		NewLevel->CreateGameMode<GameModeType, MainPawnType>();
-		Levels.insert(make_pair(_LevelName, NewLevel));
+		NewLevel->SetName(UpperName);
+		Levels.insert(make_pair(UpperName, NewLevel));
 
 		return NewLevel;
 	}
-	
+	template<typename GameModeType, typename MainPawnType>
+	void ResetLevel(std::string_view _LevelName)
+	{
+		std::string UpperName = UEngineString::ToUpper(_LevelName);
+
+		if (CurLevel->GetName() != UpperName)
+		{
+			DestroyLevel(_LevelName);
+			CreateLevel<GameModeType, MainPawnType>(_LevelName);
+			return;
+		}
+
+		auto iter = Levels.find(UpperName);
+		Level.erase(iter);
+		NextLevel = CreateLevel<GameModeType, MainPawnType>(UpperName);
+		IsCurLevelReset = true;
+	}
+
+	void DestroyLevel(std::string_view _LevelName)
+	{
+		std::string UpperName = UEngineString::ToUpper(_LevelName);
+
+		if (Levels.contains(UpperName) == false)
+			return;
+
+		auto iter = Levels.find(UpperName);
+
+		if (iter->second != nullptr)
+		{
+			delete iter->second;
+			iter->second = nullptr;
+		}
+
+		Levels.erase(iter);
+	}
+
 private:
 	static void EngineBeginPlay();
 	static void EngineTick();

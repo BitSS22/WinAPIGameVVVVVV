@@ -18,7 +18,7 @@ public:
 	};
 };
 
-class ULevel
+class ULevel : public UObject
 {
 public:
 	friend class UEngineAPICore;

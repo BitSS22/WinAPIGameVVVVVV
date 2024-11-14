@@ -41,12 +41,12 @@ int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 
 void UEngineAPICore::OpenLevel(string_view _LevelName)
 {
-	string ChangeName = _LevelName.data();
+	string UpperName = UEngineString::ToUpper(_LevelName);
 
-	auto iter = Levels.find(ChangeName);
+	auto iter = Levels.find(UpperName);
 
 	if (iter == Levels.end())
-		MSGASSERT(nullptr, ChangeName, ", 레벨이 없음.");
+		MSGASSERT(nullptr, _LevelName, "이라는 이름의 레벨이 없습니다.");
 
 	NextLevel = iter->second;
 }
@@ -65,6 +65,13 @@ void UEngineAPICore::EngineTick()
 
 void UEngineAPICore::LevelChange()
 {
+	if (IsCurLevelReset == true)
+	{
+		delete CurLevel;
+		CurLevel = nullptr;
+		IsCurLevelReset = false;
+	}
+
 	if (NextLevel != nullptr)
 	{
 		if (CurLevel != nullptr)

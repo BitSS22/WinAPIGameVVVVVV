@@ -49,12 +49,17 @@ void U2DCollision::ComponentTick()
 
 bool U2DCollision::Collision(int _OtherCollisionGroup, std::vector<AActor*>& _Result, FVector2D _NextPos, UINT _Limit)
 {
-	list<U2DCollision*>& OtherCollisions = GetActor()->GetWorld()->Collisions[_OtherCollisionGroup];
-
 	U2DCollision* ThisCollision = this;
+	if (ThisCollision->IsActive() == false)
+		return false;
+
+	list<U2DCollision*>& OtherCollisions = GetActor()->GetWorld()->Collisions[_OtherCollisionGroup];
 
 	for (const auto& DestCollision : OtherCollisions)
 	{
+		if (DestCollision->IsActive() == false)
+			continue;
+
 		FTransform ThisTrans = ThisCollision->GetComponentOffsetTransform();
 		FTransform DestTrans = DestCollision->GetComponentOffsetTransform();
 

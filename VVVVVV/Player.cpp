@@ -73,5 +73,5 @@ void APlayer::Tick()
 	FIntPoint TileIndex = GetRoom()->GetOnTileIndex(GetActorLocation());
 	string TileName = GetRoom()->GetTileName(TileIndex);
 
-	if (TileName.find())
+	
 }

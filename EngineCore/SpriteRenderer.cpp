@@ -12,50 +12,6 @@ USpriteRenderer::~USpriteRenderer()
 
 void USpriteRenderer::Render()
 {
-	if (CurAnimation != nullptr)
-	{
-		CurAnimation->IsEnd = false;
-
-		vector<int>& Indexs = CurAnimation->FrameIndex;
-		vector<float>& Times = CurAnimation->FrameTime;
-
-		Sprite = CurAnimation->Sprite;
-
-		CurAnimation->CurTime += UEngineTimer::GetInst()->GetDeltaTime();
-
-		float CurFrameTime = Times[CurAnimation->CurIndex];
-
-		if (CurAnimation->CurTime > CurFrameTime)
-		{
-			CurAnimation->CurTime -= CurFrameTime;
-			++CurAnimation->CurIndex;
-
-			if (CurAnimation->Events.contains(CurAnimation->CurIndex))
-				CurAnimation->Events[CurAnimation->CurIndex]();
-
-			if (CurAnimation->CurIndex >= Indexs.size())
-				CurAnimation->IsEnd = true;
-
-			if (CurAnimation->CurIndex >= Indexs.size())
-			{
-				if (CurAnimation->Loop == true)
-				{
-					CurAnimation->CurIndex = 0;
-					if (CurAnimation->Events.contains(CurAnimation->CurIndex))
-						CurAnimation->Events[CurAnimation->CurIndex]();
-				}
-				else
-				{
-					CurAnimation->IsEnd = true;
-					--CurAnimation->CurIndex;
-				}
-			}
-		}
-
-		CurIndex = Indexs[CurAnimation->CurIndex];
-	}
-
-
 	if (Sprite == nullptr)
 		MSGASSERT(nullptr, "Sprite가 없어 렌더링 할 수 없습니다.");
 	
@@ -85,6 +41,49 @@ void USpriteRenderer::BeginPlay()
 void USpriteRenderer::ComponentTick()
 {
 	Super::ComponentTick();
+
+	if (CurAnimation != nullptr)
+	{
+		CurAnimation->IsEnd = false;
+
+		vector<int>& Indexs = CurAnimation->FrameIndex;
+		vector<float>& Times = CurAnimation->FrameTime;
+
+		Sprite = CurAnimation->Sprite;
+
+		CurAnimation->CurTime += UEngineTimer::GetInst()->GetDeltaTime();
+
+		float CurFrameTime = Times[CurAnimation->CurIndex];
+
+		if (CurAnimation->CurTime > CurFrameTime)
+		{
+			CurAnimation->CurTime -= CurFrameTime;
+			++CurAnimation->CurIndex;
+
+			if (CurAnimation->Events.contains(CurIndex))
+				CurAnimation->Events[CurIndex]();
+
+			if (CurAnimation->CurIndex >= Indexs.size())
+				CurAnimation->IsEnd = true;
+
+			if (CurAnimation->CurIndex >= Indexs.size())
+			{
+				if (CurAnimation->Loop == true)
+				{
+					CurAnimation->CurIndex = 0;
+					if (CurAnimation->Events.contains(CurIndex))
+						CurAnimation->Events[CurIndex]();
+				}
+				else
+				{
+					CurAnimation->IsEnd = true;
+					--CurAnimation->CurIndex;
+				}
+			}
+		}
+
+		CurIndex = Indexs[CurAnimation->CurIndex];
+	}
 }
 
 void USpriteRenderer::SetCameraEffectScale(float _Effect)
@@ -168,9 +167,6 @@ void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::stri
 
 void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, int _Start, int _End, float _Time, bool _Loop)
 {
-	if (_Start > _End)
-		MSGASSERT(nullptr, _AnimationName, ", 프레임 Start보다 End가 큽니다.");
-
 	vector<int> Indexs = {};
 	vector<float> Times(_End - _Start + 1, _Time);
 
@@ -206,6 +202,7 @@ void USpriteRenderer::ChangeAnimation(std::string_view _AnimationName, bool _For
 
 	CurAnimation = &FrameAnimations[UpperName];
 	CurAnimation->Reset();
+	CurIndex = CurAnimation->FrameIndex[CurAnimation->CurIndex];
 
 	if (CurAnimation->Events.contains(CurAnimation->CurIndex))
 		CurAnimation->Events[CurAnimation->CurIndex]();
@@ -230,6 +227,9 @@ void USpriteRenderer::SetOrder(int _Order)
 {
 	int PrevOrder = Order;
 	Order = _Order;
+
+	if (PrevOrder == Order)
+		return;
 
 	ULevel* Level = GetActor()->GetWorld();
 
