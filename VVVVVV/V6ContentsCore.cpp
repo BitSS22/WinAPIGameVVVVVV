@@ -43,6 +43,8 @@ void V6ContentsCore::BeginPlay()
 	UEngineAPICore::GetCore()->CreateLevel<AEndingGameMode, AActor>("End");
 	UEngineAPICore::GetCore()->CreateLevel<ATileMapEditorMode, AActor>("TileMapEditor");
 
+	
+
 	ResourceLoad();
 
 	// Open Level
@@ -395,6 +397,9 @@ void V6ContentsCore::FontImageLoad()
 
 void V6ContentsCore::BackGroundObjectImageLoad()
 {
+	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "Enemies::Save:: CheckPoint", FVector2D(8.f, 130.f), FVector2D(32.f, 32.f), FVector2D(0.f, 0.f), 1, 1);
+
+
 	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "SadElephant", FVector2D(8.f, 182.f), FVector2D(928.f, 640.f), FVector2D(0.f, 0.f), 1, 1);
 	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "PlayTimeIcon", FVector2D(318.f, 126.f), FVector2D(34.f, 34.f), FVector2D(0.f, 0.f), 1, 1);
 	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "CommsRelayRadar", FVector2D(834.f, 26.f), FVector2D(128.f, 128.f), FVector2D(6.f, 0.f), 4, 4);

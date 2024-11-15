@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include <EngineBase/FSMStateManager.h>
+#include <EngineCore/2DCollision.h>
 
 enum class State
 {
@@ -64,6 +65,7 @@ private:
 	FVector2D LastKey = FVector2D::RIGHT;
 	FIntPoint SaveWorldIndex = {};
 	FVector2D SaveLocation = {};
+	U2DCollision* Collider = nullptr;
 
 public:
 	void BeginPlay() override;
@@ -75,6 +77,10 @@ private:
 	void MoveRoom();
 	void SetCollisionPoint();
 	void Reset();
+
+	void CollisionPlatform();
+	void CollisionEnermy();
+	void CollisionSave();
 
 };
 

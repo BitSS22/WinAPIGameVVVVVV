@@ -17,7 +17,8 @@ enum class ECollisionGroup
 {
 	Player,
 	Enermy,
-	Platform
+	Platform,
+	Save
 };
 
 enum class EColorType

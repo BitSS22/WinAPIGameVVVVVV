@@ -32,6 +32,11 @@ void APlayer::BeginPlay()
 	SpriteRenderer->CreateAnimation("FlipIdleLeft", "Guys:: Cyan rLeft", 0, 0, EGameConst::AnimationTime, true);
 	SpriteRenderer->CreateAnimation("FlipIdleRight", "Guys:: Cyan rRight", 0, 0, EGameConst::AnimationTime, true);
 	
+	Collider = CreateDefaultSubObject<U2DCollision>();
+	Collider->SetCollisionGroup(ECollisionGroup::Player);
+	Collider->SetCollisionType(ECollisionType::Rect);
+	Collider->SetComponentScale(SpriteRenderer->GetComponentScale());
+
 	SaveWorldIndex = GetRoom()->GetGameWorld()->GetCurRoomIndex();
 	SaveLocation = GetActorLocation();
 
@@ -82,7 +87,7 @@ void APlayer::Tick()
 
 		if (GetRoom()->GetTileName(CurIndex).find("SPIKETILES::") != std::string::npos)
 		{
-			//Reset();
+			// Reset();
 			break;
 		}
 	}
@@ -99,7 +104,19 @@ void APlayer::Tick()
 	else if (LastKey == FVector2D::RIGHT)
 		SpriteRenderer->ChangeAnimation(Animation += "IdleRight");
 
-	
+
+	if (Collider->CollisionOnce(ECollisionGroup::Enermy))
+	{
+		Reset();
+	}
+	else if (Collider->CollisionOnce(ECollisionGroup::Save))
+	{
+		
+	}
+	else if (Collider->CollisionOnce(ECollisionGroup::Platform))
+	{
+
+	}
 
 	//DEBUG
 	if (KEY_DOWN(VK_F1))
@@ -205,8 +222,8 @@ void APlayer::Flip()
 			OnGround = true;
 			break;
 		}
-
-		OnGround = false;
+		else
+			OnGround = false;
 	}
 }
 
@@ -216,25 +233,33 @@ void APlayer::MoveRoom()
 	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 	FIntPoint CurRoomIndex = GetRoom()->GetGameWorld()->GetCurRoomIndex();
 
-	if (GetActorLocation().X < 0)
+	if (GetActorLocation().X < 0.f)
 	{
 		GetRoom()->MoveRoom({ CurRoomIndex.X - 1, CurRoomIndex.Y });
 		AddActorLocation({ WindowSize.X, 0.f });
+		MoveValue = FVector2D::ZERO;
+		UEngineTimer::GetInst()->TimeStart();
 	}
 	else if (GetActorLocation().X > WindowSize.X)
 	{
 		GetRoom()->MoveRoom({ CurRoomIndex.X + 1, CurRoomIndex.Y });
 		AddActorLocation({ -WindowSize.X, 0.f });
+		MoveValue = FVector2D::ZERO;
+		UEngineTimer::GetInst()->TimeStart();
 	}
-	else if (GetActorLocation().Y < 0)
+	else if (GetActorLocation().Y < 0.f)
 	{
 		GetRoom()->MoveRoom({ CurRoomIndex.X, CurRoomIndex.Y - 1 });
 		AddActorLocation({ 0.f, WindowSize.Y });
+		MoveValue = FVector2D::ZERO;
+		UEngineTimer::GetInst()->TimeStart();
 	}
 	else if (GetActorLocation().Y > WindowSize.Y)
 	{
 		GetRoom()->MoveRoom({ CurRoomIndex.X, CurRoomIndex.Y + 1 });
 		AddActorLocation({ 0.f, -WindowSize.Y });
+		MoveValue = FVector2D::ZERO;
+		UEngineTimer::GetInst()->TimeStart();
 	}
 
 }
@@ -284,7 +309,21 @@ void APlayer::SetCollisionPoint()
 
 void APlayer::Reset()
 {
-	GetRoom()->MoveRoom(SaveWorldIndex);
+	if (GetRoom()->GetGameWorld()->GetCurRoomIndex() != SaveWorldIndex)
+		GetRoom()->MoveRoom(SaveWorldIndex);
 	SetActorLocation(SaveLocation);
 	IsFlip = false;
+}
+
+void APlayer::CollisionPlatform()
+{
+
+}
+
+void APlayer::CollisionEnermy()
+{
+}
+
+void APlayer::CollisionSave()
+{
 }
