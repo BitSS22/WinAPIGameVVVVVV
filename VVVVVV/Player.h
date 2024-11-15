@@ -57,11 +57,13 @@ private:
 	float Speed = 500.f;
 	bool IsFlip = false;
 	bool OnGround = false;
-	float GravitySpeed = 500.f;
+	float GravitySpeed = 600.f;
 	FVector2D PointsY[static_cast<int>(PixelPointY::LAST)] = {};
 	FVector2D PointsX[static_cast<int>(PixelPointX::LAST)] = {};
 	FVector2D MoveValue = {};
 	FVector2D LastKey = FVector2D::RIGHT;
+	FIntPoint SaveWorldIndex = {};
+	FVector2D SaveLocation = {};
 
 public:
 	void BeginPlay() override;
@@ -72,6 +74,7 @@ private:
 	void Flip();
 	void MoveRoom();
 	void SetCollisionPoint();
+	void Reset();
 
 };
 

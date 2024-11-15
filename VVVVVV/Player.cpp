@@ -32,6 +32,9 @@ void APlayer::BeginPlay()
 	SpriteRenderer->CreateAnimation("FlipIdleLeft", "Guys:: Cyan rLeft", 0, 0, EGameConst::AnimationTime, true);
 	SpriteRenderer->CreateAnimation("FlipIdleRight", "Guys:: Cyan rRight", 0, 0, EGameConst::AnimationTime, true);
 	
+	SaveWorldIndex = GetRoom()->GetGameWorld()->GetCurRoomIndex();
+	SaveLocation = GetActorLocation();
+
 	UEngineDebug::SetIsDebug(true);
 }
 
@@ -43,16 +46,9 @@ void APlayer::Tick()
 
 	SetCollisionPoint();
 
-	for (int i = 0; i < static_cast<int>(PixelPointY::LAST); ++i)
-	{
-		FIntPoint CurIndex = GetRoom()->GetOnTileIndex(PointsY[i]);
+	
 
-		if (GetRoom()->GetTileName(CurIndex).find("SPIKETILES::") != std::string::npos)
-		{
-			//MSGASSERT(nullptr, "dd");
-			break;
-		}
-	}
+	Flip();
 
 	for (int i = 0; i < static_cast<int>(PixelPointY::LeftTop); ++i)
 	{
@@ -75,11 +71,21 @@ void APlayer::Tick()
 		}
 	}
 
-	Flip();
 	Move();
 	MoveRoom();
 
 	AddActorLocation(MoveValue);
+
+	for (int i = 0; i < static_cast<int>(PixelPointY::LAST); ++i)
+	{
+		FIntPoint CurIndex = GetRoom()->GetOnTileIndex(PointsY[i]);
+
+		if (GetRoom()->GetTileName(CurIndex).find("SPIKETILES::") != std::string::npos)
+		{
+			//Reset();
+			break;
+		}
+	}
 
 	string Animation = "";
 	if (IsFlip == true)
@@ -274,4 +280,11 @@ void APlayer::SetCollisionPoint()
 	PointsX[static_cast<int>(PixelPointX::Right4)] = GetActorTransform().CenterRightTop();
 	PointsX[static_cast<int>(PixelPointX::Right4)].Y += 1.f;
 
+}
+
+void APlayer::Reset()
+{
+	GetRoom()->MoveRoom(SaveWorldIndex);
+	SetActorLocation(SaveLocation);
+	IsFlip = false;
 }
