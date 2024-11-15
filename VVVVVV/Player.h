@@ -1,11 +1,28 @@
 #pragma once
 #include "Entity.h"
+#include <EngineBase/FSMStateManager.h>
+
+enum class State
+{
+	WalkLeft,
+	WalkRight,
+	FlipWalkLeft,
+	FlipWalkRight,
+	IdleLeft,
+	IdleRight,
+	FlipIdleLeft,
+	FlipIdleRight,
+	LAST
+};
 
 enum class PixelPointY
 {
 	LeftBottom,
 	Bottom,
 	RightBottom,
+	LeftTop,
+	Top,
+	RightTop,
 	LAST
 };
 
@@ -38,17 +55,23 @@ public:
 
 private:
 	float Speed = 500.f;
-	bool Flip = false;
+	bool IsFlip = false;
 	bool OnGround = false;
 	float GravitySpeed = 500.f;
 	FVector2D PointsY[static_cast<int>(PixelPointY::LAST)] = {};
 	FVector2D PointsX[static_cast<int>(PixelPointX::LAST)] = {};
+	FVector2D MoveValue = {};
+	FVector2D LastKey = FVector2D::RIGHT;
 
 public:
 	void BeginPlay() override;
 	void Tick() override;
 
 private:
+	void Move();
+	void Flip();
+	void MoveRoom();
+	void SetCollisionPoint();
 
 };
 

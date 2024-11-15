@@ -10,12 +10,6 @@ ARoom::ARoom()
 {
 }
 
-ARoom::ARoom(FIntPoint _TileCount, FIntPoint _TileScale)
-	: TileCount(_TileCount)
-	, TileScale(_TileScale)
-{
-}
-
 ARoom::~ARoom()
 {
 }

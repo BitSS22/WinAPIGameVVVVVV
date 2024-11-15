@@ -26,13 +26,13 @@
       <Filter>Define</Filter>
     </ClInclude>
     <ClInclude Include="GameWorld.h">
-      <Filter>ContentsObject\Map\World</Filter>
+      <Filter>ContentsObject\Map\GameWorld</Filter>
     </ClInclude>
     <ClInclude Include="BackGround.h">
-      <Filter>ContentsObject\Map\World\Room\BackGround</Filter>
+      <Filter>ContentsObject\Map\GameWorld\Room\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="Room.h">
-      <Filter>ContentsObject\Map\World\Room</Filter>
+      <Filter>ContentsObject\Map\GameWorld\Room</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>ContentsObject\Entity</Filter>
@@ -73,13 +73,13 @@
       <Filter>Define</Filter>
     </ClCompile>
     <ClCompile Include="GameWorld.cpp">
-      <Filter>ContentsObject\Map\World</Filter>
+      <Filter>ContentsObject\Map\GameWorld</Filter>
     </ClCompile>
     <ClCompile Include="BackGround.cpp">
-      <Filter>ContentsObject\Map\World\Room\BackGround</Filter>
+      <Filter>ContentsObject\Map\GameWorld\Room\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="Room.cpp">
-      <Filter>ContentsObject\Map\World\Room</Filter>
+      <Filter>ContentsObject\Map\GameWorld\Room</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>ContentsObject\Entity</Filter>
@@ -116,15 +116,6 @@
     <Filter Include="Define">
       <UniqueIdentifier>{d14c7087-ff09-40ac-9588-44d64ce3bf84}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Map\World">
-      <UniqueIdentifier>{25ecce1d-5a97-41f8-8c4c-92a17f83b833}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContentsObject\Map\World\Room">
-      <UniqueIdentifier>{8db26b39-9a52-47b3-82e3-c406f955466a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContentsObject\Map\World\Room\BackGround">
-      <UniqueIdentifier>{cad76ed6-02be-47e9-a6e0-3aac7c51eff7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\Entity">
       <UniqueIdentifier>{720a4477-9a73-4824-9bcb-fa23457e6975}</UniqueIdentifier>
     </Filter>
@@ -139,6 +130,15 @@
     </Filter>
     <Filter Include="ContentsObject\Entity\Player">
       <UniqueIdentifier>{278c257d-048b-4beb-99bb-3d1657f2ea14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Map\GameWorld">
+      <UniqueIdentifier>{25ecce1d-5a97-41f8-8c4c-92a17f83b833}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Map\GameWorld\Room">
+      <UniqueIdentifier>{8db26b39-9a52-47b3-82e3-c406f955466a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Map\GameWorld\Room\BackGround">
+      <UniqueIdentifier>{cad76ed6-02be-47e9-a6e0-3aac7c51eff7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

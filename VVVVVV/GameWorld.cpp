@@ -27,7 +27,6 @@ void AGameWorld::BeginPlay()
 	GetWorld()->SetCameraToMainPawn(false);
 }
 
-
 void AGameWorld::SaveFile()
 {
 	Room->SaveRoomData();
