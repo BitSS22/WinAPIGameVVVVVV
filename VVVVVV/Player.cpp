@@ -88,15 +88,17 @@ void APlayer::Tick()
 
 	if (Collider->CollisionOnce(ECollisionGroup::Enermy))
 	{
-		//IsDeath = true;
-		//GetRoom()->SetIsEntityMove(false);
+		IsDeath = true;
+		GetRoom()->SetIsEntityMove(false);
 	}
-	else if (AActor* Actor = Collider->CollisionOnce(ECollisionGroup::Save))
+
+	if (AActor* Actor = Collider->CollisionOnce(ECollisionGroup::Save))
 	{
 		SaveWorldIndex = GetRoom()->GetGameWorld()->GetCurRoomIndex();
 		SaveLocation = Actor->GetActorLocation();
 	}
-	else if (AActor* Actor = Collider->CollisionOnce(ECollisionGroup::Platform))
+
+	if (AActor* Actor = Collider->CollisionOnce(ECollisionGroup::Platform))
 	{
 		AMoveEntity* MoveEntity = dynamic_cast<AMoveEntity*>(Actor);
 		MoveValue += MoveEntity->GetEntityDir() * MoveEntity->GetSpeed() * GET_DELTA;
@@ -104,19 +106,31 @@ void APlayer::Tick()
 		FTransform ThisTransform = GetActorTransform();
 		FTransform EntityTransform = MoveEntity->GetActorTransform();
 
-		FVector2D Dir = MoveEntity->GetActorLocation() - GetActorLocation();
+		FVector2D BaseDir = (MoveEntity->GetActorTransform().CenterRightBottom() - MoveEntity->GetActorLocation()).Nomalize();
+		FVector2D ToThisDir = (GetActorLocation() - MoveEntity->GetActorLocation()).Nomalize();
 
-		if (Dir.X > 0.f && abs(Dir.X) > abs(Dir.Y))
-			SetActorLocation({ EntityTransform.CenterRight() + ThisTransform.Scale.HalfX(), GetActorLocation().Y });
-		else if (Dir.X < 0.f && abs(Dir.X) > abs(Dir.Y))
-			SetActorLocation({ EntityTransform.CenterLeft() - ThisTransform.Scale.HalfX(), GetActorLocation().Y });
-		else if (Dir.Y > 0.f)
-			SetActorLocation({ GetActorLocation().X, EntityTransform.CenterTop() - ThisTransform.Scale.HalfY() });
-		else if (Dir.Y < 0.f)
-			SetActorLocation({ GetActorLocation().X, EntityTransform.CenterBottom() + ThisTransform.Scale.HalfY() });
 
-		MoveValue.Y = 0.f;
-		OnGround = true;
+		if (!KEY_DOWN(VK_SPACE))
+		{
+			if (-BaseDir.Y < abs(ToThisDir.Y) && abs(ToThisDir.Y) < BaseDir.Y && ToThisDir.X < 0.f)
+				SetActorLocation({ EntityTransform.CenterLeft() - ThisTransform.Scale.HalfX(), GetActorLocation().Y });
+			else if (-BaseDir.Y < abs(ToThisDir.Y) && abs(ToThisDir.Y) < BaseDir.Y && ToThisDir.X > 0.f)
+				SetActorLocation({ EntityTransform.CenterRight() + ThisTransform.Scale.HalfX(), GetActorLocation().Y });
+			else if (-BaseDir.X < abs(ToThisDir.X) && abs(ToThisDir.X) < BaseDir.X && ToThisDir.Y < 0.f && IsFlip == false)
+			{
+				SetActorLocation({ GetActorLocation().X, EntityTransform.CenterTop() - ThisTransform.Scale.HalfY() });
+				MoveValue.Y = 0.f;
+				OnGround = true;
+			}
+			else if (-BaseDir.X < abs(ToThisDir.X) && abs(ToThisDir.X) < BaseDir.X && ToThisDir.Y > 0.f && IsFlip == true)
+			{
+				SetActorLocation({ GetActorLocation().X, EntityTransform.CenterBottom() + ThisTransform.Scale.HalfY() });
+				MoveValue.Y = 0.f;
+				OnGround = true;
+			}
+
+		}
+
 	}
 
 	for (int i = 0; i < static_cast<int>(PixelPointY::LAST); ++i)
@@ -125,8 +139,8 @@ void APlayer::Tick()
 
 		if (GetRoom()->GetTileName(CurIndex).find("SPIKETILES::") != std::string::npos)
 		{
-			//IsDeath = true;
-			//GetRoom()->SetIsEntityMove(false);
+			IsDeath = true;
+			GetRoom()->SetIsEntityMove(false);
 			break;
 		}
 	}
@@ -257,7 +271,7 @@ void APlayer::Flip()
 	else
 		MoveValue.Y -= GravitySpeed * GET_DELTA;
 
-	for (int i = 0; i < static_cast<int>(PixelPointY::LAST); ++i)
+	for (int i = 0; i < static_cast<int>(PixelPointY::LeftTop); ++i)
 	{
 		FVector2D NextLocation = PointsY[i] + MoveValue;
 		FVector2D TileIndex = GetRoom()->GetOnTileIndex(NextLocation);
