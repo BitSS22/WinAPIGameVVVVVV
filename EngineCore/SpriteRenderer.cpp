@@ -35,7 +35,7 @@ void USpriteRenderer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GetActor()->GetWorld()->PushRenderer(this);
+	GetActor()->GetWorld()->ChangeRenderOrder(this, GetOrder());
 }
 
 void USpriteRenderer::ComponentTick()
@@ -44,14 +44,12 @@ void USpriteRenderer::ComponentTick()
 
 	if (CurAnimation != nullptr)
 	{
-		CurAnimation->IsEnd = false;
-
 		vector<int>& Indexs = CurAnimation->FrameIndex;
 		vector<float>& Times = CurAnimation->FrameTime;
 
 		Sprite = CurAnimation->Sprite;
 
-		CurAnimation->CurTime += UEngineTimer::GetInst()->GetDeltaTime();
+		CurAnimation->CurTime += UEngineTimer::GetInst()->GetDeltaTime() * CurAnimationSpeed;
 
 		float CurFrameTime = Times[CurAnimation->CurIndex];
 
@@ -65,6 +63,8 @@ void USpriteRenderer::ComponentTick()
 
 			if (CurAnimation->CurIndex >= Indexs.size())
 				CurAnimation->IsEnd = true;
+			else
+				CurAnimation->IsEnd = false;
 
 			if (CurAnimation->CurIndex >= Indexs.size())
 			{

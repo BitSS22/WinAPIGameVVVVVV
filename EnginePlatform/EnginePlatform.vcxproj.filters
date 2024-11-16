@@ -13,7 +13,34 @@
     <ClInclude Include="EngineWindowImage.h">
       <Filter>ImageManager</Filter>
     </ClInclude>
-    <ClInclude Include="EngineWindowDebug.h" />
+    <ClInclude Include="EngineWindowDebug.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\FMOD\inc\fmod_dsp_effects.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\FMOD\inc\fmod_errors.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\FMOD\inc\fmod_output.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\FMOD\inc\fmod.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\FMOD\inc\fmod.hpp">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\FMOD\inc\fmod_codec.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\FMOD\inc\fmod_common.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\FMOD\inc\fmod_dsp.h">
+      <Filter>ThirdParty\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineSound.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineWindow.cpp">
@@ -28,7 +55,10 @@
     <ClCompile Include="EngineWindowImage.cpp">
       <Filter>ImageManager</Filter>
     </ClCompile>
-    <ClCompile Include="EngineWindowDebug.cpp" />
+    <ClCompile Include="EngineWindowDebug.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineSound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Window">
@@ -43,5 +73,37 @@
     <Filter Include="ImageManager">
       <UniqueIdentifier>{79cc7f42-6fb2-469a-8117-0dfda5546018}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{6b189dc4-c9ba-438a-8976-a2e3f62323f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{a9340a59-7750-49f2-ba1a-00ca4d549221}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\BIn">
+      <UniqueIdentifier>{e0bf16d0-8c25-4e4c-8dc9-e535ab864cff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Inc">
+      <UniqueIdentifier>{93213347-21c5-490a-8dd0-15968874401d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\BIn\Debug">
+      <UniqueIdentifier>{9bb36b54-717c-4db8-863c-5b0f7753eaa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\BIn\Release">
+      <UniqueIdentifier>{b0ae3e05-d10b-46b7-9f9b-e11b017013a6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="ThirdParty\FMOD\bin\Debug\fmodL.dll">
+      <Filter>ThirdParty\BIn\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FMOD\bin\Debug\fmodL_vc.lib">
+      <Filter>ThirdParty\BIn\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FMOD\bin\Release\fmod_vc.lib">
+      <Filter>ThirdParty\BIn\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FMOD\bin\Release\fmod.dll">
+      <Filter>ThirdParty\BIn\Release</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

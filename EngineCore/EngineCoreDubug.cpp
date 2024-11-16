@@ -25,17 +25,26 @@ namespace UEngineDebug
 
 	void CoreDebugRender(FTransform _Trans, EDebugPosType _Type)
 	{
+		if (IsDebug == false)
+			return;
+
 		DebugPoses.push_back({ _Trans, _Type });
 	}
 
 	void CoreOutputString(std::string_view _Text)
 	{
+		if (IsDebug == false)
+			return;
+
 		DebugTexts.push_back(DebugTextInfo(_Text.data(), EngineTextPos));
 		EngineTextPos.Y += 20;
 	}
 
 	void CoreOutputString(std::string_view _Text, FVector2D _Pos)
 	{
+		if (IsDebug == false)
+			return;
+
 		DebugTexts.push_back(DebugTextInfo(_Text.data(), _Pos));
 	}
 

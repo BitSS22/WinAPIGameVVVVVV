@@ -3,6 +3,7 @@
 
 #include <EnginePlatform/EngineWindow.h>
 #include <EngineBase/EngineDelegate.h>
+#include <EnginePlatform/EngineSound.h>
 
 UEngineAPICore* UEngineAPICore::MainCore = nullptr;
 UContentsCore* UEngineAPICore::UserCore = nullptr;
@@ -20,7 +21,10 @@ UEngineAPICore::~UEngineAPICore()
 		delete iter->second;
 		++iter;
 	}
+
 	Levels.clear();
+
+	UEngineSound::Release();
 }
 
 int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
@@ -91,6 +95,8 @@ void UEngineAPICore::Tick()
 	LevelChange();
 
 	DeltaTimer.TimeCheck();
+
+	UEngineSound::Update();
 
 	UEngineInput::GetInst().KeyCheck();
 	UEngineInput::GetInst().EventCheck();

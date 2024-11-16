@@ -36,6 +36,7 @@ private:
 	std::map<std::string, FrameAnimation> FrameAnimations = {};
 	FrameAnimation* CurAnimation = nullptr;
 	unsigned char Alpha = 255;
+	float CurAnimationSpeed = 1.f;
 
 public:
 	virtual void BeginPlay() override;
@@ -100,6 +101,14 @@ public:
 	bool IsCurAnimationEnd()
 	{
 		return CurAnimation->IsEnd;
+	}
+	void SetAnimationSpeed(float _Speed)
+	{
+		CurAnimationSpeed = _Speed;
+	}
+	void ResetAnimationSpeed()
+	{
+		CurAnimationSpeed = 1.f;
 	}
 
 public:

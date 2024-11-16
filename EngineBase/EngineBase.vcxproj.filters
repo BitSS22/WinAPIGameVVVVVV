@@ -65,6 +65,7 @@
     </ClCompile>
     <ClCompile Include="FSMStateManager.cpp" />
     <ClCompile Include="TimeEvent.cpp" />
+    <ClCompile Include="EngineResources.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineDebug.h">
@@ -105,5 +106,6 @@
     </ClInclude>
     <ClInclude Include="FSMStateManager.h" />
     <ClInclude Include="TimeEvent.h" />
+    <ClInclude Include="EngineResources.h" />
   </ItemGroup>
 </Project>

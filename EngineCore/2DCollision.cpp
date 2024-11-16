@@ -57,6 +57,9 @@ bool U2DCollision::Collision(int _OtherCollisionGroup, std::vector<AActor*>& _Re
 
 	for (const auto& DestCollision : OtherCollisions)
 	{
+		if (ThisCollision == DestCollision)
+			continue;
+
 		if (DestCollision->IsActive() == false)
 			continue;
 
