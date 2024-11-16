@@ -51,7 +51,7 @@ private:
 public:
 	static void Load(std::string_view _Path);
 	static void Load(std::string_view _Name, std::string_view _Path);
-	static void Updata();
+	static void Update();
 	static void Release();
 
 	static USoundPlayer Play(std::string_view _Name);

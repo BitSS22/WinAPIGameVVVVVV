@@ -91,5 +91,9 @@ public:
 	{
 		return DefualtDir;
 	}
+	FVector2D GetEntityDir()
+	{
+		return Dir;
+	}
 };
 

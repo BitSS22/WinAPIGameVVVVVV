@@ -2,6 +2,7 @@
 #include "Player.h"
 #include <EngineCore/SpriteRenderer.h>
 #include "Room.h"
+#include "MoveEntity.h"
 
 APlayer::APlayer()
 {
@@ -20,7 +21,7 @@ void APlayer::BeginPlay()
 	SpriteRenderer->SetSpriteScale(1.f, 0);
 	SpriteRenderer->SetOrder(ERenderOrder::PLAYER);
 
-	SetActorLocation(UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half());
+	SetActorLocation(FVector2D(320.f, 350.f));
 	SetActorScale(SpriteRenderer->GetComponentScale());
 
 	SpriteRenderer->CreateAnimation("WalkLeft", "Guys:: Cyan Left", 0, 1, 0.15f, true);
@@ -31,7 +32,12 @@ void APlayer::BeginPlay()
 	SpriteRenderer->CreateAnimation("IdleRight", "Guys:: Cyan Right", 0, 0, EGameConst::AnimationTime, true);
 	SpriteRenderer->CreateAnimation("FlipIdleLeft", "Guys:: Cyan rLeft", 0, 0, EGameConst::AnimationTime, true);
 	SpriteRenderer->CreateAnimation("FlipIdleRight", "Guys:: Cyan rRight", 0, 0, EGameConst::AnimationTime, true);
-	
+
+	SpriteRenderer->CreateAnimation("SadIdleLeft", "Guys:: Cyan Sad Left", 0, 0, EGameConst::AnimationTime, true);
+	SpriteRenderer->CreateAnimation("SadIdleRight", "Guys:: Cyan Sad Right", 0, 0, EGameConst::AnimationTime, true);
+	SpriteRenderer->CreateAnimation("SadFlipIdleLeft", "Guys:: Cyan Sad rLeft", 0, 0, EGameConst::AnimationTime, true);
+	SpriteRenderer->CreateAnimation("SadFlipIdleRight", "Guys:: Cyan Sad rRight", 0, 0, EGameConst::AnimationTime, true);
+
 	Collider = CreateDefaultSubObject<U2DCollision>();
 	Collider->SetCollisionGroup(ECollisionGroup::Player);
 	Collider->SetCollisionType(ECollisionType::Rect);
@@ -51,7 +57,7 @@ void APlayer::Tick()
 
 	SetCollisionPoint();
 
-	
+
 
 	Flip();
 
@@ -79,7 +85,39 @@ void APlayer::Tick()
 	Move();
 	MoveRoom();
 
-	AddActorLocation(MoveValue);
+
+	if (Collider->CollisionOnce(ECollisionGroup::Enermy))
+	{
+		//IsDeath = true;
+		//GetRoom()->SetIsEntityMove(false);
+	}
+	else if (AActor* Actor = Collider->CollisionOnce(ECollisionGroup::Save))
+	{
+		SaveWorldIndex = GetRoom()->GetGameWorld()->GetCurRoomIndex();
+		SaveLocation = Actor->GetActorLocation();
+	}
+	else if (AActor* Actor = Collider->CollisionOnce(ECollisionGroup::Platform))
+	{
+		AMoveEntity* MoveEntity = dynamic_cast<AMoveEntity*>(Actor);
+		MoveValue += MoveEntity->GetEntityDir() * MoveEntity->GetSpeed() * GET_DELTA;
+
+		FTransform ThisTransform = GetActorTransform();
+		FTransform EntityTransform = MoveEntity->GetActorTransform();
+
+		FVector2D Dir = MoveEntity->GetActorLocation() - GetActorLocation();
+
+		if (Dir.X > 0.f && abs(Dir.X) > abs(Dir.Y))
+			SetActorLocation({ EntityTransform.CenterRight() + ThisTransform.Scale.HalfX(), GetActorLocation().Y });
+		else if (Dir.X < 0.f && abs(Dir.X) > abs(Dir.Y))
+			SetActorLocation({ EntityTransform.CenterLeft() - ThisTransform.Scale.HalfX(), GetActorLocation().Y });
+		else if (Dir.Y > 0.f)
+			SetActorLocation({ GetActorLocation().X, EntityTransform.CenterTop() - ThisTransform.Scale.HalfY() });
+		else if (Dir.Y < 0.f)
+			SetActorLocation({ GetActorLocation().X, EntityTransform.CenterBottom() + ThisTransform.Scale.HalfY() });
+
+		MoveValue.Y = 0.f;
+		OnGround = true;
+	}
 
 	for (int i = 0; i < static_cast<int>(PixelPointY::LAST); ++i)
 	{
@@ -87,35 +125,54 @@ void APlayer::Tick()
 
 		if (GetRoom()->GetTileName(CurIndex).find("SPIKETILES::") != std::string::npos)
 		{
-			// Reset();
+			//IsDeath = true;
+			//GetRoom()->SetIsEntityMove(false);
 			break;
 		}
 	}
 
-	string Animation = "";
-	if (IsFlip == true)
-		Animation += "Flip";
-	if (KEY_PRESS(VK_LEFT))
-		SpriteRenderer->ChangeAnimation(Animation += "WalkLeft");
-	else if (KEY_PRESS(VK_RIGHT))
-		SpriteRenderer->ChangeAnimation(Animation += "WalkRight");
-	else if (LastKey == FVector2D::LEFT)
-		SpriteRenderer->ChangeAnimation(Animation += "IdleLeft");
-	else if (LastKey == FVector2D::RIGHT)
-		SpriteRenderer->ChangeAnimation(Animation += "IdleRight");
+	if (IsDeath == false)
+		AddActorLocation(MoveValue);
+
+	
 
 
-	if (Collider->CollisionOnce(ECollisionGroup::Enermy))
+	if (IsDeath == true)
 	{
+		DeathTime += GET_DELTA;
+	}
+
+	if (DeathTime >= 1.f)
+	{
+		DeathTime = 0.f;
 		Reset();
+		IsDeath = false;
+		GetRoom()->SetIsEntityMove(true);
 	}
-	else if (Collider->CollisionOnce(ECollisionGroup::Save))
-	{
-		
-	}
-	else if (Collider->CollisionOnce(ECollisionGroup::Platform))
-	{
 
+	if (IsDeath == false)
+	{
+		string Animation = "";
+		if (IsFlip == true)
+			Animation += "Flip";
+		if (KEY_PRESS(VK_LEFT))
+			SpriteRenderer->ChangeAnimation(Animation += "WalkLeft");
+		else if (KEY_PRESS(VK_RIGHT))
+			SpriteRenderer->ChangeAnimation(Animation += "WalkRight");
+		else if (LastKey == FVector2D::LEFT)
+			SpriteRenderer->ChangeAnimation(Animation += "IdleLeft");
+		else if (LastKey == FVector2D::RIGHT)
+			SpriteRenderer->ChangeAnimation(Animation += "IdleRight");
+	}
+	else
+	{
+		string Animation = "Sad";
+		if (IsFlip == true)
+			Animation += "Flip";
+		if (LastKey == FVector2D::LEFT)
+			SpriteRenderer->ChangeAnimation(Animation += "IdleLeft");
+		else if (LastKey == FVector2D::RIGHT)
+			SpriteRenderer->ChangeAnimation(Animation += "IdleRight");
 	}
 
 	//DEBUG
@@ -132,15 +189,18 @@ void APlayer::Tick()
 
 void APlayer::Move()
 {
-	if (UEngineInput::GetInst().IsPress(VK_LEFT))
+	if (IsDeath == false)
 	{
-		MoveValue.X += FVector2D::LEFT.X * Speed * GET_DELTA;
-		LastKey = FVector2D::LEFT;
-	}
-	else if (UEngineInput::GetInst().IsPress(VK_RIGHT))
-	{
-		MoveValue.X += FVector2D::RIGHT.X * Speed * GET_DELTA;
-		LastKey = FVector2D::RIGHT;
+		if (UEngineInput::GetInst().IsPress(VK_LEFT))
+		{
+			MoveValue.X += FVector2D::LEFT.X * Speed * GET_DELTA;
+			LastKey = FVector2D::LEFT;
+		}
+		else if (UEngineInput::GetInst().IsPress(VK_RIGHT))
+		{
+			MoveValue.X += FVector2D::RIGHT.X * Speed * GET_DELTA;
+			LastKey = FVector2D::RIGHT;
+		}
 	}
 
 	int Start = 0;
@@ -186,7 +246,7 @@ void APlayer::Move()
 
 void APlayer::Flip()
 {
-	if (KEY_DOWN(VK_SPACE) && OnGround == true)
+	if (KEY_DOWN(VK_SPACE) && OnGround == true && IsDeath == false)
 	{
 		IsFlip = !IsFlip;
 		OnGround = false;
@@ -202,7 +262,7 @@ void APlayer::Flip()
 		FVector2D NextLocation = PointsY[i] + MoveValue;
 		FVector2D TileIndex = GetRoom()->GetOnTileIndex(NextLocation);
 		string NextTileName = GetRoom()->GetTileName(TileIndex);
-		
+
 		if ((NextTileName.find("COLLISIONTILES::") != std::string::npos) || (NextTileName.find("ANIMATIONTILES::") != std::string::npos) || (NextTileName.find("RAILTILES::") != std::string::npos))
 		{
 			if (IsFlip == false)

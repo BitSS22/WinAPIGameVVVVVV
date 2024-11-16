@@ -66,6 +66,8 @@ private:
 	FIntPoint SaveWorldIndex = {};
 	FVector2D SaveLocation = {};
 	U2DCollision* Collider = nullptr;
+	float DeathTime = 2.f;
+	bool IsDeath = false;
 
 public:
 	void BeginPlay() override;

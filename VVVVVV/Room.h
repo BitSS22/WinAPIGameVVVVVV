@@ -32,6 +32,7 @@ private:
 	AGameWorld* GameWorld = nullptr;
 	bool LoopRoom = false;
 	APlayer* Player = nullptr;
+	bool IsEntityMove = true;
 
 public:
 	virtual void BeginPlay() override;
@@ -67,6 +68,14 @@ public:
 		if (_Index.X < 0 || _Index.X >= TileCount.X || _Index.Y < 0 || _Index.Y >= TileCount.Y)
 			return "NONE TILE";
 		return Tiles[_Index.Y][_Index.X]->GetCurSpriteName();
+	}
+	bool GetIsEntityMove()
+	{
+		return IsEntityMove;
+	}
+	void SetIsEntityMove(bool _Value)
+	{
+		IsEntityMove = _Value;
 	}
 
 };

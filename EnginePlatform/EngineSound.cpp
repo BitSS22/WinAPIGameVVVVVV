@@ -63,7 +63,7 @@ void UEngineSound::Load(std::string_view _Name, std::string_view _Path)
 	Sounds.insert(make_pair(UpperName, NewSound));
 }
 
-void UEngineSound::Updata()
+void UEngineSound::Update()
 {
 	if (SoundSystem == nullptr)
 		return;

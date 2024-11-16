@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "MoveEntity.h"
+#include "Room.h"
 
 AMoveEntity::AMoveEntity()
 {
@@ -19,16 +20,19 @@ void AMoveEntity::Tick()
 {
 	Super::Tick();
 
-	if (DefualtDir != FVector2D::ZERO)
+	if (GetRoom()->GetIsEntityMove())
 	{
-		AddActorLocation(Dir * Speed * GET_DELTA);
-
-		float Diff = (DefualtLocation - GetActorLocation()).Length();
-
-		if (MoveLenght < Diff)
+		if (DefualtDir != FVector2D::ZERO)
 		{
-			Dir = -Dir;
-			AddActorLocation(Dir * abs(Diff - MoveLenght) * 2);
+			AddActorLocation(Dir * Speed * GET_DELTA);
+
+			float Diff = (DefualtLocation - GetActorLocation()).Length();
+
+			if (MoveLenght < Diff)
+			{
+				Dir = -Dir;
+				AddActorLocation(Dir * abs(Diff - MoveLenght) * 2);
+			}
 		}
 	}
 

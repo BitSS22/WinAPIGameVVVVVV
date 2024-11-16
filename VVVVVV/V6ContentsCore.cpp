@@ -397,7 +397,8 @@ void V6ContentsCore::FontImageLoad()
 
 void V6ContentsCore::BackGroundObjectImageLoad()
 {
-	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "Enemies::Save:: CheckPoint", FVector2D(8.f, 130.f), FVector2D(32.f, 32.f), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "Enemies::Save:: CheckPoint1", FVector2D(8.f, 130.f), FVector2D(32.f, 32.f), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "Enemies::Save:: CheckPoint2", FVector2D(46.f, 130.f), FVector2D(32.f, 32.f), FVector2D(0.f, 0.f), 1, 1);
 
 
 	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "SadElephant", FVector2D(8.f, 182.f), FVector2D(928.f, 640.f), FVector2D(0.f, 0.f), 1, 1);
