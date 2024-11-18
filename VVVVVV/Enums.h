@@ -25,9 +25,12 @@ enum class ECollisionGroup
 
 enum class EEntityType
 {
+	Guy,
+	Player,
 	Enermy,
 	Platform,
-	Save,
+	CheckPoint,
+	Teleport,
 	Last
 };
 

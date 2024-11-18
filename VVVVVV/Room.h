@@ -24,16 +24,12 @@ public:
 	ARoom& operator=(ARoom&& _Other) noexcept = delete;
 
 private:
-	FIntPoint TileCount = EGameConst::TileCount;
-	FIntPoint TileScale = EGameConst::TileScale;
 	std::vector<std::vector<ATile*>> Tiles = {};
 	std::vector<std::vector<ATile*>> BackGroundTiles = {};
 	ABackGround* BackGround = nullptr;
 	std::vector<AEntity*> Entites = {};
-	AGameWorld* GameWorld = nullptr;
+	FIntPoint CurRoonIndex = {};
 	bool LoopRoom = false;
-	APlayer* Player = nullptr;
-	bool IsEntityMove = true;
 
 public:
 	virtual void BeginPlay() override;

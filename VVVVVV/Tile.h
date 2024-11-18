@@ -14,8 +14,8 @@ public:
 	ATile& operator=(ATile&& _Other) noexcept = delete;
 
 private:
-	ETileType TileType = ETileType::Last;
 	USpriteRenderer* SpriteRenderer = nullptr;
+	ETileType TileType = ETileType::Last;
 
 public:
 	virtual void BeginPlay() override;

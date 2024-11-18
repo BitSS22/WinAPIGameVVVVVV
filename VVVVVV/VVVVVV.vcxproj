@@ -155,6 +155,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="CheckPoint.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EndingGameMode.h">
       <SubType>
       </SubType>
@@ -210,6 +214,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BackGround.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="CheckPoint.cpp">
       <SubType>
       </SubType>
     </ClCompile>

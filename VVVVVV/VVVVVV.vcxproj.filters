@@ -25,9 +25,6 @@
     <ClInclude Include="Enums.h">
       <Filter>Define</Filter>
     </ClInclude>
-    <ClInclude Include="GameWorld.h">
-      <Filter>ContentsObject\Map\GameWorld</Filter>
-    </ClInclude>
     <ClInclude Include="BackGround.h">
       <Filter>ContentsObject\Map\GameWorld\Room\BackGround</Filter>
     </ClInclude>
@@ -38,19 +35,25 @@
       <Filter>ContentsObject\Entity</Filter>
     </ClInclude>
     <ClInclude Include="MoveEntity.h">
-      <Filter>ContentsObject\Entity\Enermy</Filter>
+      <Filter>ContentsObject\Entity\MoveEntity</Filter>
     </ClInclude>
     <ClInclude Include="Guy.h">
       <Filter>ContentsObject\Entity\Guy</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>ContentsObject\Entity\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Platform.h">
-      <Filter>ContentsObject\Entity\Platform</Filter>
+      <Filter>ContentsObject\Entity\Guy\Player</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>ContentsObject\Map\GameWorld\Room\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWorld.h">
+      <Filter>ContentsObject\Map\GameWorld</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>ContentsObject\Entity\MoveEntity\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckPoint.h">
+      <Filter>ContentsObject\Entity\CheckPoint</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -78,9 +81,6 @@
     <ClCompile Include="Enums.cpp">
       <Filter>Define</Filter>
     </ClCompile>
-    <ClCompile Include="GameWorld.cpp">
-      <Filter>ContentsObject\Map\GameWorld</Filter>
-    </ClCompile>
     <ClCompile Include="BackGround.cpp">
       <Filter>ContentsObject\Map\GameWorld\Room\BackGround</Filter>
     </ClCompile>
@@ -91,19 +91,25 @@
       <Filter>ContentsObject\Entity</Filter>
     </ClCompile>
     <ClCompile Include="MoveEntity.cpp">
-      <Filter>ContentsObject\Entity\Enermy</Filter>
+      <Filter>ContentsObject\Entity\MoveEntity</Filter>
     </ClCompile>
     <ClCompile Include="Guy.cpp">
       <Filter>ContentsObject\Entity\Guy</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>ContentsObject\Entity\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Platform.cpp">
-      <Filter>ContentsObject\Entity\Platform</Filter>
+      <Filter>ContentsObject\Entity\Guy\Player</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>ContentsObject\Map\GameWorld\Room\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWorld.cpp">
+      <Filter>ContentsObject\Map\GameWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>ContentsObject\Entity\MoveEntity\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckPoint.cpp">
+      <Filter>ContentsObject\Entity\CheckPoint</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,17 +137,11 @@
     <Filter Include="ContentsObject\Entity">
       <UniqueIdentifier>{720a4477-9a73-4824-9bcb-fa23457e6975}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Entity\Enermy">
-      <UniqueIdentifier>{2d273734-dd48-4a7f-96db-95239822e905}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\Entity\Guy">
       <UniqueIdentifier>{6dcae77c-f5bc-4298-9ac9-379a4f4adc75}</UniqueIdentifier>
     </Filter>
     <Filter Include="ContentsObject\Entity\InterObject">
       <UniqueIdentifier>{89ce6dd6-d671-4c5b-b625-d948fe2f71c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContentsObject\Entity\Player">
-      <UniqueIdentifier>{278c257d-048b-4beb-99bb-3d1657f2ea14}</UniqueIdentifier>
     </Filter>
     <Filter Include="ContentsObject\Map\GameWorld">
       <UniqueIdentifier>{25ecce1d-5a97-41f8-8c4c-92a17f83b833}</UniqueIdentifier>
@@ -152,11 +152,20 @@
     <Filter Include="ContentsObject\Map\GameWorld\Room\BackGround">
       <UniqueIdentifier>{cad76ed6-02be-47e9-a6e0-3aac7c51eff7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Entity\Platform">
-      <UniqueIdentifier>{b34b6cb6-1c19-4637-9296-1c6b4ba5c43b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\Map\GameWorld\Room\Tile">
       <UniqueIdentifier>{738c236f-b7ee-4bcc-87ca-78b7b56b1086}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Entity\MoveEntity">
+      <UniqueIdentifier>{2d273734-dd48-4a7f-96db-95239822e905}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Entity\MoveEntity\Platform">
+      <UniqueIdentifier>{affa1a28-ad83-46c9-a2d1-66f19a0db784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Entity\CheckPoint">
+      <UniqueIdentifier>{7b97b20e-e3c5-4e36-b9db-4963a864f78a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Entity\Guy\Player">
+      <UniqueIdentifier>{278c257d-048b-4beb-99bb-3d1657f2ea14}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

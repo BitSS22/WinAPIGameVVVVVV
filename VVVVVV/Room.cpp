@@ -110,7 +110,7 @@ void ARoom::SaveRoomData()
 
 	for (size_t i = 0; i < Entites.size(); ++i)
 	{
-		AGameWorld::EntityData EntityData = {};
+		AGameWorld::RoomEntityData EntityData = {};
 		AEntity* Entity = Entites[i];
 
 		EntityData.Name = Entity->GetRenderer()->GetCurSpriteName();
@@ -170,7 +170,7 @@ void ARoom::LoadRoomData(FIntPoint _Index)
 
 	for (size_t i = 0; i < ChangeRoomDatas.EntityDatas.size(); ++i)
 	{
-		AGameWorld::EntityData Data = ChangeRoomDatas.EntityDatas[i];
+		AGameWorld::RoomEntityData Data = ChangeRoomDatas.EntityDatas[i];
 
 		if (ChangeRoomDatas.EntityDatas[i].Name.find("ENEMIES::") != std::string::npos)
 		{

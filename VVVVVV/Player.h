@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include <EngineBase/FSMStateManager.h>
 #include <EngineCore/2DCollision.h>
+#include "Guy.h"
 
 enum class State
 {
@@ -43,7 +44,7 @@ enum class PixelPointX
 
 class USpriteRenderer;
 
-class APlayer : public AEntity
+class APlayer : public AGuy
 {
 public:
 	APlayer();

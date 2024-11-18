@@ -37,7 +37,7 @@ void AEntity::EntityDefaultSetUp(std::string_view _Name, FVector2D _Location)
 	if (_Name.find("PLATFORMS::") != std::string::npos)
 		EntityType = EEntityType::Platform;
 	else if (_Name.find("SAVE::") != std::string::npos)
-		EntityType = EEntityType::Save;
+		EntityType = EEntityType::CheckPoint;
 	else
 		EntityType = EEntityType::Enermy;
 
@@ -49,7 +49,7 @@ void AEntity::EntityDefaultSetUp(std::string_view _Name, FVector2D _Location)
 	case EEntityType::Platform:
 		Collider->SetCollisionGroup(ECollisionGroup::Platform);
 		break;
-	case EEntityType::Save:
+	case EEntityType::CheckPoint:
 		Collider->SetCollisionGroup(ECollisionGroup::Save);
 		break;
 	}

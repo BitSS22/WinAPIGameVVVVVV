@@ -1,8 +1,133 @@
-엔티티 상속 클래스 설계 ->
 
-AEntity class -> 관리하기 위한 추상 클래스
-AEnermy class -> Collider를 가지고 있으며 닿으면 플레이어가 사망하는 class
-AInterObject class -> player와 특정한 상호작용이 가능한 class
+
+class AGameWorld
+{
+	FIntPoint TotalRoomCount
+	ARoom Room
+	RoomData RoomDatas
+}
+
+struct RoomData
+{
+	vector<vector<RoomTileData>> TileDatas
+	vector<vector<RoomTileData>> BackGroundTileDatas
+	RoomBackGroundData BackGroundData
+	vector<RoomEntityData> EntityDatas
+	bool Loop
+}
+
+struct RoomTileData
+{
+	string Name
+	int Index
+	ETileType TileType
+	bool ShowTile
+}
+
+struct RoomBackGroundData
+{
+	string Name
+	int Index
+	ETileType BackGroundType
+	EEffectType EffectType
+}
+
+struct RoomEntityData
+{
+	string Name
+	EEntityType Type
+	DefualtLocation
+	FVector2D DefualtDir
+	float Speed
+	float MoveLenght
+	float MoveLenghtOffset
+}
+
+class ARoom
+{
+	vector<vector<ATile>> Tiles
+	vector<vector<ATile>> BackGroundTiles
+	ABackGround BackGround
+	vector<AEntity> Entitys
+	FIntPoint CurrentRoomIndex
+	bool Loop
+}
+
+class ATile
+{
+	USpriteRenderer Sprite
+	ETileType TileType
+}
+
+class ABackGround
+{
+	USpriteRenderer Sprite
+	EBackGroundType BackGroundType
+	vector<vector<Effect>> Effects
+}
+
+struct Effect
+{
+	USpriteRenderer Sprite
+	float Speed
+	FVector2D Dir
+}
+
+class AEntity : public AActor
+{
+	USpriteRenderer Renderer
+	U2DCollision Collider
+	EEntityType Type
+}
+
+class AMoveEntity : public AEntity
+{
+	FVector2D DefualtLocation
+	FVector2D DefualtDir
+	float Speed
+	float MoveLenght
+	float MoveLenghtOffset
+}
+
+class APlatform : public AMoveEntity
+{
+	
+}
+
+class ASave : public AEntity
+{
+
+}
+
+class ATeleport : public AEntity
+{
+
+}
+
+class AGuy : public AEntity
+{
+	
+}
+
+class APlayer : public AGuy
+{
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 타일맵 에디터 조작키

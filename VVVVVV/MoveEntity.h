@@ -13,10 +13,10 @@ public:
 	AMoveEntity& operator=(AMoveEntity&& _Other) noexcept = delete;
 
 private:
-	float Speed = EGameConst::DefualtSpeed;
-	FVector2D Dir = FVector2D::ZERO;
-	FVector2D DefualtDir = FVector2D::ZERO;
 	FVector2D DefualtLocation = {};
+	FVector2D DefualtDir = FVector2D::ZERO;
+	FVector2D Dir = FVector2D::ZERO;
+	float Speed = EGameConst::DefualtSpeed;
 	float MoveLenght = 0.f;
 	float MoveLenghtOffset = 0.f;
 

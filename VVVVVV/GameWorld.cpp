@@ -81,7 +81,7 @@ void AGameWorld::RoomData::DeSerialize(UEngineSerializer& _Class)
 	_Class >> TileScale;
 }
 
-void AGameWorld::EntityData::Serialize(UEngineSerializer& _Class)
+void AGameWorld::RoomEntityData::Serialize(UEngineSerializer& _Class)
 {
 	_Class << Name;
 	_Class << DefualtLocation;
@@ -91,7 +91,7 @@ void AGameWorld::EntityData::Serialize(UEngineSerializer& _Class)
 	_Class << MoveLenghtOffset;
 }
 
-void AGameWorld::EntityData::DeSerialize(UEngineSerializer& _Class)
+void AGameWorld::RoomEntityData::DeSerialize(UEngineSerializer& _Class)
 {
 	_Class >> Name;
 	_Class >> DefualtLocation;

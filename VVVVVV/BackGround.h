@@ -2,12 +2,19 @@
 
 enum class EBackGroundType
 {
-	SPACE,
-	HORIZONTAL,
-	VERTICAL,
-	TOWER,
-	ENDING,
-	DEBUG
+	Space,
+	Horizontal,
+	Vertical,
+	Tower,
+	Ending,
+	Last
+};
+
+enum class EEffectType
+{
+	Star,
+	Rect,
+	Last
 };
 
 class ARoom;
@@ -19,7 +26,7 @@ public:
 	friend class ARoom;
 	friend class AGameWorld;
 private:
-	INNER_CLASS struct Star;
+	INNER_CLASS struct Effect;
 public:
 	ABackGround();
 	~ABackGround();
@@ -31,11 +38,10 @@ public:
 
 private:
 	USpriteRenderer* Sprite = nullptr;
-	EBackGroundType CurBackGroundType = EBackGroundType::DEBUG;
-	std::vector<Star> Effects = {};
+	EBackGroundType CurBackGroundType = EBackGroundType::Last;
+	std::vector<Effect> Effects = {};
 	float AnimationSpeed = 320.f;
 	bool EffectValue = false;
-	ARoom* Room = nullptr;
 
 public:
 	virtual void BeginPlay() override;
@@ -53,11 +59,13 @@ public:
 	void SetBackGround(std::string_view _Name);
 
 private:
-	INNER_CLASS struct Star
+	INNER_CLASS struct Effect
 	{
 	public:
 		USpriteRenderer* Sprite = nullptr;
+		EEffectType EffectType = EEffectType::Last;
 		float Speed = 0.f;
+		FVector2D Dir = {};
 	};
 };
 

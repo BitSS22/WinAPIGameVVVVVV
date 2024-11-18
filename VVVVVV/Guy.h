@@ -15,7 +15,6 @@ public:
 	AGuy& operator=(AGuy&& _Other) noexcept = delete;
 
 private:
-	APlayer* Player = nullptr;
 
 };
 

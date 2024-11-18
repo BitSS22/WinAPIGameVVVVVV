@@ -11,7 +11,7 @@ public:
 	friend class ABackGround;
 	INNER_CLASS struct RoomData;
 	INNER_CLASS struct RoomTileData;
-	INNER_CLASS struct EntityData;
+	INNER_CLASS struct RoomEntityData;
 public:
 	AGameWorld();
 	~AGameWorld();
@@ -23,10 +23,8 @@ public:
 
 private:
 	FIntPoint WorldMaxIndex = EGameConst::WorldMaxIndex;
-	FIntPoint CurRoomIndex = { 3, 4 };
 	ARoom* Room = {};
 	std::vector<std::vector<RoomData>> RoomDatas = {};
-	bool EditMode = true;
 
 public:
 	virtual void BeginPlay() override;
@@ -59,10 +57,11 @@ public:
 	}
 
 public:
-	INNER_CLASS struct EntityData : public ISerializObject
+	INNER_CLASS struct RoomEntityData : public ISerializObject
 	{
 		std::string Name = "Debug Tile";
-		FVector2D DefualtLocation = {};
+		EEntityType EntityType = EEntityType::Last;
+		FVector2D DefualtLocation = FVector2D::ZERO;
 		FVector2D DefualtDir = FVector2D::ZERO;
 		float Speed = EGameConst::DefualtSpeed;
 		float MoveLenght = EGameConst::DefualtMoveLen;
@@ -77,7 +76,8 @@ public:
 	{
 	public:
 		std::string Name = "None Tile";
-		int SpriteIndex = 0;
+		int Index = 0;
+		ETileType TileType = ETileType::Last;
 		bool ShowTile = false;
 
 	public:
@@ -89,8 +89,10 @@ public:
 	{
 	public:
 		std::string Name = "Debug BackGround.png";
-		int SpriteIndex = 0;
-		bool Effect = false;
+		int Index = 0;
+		EBackGroundType BackGroundType = EBackGroundType::Last;
+		float AnimationSpeed = 0.f;
+		bool IsEffect = false;
 
 	public:
 		void Serialize(UEngineSerializer& _Class) override;
@@ -117,12 +119,9 @@ public:
 	public:
 		std::vector<std::vector<RoomTileData>> RoomTileDatas = {};
 		std::vector<std::vector<RoomTileData>> RoomBackGroundTileDatas = {};
-		std::string RoomBackGroundData = "Debug BackGround.png";
-		std::vector<EntityData> EntityDatas = {};
+		RoomBackGroundData BackGroundData = {};
+		std::vector<RoomEntityData> EntityDatas = {};
 		bool LoopRoom = false;
-
-		FIntPoint TileCount = EGameConst::TileCount;
-		FIntPoint TileScale = EGameConst::TileScale;
 
 	public:
 		virtual void Serialize(UEngineSerializer& _Class) override;

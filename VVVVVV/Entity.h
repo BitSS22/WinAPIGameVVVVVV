@@ -1,5 +1,6 @@
 #pragma once
 #include "Enums.h"
+#include "EngineCore/Actor.h"
 
 class AGameWorld;
 class ARoom;
@@ -16,12 +17,11 @@ public:
 	AEntity& operator=(AEntity&& _Other) noexcept = delete;
 
 private:
-	ARoom* Room = nullptr;
+	USpriteRenderer* SpriteRenderer = nullptr;
+	U2DCollision* Collider = nullptr;
 	EEntityType EntityType = EEntityType::Last;
 
 protected:
-	USpriteRenderer* SpriteRenderer = nullptr;
-	U2DCollision* Collider = nullptr;
 
 public:
 	virtual void BeginPlay() override;
@@ -40,14 +40,6 @@ public:
 		AddActorLocation(_Location);
 	}
 
-	void SetRoom(ARoom* _Room)
-	{
-		Room = _Room;
-	}
-	ARoom* GetRoom()
-	{
-		return Room;
-	}
 	void SetEntityType(EEntityType _Type)
 	{
 		EntityType = _Type;
