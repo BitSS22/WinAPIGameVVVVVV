@@ -61,15 +61,4 @@ void AMoveEntity::MoveEntityDefaultSetUp(std::string_view _Name, FVector2D _Loca
 	SetActorLocation(DefualtLocation);
 	MoveLenghtOffset = _MoveOffset;
 	AddActorLocation(Dir * MoveLenghtOffset);
-
-	UEngineSprite* Sprite = UImageManager::GetInst().FindSprite(_Name);
-	Collider = CreateDefaultSubObject<U2DCollision>();
-	Collider->SetComponentScale(Sprite->GetSpriteData(0).Transform.Scale);
-	if (_Name.find("PLATFORMS::") != std::string::npos)
-		Collider->SetCollisionGroup(ECollisionGroup::Platform);
-	else if (_Name.find("SAVE::") != std::string::npos)
-		Collider->SetCollisionGroup(ECollisionGroup::Save);
-	else
-		Collider->SetCollisionGroup(ECollisionGroup::Enermy);
-	Collider->SetCollisionType(ECollisionType::Rect);
 }

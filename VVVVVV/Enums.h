@@ -10,7 +10,8 @@ enum class ERenderOrder
 	Entity,
 	FRIEND,
 	PLAYER,
-	EDITOR_CURSOR
+	EDITOR_CURSOR,
+	Last
 };
 
 enum class ECollisionGroup
@@ -18,18 +19,24 @@ enum class ECollisionGroup
 	Player,
 	Enermy,
 	Platform,
-	Save
+	Save,
+	Last
 };
 
-enum class EColorType
+enum class EEntityType
 {
-	WHITE,
-	CYAN,
-	PINK,
-	RED,
-	BLUE,
-	YELLOW,
-	GREEN,
-	GREY,
-	SIZE
+	Enermy,
+	Platform,
+	Save,
+	Last
+};
+
+enum class ETileType
+{
+	None,
+	BackGround,
+	Collision,
+	Spike,
+	Rail,
+	Last
 };

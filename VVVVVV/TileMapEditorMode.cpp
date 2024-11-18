@@ -481,31 +481,31 @@ void ATileMapEditorMode::LoadResourceList()
 
 	string BackGrounds = UEngineString::ToUpper("BackGrounds::");
 
-	string APlatforms = UEngineString::ToUpper("Platforms::");
-	string InterObjects = UEngineString::ToUpper("InterObjects::");
+	string APlatform = UEngineString::ToUpper("Platforms::");
+	string Saves = UEngineString::ToUpper("Saves::");
 	string Enemies = UEngineString::ToUpper("Enemies::");
 
 	for (auto& Sprite : SpritesList)
 	{
 		if (std::string::npos != Sprite.first.find(BackGroundTiles))
-			AddBackGroundTileList(Sprite.first);
+			TileLists[static_cast<int>(TileList::BackGroundTileList)].push_back(Sprite.first);
 		else if (std::string::npos != Sprite.first.find(CollisionTiles))
-			AddTileList(Sprite.first);
+			TileLists[static_cast<int>(TileList::TileList)].push_back(Sprite.first);
 		else if (std::string::npos != Sprite.first.find(SpikeTiles))
-			AddSpikeTileList(Sprite.first);
+			TileLists[static_cast<int>(TileList::SpikeTileList)].push_back(Sprite.first);
 		else if (std::string::npos != Sprite.first.find(AnimationTiles))
-			AddAnimationTileList(Sprite.first);
+			TileLists[static_cast<int>(TileList::AnimationTileList)].push_back(Sprite.first);
 		else if (std::string::npos != Sprite.first.find(RailTiles))
-			AddAnimationTileList(Sprite.first);
+			TileLists[static_cast<int>(TileList::RailTileList)].push_back(Sprite.first);
 		else if (std::string::npos != Sprite.first.find(BackGrounds))
-			AddBackGroundList(Sprite.first);
+			TileLists[static_cast<int>(TileList::BackGroundList)].push_back(Sprite.first);
 
-		else if (std::string::npos != Sprite.first.find(APlatforms))
-			AddPlatformList(Sprite.first);
-		else if (std::string::npos != Sprite.first.find(InterObjects))
-			AddInterObjectList(Sprite.first);
+		else if (std::string::npos != Sprite.first.find(APlatform))
+			EntityLists[static_cast<int>(EntityList::Platforms)].push_back(Sprite.first);
+		else if (std::string::npos != Sprite.first.find(Saves))
+			EntityLists[static_cast<int>(EntityList::Saves)].push_back(Sprite.first);
 		else if (std::string::npos != Sprite.first.find(Enemies))
-			AddEnermyList(Sprite.first);
+			EntityLists[static_cast<int>(EntityList::Enemies)].push_back(Sprite.first);
 	}
 }
 
@@ -875,7 +875,7 @@ void ATileMapEditorMode::NextBackGroundImage()
 
 void ATileMapEditorMode::CreateEntity()
 {
-	if (CurSelectEntityList == EntityList::Enemies || CurSelectEntityList == EntityList::APlatforms)
+	if (CurSelectEntityList == EntityList::Enemies || CurSelectEntityList == EntityList::Platforms)
 	{
 		AMoveEntity* NewEntity = GetWorld()->SpawnActor<AMoveEntity>();
 		NewEntity->MoveEntityDefaultSetUp(CurSelectEntityType->GetCurSpriteName(), CurSelectEntityType->GetComponentLocation(), FVector2D::RIGHT, EGameConst::DefualtSpeed, EGameConst::DefualtMoveLen, 0.f);
@@ -884,7 +884,7 @@ void ATileMapEditorMode::CreateEntity()
 		CurAdjustmentEntity = NewEntity;
 		CurAdjustmentEntityIndex = static_cast<int>(GameWorld->GetRoom()->Entites.size() - 1);
 	}
-	else if (CurSelectEntityList == EntityList::InterObjects)
+	else if (CurSelectEntityList == EntityList::Saves)
 	{
 		// TODO. 
 	}

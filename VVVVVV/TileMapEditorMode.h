@@ -10,14 +10,16 @@ enum class TileList
 	TileList,
 	SpikeTileList,
 	AnimationTileList,
+	RailTileList,
 	BackGroundList,
 	LAST
 };
 enum class EntityList
 {
-	APlatforms,
-	InterObjects,
+	Platforms,
+	Saves,
 	Enemies,
+	Teleports,
 	LAST
 };
 
@@ -112,38 +114,6 @@ private:
 	void PickUpTile();
 
 	void LoadResourceList();
-	void AddTileList(std::string_view _Name)
-	{
-		TileLists[static_cast<int>(TileList::TileList)].push_back(_Name.data());
-	}
-	void AddBackGroundTileList(std::string_view _Name)
-	{
-		TileLists[static_cast<int>(TileList::BackGroundTileList)].push_back(_Name.data());
-	}
-	void AddSpikeTileList(std::string_view _Name)
-	{
-		TileLists[static_cast<int>(TileList::SpikeTileList)].push_back(_Name.data());
-	}
-	void AddAnimationTileList(std::string_view _Name)
-	{
-		TileLists[static_cast<int>(TileList::AnimationTileList)].push_back(_Name.data());
-	}
-	void AddBackGroundList(std::string_view _Name)
-	{
-		TileLists[static_cast<int>(TileList::BackGroundList)].push_back(_Name.data());
-	}
-	void AddPlatformList(std::string_view _Name)
-	{
-		EntityLists[static_cast<int>(EntityList::APlatforms)].push_back(_Name.data());
-	}
-	void AddInterObjectList(std::string_view _Name)
-	{
-		EntityLists[static_cast<int>(EntityList::InterObjects)].push_back(_Name.data());
-	}
-	void AddEnermyList(std::string_view _Name)
-	{
-		EntityLists[static_cast<int>(EntityList::Enemies)].push_back(_Name.data());
-	}
 
 	void EditorKeyCheck();
 	void DebugText();

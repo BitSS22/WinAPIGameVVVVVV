@@ -55,9 +55,9 @@ public:
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
 private:
-	float Speed = 500.f;
 	bool IsFlip = false;
 	bool OnGround = false;
+	float Speed = 500.f;
 	float GravitySpeed = 600.f;
 	FVector2D PointsY[static_cast<int>(PixelPointY::LAST)] = {};
 	FVector2D PointsX[static_cast<int>(PixelPointX::LAST)] = {};

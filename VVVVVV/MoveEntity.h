@@ -19,7 +19,6 @@ private:
 	FVector2D DefualtLocation = {};
 	float MoveLenght = 0.f;
 	float MoveLenghtOffset = 0.f;
-	U2DCollision* Collider = nullptr;
 
 public:
 	virtual void BeginPlay() override;

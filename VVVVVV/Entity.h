@@ -1,4 +1,5 @@
 #pragma once
+#include "Enums.h"
 
 class AGameWorld;
 class ARoom;
@@ -16,8 +17,11 @@ public:
 
 private:
 	ARoom* Room = nullptr;
+	EEntityType EntityType = EEntityType::Last;
+
 protected:
 	USpriteRenderer* SpriteRenderer = nullptr;
+	U2DCollision* Collider = nullptr;
 
 public:
 	virtual void BeginPlay() override;
@@ -43,6 +47,14 @@ public:
 	ARoom* GetRoom()
 	{
 		return Room;
+	}
+	void SetEntityType(EEntityType _Type)
+	{
+		EntityType = _Type;
+	}
+	EEntityType GetEntityType()
+	{
+		return EntityType;
 	}
 
 };

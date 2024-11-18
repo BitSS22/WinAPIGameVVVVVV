@@ -46,8 +46,11 @@
     <ClInclude Include="Player.h">
       <Filter>ContentsObject\Entity\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Platforms.h">
-      <Filter>ContentsObject\Entity\Enermy</Filter>
+    <ClInclude Include="Platform.h">
+      <Filter>ContentsObject\Entity\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>ContentsObject\Map\GameWorld\Room\Tile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -96,8 +99,11 @@
     <ClCompile Include="Player.cpp">
       <Filter>ContentsObject\Entity\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Platforms.cpp">
-      <Filter>ContentsObject\Entity\Enermy</Filter>
+    <ClCompile Include="Platform.cpp">
+      <Filter>ContentsObject\Entity\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>ContentsObject\Map\GameWorld\Room\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +151,12 @@
     </Filter>
     <Filter Include="ContentsObject\Map\GameWorld\Room\BackGround">
       <UniqueIdentifier>{cad76ed6-02be-47e9-a6e0-3aac7c51eff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Entity\Platform">
+      <UniqueIdentifier>{b34b6cb6-1c19-4637-9296-1c6b4ba5c43b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Map\GameWorld\Room\Tile">
+      <UniqueIdentifier>{738c236f-b7ee-4bcc-87ca-78b7b56b1086}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

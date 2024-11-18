@@ -1,6 +1,7 @@
 #pragma once
 #include <EnginePlatform/EngineWindowImage.h>
 #include "GameWorld.h"
+#include "Tile.h"
 
 class AEntity;
 class ABackGround;
@@ -25,8 +26,8 @@ public:
 private:
 	FIntPoint TileCount = EGameConst::TileCount;
 	FIntPoint TileScale = EGameConst::TileScale;
-	std::vector<std::vector<USpriteRenderer*>> Tiles = {};
-	std::vector<std::vector<USpriteRenderer*>> BackGroundTiles = {};
+	std::vector<std::vector<ATile*>> Tiles = {};
+	std::vector<std::vector<ATile*>> BackGroundTiles = {};
 	ABackGround* BackGround = nullptr;
 	std::vector<AEntity*> Entites = {};
 	AGameWorld* GameWorld = nullptr;

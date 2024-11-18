@@ -30,4 +30,30 @@ void AEntity::EntityDefaultSetUp(std::string_view _Name, FVector2D _Location)
 	SetActorLocation(UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half());
 	SetActorScale(SpriteSize);
 	SpriteRenderer->SetComponentScale(SpriteSize);
+
+
+	Collider = CreateDefaultSubObject<U2DCollision>();
+
+	if (_Name.find("PLATFORMS::") != std::string::npos)
+		EntityType = EEntityType::Platform;
+	else if (_Name.find("SAVE::") != std::string::npos)
+		EntityType = EEntityType::Save;
+	else
+		EntityType = EEntityType::Enermy;
+
+	switch (EntityType)
+	{
+	case EEntityType::Enermy:
+		Collider->SetCollisionGroup(ECollisionGroup::Enermy);
+		break;
+	case EEntityType::Platform:
+		Collider->SetCollisionGroup(ECollisionGroup::Platform);
+		break;
+	case EEntityType::Save:
+		Collider->SetCollisionGroup(ECollisionGroup::Save);
+		break;
+	}
+
+	Collider->SetCollisionType(ECollisionType::Rect);
+	Collider->SetComponentScale(GetActorScale());
 }
