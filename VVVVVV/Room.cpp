@@ -47,49 +47,35 @@ void ARoom::MoveRoom(FIntPoint _Index)
 	SaveRoomData();
 
 	if (_Index.X < 0)
-		_Index.X = GameWorld->WorldMaxIndex.X - 1;
-	else if (_Index.X >= GameWorld->WorldMaxIndex.X)
+		_Index.X = EGameConst::WorldMaxIndex.X - 1;
+	else if (_Index.X >= EGameConst::WorldMaxIndex.X)
 		_Index.X = 0;
 	if (_Index.Y < 0)
-		_Index.Y = GameWorld->WorldMaxIndex.Y - 1;
-	else if (_Index.Y >= GameWorld->WorldMaxIndex.Y)
+		_Index.Y = EGameConst::WorldMaxIndex.Y - 1;
+	else if (_Index.Y >= EGameConst::WorldMaxIndex.Y)
 		_Index.Y = 0;
 
 	LoadRoomData(_Index);
 
-	GameWorld->CurRoomIndex = _Index;
+	CurRoomIndex = _Index;
 }
 
 void ARoom::SaveRoomData()
 {
-	if (GameWorld->EditMode == false)
-		return;
+	auto& CurRoomDatas = GameWorld->RoomDatas[CurRoomIndex.Y][CurRoomIndex.X];
 
-	auto& CurRoomDatas = GameWorld->RoomDatas[GameWorld->CurRoomIndex.Y][GameWorld->CurRoomIndex.X];
-
-	for (size_t y = 0; y < TileCount.Y; ++y)
+	for (size_t y = 0; y < EGameConst::TileCount.Y; ++y)
 	{
-		for (size_t x = 0; x < TileCount.X; ++x)
+		for (size_t x = 0; x < EGameConst::TileCount.X; ++x)
 		{
-			AGameWorld::RoomTileData TileData = {};
-			TileData.Name = Tiles[y][x]->GetCurSpriteName();
+			AGameWorld::RoomData::RoomTileData TileData = {};
+			TileData.Name = Tiles[y][x]->Sprite->GetCurSpriteName();
 			TileData.SpriteIndex = Tiles[y][x]->GetCurIndex();
-			if (TileData.Name.find("NONE TILE") != std::string::npos)
+			if ()
 				TileData.ShowTile = false;
 			else
 				TileData.ShowTile = true;
 			CurRoomDatas.RoomTileDatas[y][x] = TileData;
-
-			AGameWorld::RoomTileData BackGroundTileData = {};
-			BackGroundTileData.Name = BackGroundTiles[y][x]->GetCurSpriteName();
-			BackGroundTileData.SpriteIndex = BackGroundTiles[y][x]->GetCurIndex();
-			if (TileData.Name.find("SPIKETILES::") != std::string::npos)
-				BackGroundTileData.ShowTile = true;
-			else if (BackGroundTileData.Name.find("NONE TILE") != std::string::npos || TileData.Name.find("NONE TILE") == std::string::npos)
-				BackGroundTileData.ShowTile = false;
-			else
-				BackGroundTileData.ShowTile = true;
-			CurRoomDatas.RoomBackGroundTileDatas[y][x] = BackGroundTileData;
 		}
 	}
 

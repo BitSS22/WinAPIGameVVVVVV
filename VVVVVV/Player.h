@@ -42,8 +42,6 @@ enum class PixelPointX
 	LAST
 };
 
-class USpriteRenderer;
-
 class APlayer : public AGuy
 {
 public:

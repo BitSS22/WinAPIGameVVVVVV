@@ -11,6 +11,7 @@ public:
 	friend class ABackGround;
 	INNER_CLASS struct RoomData;
 	INNER_CLASS struct RoomTileData;
+	INNER_CLASS struct RoomBackGroundData;
 	INNER_CLASS struct RoomEntityData;
 public:
 	AGameWorld();
@@ -44,68 +45,61 @@ public:
 	}
 
 public:
-	INNER_CLASS struct RoomEntityData : public ISerializObject
-	{
-		std::string Name = "Debug Tile";
-		EEntityType EntityType = EEntityType::Last;
-		FVector2D DefualtLocation = FVector2D::ZERO;
-		FVector2D DefualtDir = FVector2D::ZERO;
-		float Speed = EGameConst::DefualtSpeed;
-		float MoveLenght = EGameConst::DefualtMoveLen;
-		float MoveLenghtOffset = 0.f;
-
-	public:
-		void Serialize(UEngineSerializer& _Class) override;
-		void DeSerialize(UEngineSerializer& _Class) override;
-	};
-
-	INNER_CLASS struct RoomTileData : public ISerializObject
-	{
-	public:
-		std::string Name = "None Tile";
-		int Index = 0;
-		ETileType TileType = ETileType::Last;
-		bool ShowTile = false;
-
-	public:
-		void Serialize(UEngineSerializer& _Class) override;
-		void DeSerialize(UEngineSerializer& _Class) override;
-	};
-
-	INNER_CLASS struct RoomBackGroundData : public ISerializObject
-	{
-	public:
-		std::string Name = "Debug BackGround.png";
-		int Index = 0;
-		EBackGroundType BackGroundType = EBackGroundType::Last;
-		float AnimationSpeed = 0.f;
-		bool IsEffect = false;
-
-	public:
-		void Serialize(UEngineSerializer& _Class) override;
-		void DeSerialize(UEngineSerializer& _Class) override;
-	};
-
 	INNER_CLASS struct RoomData : public ISerializObject
 	{
+	public:
+		INNER_CLASS struct RoomEntityData : public ISerializObject
+		{
+			std::string Name = "Debug Tile";
+			EEntityType EntityType = EEntityType::Last;
+			FVector2D DefualtLocation = FVector2D::ZERO;
+			FVector2D DefualtDir = FVector2D::ZERO;
+			float Speed = EGameConst::DefualtSpeed;
+			float MoveLenght = EGameConst::DefualtMoveLen;
+			float MoveLenghtOffset = 0.f;
+
+		public:
+			void Serialize(UEngineSerializer& _Class) override;
+			void DeSerialize(UEngineSerializer& _Class) override;
+		};
+
+		INNER_CLASS struct RoomTileData : public ISerializObject
+		{
+		public:
+			std::string Name = "Debug Tile";
+			int Index = -1;
+			ETileType TileType = ETileType::Last;
+
+		public:
+			void Serialize(UEngineSerializer& _Class) override;
+			void DeSerialize(UEngineSerializer& _Class) override;
+		};
+
+		INNER_CLASS struct RoomBackGroundData : public ISerializObject
+		{
+		public:
+			std::string Name = "Debug BackGround.png";
+			int Index = 0;
+			EBackGroundType BackGroundType = EBackGroundType::Last;
+			float AnimationSpeed = 0.f;
+			bool IsEffect = false;
+
+		public:
+			void Serialize(UEngineSerializer& _Class) override;
+			void DeSerialize(UEngineSerializer& _Class) override;
+		};
+
+
+	public:
 		RoomData()
 		{
 			RoomTileDatas.resize(EGameConst::TileCount.Y);
 			for (size_t y = 0; y < RoomTileDatas.size(); ++y)
-			{
 				RoomTileDatas[y].resize(EGameConst::TileCount.X);
-			}
-
-			RoomBackGroundTileDatas.resize(EGameConst::TileCount.Y);
-			for (size_t y = 0; y < RoomBackGroundTileDatas.size(); ++y)
-			{
-				RoomBackGroundTileDatas[y].resize(EGameConst::TileCount.X);
-			}
 		}
 
 	public:
 		std::vector<std::vector<RoomTileData>> RoomTileDatas = {};
-		std::vector<std::vector<RoomTileData>> RoomBackGroundTileDatas = {};
 		RoomBackGroundData BackGroundData = {};
 		std::vector<RoomEntityData> EntityDatas = {};
 		bool LoopRoom = false;
@@ -113,6 +107,7 @@ public:
 	public:
 		virtual void Serialize(UEngineSerializer& _Class) override;
 		virtual void DeSerialize(UEngineSerializer& _Class) override;
+
 	};
 
 };

@@ -16,32 +16,32 @@ void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
-	SpriteRenderer->SetSprite("Guys:: Cyan Right", 0);
-	SpriteRenderer->SetSpriteScale(1.f, 0);
-	SpriteRenderer->SetOrder(ERenderOrder::PLAYER);
+	Sprite = CreateDefaultSubObject<USpriteRenderer>();
+	Sprite->SetSprite("Guys:: Cyan Right", 0);
+	Sprite->SetSpriteScale(1.f, 0);
+	Sprite->SetOrder(ERenderOrder::PLAYER);
 
 	SetActorLocation(FVector2D(320.f, 350.f));
-	SetActorScale(SpriteRenderer->GetComponentScale());
+	SetActorScale(Sprite->GetComponentScale());
 
-	SpriteRenderer->CreateAnimation("WalkLeft", "Guys:: Cyan Left", 0, 1, 0.15f, true);
-	SpriteRenderer->CreateAnimation("WalkRight", "Guys:: Cyan Right", 0, 1, 0.15f, true);
-	SpriteRenderer->CreateAnimation("FlipWalkLeft", "Guys:: Cyan rLeft", 0, 1, 0.15f, true);
-	SpriteRenderer->CreateAnimation("FlipWalkRight", "Guys:: Cyan rRight", 0, 1, 0.15f, true);
-	SpriteRenderer->CreateAnimation("IdleLeft", "Guys:: Cyan Left", 0, 0, EGameConst::AnimationTime, true);
-	SpriteRenderer->CreateAnimation("IdleRight", "Guys:: Cyan Right", 0, 0, EGameConst::AnimationTime, true);
-	SpriteRenderer->CreateAnimation("FlipIdleLeft", "Guys:: Cyan rLeft", 0, 0, EGameConst::AnimationTime, true);
-	SpriteRenderer->CreateAnimation("FlipIdleRight", "Guys:: Cyan rRight", 0, 0, EGameConst::AnimationTime, true);
+	Sprite->CreateAnimation("WalkLeft", "Guys:: Cyan Left", 0, 1, 0.15f, true);
+	Sprite->CreateAnimation("WalkRight", "Guys:: Cyan Right", 0, 1, 0.15f, true);
+	Sprite->CreateAnimation("FlipWalkLeft", "Guys:: Cyan rLeft", 0, 1, 0.15f, true);
+	Sprite->CreateAnimation("FlipWalkRight", "Guys:: Cyan rRight", 0, 1, 0.15f, true);
+	Sprite->CreateAnimation("IdleLeft", "Guys:: Cyan Left", 0, 0, EGameConst::AnimationTime, true);
+	Sprite->CreateAnimation("IdleRight", "Guys:: Cyan Right", 0, 0, EGameConst::AnimationTime, true);
+	Sprite->CreateAnimation("FlipIdleLeft", "Guys:: Cyan rLeft", 0, 0, EGameConst::AnimationTime, true);
+	Sprite->CreateAnimation("FlipIdleRight", "Guys:: Cyan rRight", 0, 0, EGameConst::AnimationTime, true);
 
-	SpriteRenderer->CreateAnimation("SadIdleLeft", "Guys:: Cyan Sad Left", 0, 0, EGameConst::AnimationTime, true);
-	SpriteRenderer->CreateAnimation("SadIdleRight", "Guys:: Cyan Sad Right", 0, 0, EGameConst::AnimationTime, true);
-	SpriteRenderer->CreateAnimation("SadFlipIdleLeft", "Guys:: Cyan Sad rLeft", 0, 0, EGameConst::AnimationTime, true);
-	SpriteRenderer->CreateAnimation("SadFlipIdleRight", "Guys:: Cyan Sad rRight", 0, 0, EGameConst::AnimationTime, true);
+	Sprite->CreateAnimation("SadIdleLeft", "Guys:: Cyan Sad Left", 0, 0, EGameConst::AnimationTime, true);
+	Sprite->CreateAnimation("SadIdleRight", "Guys:: Cyan Sad Right", 0, 0, EGameConst::AnimationTime, true);
+	Sprite->CreateAnimation("SadFlipIdleLeft", "Guys:: Cyan Sad rLeft", 0, 0, EGameConst::AnimationTime, true);
+	Sprite->CreateAnimation("SadFlipIdleRight", "Guys:: Cyan Sad rRight", 0, 0, EGameConst::AnimationTime, true);
 
 	Collider = CreateDefaultSubObject<U2DCollision>();
 	Collider->SetCollisionGroup(ECollisionGroup::Player);
 	Collider->SetCollisionType(ECollisionType::Rect);
-	Collider->SetComponentScale(SpriteRenderer->GetComponentScale());
+	Collider->SetComponentScale(Sprite->GetComponentScale());
 
 	SaveWorldIndex = GetRoom()->GetGameWorld()->GetCurRoomIndex();
 	SaveLocation = GetActorLocation();
@@ -188,13 +188,13 @@ void APlayer::Tick()
 		if (IsFlip == true)
 			Animation += "Flip";
 		if (KEY_PRESS(VK_LEFT))
-			SpriteRenderer->ChangeAnimation(Animation += "WalkLeft");
+			Sprite->ChangeAnimation(Animation += "WalkLeft");
 		else if (KEY_PRESS(VK_RIGHT))
-			SpriteRenderer->ChangeAnimation(Animation += "WalkRight");
+			Sprite->ChangeAnimation(Animation += "WalkRight");
 		else if (LastKey == FVector2D::LEFT)
-			SpriteRenderer->ChangeAnimation(Animation += "IdleLeft");
+			Sprite->ChangeAnimation(Animation += "IdleLeft");
 		else if (LastKey == FVector2D::RIGHT)
-			SpriteRenderer->ChangeAnimation(Animation += "IdleRight");
+			Sprite->ChangeAnimation(Animation += "IdleRight");
 	}
 	else
 	{
@@ -202,9 +202,9 @@ void APlayer::Tick()
 		if (IsFlip == true)
 			Animation += "Flip";
 		if (LastKey == FVector2D::LEFT)
-			SpriteRenderer->ChangeAnimation(Animation += "IdleLeft");
+			Sprite->ChangeAnimation(Animation += "IdleLeft");
 		else if (LastKey == FVector2D::RIGHT)
-			SpriteRenderer->ChangeAnimation(Animation += "IdleRight");
+			Sprite->ChangeAnimation(Animation += "IdleRight");
 	}
 
 	//DEBUG

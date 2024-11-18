@@ -26,7 +26,8 @@ private:
 	void AnimationTileSetup();
 
 public:
-	void SetTile(AGameWorld::RoomTileData _Data);
+	void SetTile(const AGameWorld::RoomData::RoomTileData& _Data);
+	AGameWorld::RoomData::RoomTileData GetTileData();
 	ETileType GetTileType()
 	{
 		return TileType;

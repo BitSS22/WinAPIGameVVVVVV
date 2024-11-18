@@ -24,7 +24,7 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
 
-	virtual void SetEntity(std::string_view _Name) override;
+	virtual void SetEntity(const AGameWorld::RoomData::RoomEntityData& _Data) override;
 	
 private:
 
@@ -94,5 +94,6 @@ public:
 	{
 		return Dir;
 	}
+
 };
 

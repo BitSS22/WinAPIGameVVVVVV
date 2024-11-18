@@ -1,9 +1,7 @@
 #pragma once
 #include "Enums.h"
 #include "EngineCore/Actor.h"
-
-class AGameWorld;
-class ARoom;
+#include "GameWorld.h"
 
 class AEntity : public AActor
 {
@@ -17,14 +15,14 @@ public:
 	AEntity& operator=(AEntity&& _Other) noexcept = delete;
 
 private:
-	USpriteRenderer* SpriteRenderer = nullptr;
+	USpriteRenderer* Sprite = nullptr;
 	U2DCollision* Collider = nullptr;
 	EEntityType EntityType = EEntityType::Last;
 
 protected:
 
 public:
-	virtual void SetEntity(std::string_view _Name) = 0;
+	virtual void SetEntity(const AGameWorld::RoomData::RoomEntityData& _Data) = 0;
 
 private:
 

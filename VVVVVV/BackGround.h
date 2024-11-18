@@ -1,15 +1,5 @@
 #pragma once
 
-enum class EBackGroundType
-{
-	Space,
-	Horizontal,
-	Vertical,
-	Tower,
-	Ending,
-	Last
-};
-
 enum class EEffectType
 {
 	Star,

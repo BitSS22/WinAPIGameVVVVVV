@@ -28,7 +28,7 @@ private:
 	std::vector<std::vector<ATile*>> BackGroundTiles = {};
 	ABackGround* BackGround = nullptr;
 	std::vector<AEntity*> Entites = {};
-	FIntPoint CurRoonIndex = {};
+	FIntPoint CurRoomIndex = {};
 	bool LoopRoom = false;
 	AGameWorld* GameWorld = nullptr;
 

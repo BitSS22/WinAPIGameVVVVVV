@@ -20,19 +20,16 @@ void APistonEntity::Tick()
 {
 	Super::Tick();
 
-	if (GetRoom()->GetIsEntityMove())
+	if (DefualtDir != FVector2D::ZERO)
 	{
-		if (DefualtDir != FVector2D::ZERO)
+		AddActorLocation(Dir * Speed * GET_DELTA);
+
+		float Diff = (DefualtLocation - GetActorLocation()).Length();
+
+		if (MoveLenght < Diff)
 		{
-			AddActorLocation(Dir * Speed * GET_DELTA);
-
-			float Diff = (DefualtLocation - GetActorLocation()).Length();
-
-			if (MoveLenght < Diff)
-			{
-				Dir = -Dir;
-				AddActorLocation(Dir * abs(Diff - MoveLenght) * 2);
-			}
+			Dir = -Dir;
+			AddActorLocation(Dir * abs(Diff - MoveLenght) * 2);
 		}
 	}
 
@@ -49,20 +46,17 @@ void APistonEntity::Tick()
 	}
 }
 
-void APistonEntity::SetEntity(std::string_view _Name)
+void APistonEntity::SetEntity(const AGameWorld::RoomData::RoomEntityData& _Data)
 {
-}
+	AEntity::SetEntity(_Data);
 
-void APistonEntity::MoveEntityDefaultSetUp(std::string_view _Name, FVector2D _Location, FVector2D _Dir, float _Speed, float _MoveLength, float _MoveOffset)
-{
-	AEntity::EntityDefaultSetUp(_Name, _Location);
-
-	DefualtDir = _Dir;
+	DefualtDir = _Data.DefualtDir;
 	Dir = DefualtDir;
-	Speed = _Speed;
-	MoveLenght = _MoveLength;
-	DefualtLocation = _Location;
+	Speed = _Data.Speed;
+	MoveLenght = _Data.MoveLenght;
+	DefualtLocation = _Data.DefualtLocation;
 	SetActorLocation(DefualtLocation);
-	MoveLenghtOffset = _MoveOffset;
+	MoveLenghtOffset = _Data.MoveLenghtOffset;
+
 	AddActorLocation(Dir * MoveLenghtOffset);
 }

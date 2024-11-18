@@ -5,7 +5,6 @@ enum class ERenderOrder
 {
 	BACKGROUND,
 	BACKGROUND_EFFECT,
-	BACKGROUND_TILE,
 	TILE,
 	Entity,
 	FRIEND,
@@ -42,5 +41,15 @@ enum class ETileType
 	Spike,
 	Animation,
 	Rail,
+	Last
+};
+
+enum class EBackGroundType
+{
+	Space,
+	Horizontal,
+	Vertical,
+	Tower,
+	Ending,
 	Last
 };

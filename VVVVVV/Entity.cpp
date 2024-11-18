@@ -9,46 +9,25 @@ AEntity::~AEntity()
 {
 }
 
-void AEntity::SetEntity(std::string_view _Name)
+void AEntity::SetEntity(const AGameWorld::RoomData::RoomEntityData& _Data)
 {
-	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
-	SpriteRenderer->SetSprite(_Name, 0);
-	UEngineSprite* Sprite = UImageManager::GetInst().FindSprite(_Name);
-	if (Sprite->GetSpriteCount() > 2)
-	{
-		SpriteRenderer->CreateAnimation(Sprite->GetNameView(), Sprite->GetNameView(), 0, Sprite->GetSpriteCount() - 1, EGameConst::AnimationTime, true);
-		SpriteRenderer->ChangeAnimation(Sprite->GetNameView());
-	}
-	SpriteRenderer->SetOrder(ERenderOrder::Entity);
+	Sprite = CreateDefaultSubObject<USpriteRenderer>();
+	Sprite->SetSprite(_Data.Name, 0);
 
-	FVector2D SpriteSize = Sprite->GetSpriteData(0).Transform.Scale;
+	UEngineSprite* NewSprite = UImageManager::GetInst().FindSprite(_Data.Name);
+	Sprite->SetOrder(ERenderOrder::Entity);
+	if (NewSprite->GetSpriteCount() > 2)
+	{
+		Sprite->CreateAnimation(NewSprite->GetNameView(), NewSprite->GetNameView(), 0, NewSprite->GetSpriteCount() - 1, EGameConst::AnimationTime, true);
+		Sprite->ChangeAnimation(NewSprite->GetNameView());
+	}
+
+	FVector2D SpriteSize = NewSprite->GetSpriteData(0).Transform.Scale;
 	SetActorLocation(UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half());
 	SetActorScale(SpriteSize);
-	SpriteRenderer->SetComponentScale(SpriteSize);
-
+	Sprite->SetComponentScale(SpriteSize);
 
 	Collider = CreateDefaultSubObject<U2DCollision>();
-
-	if (_Name.find("PLATFORMS::") != std::string::npos)
-		EntityType = EEntityType::Platform;
-	else if (_Name.find("SAVE::") != std::string::npos)
-		EntityType = EEntityType::CheckPoint;
-	else
-		EntityType = EEntityType::Enermy;
-
-	switch (EntityType)
-	{
-	case EEntityType::Enermy:
-		Collider->SetCollisionGroup(ECollisionGroup::Enermy);
-		break;
-	case EEntityType::Platform:
-		Collider->SetCollisionGroup(ECollisionGroup::Platform);
-		break;
-	case EEntityType::CheckPoint:
-		Collider->SetCollisionGroup(ECollisionGroup::Save);
-		break;
-	}
-
 	Collider->SetCollisionType(ECollisionType::Rect);
 	Collider->SetComponentScale(GetActorScale());
 }

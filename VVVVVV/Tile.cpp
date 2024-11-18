@@ -24,36 +24,23 @@ void ATile::BeginPlay()
 void ATile::Tick()
 {
 	Super::Tick();
+}
+
+void ATile::SetTile(const AGameWorld::RoomData::RoomTileData& _Data)
+{
+	Sprite->SetSprite(_Data.Name, _Data.Index);
+	TileType = _Data.TileType;
+
+	if (TileType == ETileType::None)
+		SetActive(false);
+	else
+		SetActive(true);
 
 	switch (TileType)
 	{
 	case ETileType::None:
-		break;	
-	case ETileType::BackGround:
-		break;
-	case ETileType::Collision:
-		break;
-	case ETileType::Spike:
-		break;
-	case ETileType::Animation:
-		break;
-	case ETileType::Rail:
-		break;
-	case ETileType::Last:
-		break;
-	default:
-		break;
-	}
-}
-
-void ATile::SetTile(std::string_view _Name, int _Index, ETileType _TileType)
-{
-	Sprite->SetSprite(_Name, _Index);
-	TileType = _TileType;
-
-	switch (_TileType)
-	{
-	case ETileType::None:
+		Sprite->OffAnimation();
+		return;
 	case ETileType::BackGround:
 	case ETileType::Collision:
 	case ETileType::Spike:
@@ -61,11 +48,21 @@ void ATile::SetTile(std::string_view _Name, int _Index, ETileType _TileType)
 		return;
 	case ETileType::Animation:
 	case ETileType::Rail:
-		Sprite->ChangeAnimation(_Name, false);
+		Sprite->ChangeAnimation(_Data.Name, false);
 		return;
 	}
 
 	MSGASSERT(nullptr, "Unknown Tile Type");
+}
+
+AGameWorld::RoomData::RoomTileData ATile::GetTileData()
+{
+	AGameWorld::RoomData::RoomTileData TileData = {};
+	TileData.Name = Sprite->GetCurSpriteName();
+	TileData.Index = Sprite->GetCurIndex();
+	TileData.TileType = TileType;
+	
+	return TileData;
 }
 
 void ATile::AnimationTileSetup()
