@@ -21,13 +21,15 @@ void ATileMapEditorMode::BeginPlay()
 
 	GameWorld = GetWorld()->SpawnActor<AGameWorld>();
 
-	// 커서 스프라이트
-	CurSelectTile = CreateDefaultSubObject<USpriteRenderer>();
-	CurSelectTile->SetSprite("CollisionTiles::Type00-1 Cyan", 44);
-	CurSelectTile->SetComponentScale(EGameConst::TileScale);
-	CurSelectTile->SetOrder(ERenderOrder::EDITOR_CURSOR);
+	// Cursor Sprite
+	USpriteRenderer* Sprite = CurSelectTile->CreateDefaultSubObject<USpriteRenderer>();
+	Sprite->SetSprite("CollisionTiles::Type00-1 Cyan", 44);
+	Sprite->SetComponentScale(EGameConst::TileScale);
+	Sprite->SetOrder(ERenderOrder::EDITOR_CURSOR);
 
-	CurSelectEntityType = CreateDefaultSubObject<USpriteRenderer>();
+	// Entity Sprite
+	CurSelectEntity = GetWorld()->SpawnActor<AEntity>();
+	CurSelectEntity->GetSpriteRenderer() = CreateDefaultSubObject<USpriteRenderer>();
 	CurSelectEntityType->SetSprite("Enemies::001 Stop Cyan", 0);
 	FVector2D SpriteSize = UImageManager::GetInst().FindSprite("Enemies::001 Stop Cyan")->GetSpriteData(0).Transform.Scale;
 	CurSelectEntityType->SetComponentScale(SpriteSize);

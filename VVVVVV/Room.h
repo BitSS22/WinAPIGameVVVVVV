@@ -2,11 +2,7 @@
 #include <EnginePlatform/EngineWindowImage.h>
 #include "GameWorld.h"
 #include "Tile.h"
-
-class AEntity;
-class ABackGround;
-class AGameWorld;
-class APlayer;
+#include "BackGround.h"
 
 class ARoom : public AActor
 {

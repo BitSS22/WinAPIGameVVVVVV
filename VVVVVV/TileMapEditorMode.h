@@ -28,8 +28,8 @@ private:
 	EBackGroundType CurBackGroundList = EBackGroundType::Last;
 	int CurBackGroundIndex = 0;
 
-	ATile* CurSelectTile = nullptr;
-	AEntity* CurSelectEntity = nullptr;
+	USpriteRenderer* CurSelectTile = nullptr;
+	USpriteRenderer* CurSelectEntity = nullptr;
 	
 	AEntity* CurAdjustmentEntity = nullptr;
 	int CurAdjustmentEntityIndex = -1;
