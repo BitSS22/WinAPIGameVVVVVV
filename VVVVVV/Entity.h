@@ -18,6 +18,7 @@ private:
 	USpriteRenderer* Sprite = nullptr;
 	U2DCollision* Collider = nullptr;
 	EEntityType EntityType = EEntityType::Last;
+	ARoom* Room = nullptr;
 
 protected:
 
@@ -34,6 +35,18 @@ public:
 	EEntityType GetEntityType()
 	{
 		return EntityType;
+	}
+	USpriteRenderer* GetSpriteRenderer()
+	{
+		return Sprite;
+	}
+	U2DCollision* GetCollision()
+	{
+		return Collider;
+	}
+	ARoom* GetRoom()
+	{
+		return Room;
 	}
 
 };

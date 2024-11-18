@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Tile.h"
+#include "GameWorld.h"
 
 ATile::ATile()
 {
@@ -21,11 +22,6 @@ void ATile::BeginPlay()
 	AnimationTileSetup();
 }
 
-void ATile::Tick()
-{
-	Super::Tick();
-}
-
 void ATile::SetTile(const AGameWorld::RoomData::RoomTileData& _Data)
 {
 	Sprite->SetSprite(_Data.Name, _Data.Index);
@@ -39,8 +35,6 @@ void ATile::SetTile(const AGameWorld::RoomData::RoomTileData& _Data)
 	switch (TileType)
 	{
 	case ETileType::None:
-		Sprite->OffAnimation();
-		return;
 	case ETileType::BackGround:
 	case ETileType::Collision:
 	case ETileType::Spike:

@@ -18,13 +18,8 @@ void APlayGameMode::BeginPlay()
 	Super::BeginPlay();
 
 	GameWorld = GetWorld()->SpawnActor<AGameWorld>();
-	GameWorld->SetEditMode(false);
 
-	GameWorld->LoadFile();
-
-	GetWorld()->CollisionGroupLink(ECollisionGroup::Player, ECollisionGroup::Platform);
-	GetWorld()->CollisionGroupLink(ECollisionGroup::Player, ECollisionGroup::Enermy);
-	GetWorld()->CollisionGroupLink(ECollisionGroup::Player, ECollisionGroup::Save);
+	GetWorld()->CollisionGroupLink(ECollisionGroup::Player, ECollisionGroup::Entity);
 }
 
 void APlayGameMode::Tick()

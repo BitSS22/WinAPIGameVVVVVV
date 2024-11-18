@@ -1,22 +1,18 @@
 #pragma once
+#include "GameWorld.h"
 
 enum class EEffectType
 {
 	Star,
 	Rect,
-	Last
+	None
 };
 
-class ARoom;
-// Ό³Έν :
 class ABackGround : public AActor
 {
-public:
-	friend class ATileMapEditorMode;
-	friend class ARoom;
-	friend class AGameWorld;
 private:
-	INNER_CLASS struct Effect;
+	INNER_CLASS struct StarEffect;
+	INNER_CLASS struct RectEffect;
 public:
 	ABackGround();
 	~ABackGround();
@@ -28,32 +24,45 @@ public:
 
 private:
 	USpriteRenderer* Sprite = nullptr;
-	EBackGroundType CurBackGroundType = EBackGroundType::Last;
-	std::vector<Effect> Effects = {};
+	EBackGroundType BackGroundType = EBackGroundType::Last;
 	float AnimationSpeed = 320.f;
-	bool EffectValue = false;
+	std::vector<StarEffect> StarEffects = {};
+	std::vector<RectEffect> RectEffects = {};
+
+	std::function<void()> CurAnimation = nullptr;
+	std::function<void()> CurEffect = nullptr;
 
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
 
+	void SetBackGround(const AGameWorld::RoomData::RoomBackGroundData& _Data);
+	AGameWorld::RoomData::RoomBackGroundData GetBackGroundData();
+
 private:
-	void SetEffect(bool _Value)
-	{
-		for (size_t i = 0; i < Effects.size(); ++i)
-			Effects[i].Sprite->SetActive(_Value);
-		EffectValue = _Value;
-	}
+	void PlayHorizontalAnimation();
+	void PlayVerticalAnimation();
+	void PlayTowerAnimation();
+
+	void PlayStarEffect();
+	void PlayRectEffect();
+
+	void SetEffect(EEffectType _Type);
 
 public:
-	void SetBackGround(std::string_view _Name);
 
 private:
-	INNER_CLASS struct Effect
+	INNER_CLASS struct StarEffect
 	{
 	public:
 		USpriteRenderer* Sprite = nullptr;
-		EEffectType EffectType = EEffectType::Last;
+		float Speed = 0.f;
+		FVector2D Dir = {};
+	};
+	INNER_CLASS struct RectEffect
+	{
+	public:
+		USpriteRenderer* Sprite = nullptr;
 		float Speed = 0.f;
 		FVector2D Dir = {};
 	};

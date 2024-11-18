@@ -27,10 +27,50 @@ void AGameWorld::BeginPlay()
 	GetWorld()->SetCameraToMainPawn(false);
 }
 
+void AGameWorld::SaveRoomData()
+{
+	FIntPoint CurRoomIndex = Room->GetCurRoomIndex();
+	AGameWorld::RoomData& Data = RoomDatas[CurRoomIndex.Y][CurRoomIndex.X];
+
+	for (size_t y = 0; y < EGameConst::TileCount.Y; ++y)
+	{
+		for (size_t x = 0; x < EGameConst::TileCount.X; ++x)
+		{
+			Data.RoomTileDatas[y][x] = Room->Tiles[y][x]->GetTileData();
+		}
+	}
+
+	Data.BackGroundData = Room->GetBackGround()->GetBackGroundData();
+	Data.LoopRoom = Room->GetIsLoop();
+
+	// TODO. Entity Save Code
+	CurRoomDatas.EntityDatas.clear();
+
+	for (size_t i = 0; i < Entites.size(); ++i)
+	{
+		AGameWorld::RoomEntityData EntityData = {};
+		AEntity* Entity = Entites[i];
+
+		EntityData.Name = Entity->GetRenderer()->GetCurSpriteName();
+		EntityData.DefualtLocation = Entity->GetActorLocation();
+
+		APistonEntity* MoveEntity = dynamic_cast<APistonEntity*>(Entity);
+
+		if (MoveEntity != nullptr)
+		{
+			EntityData.DefualtLocation = MoveEntity->GetEntityDefualtLocation();
+			EntityData.DefualtDir = MoveEntity->GetEntityDefualtDir();
+			EntityData.Speed = MoveEntity->GetSpeed();
+			EntityData.MoveLenght = MoveEntity->GetMoveLenght();
+			EntityData.MoveLenghtOffset = MoveEntity->GetMoveLenghtOffset();
+		}
+
+		CurRoomDatas.EntityDatas.push_back(EntityData);
+	}
+}
+
 void AGameWorld::SaveFile()
 {
-	Room->SaveRoomData();
-
 	UEngineSerializer Ser = {};
 
 	Ser << RoomDatas;

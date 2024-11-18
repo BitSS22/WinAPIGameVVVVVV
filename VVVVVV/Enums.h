@@ -16,9 +16,7 @@ enum class ERenderOrder
 enum class ECollisionGroup
 {
 	Player,
-	Enermy,
-	Platform,
-	Save,
+	Entity,
 	Last
 };
 

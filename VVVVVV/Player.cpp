@@ -2,7 +2,7 @@
 #include "Player.h"
 #include <EngineCore/SpriteRenderer.h>
 #include "Room.h"
-#include "MoveEntity.h"
+#include "PistonEntity.h"
 
 APlayer::APlayer()
 {
@@ -16,32 +16,31 @@ void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Sprite = CreateDefaultSubObject<USpriteRenderer>();
-	Sprite->SetSprite("Guys:: Cyan Right", 0);
-	Sprite->SetSpriteScale(1.f, 0);
-	Sprite->SetOrder(ERenderOrder::PLAYER);
+	GetSpriteRenderer()->SetSprite("Guys:: Cyan Right", 0);
+	GetSpriteRenderer()->SetSpriteScale(1.f, 0);
+	GetSpriteRenderer()->SetOrder(ERenderOrder::PLAYER);
 
 	SetActorLocation(FVector2D(320.f, 350.f));
-	SetActorScale(Sprite->GetComponentScale());
+	SetActorScale(GetSpriteRenderer()->GetComponentScale());
 
-	Sprite->CreateAnimation("WalkLeft", "Guys:: Cyan Left", 0, 1, 0.15f, true);
-	Sprite->CreateAnimation("WalkRight", "Guys:: Cyan Right", 0, 1, 0.15f, true);
-	Sprite->CreateAnimation("FlipWalkLeft", "Guys:: Cyan rLeft", 0, 1, 0.15f, true);
-	Sprite->CreateAnimation("FlipWalkRight", "Guys:: Cyan rRight", 0, 1, 0.15f, true);
-	Sprite->CreateAnimation("IdleLeft", "Guys:: Cyan Left", 0, 0, EGameConst::AnimationTime, true);
-	Sprite->CreateAnimation("IdleRight", "Guys:: Cyan Right", 0, 0, EGameConst::AnimationTime, true);
-	Sprite->CreateAnimation("FlipIdleLeft", "Guys:: Cyan rLeft", 0, 0, EGameConst::AnimationTime, true);
-	Sprite->CreateAnimation("FlipIdleRight", "Guys:: Cyan rRight", 0, 0, EGameConst::AnimationTime, true);
+	GetSpriteRenderer()->CreateAnimation("WalkLeft", "Guys:: Cyan Left", 0, 1, 0.15f, true);
+	GetSpriteRenderer()->CreateAnimation("WalkRight", "Guys:: Cyan Right", 0, 1, 0.15f, true);
+	GetSpriteRenderer()->CreateAnimation("FlipWalkLeft", "Guys:: Cyan rLeft", 0, 1, 0.15f, true);
+	GetSpriteRenderer()->CreateAnimation("FlipWalkRight", "Guys:: Cyan rRight", 0, 1, 0.15f, true);
+	GetSpriteRenderer()->CreateAnimation("IdleLeft", "Guys:: Cyan Left", 0, 0, EGameConst::AnimationTime, true);
+	GetSpriteRenderer()->CreateAnimation("IdleRight", "Guys:: Cyan Right", 0, 0, EGameConst::AnimationTime, true);
+	GetSpriteRenderer()->CreateAnimation("FlipIdleLeft", "Guys:: Cyan rLeft", 0, 0, EGameConst::AnimationTime, true);
+	GetSpriteRenderer()->CreateAnimation("FlipIdleRight", "Guys:: Cyan rRight", 0, 0, EGameConst::AnimationTime, true);
 
-	Sprite->CreateAnimation("SadIdleLeft", "Guys:: Cyan Sad Left", 0, 0, EGameConst::AnimationTime, true);
-	Sprite->CreateAnimation("SadIdleRight", "Guys:: Cyan Sad Right", 0, 0, EGameConst::AnimationTime, true);
-	Sprite->CreateAnimation("SadFlipIdleLeft", "Guys:: Cyan Sad rLeft", 0, 0, EGameConst::AnimationTime, true);
-	Sprite->CreateAnimation("SadFlipIdleRight", "Guys:: Cyan Sad rRight", 0, 0, EGameConst::AnimationTime, true);
+	GetSpriteRenderer()->CreateAnimation("SadIdleLeft", "Guys:: Cyan Sad Left", 0, 0, EGameConst::AnimationTime, true);
+	GetSpriteRenderer()->CreateAnimation("SadIdleRight", "Guys:: Cyan Sad Right", 0, 0, EGameConst::AnimationTime, true);
+	GetSpriteRenderer()->CreateAnimation("SadFlipIdleLeft", "Guys:: Cyan Sad rLeft", 0, 0, EGameConst::AnimationTime, true);
+	GetSpriteRenderer()->CreateAnimation("SadFlipIdleRight", "Guys:: Cyan Sad rRight", 0, 0, EGameConst::AnimationTime, true);
 
 	Collider = CreateDefaultSubObject<U2DCollision>();
 	Collider->SetCollisionGroup(ECollisionGroup::Player);
 	Collider->SetCollisionType(ECollisionType::Rect);
-	Collider->SetComponentScale(Sprite->GetComponentScale());
+	Collider->SetComponentScale(GetSpriteRenderer()->GetComponentScale());
 
 	SaveWorldIndex = GetRoom()->GetGameWorld()->GetCurRoomIndex();
 	SaveLocation = GetActorLocation();

@@ -6,13 +6,7 @@
 class AGameWorld : public AActor
 {
 public:
-	friend class ATileMapEditorMode;
-	friend class ARoom;
-	friend class ABackGround;
 	INNER_CLASS struct RoomData;
-	INNER_CLASS struct RoomTileData;
-	INNER_CLASS struct RoomBackGroundData;
-	INNER_CLASS struct RoomEntityData;
 public:
 	AGameWorld();
 	~AGameWorld();
@@ -29,6 +23,8 @@ private:
 public:
 	virtual void BeginPlay() override;
 
+	void SaveRoomData();
+
 	void SaveFile();
 	void LoadFile();
 
@@ -39,7 +35,7 @@ public:
 	{
 		return Room;
 	}
-	const RoomData& GetRoomDatasRef(FIntPoint _Index) const
+	const RoomData& GetRoomDatasRef(FIntPoint _Index)
 	{
 		return RoomDatas[_Index.Y][_Index.X];
 	}
@@ -82,7 +78,6 @@ public:
 			int Index = 0;
 			EBackGroundType BackGroundType = EBackGroundType::Last;
 			float AnimationSpeed = 0.f;
-			bool IsEffect = false;
 
 		public:
 			void Serialize(UEngineSerializer& _Class) override;

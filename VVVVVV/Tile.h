@@ -20,14 +20,15 @@ private:
 
 public:	
 	virtual void BeginPlay() override;
-	virtual void Tick() override;
+
+	void SetTile(const AGameWorld::RoomData::RoomTileData& _Data);
+	AGameWorld::RoomData::RoomTileData GetTileData();
 
 private:
 	void AnimationTileSetup();
 
 public:
-	void SetTile(const AGameWorld::RoomData::RoomTileData& _Data);
-	AGameWorld::RoomData::RoomTileData GetTileData();
+
 	ETileType GetTileType()
 	{
 		return TileType;
