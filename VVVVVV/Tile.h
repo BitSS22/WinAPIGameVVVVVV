@@ -21,7 +21,7 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
 	
-	void SetTile(std::string_view _Name);
+	virtual void SetTile(std::string_view _Name, FIntPoint _Location, ETileType _TileType);
 
 private:
 

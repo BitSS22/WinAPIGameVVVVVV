@@ -36,10 +36,6 @@ void ATile::BeginPlay()
 	SpriteRenderer->CreateAnimation("RailTiles::13 Rail Right Green", "RailTiles::13 Rail Right Green", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
 	SpriteRenderer->CreateAnimation("RailTiles::14 Rail Right Grey", "RailTiles::14 Rail Right Grey", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
 
-	SpriteRenderer->SetComponentScale(FVector2D(TileScale.X, TileScale.Y));
-	SpriteRenderer->SetComponentLocation(FVector2D(TileScale.X * x + TileScale.X / 2, TileScale.Y * y + TileScale.Y / 2));
-	SpriteRenderer->SetSprite("Debug Tile", 0);
-	SpriteRenderer->SetOrder(ERenderOrder::TILE);
 }
 
 void ATile::Tick()
@@ -48,11 +44,13 @@ void ATile::Tick()
 
 }
 
-void ATile::SetTile(std::string_view _Name)
+void ATile::SetTile(std::string_view _Name, FIntPoint _Location, ETileType _TileType)
 {
-	SpriteRenderer->SetSprite(_Name, 0);
-	string UpperName = UEngineString::ToUpper(_Name);
+	TileType = _TileType;
 
-	if (UpperName.find() != std::string::npos)
+	SpriteRenderer->SetComponentScale(EGameConst::TileScale);
+	SpriteRenderer->SetComponentLocation(_Location);
+	SpriteRenderer->SetSprite(_Name, 0);
+	SpriteRenderer->SetOrder(ERenderOrder::TILE);
 }
 

@@ -23,7 +23,7 @@ void ABackGround::BeginPlay()
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
 		StarSprite->SetActive(false);
 		float RandNumber = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(-440.f, -360.f);
-		Effects.push_back(Star(StarSprite, RandNumber));
+		Effects.push_back(Effect(StarSprite, RandNumber));
 	}
 	for (size_t i = 0; i < 10; ++i)
 	{
@@ -34,7 +34,7 @@ void ABackGround::BeginPlay()
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
 		StarSprite->SetActive(false);
 		float RandNumber = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(-520.f, -400.f);
-		Effects.push_back(Star(StarSprite, RandNumber));
+		Effects.push_back(Effect(StarSprite, RandNumber));
 	}
 	for (size_t i = 0; i < 20; ++i)
 	{
@@ -45,7 +45,7 @@ void ABackGround::BeginPlay()
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
 		StarSprite->SetActive(false);
 		float RandNumber = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(-600.f, -440.f);
-		Effects.push_back(Star(StarSprite, RandNumber));
+		Effects.push_back(Effect(StarSprite, RandNumber));
 	}
 
 	Sprite = CreateDefaultSubObject<USpriteRenderer>();
@@ -83,17 +83,17 @@ void ABackGround::Tick()
 
 	switch (CurBackGroundType)
 	{
-	case EBackGroundType::HORIZONTAL:
+	case EBackGroundType::Horizontal:
 		Sprite->AddComponentLocation(FVector2D(-AnimationSpeed * GET_DELTA, 0.f));
 		if (Sprite->GetComponentLocation().X < UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half().X - 16.f)
 			Sprite->AddComponentLocation(FVector2D(32.f, 0.f));
 		break;
-	case EBackGroundType::VERTICAL:
+	case EBackGroundType::Vertical:
 		Sprite->AddComponentLocation(FVector2D(0.f, -AnimationSpeed * GET_DELTA));
 		if (Sprite->GetComponentLocation().Y < UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half().Y - 16.f)
 			Sprite->AddComponentLocation(FVector2D(0.f, 32.f));
 		break;
-	case EBackGroundType::TOWER:
+	case EBackGroundType::Tower:
 		break;
 	}
 }

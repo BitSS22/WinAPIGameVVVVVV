@@ -4,25 +4,6 @@
 #include "Room.h"
 #include "GameWorld.h"
 
-enum class TileList
-{
-	BackGroundTileList,
-	TileList,
-	SpikeTileList,
-	AnimationTileList,
-	RailTileList,
-	BackGroundList,
-	LAST
-};
-enum class EntityList
-{
-	Platforms,
-	Saves,
-	Enemies,
-	Teleports,
-	LAST
-};
-
 class ATileMapEditorMode : public AGameMode
 {
 public:
@@ -35,18 +16,25 @@ public:
 	ATileMapEditorMode& operator=(ATileMapEditorMode&& _Other) noexcept = delete;
 
 private:
-	std::vector<std::string> TileLists[static_cast<int>(TileList::LAST)] = {};
-	std::vector<std::string> EntityLists[static_cast<int>(EntityList::LAST)] = {};
-	TileList CurSelectTileList = TileList::TileList;
-	EntityList CurSelectEntityList = EntityList::Enemies;
+	std::vector<std::string> TileLists[static_cast<int>(ETileType::Last)] = {};
+	ETileType CurTileList = ETileType::Last;
 	int CurTileSetIndex = 0;
+
+	std::vector<std::string> EntityLists[static_cast<int>(EEntityType::Last)] = {};
+	EEntityType CurEntityList = EEntityType::Last;
 	int CurEntityIndex = 0;
+	
+	std::vector<std::string> BackGroundLists[static_cast<int>(EBackGroundType::Last)] = {};
+	EBackGroundType CurBackGroundList = EBackGroundType::Last;
 	int CurBackGroundIndex = 0;
-	AGameWorld* GameWorld = nullptr;
-	USpriteRenderer* CurSelectSprite = nullptr;
-	USpriteRenderer* CurSelectEntityType = nullptr;
+
+	ATile* CurSelectTile = nullptr;
+	AEntity* CurSelectEntity = nullptr;
+	
 	AEntity* CurAdjustmentEntity = nullptr;
 	int CurAdjustmentEntityIndex = -1;
+	
+	AGameWorld* GameWorld = nullptr;
 
 public:
 	virtual void BeginPlay() override;
@@ -56,23 +44,17 @@ private:
 	int AroundTileChange(const string& _Name, int _X, int _Y);
 	int FindAroundTile(uint8_t _Bit) const;
 	bool IsSameTileName(const string& _Name, int x, int y) const;
-	std::vector<std::vector<USpriteRenderer*>>& GetCurSelectTileMap() const
+	std::vector<std::vector<ATile*>>& GetCurSelectTileMap() const
 	{
-		switch (CurSelectTileList)
+		switch (CurTileList)
 		{
-		case TileList::BackGroundTileList:
+		case ETileType::BackGround:
 			return GameWorld->GetRoom()->BackGroundTiles;
 			break;
-		case TileList::TileList:
-		case TileList::SpikeTileList:
-		case TileList::AnimationTileList:
+		default:
 			return GameWorld->GetRoom()->Tiles;
 			break;
-		default:
-			MSGASSERT(nullptr, "타일 리스트가 제대로 선택되지 않았습니다.");
-			break;
 		}
-		return GameWorld->GetRoom()->Tiles;
 	}
 
 	void ChangeTile(bool _AroundTileChange, FIntPoint _Index);
@@ -125,9 +107,3 @@ public:
 	}
 
 };
-
-
-TileList& operator++(TileList& _List);
-TileList& operator--(TileList& _List);
-EntityList& operator++(EntityList& _List);
-EntityList& operator--(EntityList& _List);
