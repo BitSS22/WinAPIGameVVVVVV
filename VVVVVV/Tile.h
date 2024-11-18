@@ -14,13 +14,16 @@ public:
 	ATile& operator=(ATile&& _Other) noexcept = delete;
 
 private:
-	USpriteRenderer* SpriteRenderer = nullptr;
+	USpriteRenderer* Sprite = nullptr;
 	ETileType TileType = ETileType::Last;
 
 public:	
-	virtual void SetTile(std::string_view _Name) = 0;
+	virtual void BeginPlay() override;
+
+	void SetTile(std::string_view _Name, int _Index, ETileType _TileType);
 
 private:
+	void AnimationTileSetup();
 
 public:
 	ETileType GetTileType()

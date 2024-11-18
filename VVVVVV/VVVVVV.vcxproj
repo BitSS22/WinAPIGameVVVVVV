@@ -151,10 +151,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AnimationTile.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Teleport.h">
       <SubType>
       </SubType>
@@ -163,15 +159,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="BackGroundTile.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="CheckPoint.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="CollisionTile.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -206,15 +194,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="RailTile.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Room.h" />
-    <ClInclude Include="SpikeTile.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Tile.h">
       <SubType>
       </SubType>
@@ -237,10 +217,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AnimationTile.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="Teleport.cpp">
       <SubType>
       </SubType>
@@ -249,15 +225,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="BackGroundTile.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="CheckPoint.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="CollisionTile.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -295,15 +263,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="RailTile.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="Room.cpp" />
-    <ClCompile Include="SpikeTile.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="Tile.cpp">
       <SubType>
       </SubType>

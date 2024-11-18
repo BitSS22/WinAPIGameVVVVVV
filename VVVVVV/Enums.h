@@ -40,6 +40,7 @@ enum class ETileType
 	BackGround,
 	Collision,
 	Spike,
+	Animation,
 	Rail,
 	Last
 };
