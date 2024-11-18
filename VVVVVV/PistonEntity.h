@@ -1,16 +1,16 @@
 #pragma once
 #include "Entity.h"
 
-class AMoveEntity : public AEntity
+class APistonEntity : public AEntity
 {
 public:
-	AMoveEntity();
-	~AMoveEntity();
+	APistonEntity();
+	~APistonEntity();
 
-	AMoveEntity(const AMoveEntity& _Other) = delete;
-	AMoveEntity(AMoveEntity&& _Other) noexcept = delete;
-	AMoveEntity& operator=(const AMoveEntity& _Other) = delete;
-	AMoveEntity& operator=(AMoveEntity&& _Other) noexcept = delete;
+	APistonEntity(const APistonEntity& _Other) = delete;
+	APistonEntity(APistonEntity&& _Other) noexcept = delete;
+	APistonEntity& operator=(const APistonEntity& _Other) = delete;
+	APistonEntity& operator=(APistonEntity&& _Other) noexcept = delete;
 
 private:
 	FVector2D DefualtLocation = {};

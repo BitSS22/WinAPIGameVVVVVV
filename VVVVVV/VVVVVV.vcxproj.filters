@@ -34,8 +34,8 @@
     <ClInclude Include="Entity.h">
       <Filter>ContentsObject\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="MoveEntity.h">
-      <Filter>ContentsObject\Entity\MoveEntity</Filter>
+    <ClInclude Include="PistonEntity.h">
+      <Filter>ContentsObject\Entity\PistonEntity</Filter>
     </ClInclude>
     <ClInclude Include="Guy.h">
       <Filter>ContentsObject\Entity\Guy</Filter>
@@ -50,7 +50,7 @@
       <Filter>ContentsObject\Map\GameWorld</Filter>
     </ClInclude>
     <ClInclude Include="Platform.h">
-      <Filter>ContentsObject\Entity\MoveEntity\Platform</Filter>
+      <Filter>ContentsObject\Entity\PistonEntity\Platform</Filter>
     </ClInclude>
     <ClInclude Include="CheckPoint.h">
       <Filter>ContentsObject\Entity\CheckPoint</Filter>
@@ -65,10 +65,13 @@
       <Filter>ContentsObject\Map\GameWorld\Room\Tile\CollisionTile</Filter>
     </ClInclude>
     <ClInclude Include="RailTile.h">
-      <Filter>ContentsObject\Map\GameWorld\Room\Tile\CollisionTile\RailTile</Filter>
+      <Filter>ContentsObject\Map\GameWorld\Room\Tile\CollisionTile\AnimationTile\RailTile</Filter>
     </ClInclude>
     <ClInclude Include="SpikeTile.h">
       <Filter>ContentsObject\Map\GameWorld\Room\Tile\CollisionTile\SpikeTile</Filter>
+    </ClInclude>
+    <ClInclude Include="Teleport.h">
+      <Filter>ContentsObject\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -105,8 +108,8 @@
     <ClCompile Include="Entity.cpp">
       <Filter>ContentsObject\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="MoveEntity.cpp">
-      <Filter>ContentsObject\Entity\MoveEntity</Filter>
+    <ClCompile Include="PistonEntity.cpp">
+      <Filter>ContentsObject\Entity\PistonEntity</Filter>
     </ClCompile>
     <ClCompile Include="Guy.cpp">
       <Filter>ContentsObject\Entity\Guy</Filter>
@@ -121,7 +124,7 @@
       <Filter>ContentsObject\Map\GameWorld</Filter>
     </ClCompile>
     <ClCompile Include="Platform.cpp">
-      <Filter>ContentsObject\Entity\MoveEntity\Platform</Filter>
+      <Filter>ContentsObject\Entity\PistonEntity\Platform</Filter>
     </ClCompile>
     <ClCompile Include="CheckPoint.cpp">
       <Filter>ContentsObject\Entity\CheckPoint</Filter>
@@ -136,10 +139,13 @@
       <Filter>ContentsObject\Map\GameWorld\Room\Tile\CollisionTile</Filter>
     </ClCompile>
     <ClCompile Include="RailTile.cpp">
-      <Filter>ContentsObject\Map\GameWorld\Room\Tile\CollisionTile\RailTile</Filter>
+      <Filter>ContentsObject\Map\GameWorld\Room\Tile\CollisionTile\AnimationTile\RailTile</Filter>
     </ClCompile>
     <ClCompile Include="SpikeTile.cpp">
       <Filter>ContentsObject\Map\GameWorld\Room\Tile\CollisionTile\SpikeTile</Filter>
+    </ClCompile>
+    <ClCompile Include="Teleport.cpp">
+      <Filter>ContentsObject\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -182,12 +188,6 @@
     <Filter Include="ContentsObject\Map\GameWorld\Room\Tile">
       <UniqueIdentifier>{738c236f-b7ee-4bcc-87ca-78b7b56b1086}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Entity\MoveEntity">
-      <UniqueIdentifier>{2d273734-dd48-4a7f-96db-95239822e905}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContentsObject\Entity\MoveEntity\Platform">
-      <UniqueIdentifier>{affa1a28-ad83-46c9-a2d1-66f19a0db784}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\Entity\CheckPoint">
       <UniqueIdentifier>{7b97b20e-e3c5-4e36-b9db-4963a864f78a}</UniqueIdentifier>
     </Filter>
@@ -203,11 +203,17 @@
     <Filter Include="ContentsObject\Map\GameWorld\Room\Tile\CollisionTile\AnimationTile">
       <UniqueIdentifier>{569a9e8a-268a-43b5-affd-d210e69f9308}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Map\GameWorld\Room\Tile\CollisionTile\RailTile">
-      <UniqueIdentifier>{6006e488-f28e-4df8-bdf0-4c0fa5499d27}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\Map\GameWorld\Room\Tile\CollisionTile\SpikeTile">
       <UniqueIdentifier>{946aa8c3-3abb-427d-b8aa-53628d57bc1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Map\GameWorld\Room\Tile\CollisionTile\AnimationTile\RailTile">
+      <UniqueIdentifier>{6006e488-f28e-4df8-bdf0-4c0fa5499d27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Entity\PistonEntity">
+      <UniqueIdentifier>{2d273734-dd48-4a7f-96db-95239822e905}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Entity\PistonEntity\Platform">
+      <UniqueIdentifier>{affa1a28-ad83-46c9-a2d1-66f19a0db784}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

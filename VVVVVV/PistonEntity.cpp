@@ -1,22 +1,22 @@
 #include "pch.h"
-#include "MoveEntity.h"
+#include "PistonEntity.h"
 #include "Room.h"
 
-AMoveEntity::AMoveEntity()
+APistonEntity::APistonEntity()
 {
 }
 
-AMoveEntity::~AMoveEntity()
+APistonEntity::~APistonEntity()
 {
 }
 
-void AMoveEntity::BeginPlay()
+void APistonEntity::BeginPlay()
 {
 	Super::BeginPlay();
 
 }
 
-void AMoveEntity::Tick()
+void APistonEntity::Tick()
 {
 	Super::Tick();
 
@@ -49,7 +49,7 @@ void AMoveEntity::Tick()
 	}
 }
 
-void AMoveEntity::MoveEntityDefaultSetUp(std::string_view _Name, FVector2D _Location, FVector2D _Dir, float _Speed, float _MoveLength, float _MoveOffset)
+void APistonEntity::MoveEntityDefaultSetUp(std::string_view _Name, FVector2D _Location, FVector2D _Dir, float _Speed, float _MoveLength, float _MoveOffset)
 {
 	AEntity::EntityDefaultSetUp(_Name, _Location);
 

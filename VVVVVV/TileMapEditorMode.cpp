@@ -815,7 +815,7 @@ void ATileMapEditorMode::DebugText()
 		str += std::to_string(CurAdjustmentEntityIndex);
 		UEngineDebug::CoreOutputString(str);
 
-		AMoveEntity* MoveEntity = dynamic_cast<AMoveEntity*>(CurAdjustmentEntity);
+		APistonEntity* MoveEntity = dynamic_cast<APistonEntity*>(CurAdjustmentEntity);
 		if (MoveEntity != nullptr)
 		{
 			str = "Location : ";
@@ -877,7 +877,7 @@ void ATileMapEditorMode::CreateEntity()
 {
 	if (CurEntityList == EntityList::Enemies || CurEntityList == EntityList::Platforms)
 	{
-		AMoveEntity* NewEntity = GetWorld()->SpawnActor<AMoveEntity>();
+		APistonEntity* NewEntity = GetWorld()->SpawnActor<APistonEntity>();
 		NewEntity->MoveEntityDefaultSetUp(CurSelectEntityType->GetCurSpriteName(), CurSelectEntityType->GetComponentLocation(), FVector2D::RIGHT, EGameConst::DefualtSpeed, EGameConst::DefualtMoveLen, 0.f);
 		NewEntity->SetRoom(GameWorld->GetRoom());
 		GameWorld->GetRoom()->Entites.push_back(NewEntity);
@@ -983,7 +983,7 @@ void ATileMapEditorMode::AddEntityLocation(FVector2D _AddPos)
 
 void ATileMapEditorMode::AddEntitySpeed(float _Speed)
 {
-	AMoveEntity* Enermy = dynamic_cast<AMoveEntity*>(CurAdjustmentEntity);
+	APistonEntity* Enermy = dynamic_cast<APistonEntity*>(CurAdjustmentEntity);
 
 	if (Enermy == nullptr)
 		return;
@@ -993,7 +993,7 @@ void ATileMapEditorMode::AddEntitySpeed(float _Speed)
 
 void ATileMapEditorMode::AddEntityMoveLenght(float _Lenght)
 {
-	AMoveEntity* Enermy = dynamic_cast<AMoveEntity*>(CurAdjustmentEntity);
+	APistonEntity* Enermy = dynamic_cast<APistonEntity*>(CurAdjustmentEntity);
 
 	if (Enermy == nullptr)
 		return;
@@ -1003,7 +1003,7 @@ void ATileMapEditorMode::AddEntityMoveLenght(float _Lenght)
 
 void ATileMapEditorMode::AddEntityMoveOffSet(float _Offset)
 {
-	AMoveEntity* Enermy = dynamic_cast<AMoveEntity*>(CurAdjustmentEntity);
+	APistonEntity* Enermy = dynamic_cast<APistonEntity*>(CurAdjustmentEntity);
 
 	if (Enermy == nullptr)
 		return;
@@ -1013,7 +1013,7 @@ void ATileMapEditorMode::AddEntityMoveOffSet(float _Offset)
 
 void ATileMapEditorMode::AddEntityDir(FVector2D _Dir)
 {
-	AMoveEntity* Enermy = dynamic_cast<AMoveEntity*>(CurAdjustmentEntity);
+	APistonEntity* Enermy = dynamic_cast<APistonEntity*>(CurAdjustmentEntity);
 
 	if (Enermy == nullptr)
 		return;
@@ -1023,7 +1023,7 @@ void ATileMapEditorMode::AddEntityDir(FVector2D _Dir)
 
 void ATileMapEditorMode::SetEntityDir(FVector2D _Dir)
 {
-	AMoveEntity* Enermy = dynamic_cast<AMoveEntity*>(CurAdjustmentEntity);
+	APistonEntity* Enermy = dynamic_cast<APistonEntity*>(CurAdjustmentEntity);
 
 	if (Enermy == nullptr)
 		return;

@@ -1,8 +1,8 @@
 #pragma once
-#include "CollisionTile.h"
+#include "AnimationTile.h"
 
 // Ό³Έν :
-class ARailTile : public ACollisionTile
+class ARailTile : public AAnimationTile
 {
 public:
 	ARailTile();

@@ -116,7 +116,7 @@ void ARoom::SaveRoomData()
 		EntityData.Name = Entity->GetRenderer()->GetCurSpriteName();
 		EntityData.DefualtLocation = Entity->GetActorLocation();
 
-		AMoveEntity* MoveEntity = dynamic_cast<AMoveEntity*>(Entity);
+		APistonEntity* MoveEntity = dynamic_cast<APistonEntity*>(Entity);
 
 		if (MoveEntity != nullptr)
 		{
@@ -174,14 +174,14 @@ void ARoom::LoadRoomData(FIntPoint _Index)
 
 		if (ChangeRoomDatas.EntityDatas[i].Name.find("ENEMIES::") != std::string::npos)
 		{
-			AMoveEntity* NewEntity = GetWorld()->SpawnActor<AMoveEntity>();
+			APistonEntity* NewEntity = GetWorld()->SpawnActor<APistonEntity>();
 			NewEntity->MoveEntityDefaultSetUp(Data.Name, Data.DefualtLocation, Data.DefualtDir, Data.Speed, Data.MoveLenght, Data.MoveLenghtOffset);
 			Entites.push_back(NewEntity);
 			NewEntity->SetRoom(this);
 		}
 		else if (ChangeRoomDatas.EntityDatas[i].Name.find("PLATFORMS::") != std::string::npos)
 		{
-			AMoveEntity* NewEntity = GetWorld()->SpawnActor<AMoveEntity>();
+			APistonEntity* NewEntity = GetWorld()->SpawnActor<APistonEntity>();
 			NewEntity->MoveEntityDefaultSetUp(Data.Name, Data.DefualtLocation, Data.DefualtDir, Data.Speed, Data.MoveLenght, Data.MoveLenghtOffset);
 			Entites.push_back(NewEntity);
 			NewEntity->SetRoom(this);

@@ -1,10 +1,10 @@
 #pragma once
 #include <EngineCore/Actor.h>
-#include "MoveEntity.h"
+#include "PistonEntity.h"
 
 
 // Ό³Έν :
-class APlatform : public AMoveEntity
+class APlatform : public APistonEntity
 {
 public:
 	APlatform();
