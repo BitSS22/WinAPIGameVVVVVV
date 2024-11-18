@@ -23,7 +23,7 @@ void ABackGround::BeginPlay()
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
 		StarSprite->SetActive(false);
 		float RandNumber = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(-440.f, -360.f);
-		Effects.push_back(Effect(StarSprite, RandNumber));
+		Effects.push_back(Effect(StarSprite, EEffectType::Star ,RandNumber, FVector2D::RIGHT));
 	}
 	for (size_t i = 0; i < 10; ++i)
 	{
@@ -34,7 +34,7 @@ void ABackGround::BeginPlay()
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
 		StarSprite->SetActive(false);
 		float RandNumber = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(-520.f, -400.f);
-		Effects.push_back(Effect(StarSprite, RandNumber));
+		Effects.push_back(Effect(StarSprite, EEffectType::Star, RandNumber, FVector2D::RIGHT));
 	}
 	for (size_t i = 0; i < 20; ++i)
 	{
@@ -45,7 +45,7 @@ void ABackGround::BeginPlay()
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
 		StarSprite->SetActive(false);
 		float RandNumber = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(-600.f, -440.f);
-		Effects.push_back(Effect(StarSprite, RandNumber));
+		Effects.push_back(Effect(StarSprite, EEffectType::Star, RandNumber, FVector2D::RIGHT));
 	}
 
 	Sprite = CreateDefaultSubObject<USpriteRenderer>();

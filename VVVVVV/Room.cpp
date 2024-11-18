@@ -3,7 +3,7 @@
 #include "BackGround.h"
 #include "GameWorld.h"
 #include "Entity.h"
-#include "MoveEntity.h"
+#include "PistonEntity.h"
 #include "Player.h"
 
 ARoom::ARoom()
@@ -17,40 +17,29 @@ ARoom::~ARoom()
 void ARoom::BeginPlay()
 {
 	BackGround = GetWorld()->SpawnActor<ABackGround>();
-	BackGround->Room = this;
-
-	if (GameWorld->EditMode == false)
-	{
-		Player = GetWorld()->SpawnActor<APlayer>();
-		Player->SetRoom(this);
-	}
 
 	// 타일 스프라이트
-	Tiles.resize(TileCount.Y);
-	for (int y = 0; y < TileCount.Y; ++y)
+	BackGroundTiles.resize(EGameConst::TileCount.Y);
+	for (int y = 0; y < EGameConst::TileCount.Y; ++y)
 	{
-		Tiles[y].reserve(TileCount.X);
-		for (int x = 0; x < TileCount.X; ++x)
+		BackGroundTiles[y].reserve(EGameConst::TileCount.X);
+		for (int x = 0; x < EGameConst::TileCount.X; ++x)
 		{
-			Tiles[y][x] = GetWorld()->SpawnActor<ATile>();
-		}
-	}
-	BackGroundTiles.resize(TileCount.Y);
-	for (int y = 0; y < TileCount.Y; ++y)
-	{
-		BackGroundTiles[y].reserve(TileCount.X);
-		for (int x = 0; x < TileCount.X; ++x)
-		{
-			USpriteRenderer* NewSprite = CreateDefaultSubObject<USpriteRenderer>();
-			NewSprite->SetComponentScale(FVector2D(TileScale.X, TileScale.Y));
-			NewSprite->SetComponentLocation(FVector2D(TileScale.X * x + TileScale.X / 2, TileScale.Y * y + TileScale.Y / 2));
-			NewSprite->SetSprite("Debug Tile", 0);
-			NewSprite->SetOrder(ERenderOrder::BACKGROUND_TILE);
-			BackGroundTiles[y].push_back(NewSprite);
+			BackGroundTiles[y][x] = GetWorld()->SpawnActor<ATile>();
+			BackGroundTiles[y][x]->SetActorLocation(FVector2D(EGameConst::TileScale.X * x + EGameConst::TileScale.X / 2, EGameConst::TileScale.Y * y + EGameConst::TileScale.Y / 2));
 		}
 	}
 
-	LoadRoomData(GameWorld->GetCurRoomIndex());
+	Tiles.resize(EGameConst::TileCount.Y);
+	for (int y = 0; y < EGameConst::TileCount.Y; ++y)
+	{
+		Tiles[y].reserve(EGameConst::TileCount.X);
+		for (int x = 0; x < EGameConst::TileCount.X; ++x)
+		{
+			Tiles[y][x] = GetWorld()->SpawnActor<ATile>();
+			Tiles[y][x]->SetActorLocation(FVector2D(EGameConst::TileScale.X * x + EGameConst::TileScale.X / 2, EGameConst::TileScale.Y * y + EGameConst::TileScale.Y / 2));
+		}
+	}
 }
 
 void ARoom::MoveRoom(FIntPoint _Index)

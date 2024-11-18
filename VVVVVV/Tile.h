@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/SpriteRenderer.h>
+#include "GameWorld.h"
 
 // Ό³Έν :
 class ATile : public AActor
@@ -19,13 +20,13 @@ private:
 
 public:	
 	virtual void BeginPlay() override;
-
-	void SetTile(std::string_view _Name, int _Index, ETileType _TileType);
+	virtual void Tick() override;
 
 private:
 	void AnimationTileSetup();
 
 public:
+	void SetTile(AGameWorld::RoomTileData _Data);
 	ETileType GetTileType()
 	{
 		return TileType;

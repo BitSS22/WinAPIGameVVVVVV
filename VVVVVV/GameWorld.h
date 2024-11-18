@@ -22,7 +22,6 @@ public:
 	AGameWorld& operator=(AGameWorld&& _Other) noexcept = delete;
 
 private:
-	FIntPoint WorldMaxIndex = EGameConst::WorldMaxIndex;
 	ARoom* Room = {};
 	std::vector<std::vector<RoomData>> RoomDatas = {};
 
@@ -35,25 +34,13 @@ public:
 private:
 
 public:
-	ARoom* GetRoom()
+	ARoom* GetRoom() const
 	{
 		return Room;
 	}
-	FIntPoint GetWorldSize() const
+	const RoomData& GetRoomDatasRef(FIntPoint _Index) const
 	{
-		return WorldMaxIndex;
-	}
-	FIntPoint GetCurRoomIndex() const
-	{
-		return CurRoomIndex;
-	}
-	void SetCurRoomIndex(FIntPoint _Index)
-	{
-		CurRoomIndex = _Index;
-	}
-	void SetEditMode(bool _Value)
-	{
-		EditMode = _Value;
+		return RoomDatas[_Index.Y][_Index.X];
 	}
 
 public:
@@ -103,16 +90,16 @@ public:
 	{
 		RoomData()
 		{
-			RoomTileDatas.resize(TileCount.Y);
+			RoomTileDatas.resize(EGameConst::TileCount.Y);
 			for (size_t y = 0; y < RoomTileDatas.size(); ++y)
 			{
-				RoomTileDatas[y].resize(TileCount.X);
+				RoomTileDatas[y].resize(EGameConst::TileCount.X);
 			}
 
-			RoomBackGroundTileDatas.resize(TileCount.Y);
+			RoomBackGroundTileDatas.resize(EGameConst::TileCount.Y);
 			for (size_t y = 0; y < RoomBackGroundTileDatas.size(); ++y)
 			{
-				RoomBackGroundTileDatas[y].resize(TileCount.X);
+				RoomBackGroundTileDatas[y].resize(EGameConst::TileCount.X);
 			}
 		}
 

@@ -30,49 +30,33 @@ private:
 	std::vector<AEntity*> Entites = {};
 	FIntPoint CurRoonIndex = {};
 	bool LoopRoom = false;
+	AGameWorld* GameWorld = nullptr;
 
 public:
 	virtual void BeginPlay() override;
 
 	void MoveRoom(FIntPoint _Index);
+	
 	void SaveRoomData();
 	void LoadRoomData(FIntPoint _Index);
-
-	void SetupAnimationTiles();
 
 private:
 
 public:
-	FIntPoint GetOnTileIndex(FVector2D _Pos)
+	FIntPoint GetOnTileIndex(FVector2D _Pos) const
 	{
-		FIntPoint Result = FIntPoint(_Pos.X / TileScale.X, _Pos.Y / TileScale.Y);
+		FIntPoint Result = FIntPoint(_Pos.X / EGameConst::TileScale.X, _Pos.Y / EGameConst::TileScale.Y);
 		return Result;
 	}
-	AGameWorld* GetGameWorld()
+	ETileType GetTileType(FIntPoint _Index) const
+	{
+		if (_Index.X < 0 || _Index.X >= EGameConst::TileCount.X || _Index.Y < 0 || _Index.Y >= EGameConst::TileCount.Y)
+			return ETileType::None;
+		return Tiles[_Index.Y][_Index.X]->GetTileType();
+	}
+	AGameWorld* GetGameWorld() const
 	{
 		return GameWorld;
-	}
-	FIntPoint GetTileCount()
-	{
-		return TileCount;
-	}
-	FIntPoint GetTileScale()
-	{
-		return TileScale;
-	}
-	std::string GetTileName(FIntPoint _Index)
-	{
-		if (_Index.X < 0 || _Index.X >= TileCount.X || _Index.Y < 0 || _Index.Y >= TileCount.Y)
-			return "NONE TILE";
-		return Tiles[_Index.Y][_Index.X]->GetCurSpriteName();
-	}
-	bool GetIsEntityMove()
-	{
-		return IsEntityMove;
-	}
-	void SetIsEntityMove(bool _Value)
-	{
-		IsEntityMove = _Value;
 	}
 
 };

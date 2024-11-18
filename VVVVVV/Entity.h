@@ -29,16 +29,6 @@ public:
 private:
 
 public:
-	USpriteRenderer* GetRenderer()
-	{
-		return SpriteRenderer;
-	}
-
-	virtual void AddEntityLocation(FVector2D _Location)
-	{
-		AddActorLocation(_Location);
-	}
-
 	void SetEntityType(EEntityType _Type)
 	{
 		EntityType = _Type;

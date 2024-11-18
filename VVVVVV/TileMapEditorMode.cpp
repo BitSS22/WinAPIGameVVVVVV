@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "TileMapEditorMode.h"
 #include "Player.h"
-#include "MoveEntity.h"
+#include "PistonEntity.h"
 #include "Entity.h"
 #include "GameWorld.h"
 

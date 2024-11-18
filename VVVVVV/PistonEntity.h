@@ -24,10 +24,6 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
 
-	virtual APistonEntity* GetThis() override
-	{
-		return this;
-	}
 	virtual void SetEntity(std::string_view _Name) override;
 	
 private:
@@ -49,7 +45,7 @@ public:
 		SetActorLocation(DefualtLocation + (DefualtDir * MoveLenghtOffset));
 		Dir = DefualtDir;
 	}
-	virtual void AddEntityLocation(FVector2D _Location) override
+	void AddDefualtLocation(FVector2D _Location)
 	{
 		SetActorLocation(DefualtLocation += _Location);
 		DefualtLocation = GetActorLocation();

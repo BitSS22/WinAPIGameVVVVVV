@@ -151,6 +151,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ABackGroundTile.h" />
     <ClInclude Include="Teleport.h">
       <SubType>
       </SubType>
@@ -217,6 +218,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ABackGroundTile.cpp" />
     <ClCompile Include="Teleport.cpp">
       <SubType>
       </SubType>

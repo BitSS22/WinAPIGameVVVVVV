@@ -20,9 +20,9 @@ void AGameWorld::BeginPlay()
 	Room = GetWorld()->SpawnActor<ARoom>();
 	Room->GameWorld = this;
 
-	RoomDatas.resize(WorldMaxIndex.Y);
+	RoomDatas.resize(EGameConst::WorldMaxIndex.Y);
 	for (size_t y = 0; y < RoomDatas.size(); ++y)
-		RoomDatas[y].resize(WorldMaxIndex.X);
+		RoomDatas[y].resize(EGameConst::WorldMaxIndex.X);
 
 	GetWorld()->SetCameraToMainPawn(false);
 }

@@ -20,10 +20,6 @@ private:
 	virtual void Tick() override;
 
 public:
-	virtual APlatform* GetThis() override
-	{
-		return this;
-	}
 
 private:
 

@@ -58,6 +58,9 @@
     <ClInclude Include="Teleport.h">
       <Filter>ContentsObject\Entity\Teleport</Filter>
     </ClInclude>
+    <ClInclude Include="ABackGroundTile.h">
+      <Filter>ContentsObject\Map\GameWorld\Room\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -116,6 +119,9 @@
     </ClCompile>
     <ClCompile Include="Teleport.cpp">
       <Filter>ContentsObject\Entity\Teleport</Filter>
+    </ClCompile>
+    <ClCompile Include="ABackGroundTile.cpp">
+      <Filter>ContentsObject\Map\GameWorld\Room\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
