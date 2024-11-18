@@ -71,7 +71,7 @@
       <Filter>ContentsObject\Map\GameWorld\Room\Tile\CollisionTile\SpikeTile</Filter>
     </ClInclude>
     <ClInclude Include="Teleport.h">
-      <Filter>ContentsObject\Entity</Filter>
+      <Filter>ContentsObject\Entity\Teleport</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -145,7 +145,7 @@
       <Filter>ContentsObject\Map\GameWorld\Room\Tile\CollisionTile\SpikeTile</Filter>
     </ClCompile>
     <ClCompile Include="Teleport.cpp">
-      <Filter>ContentsObject\Entity</Filter>
+      <Filter>ContentsObject\Entity\Teleport</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +214,9 @@
     </Filter>
     <Filter Include="ContentsObject\Entity\PistonEntity\Platform">
       <UniqueIdentifier>{affa1a28-ad83-46c9-a2d1-66f19a0db784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Entity\Teleport">
+      <UniqueIdentifier>{18c6074f-4b77-4309-ac80-9d49fd9b9904}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

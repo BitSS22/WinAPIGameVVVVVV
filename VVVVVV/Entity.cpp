@@ -9,12 +9,7 @@ AEntity::~AEntity()
 {
 }
 
-void AEntity::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
-void AEntity::EntityDefaultSetUp(std::string_view _Name, FVector2D _Location)
+void AEntity::SetEntity(std::string_view _Name)
 {
 	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 	SpriteRenderer->SetSprite(_Name, 0);

@@ -49,6 +49,10 @@ void APistonEntity::Tick()
 	}
 }
 
+void APistonEntity::SetEntity(std::string_view _Name)
+{
+}
+
 void APistonEntity::MoveEntityDefaultSetUp(std::string_view _Name, FVector2D _Location, FVector2D _Dir, float _Speed, float _MoveLength, float _MoveOffset)
 {
 	AEntity::EntityDefaultSetUp(_Name, _Location);

@@ -18,5 +18,5 @@ void APlatform::Tick()
 {
 	Super::Tick();
 
-	// Collider->Get
+	
 }

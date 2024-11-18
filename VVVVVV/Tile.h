@@ -17,19 +17,12 @@ private:
 	USpriteRenderer* SpriteRenderer = nullptr;
 	ETileType TileType = ETileType::Last;
 
-public:
-	virtual void BeginPlay() override;
-	virtual void Tick() override;
-	
-	virtual void SetTile(std::string_view _Name, FIntPoint _Location, ETileType _TileType);
+public:	
+	virtual void SetTile(std::string_view _Name) = 0;
 
 private:
 
 public:
-	void SetTileType(ETileType _Type)
-	{
-		TileType = _Type;
-	}
 	ETileType GetTileType()
 	{
 		return TileType;

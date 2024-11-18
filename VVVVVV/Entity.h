@@ -24,8 +24,7 @@ private:
 protected:
 
 public:
-	virtual void BeginPlay() override;
-	void EntityDefaultSetUp(std::string_view _Name, FVector2D _Location);
+	virtual void SetEntity(std::string_view _Name) = 0;
 
 private:
 

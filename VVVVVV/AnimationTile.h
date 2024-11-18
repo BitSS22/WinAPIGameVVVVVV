@@ -14,6 +14,8 @@ public:
 	AAnimationTile& operator=(AAnimationTile&& _Other) noexcept = delete;
 
 private:
+	virtual void BeginPlay() override;
+	virtual void Tick() override;
 
 public:
 

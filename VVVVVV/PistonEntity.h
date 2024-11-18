@@ -24,7 +24,11 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
 
-	void MoveEntityDefaultSetUp(std::string_view _Name, FVector2D _Location, FVector2D _Dir, float _Speed, float _MoveLength, float _MoveOffset);
+	virtual APistonEntity* GetThis() override
+	{
+		return this;
+	}
+	virtual void SetEntity(std::string_view _Name) override;
 	
 private:
 
