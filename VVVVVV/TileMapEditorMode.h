@@ -15,7 +15,7 @@ enum class TileList
 };
 enum class EntityList
 {
-	Platforms,
+	APlatforms,
 	InterObjects,
 	Enemies,
 	LAST
@@ -134,7 +134,7 @@ private:
 	}
 	void AddPlatformList(std::string_view _Name)
 	{
-		EntityLists[static_cast<int>(EntityList::Platforms)].push_back(_Name.data());
+		EntityLists[static_cast<int>(EntityList::APlatforms)].push_back(_Name.data());
 	}
 	void AddInterObjectList(std::string_view _Name)
 	{

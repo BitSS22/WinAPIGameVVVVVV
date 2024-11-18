@@ -212,8 +212,16 @@ void ARoom::LoadRoomData(FIntPoint _Index)
 	{
 		AGameWorld::EntityData Data = ChangeRoomDatas.EntityDatas[i];
 
-		if (ChangeRoomDatas.EntityDatas[i].Name.find("ENEMIES::") != std::string::npos || ChangeRoomDatas.EntityDatas[i].Name.find("PLATFORMS::") != std::string::npos)
+		if (ChangeRoomDatas.EntityDatas[i].Name.find("ENEMIES::") != std::string::npos)
 		{
+			AMoveEntity* NewEntity = GetWorld()->SpawnActor<AMoveEntity>();
+			NewEntity->MoveEntityDefaultSetUp(Data.Name, Data.DefualtLocation, Data.DefualtDir, Data.Speed, Data.MoveLenght, Data.MoveLenghtOffset);
+			Entites.push_back(NewEntity);
+			NewEntity->SetRoom(this);
+		}
+		else if (ChangeRoomDatas.EntityDatas[i].Name.find("PLATFORMS::") != std::string::npos)
+		{
+			
 			AMoveEntity* NewEntity = GetWorld()->SpawnActor<AMoveEntity>();
 			NewEntity->MoveEntityDefaultSetUp(Data.Name, Data.DefualtLocation, Data.DefualtDir, Data.Speed, Data.MoveLenght, Data.MoveLenghtOffset);
 			Entites.push_back(NewEntity);

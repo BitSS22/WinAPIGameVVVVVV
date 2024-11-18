@@ -83,8 +83,6 @@ void APlayer::Tick()
 	}
 
 	Move();
-	MoveRoom();
-
 
 	if (Collider->CollisionOnce(ECollisionGroup::Enermy))
 	{
@@ -98,152 +96,62 @@ void APlayer::Tick()
 		SaveLocation = Actor->GetActorLocation();
 	}
 
-	vector<AActor*> Actors = Collider->CollisionAll(ECollisionGroup::Platform, FVector2D::ZERO);
+	vector<AActor*> Actors = Collider->CollisionAll(ECollisionGroup::Platform, MoveValue);
 
-	if (Actors.empty() == false)
-	{
-		for (int i = 0; i < Actors.size(); ++i)
-		{
-			FVector2D PlatformDir = Actors[i]->GetActorTransform().CenterRightBottom().Nomalize();
-			FVector2D ToDir = (GetActorLocation() + MoveValue - Actors[i]->GetActorLocation()).Nomalize();
+	//if (Actors.empty() == false)
+	//{
+	//	for (int i = 0; i < Actors.size(); ++i)
+	//	{
+	//		FVector2D Point = { 0.f, 0.f };
 
-			AMoveEntity* MoveEntity = dynamic_cast<AMoveEntity*>(Actors[i]);
-			FTransform ThisTransform = GetActorTransform();
-			FTransform EntityTransform = MoveEntity->GetActorTransform();
-
-			bool OnPlatform = false;
-
-			if (ToDir.X < PlatformDir.X && ToDir.X > -PlatformDir.X && ToDir.Y > 0.f && IsFlip == true)
-			{
-				SetActorLocation({ GetActorLocation().X, EntityTransform.CenterBottom() + ThisTransform.Scale.HalfY() });
-				MoveValue.Y = 0.f;
-				OnPlatform = true;
-				OnGround = true;
-			}
-			else if (ToDir.X < PlatformDir.X && ToDir.X > -PlatformDir.X && ToDir.Y < 0.f && IsFlip == false)
-			{
-				SetActorLocation({ GetActorLocation().X, EntityTransform.CenterTop() - ThisTransform.Scale.HalfY() });
-				MoveValue.Y = 0.f;
-				OnPlatform = true;
-				OnGround = true;
-			}
-			else if (ToDir.Y < PlatformDir.Y && ToDir.Y > -PlatformDir.Y && ToDir.X < 0.f)
-			{
-				SetActorLocation({ EntityTransform.CenterLeft() - ThisTransform.Scale.HalfX(), GetActorLocation().Y });
-			}
-			else if (ToDir.Y < PlatformDir.Y && ToDir.Y > -PlatformDir.Y && ToDir.X > 0.f)
-			{
-				SetActorLocation({ EntityTransform.CenterRight() + ThisTransform.Scale.HalfX(), GetActorLocation().Y });
-			}
-
-			if (OnPlatform == true)
-				MoveValue += MoveEntity->GetEntityDir() * MoveEntity->GetSpeed() * GET_DELTA;
+	//		if (GetActorLocation().X < Actors[i]->GetActorLocation().X)
+	//			Point = PointsY[static_cast<int>(PixelPointY::RightBottom)];
+	//		else
+	//			Point = PointsY[static_cast<int>(PixelPointY::LeftBottom)];
 
 
+	//		FVector2D Vector = Point - Actors[i]->GetActorLocation();
+	//		Vector.X = Vector.X / Actors[i]->GetActorScale().X;
+	//		Vector.Y = Vector.Y / Actors[i]->GetActorScale().Y;
+
+	//		AMoveEntity* MoveEntity = dynamic_cast<AMoveEntity*>(Actors[i]);
+
+	//		if (Vector.X > Vector.Y && -Vector.X > Vector.Y && IsFlip == false)
+	//		{
+	//			SetActorLocation({ GetActorLocation().X,  Actors[i]->GetActorTransform().CenterTop() - GetActorScale().HalfY() });
+	//			AddActorLocation(MoveEntity->GetEntityDir() * MoveEntity->GetSpeed() * GET_DELTA);
+	//			MoveValue.Y = 0.f;
+	//			OnGround = true;
+	//		}
+	//		if (Vector.X < Vector.Y && -Vector.X < Vector.Y && IsFlip == true)
+	//		{
+	//			SetActorLocation({ GetActorLocation().X,  Actors[i]->GetActorTransform().CenterBottom() + GetActorScale().HalfY() });
+	//			AddActorLocation(MoveEntity->GetEntityDir() * MoveEntity->GetSpeed() * GET_DELTA);
+	//			MoveValue.Y = 0.f;
+	//			OnGround = true;
+	//		}
+	//		if (Vector.Y > Vector.X && -Vector.Y > Vector.X && GetActorLocation().X < Actors[i]->GetActorLocation().X)
+	//		{
+	//			SetActorLocation({ Actors[i]->GetActorTransform().CenterLeft() - GetActorScale().HalfX() - 1.f , GetActorLocation().Y });
+	//			MoveValue.X = 0.f;
+	//		}
+	//		if (Vector.Y < Vector.X && -Vector.Y < Vector.X && GetActorLocation().X > Actors[i]->GetActorLocation().X)
+	//		{
+	//			SetActorLocation({ Actors[i]->GetActorTransform().CenterRight() + GetActorScale().HalfX() + 1.f , GetActorLocation().Y });
+	//			MoveValue.X = 0.f;
+	//		}
+	//	}
+
+	//}
 
 
+	if (IsDeath == false)
+		AddActorLocation(MoveValue);
+	
+	MoveRoom();
 
-			/*FVector2D NextLocation = GetActorLocation() + MoveValue;
-			FTransform NextTransform = FTransform(NextLocation, GetActorScale());
-			FVector2D Dir = (NextLocation - GetActorLocation());
 
-			AMoveEntity* MoveEntity = dynamic_cast<AMoveEntity*>(Actors[i]);
-
-			FTransform ThisTransform = GetActorTransform();
-			FTransform EntityTransform = MoveEntity->GetActorTransform();
-
-			FVector2D BaseDir = (MoveEntity->GetActorLocation() - EntityTransform.CenterRightBottom()).Nomalize();
-			FVector2D ToThisDir = (GetActorLocation() - MoveEntity->GetActorLocation()).Nomalize();*/
-
-			/*if (!KEY_DOWN(VK_SPACE))
-			{
-				if (abs(Dir.Y) < abs(Dir.X) && Dir.X > 0.f)
-					SetActorLocation({ EntityTransform.CenterLeft() - ThisTransform.Scale.HalfX(), GetActorLocation().Y });
-				else if (abs(Dir.Y) < abs(Dir.X) && Dir.X < 0.f)
-					SetActorLocation({ EntityTransform.CenterRight() + ThisTransform.Scale.HalfX(), GetActorLocation().Y });
-				else if (abs(Dir.Y) > abs(Dir.X) && Dir.Y > 0.f)
-				{
-					SetActorLocation({ GetActorLocation().X, EntityTransform.CenterTop() - ThisTransform.Scale.HalfY() });
-					MoveValue.Y = 0.f;
-					OnGround = true;
-				}
-				else if (abs(Dir.Y) > abs(Dir.X) && Dir.Y < 0.f)
-				{
-					SetActorLocation({ GetActorLocation().X, EntityTransform.CenterBottom() + ThisTransform.Scale.HalfY() });
-					MoveValue.Y = 0.f;
-					OnGround = true;
-				}
-			}*/
-
-			/*bool IsLeft = NextTransform.CenterRight() < Actors[i]->GetActorTransform().CenterLeft();
-			bool IsRight = NextTransform.CenterLeft() > Actors[i]->GetActorTransform().CenterRight();
-			bool IsTop = NextTransform.CenterBottom() < Actors[i]->GetActorTransform().CenterTop();
-			bool IsBottom = NextTransform.CenterTop() > Actors[i]->GetActorTransform().CenterBottom();
-
-			if (!KEY_DOWN(VK_SPACE))
-			{
-				if (IsLeft && !IsRight && !IsTop && !IsBottom)
-					SetActorLocation({ EntityTransform.CenterLeft() - ThisTransform.Scale.HalfX(), GetActorLocation().Y });
-				else if (!IsLeft && IsRight && !IsTop && !IsBottom)
-					SetActorLocation({ EntityTransform.CenterRight() + ThisTransform.Scale.HalfX(), GetActorLocation().Y });
-				else if (!IsLeft && !IsRight && IsTop && !IsBottom)
-				{
-					SetActorLocation({ GetActorLocation().X, EntityTransform.CenterTop() - ThisTransform.Scale.HalfY() });
-					MoveValue.Y = 0.f;
-					OnGround = true;
-				}
-				else if (!IsLeft && !IsRight && !IsTop && IsBottom)
-				{
-					SetActorLocation({ GetActorLocation().X, EntityTransform.CenterBottom() + ThisTransform.Scale.HalfY() });
-					MoveValue.Y = 0.f;
-					OnGround = true;
-				}
-			}*/
-			
-			/*if (!KEY_DOWN(VK_SPACE))
-			{
-				if (abs(Dir.Y) < abs(Dir.X) && Dir.X > 0.f)
-					SetActorLocation({ EntityTransform.CenterLeft() - ThisTransform.Scale.HalfX(), GetActorLocation().Y });
-				else if (abs(Dir.Y) < abs(Dir.X) && Dir.X < 0.f)
-					SetActorLocation({ EntityTransform.CenterRight() + ThisTransform.Scale.HalfX(), GetActorLocation().Y });
-				else if (abs(Dir.Y) > abs(Dir.X) && Dir.Y > 0.f)
-				{
-					SetActorLocation({ GetActorLocation().X, EntityTransform.CenterTop() - ThisTransform.Scale.HalfY() });
-					MoveValue.Y = 0.f;
-					OnGround = true;
-				}
-				else if (abs(Dir.Y) > abs(Dir.X) && Dir.Y < 0.f)
-				{
-					SetActorLocation({ GetActorLocation().X, EntityTransform.CenterBottom() + ThisTransform.Scale.HalfY() });
-					MoveValue.Y = 0.f;
-					OnGround = true;
-				}
-			}*/
-
-			/*if (!KEY_DOWN(VK_SPACE))
-			{
-				if (-BaseDir.Y < abs(ToThisDir.Y) && abs(ToThisDir.Y) < BaseDir.Y && ToThisDir.X < 0.f)
-					SetActorLocation({ EntityTransform.CenterLeft() - ThisTransform.Scale.HalfX(), GetActorLocation().Y });
-				else if (-BaseDir.Y < abs(ToThisDir.Y) && abs(ToThisDir.Y) < BaseDir.Y && ToThisDir.X > 0.f)
-					SetActorLocation({ EntityTransform.CenterRight() + ThisTransform.Scale.HalfX(), GetActorLocation().Y });
-				else if (-BaseDir.X < abs(ToThisDir.X) && abs(ToThisDir.X) < BaseDir.X && ToThisDir.Y < 0.f && IsFlip == false)
-				{
-					SetActorLocation({ GetActorLocation().X, EntityTransform.CenterTop() - ThisTransform.Scale.HalfY() });
-					MoveValue.Y = 0.f;
-					OnGround = true;
-				}
-				else if (-BaseDir.X < abs(ToThisDir.X) && abs(ToThisDir.X) < BaseDir.X && ToThisDir.Y > 0.f && IsFlip == true)
-				{
-					SetActorLocation({ GetActorLocation().X, EntityTransform.CenterBottom() + ThisTransform.Scale.HalfY() });
-					MoveValue.Y = 0.f;
-					OnGround = true;
-				}
-			}
-
-			MoveValue += MoveEntity->GetEntityDir() * MoveEntity->GetSpeed() * GET_DELTA;*/
-		}
-
-	}
+	
 
 	for (int i = 0; i < static_cast<int>(PixelPointY::LAST); ++i)
 	{
@@ -257,8 +165,6 @@ void APlayer::Tick()
 		}
 	}
 
-	if (IsDeath == false)
-		AddActorLocation(MoveValue);
 
 	
 

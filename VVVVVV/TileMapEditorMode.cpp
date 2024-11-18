@@ -481,7 +481,7 @@ void ATileMapEditorMode::LoadResourceList()
 
 	string BackGrounds = UEngineString::ToUpper("BackGrounds::");
 
-	string Platforms = UEngineString::ToUpper("Platforms::");
+	string APlatforms = UEngineString::ToUpper("Platforms::");
 	string InterObjects = UEngineString::ToUpper("InterObjects::");
 	string Enemies = UEngineString::ToUpper("Enemies::");
 
@@ -500,7 +500,7 @@ void ATileMapEditorMode::LoadResourceList()
 		else if (std::string::npos != Sprite.first.find(BackGrounds))
 			AddBackGroundList(Sprite.first);
 
-		else if (std::string::npos != Sprite.first.find(Platforms))
+		else if (std::string::npos != Sprite.first.find(APlatforms))
 			AddPlatformList(Sprite.first);
 		else if (std::string::npos != Sprite.first.find(InterObjects))
 			AddInterObjectList(Sprite.first);
@@ -875,7 +875,7 @@ void ATileMapEditorMode::NextBackGroundImage()
 
 void ATileMapEditorMode::CreateEntity()
 {
-	if (CurSelectEntityList == EntityList::Enemies || CurSelectEntityList == EntityList::Platforms)
+	if (CurSelectEntityList == EntityList::Enemies || CurSelectEntityList == EntityList::APlatforms)
 	{
 		AMoveEntity* NewEntity = GetWorld()->SpawnActor<AMoveEntity>();
 		NewEntity->MoveEntityDefaultSetUp(CurSelectEntityType->GetCurSpriteName(), CurSelectEntityType->GetComponentLocation(), FVector2D::RIGHT, EGameConst::DefualtSpeed, EGameConst::DefualtMoveLen, 0.f);

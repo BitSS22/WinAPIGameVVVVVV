@@ -46,6 +46,9 @@
     <ClInclude Include="Player.h">
       <Filter>ContentsObject\Entity\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Platforms.h">
+      <Filter>ContentsObject\Entity\Enermy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -92,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>ContentsObject\Entity\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Platforms.cpp">
+      <Filter>ContentsObject\Entity\Enermy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
