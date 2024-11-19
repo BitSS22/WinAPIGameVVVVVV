@@ -48,6 +48,7 @@ RoomEntityData AEntity::GetEntityData()
 {
 	RoomEntityData Data = {};
 
+	Data.DefualtLocation = GetActorLocation();
 	Data.Name = Sprite->GetCurSpriteName();
 	Data.EntityType = EntityType;
 
