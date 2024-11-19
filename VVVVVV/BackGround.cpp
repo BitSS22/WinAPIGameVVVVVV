@@ -31,7 +31,6 @@ void ABackGround::BeginPlay()
 		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
 		StarSprite->SetOrder(ERenderOrder::BACKGROUND_EFFECT);
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
-		StarSprite->SetActive(false);
 		float RandNumber = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(-440.f, -360.f);
 		StarEffects.push_back(StarEffect(StarSprite, RandNumber, FVector2D::RIGHT));
 	}
@@ -42,7 +41,6 @@ void ABackGround::BeginPlay()
 		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
 		StarSprite->SetOrder(ERenderOrder::BACKGROUND_EFFECT);
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
-		StarSprite->SetActive(false);
 		float RandNumber = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(-520.f, -400.f);
 		StarEffects.push_back(StarEffect(StarSprite, RandNumber, FVector2D::RIGHT));
 	}
@@ -53,10 +51,11 @@ void ABackGround::BeginPlay()
 		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
 		StarSprite->SetOrder(ERenderOrder::BACKGROUND_EFFECT);
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
-		StarSprite->SetActive(false);
 		float RandNumber = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(-600.f, -440.f);
 		StarEffects.push_back(StarEffect(StarSprite, RandNumber, FVector2D::RIGHT));
 	}
+
+	SetEffect(EEffectType::Star);
 
 	// TODO. Create Rect Effect
 }
@@ -88,7 +87,7 @@ void ABackGround::PlayVerticalAnimation()
 
 void ABackGround::PlayTowerAnimation()
 {
-	// TODO. 추후 작성 필요함
+	// TODO. After Code
 }
 
 void ABackGround::PlayStarEffect()

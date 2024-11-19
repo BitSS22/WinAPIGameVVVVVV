@@ -50,8 +50,10 @@ void AGameWorld::SaveRoomData()
 		Data.EntityDatas.push_back(Room->GetEntitesCRef()[i]->GetEntityData());
 }
 
-void AGameWorld::SaveFile()
+void AGameWorld::SaveMapDataFile()
 {
+	SaveRoomData();
+
 	UEngineSerializer Ser = {};
 
 	Ser << RoomDatas;
@@ -65,7 +67,7 @@ void AGameWorld::SaveFile()
 	NewFile.Write(Ser);
 }
 
-void AGameWorld::LoadFile()
+void AGameWorld::LoadMapDataFile()
 {
 	UEngineSerializer Ser = {};
 
@@ -78,6 +80,8 @@ void AGameWorld::LoadFile()
 	NewFile.Read(Ser);
 
 	Ser >> RoomDatas;
+
+	Room->SetRoom(Room->GetCurRoomIndex());
 }
 
 void RoomEntityData::Serialize(UEngineSerializer& _Class)

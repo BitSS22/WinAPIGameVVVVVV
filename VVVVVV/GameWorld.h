@@ -90,8 +90,8 @@ public:
 
 	void SaveRoomData();
 
-	void SaveFile();
-	void LoadFile();
+	void SaveMapDataFile();
+	void LoadMapDataFile();
 
 private:
 

@@ -70,7 +70,6 @@ private:
 	void PrevSelectEntity();
 	void NextSelectEntity();
 
-	// TODO. Think Delete
 	void AddEntityLocation(const FVector2D& _AddPos);
 	void AddEntitySpeed(float _Speed);
 	void AddEntityMoveLenght(float _Lenght);

@@ -388,7 +388,7 @@ void ATileMapEditorMode::AddTileList(int _Value)
 	CurTileIndex += _Value;
 
 	if (CurTileIndex < 0)
-		CurTileIndex = TileDatas[static_cast<int>(CurTileType)].size() - 1;
+		CurTileIndex = static_cast<int>(TileDatas[static_cast<int>(CurTileType)].size() - 1);
 	else if (CurTileIndex >= TileDatas[static_cast<int>(CurTileType)].size())
 		CurTileIndex = 0;
 
@@ -400,7 +400,7 @@ void ATileMapEditorMode::AddTileSpriteIndex(int _Value)
 	int MaxIndex = CurSelectTile->GetMaxIndex();
 	int CurIndex = CurSelectTile->GetCurIndex();
 	CurIndex += _Value;
-	if (CurIndex > 0)
+	if (CurIndex < 0)
 		CurIndex = MaxIndex - 1;
 	else if (CurIndex >= MaxIndex)
 		CurIndex = 0;
@@ -420,7 +420,7 @@ void ATileMapEditorMode::AddBackGroundList(int _Value)
 {
 	CurBackGroundIndex += _Value;
 	if (CurBackGroundIndex < 0)
-		CurBackGroundIndex = BackGroundDatas[static_cast<int>(CurBackGroundType)].size() - 1;
+		CurBackGroundIndex = static_cast<int>(BackGroundDatas[static_cast<int>(CurBackGroundType)].size() - 1);
 	else if (CurBackGroundIndex >= BackGroundDatas[static_cast<int>(CurBackGroundType)].size())
 		CurBackGroundIndex = 0;
 
@@ -441,7 +441,7 @@ void ATileMapEditorMode::AddEntityList(int _Value)
 	CurEntityIndex += _Value;
 
 	if (CurEntityIndex < 0)
-		CurEntityIndex = EntityDatas[static_cast<int>(CurEntityType)].size() - 1;
+		CurEntityIndex = static_cast<int>(EntityDatas[static_cast<int>(CurEntityType)].size() - 1);
 	else if (CurEntityIndex >= EntityDatas[static_cast<int>(CurEntityType)].size())
 		CurEntityIndex = 0;
 
@@ -607,6 +607,8 @@ void ATileMapEditorMode::LoadResourceList()
 
 void ATileMapEditorMode::EditorKeyCheck()
 {
+	
+
 	// 마우스 위치 추적
 	FIntPoint CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
 
@@ -668,9 +670,16 @@ void ATileMapEditorMode::EditorKeyCheck()
 	}
 
 	// Tile 관련
-
 	if (KEY_DOWN(VK_XBUTTON1))
 		PickUpTile();
+
+	if (KEY_DOWN(VK_XBUTTON2))
+	{
+		if (KEY_PRESS(VK_CONTROL))
+			AddTileSpriteIndex(-1);
+		else
+			AddTileSpriteIndex(1);
+	}
 
 	if (KEY_DOWN('1'))
 		SetTileType(--CurTileType);
@@ -678,9 +687,19 @@ void ATileMapEditorMode::EditorKeyCheck()
 		SetTileType(++CurTileType);
 
 	if (KEY_DOWN('Q'))
-		AddTileList(-1);
+	{
+		if (KEY_PRESS(VK_CONTROL))
+			AddTileList(-7);
+		else
+			AddTileList(-1);
+	}
 	if (KEY_DOWN('E'))
-		AddTileList(+1);
+	{
+		if (KEY_PRESS(VK_CONTROL))
+			AddTileList(7);
+		else
+			AddTileList(1);
+	}
 
 	// 배경화면
 	if (KEY_DOWN('O'))
@@ -698,30 +717,72 @@ void ATileMapEditorMode::EditorKeyCheck()
 			AddBackGroundList(1);
 	}
 
-	// 방 이동, 세이브
+	FVector2D Dir = FVector2D::ZERO;
+	
 	FIntPoint RoomIndex = GameWorld->GetRoom()->GetCurRoomIndex();
 	if (KEY_DOWN('W'))
 	{
-		RoomIndex.Y -= 1;
-		MoveRoom(RoomIndex);
+		if (KEY_PRESS(VK_CONTROL) && KEY_PRESS(VK_SHIFT))
+		{
+			RoomIndex.Y -= 1;
+			MoveRoom(RoomIndex);
+		}
+		else
+			Dir += FVector2D::UP;
 	}
 	if (KEY_DOWN('S'))
 	{
-		RoomIndex.Y += 1;
-		MoveRoom(RoomIndex);
+		if (KEY_PRESS(VK_CONTROL) && KEY_PRESS(VK_SHIFT))
+		{
+			RoomIndex.Y += 1;
+			MoveRoom(RoomIndex);
+		}
+		else
+			Dir += FVector2D::DOWN;
 	}
 	if (KEY_DOWN('A'))
 	{
-		RoomIndex.X -= 1;
-		MoveRoom(RoomIndex);
+		if (KEY_PRESS(VK_CONTROL) && KEY_PRESS(VK_SHIFT))
+		{
+			RoomIndex.X -= 1;
+			MoveRoom(RoomIndex);
+		}
+		else
+			Dir += FVector2D::LEFT;
 	}
 	if (KEY_DOWN('D'))
 	{
-		RoomIndex.X += 1;
-		MoveRoom(RoomIndex);
+		if (KEY_PRESS(VK_CONTROL) && KEY_PRESS(VK_SHIFT))
+		{
+			RoomIndex.X += 1;
+			MoveRoom(RoomIndex);
+		}
+		else
+			Dir += FVector2D::RIGHT;
 	}
+
+	if (Dir != FVector2D::ZERO)
+	{
+		if (KEY_PRESS(VK_CONTROL) && KEY_FREE(VK_SHIFT))
+			SetEntityDir(Dir);
+		else
+			AddEntityDir(Dir);
+	}
+
 	if (KEY_DOWN('R'))
 		MoveRoom(RoomIndex);
+
+
+	if (KEY_PRESS(VK_CONTROL))
+		Dir += FVector2D::UP;
+	else if (KEY_DOWN('J'))
+		Dir += FVector2D::DOWN;
+	else if (KEY_DOWN('H'))
+		Dir += FVector2D::LEFT;
+	else if (KEY_DOWN('K'))
+		Dir += FVector2D::RIGHT;
+
+	
 
 	// Entity 관련
 	if (KEY_DOWN(VK_RETURN))
@@ -729,21 +790,44 @@ void ATileMapEditorMode::EditorKeyCheck()
 	if (KEY_DOWN(VK_DELETE))
 		DeleteEntity();
 
-	FVector2D Dir = FVector2D::ZERO;
+	Dir = FVector2D::ZERO;
 
 	if (KEY_DOWN(VK_UP))
-		Dir += FVector2D::UP;
+	{
+		if (KEY_PRESS(VK_SHIFT))
+			Dir += FVector2D::UP * 1;
+		else if (KEY_PRESS(VK_CONTROL))
+			Dir += FVector2D::UP * 64;
+		else
+			Dir += FVector2D::UP * 8;
+	}
 	if (KEY_DOWN(VK_DOWN))
-		Dir += FVector2D::DOWN;
+	{
+		if (KEY_PRESS(VK_SHIFT))
+			Dir += FVector2D::DOWN * 1;
+		else if (KEY_PRESS(VK_CONTROL))
+			Dir += FVector2D::DOWN * 64;
+		else
+			Dir += FVector2D::DOWN * 8;
+	}
 	if (KEY_DOWN(VK_LEFT))
-		Dir += FVector2D::LEFT;
+	{
+		if (KEY_PRESS(VK_SHIFT))
+			Dir += FVector2D::LEFT * 1;
+		else if (KEY_PRESS(VK_CONTROL))
+			Dir += FVector2D::LEFT * 64;
+		else
+			Dir += FVector2D::LEFT * 8;
+	}
 	if (KEY_DOWN(VK_RIGHT))
-		Dir += FVector2D::RIGHT;
-
-	if (KEY_PRESS(VK_SHIFT))
-		Dir = Dir * 8;
-	else if (KEY_PRESS(VK_CONTROL))
-		Dir = Dir * 64;
+	{
+		if (KEY_PRESS(VK_SHIFT))
+			Dir += FVector2D::RIGHT * 1;
+		else if (KEY_PRESS(VK_CONTROL))
+			Dir += FVector2D::RIGHT * 64;
+		else
+			Dir += FVector2D::RIGHT * 8;
+	}
 
 	if (Dir != FVector2D::ZERO)
 		AddEntityLocation(Dir);
@@ -752,58 +836,58 @@ void ATileMapEditorMode::EditorKeyCheck()
 	if (KEY_DOWN(VK_OEM_MINUS))
 	{
 		if (KEY_PRESS(VK_SHIFT))
-			AddEntitySpeed(-8.f);
+			AddEntitySpeed(-1.f);
 		else if (KEY_PRESS(VK_CONTROL))
 			AddEntitySpeed(-64.f);
 		else
-			AddEntitySpeed(-1.f);
+			AddEntitySpeed(-8.f);
 	}
 	if (KEY_DOWN(VK_OEM_PLUS))
 	{
 		if (KEY_PRESS(VK_SHIFT))
-			AddEntitySpeed(8.f);
+			AddEntitySpeed(1.f);
 		else if (KEY_PRESS(VK_CONTROL))
 			AddEntitySpeed(64.f);
 		else
-			AddEntitySpeed(1.f);
+			AddEntitySpeed(8.f);
 	}
 
 	if (KEY_DOWN(VK_OEM_4))
 	{
 		if (KEY_PRESS(VK_SHIFT))
-			AddEntityMoveLenght(-8.f);
+			AddEntityMoveLenght(-1.f);
 		else if (KEY_PRESS(VK_CONTROL))
 			AddEntityMoveLenght(-64.f);
 		else
-			AddEntityMoveLenght(-1.f);
+			AddEntityMoveLenght(-8.f);
 	}
 	if (KEY_DOWN(VK_OEM_6))
 	{
 		if (KEY_PRESS(VK_SHIFT))
-			AddEntityMoveLenght(8.f);
+			AddEntityMoveLenght(1.f);
 		else if (KEY_PRESS(VK_CONTROL))
 			AddEntityMoveLenght(64.f);
 		else
-			AddEntityMoveLenght(1.f);
+			AddEntityMoveLenght(8.f);
 	}
 
 	if (KEY_DOWN('9'))
 	{
 		if (KEY_PRESS(VK_SHIFT))
-			AddEntityMoveOffSet(-8.f);
+			AddEntityMoveOffSet(-1.f);
 		else if (KEY_PRESS(VK_CONTROL))
 			AddEntityMoveOffSet(-64.f);
 		else
-			AddEntityMoveOffSet(-1.f);
+			AddEntityMoveOffSet(-8.f);
 	}
 	if (KEY_DOWN('0'))
 	{
 		if (KEY_PRESS(VK_SHIFT))
-			AddEntityMoveOffSet(8.f);
+			AddEntityMoveOffSet(1.f);
 		else if (KEY_PRESS(VK_CONTROL))
 			AddEntityMoveOffSet(64.f);
 		else
-			AddEntityMoveOffSet(1.f);
+			AddEntityMoveOffSet(8.f);
 	}
 
 	if (KEY_DOWN('N'))
@@ -831,29 +915,11 @@ void ATileMapEditorMode::EditorKeyCheck()
 			AddEntityList(1);
 	}
 
-	Dir = FVector2D::ZERO;
-	if (KEY_DOWN('U'))
-		Dir += FVector2D::UP;
-	else if (KEY_DOWN('J'))
-		Dir += FVector2D::DOWN;
-	else if (KEY_DOWN('H'))
-		Dir += FVector2D::LEFT;
-	else if (KEY_DOWN('K'))
-		Dir += FVector2D::RIGHT;
-
-	if (Dir != FVector2D::ZERO)
-	{
-		if (KEY_PRESS(VK_CONTROL))
-			SetEntityDir(Dir);
-		else
-			AddEntityDir(Dir);
-	}
-
 	if (KEY_DOWN(VK_F3))
-		GameWorld->SaveFile();
+		GameWorld->SaveMapDataFile();
 
 	if (KEY_DOWN(VK_F4))
-		GameWorld->LoadFile();
+		GameWorld->LoadMapDataFile();
 
 	if (KEY_DOWN(VK_TAB))
 		SwitchLoopRoom();
@@ -865,25 +931,25 @@ void ATileMapEditorMode::DebugText()
 	FIntPoint RoomIndex = GameWorld->GetRoom()->GetCurRoomIndex();
 
 	// DEBUG TEXT
-	string CurTileList = {};
 
-	string str = "Selected Entity : ";
-	str += CurSelectEntity->GetCurSpriteName();
-	UEngineDebug::CoreOutputString(str);
+	string str = "";
 
 	str = "World Index : ";
 	str += std::to_string(RoomIndex.X);
 	str += ",";
 	str += std::to_string(RoomIndex.Y);
 	str += ", RoomLoop : ";
-	str += std::to_string(GameWorld->GetRoom()->GetIsLoop());
+	if (GameWorld->GetRoom()->GetIsLoop() == true)
+		str += "true";
+	else
+		str += "false";
 	UEngineDebug::CoreOutputString(str);
 
-	str = "Tile Set Index : ";
-	str += std::to_string(CurTileIndex);
+	str = "Current Entity Name : ";
+	str += CurSelectEntity->GetCurSpriteName();
 	UEngineDebug::CoreOutputString(str);
 
-	str = "Select Tile Name : ";
+	str = "Currnet Tile Name : ";
 	str += CurSelectTile->GetCurSpriteName();
 	str += ", Index : ";
 	str += std::to_string(CurSelectTile->GetCurIndex());
@@ -907,45 +973,33 @@ void ATileMapEditorMode::DebugText()
 
 		str = "Selected Entity Name : ";
 		str += CurAdjustmentEntity->GetSpriteName();
-		str += ", List Number : ";
+		str += ", Number : ";
 		str += std::to_string(CurAdjustmentEntityIndex);
+		UEngineDebug::CoreOutputString(str);
+
+		str = "Location : ";
+		str += std::to_string(CurAdjustmentEntity->GetEntityLocation().X);
+		str += ",";
+		str += std::to_string(CurAdjustmentEntity->GetEntityLocation().Y);
+		str += ", Scale : ";
+		str += std::to_string(CurAdjustmentEntity->GetActorScale().X);
+		str += ",";
+		str += std::to_string(CurAdjustmentEntity->GetActorScale().Y);
 		UEngineDebug::CoreOutputString(str);
 
 		APistonEntity* PistonEntity = dynamic_cast<APistonEntity*>(CurAdjustmentEntity);
 		if (PistonEntity != nullptr)
 		{
-			str = "Location : ";
-			str += std::to_string(PistonEntity->GetEntityLocation().X);
-			str += ",";
-			str += std::to_string(PistonEntity->GetEntityLocation().Y);
-			str += ", Scale : ";
-			str += std::to_string(PistonEntity->GetActorScale().X);
-			str += ",";
-			str += std::to_string(PistonEntity->GetActorScale().Y);
-			str += ", MoveLenght : ";
-			str += std::to_string(PistonEntity->GetMoveLenght());
-			UEngineDebug::CoreOutputString(str);
-
 			str = "Speed : ";
 			str += std::to_string(PistonEntity->GetSpeed());
-			str += ", StartOffset : ";
+			str += ", Lenght : ";
+			str += std::to_string(PistonEntity->GetMoveLenght());
+			str += ", Offset : ";
 			str += std::to_string(PistonEntity->GetMoveLenghtOffset());
-			str += ", Direction : ";
+			str += ", Dir : ";
 			str += std::to_string(PistonEntity->GetEntityDefualtDir().X);
 			str += ", ";
 			str += std::to_string(PistonEntity->GetEntityDefualtDir().Y);
-			UEngineDebug::CoreOutputString(str);
-		}
-		else
-		{
-			str = "Location : ";
-			str += std::to_string(CurAdjustmentEntity->GetEntityLocation().X);
-			str += ",";
-			str += std::to_string(CurAdjustmentEntity->GetEntityLocation().Y);
-			str += "Scale : ";
-			str += std::to_string(CurAdjustmentEntity->GetActorScale().X);
-			str += ",";
-			str += std::to_string(CurAdjustmentEntity->GetActorScale().Y);
 			UEngineDebug::CoreOutputString(str);
 		}
 	}
@@ -983,6 +1037,8 @@ void ATileMapEditorMode::CreateEntity()
 	RoomEntityData Data = {};
 	Data.Name = CurSelectEntity->GetCurSpriteName();
 	Data.EntityType = CurEntityType;
+	Data.DefualtDir = FVector2D::RIGHT;
+	Data.DefualtLocation = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half();
 	NewEntity->SetEntity(Data);
 	NewEntity->SetRoom(GameWorld->GetRoom());
 	CurAdjustmentEntity = NewEntity;
