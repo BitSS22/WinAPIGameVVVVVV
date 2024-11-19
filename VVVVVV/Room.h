@@ -9,6 +9,8 @@
 class ARoom : public AActor
 {
 public:
+	friend class ATileMapEditorMode;
+public:
 	ARoom();
 	~ARoom();
 
@@ -35,9 +37,13 @@ public:
 	void SetRoom(const AGameWorld::RoomData& _Data);
 	AGameWorld::RoomData GetRoomData();
 
-	FIntPoint GetOnTileIndex(FVector2D _Pos) const;
+	static FIntPoint GetOnTileIndex(FVector2D _Pos);
+	ETileType GetTileType(FVector2D _Location) const;
 	ETileType GetTileType(FIntPoint _Index) const;
-	
+
+	static bool IsOutScreen(const FVector2D& _Location);
+	static bool IsOutTileIndex(const FIntPoint& _Index);
+
 private:
 
 public:

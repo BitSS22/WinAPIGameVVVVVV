@@ -30,46 +30,12 @@ public:
 private:
 
 public:
-	void AddSpeed(float _Speed)
-	{
-		Speed += _Speed;
-	}
-	void AddMoveLenght(float _Lenght)
-	{
-		MoveLenght += _Lenght;
-		SetActorLocation(DefualtLocation + (DefualtDir * MoveLenghtOffset));
-		Dir = DefualtDir;
-	}
-	void AddMoveLenghtOffset(float _Offset)
-	{
-		MoveLenghtOffset += _Offset;
-		SetActorLocation(DefualtLocation + (DefualtDir * MoveLenghtOffset));
-		Dir = DefualtDir;
-	}
-	void AddDefualtLocation(FVector2D _Location)
-	{
-		SetActorLocation(DefualtLocation += _Location);
-		DefualtLocation = GetActorLocation();
-		SetActorLocation(DefualtLocation + (DefualtDir * MoveLenghtOffset));
-		Dir = DefualtDir;
-	}
-
-	void AddDir(FVector2D _Dir)
-	{
-		DefualtDir += _Dir;
-		if (DefualtDir != FVector2D::ZERO)
-			DefualtDir.Nomalize();
-		Dir = DefualtDir;
-		SetActorLocation(DefualtLocation + (DefualtDir * MoveLenghtOffset));
-	}
-	void SetDir(FVector2D _Dir)
-	{
-		DefualtDir = _Dir;
-		if (DefualtDir != FVector2D::ZERO)
-			DefualtDir.Nomalize();
-		Dir = DefualtDir;
-		SetActorLocation(DefualtLocation + (DefualtDir * MoveLenghtOffset));
-	}
+	virtual void AddEntityLocation(const FVector2D& _Location) override;
+	void AddSpeed(float _Speed);
+	void AddMoveLenght(float _Lenght);
+	void AddMoveLenghtOffset(float _Offset);
+	void AddDir(const FVector2D& _Dir);
+	void SetDir(const FVector2D& _Dir);
 
 	float GetSpeed()
 	{

@@ -53,7 +53,8 @@ void ARoom::MoveRoom(FIntPoint _Index)
 
 void ARoom::SetRoom(FIntPoint _Index)
 {
-	SetRoom(GetGameWorld()->GetRoomDatasRef(_Index));
+	const AGameWorld::RoomData& Data = GetGameWorld()->GetRoomDatasRef(_Index);
+	SetRoom(Data);
 }
 
 void ARoom::SetRoom(const AGameWorld::RoomData& _Data)
@@ -128,7 +129,7 @@ AGameWorld::RoomData ARoom::GetRoomData()
 	return Data;
 }
 
-FIntPoint ARoom::GetOnTileIndex(FVector2D _Pos) const
+FIntPoint ARoom::GetOnTileIndex(FVector2D _Pos)
 {
 	if (_Pos.X < 0)
 		_Pos.X -= EGameConst::TileScale.X;
@@ -138,6 +139,11 @@ FIntPoint ARoom::GetOnTileIndex(FVector2D _Pos) const
 	return FIntPoint(_Pos.X / EGameConst::TileScale.X, _Pos.Y / EGameConst::TileScale.Y);
 }
 
+ETileType ARoom::GetTileType(FVector2D _Location) const
+{
+	return GetTileType(GetOnTileIndex(_Location));
+}
+
 ETileType ARoom::GetTileType(FIntPoint _Index) const
 {
 	if (_Index.X < 0 || _Index.X >= EGameConst::TileCount.X || _Index.Y < 0 || _Index.Y >= EGameConst::TileCount.Y)
@@ -145,3 +151,34 @@ ETileType ARoom::GetTileType(FIntPoint _Index) const
 	else
 		return Tiles[_Index.Y][_Index.X]->GetType();
 }
+
+bool ARoom::IsOutScreen(const FVector2D& _Location)
+{
+	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+
+	if (_Location.X < 0.f)
+		return true;
+	else if (_Location.Y < 0.f)
+		return true;
+	else if (_Location.X >= WindowSize.X)
+		return true;
+	else if (_Location.Y >= WindowSize.Y)
+		return true;
+
+	return false;
+}
+
+bool ARoom::IsOutTileIndex(const FIntPoint& _Index)
+{
+	if (_Index.X < 0.f)
+		return true;
+	else if (_Index.Y < 0.f)
+		return true;
+	else if (_Index.X >= EGameConst::TileCount.X)
+		return true;
+	else if (_Index.Y >= EGameConst::TileCount.Y)
+		return true;
+
+	return false;
+}
+

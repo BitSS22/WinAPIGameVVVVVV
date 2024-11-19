@@ -34,16 +34,12 @@ void APistonEntity::Tick()
 	}
 
 	// Debug
-	// 액터 위치
 	UEngineDebug::CoreDebugRender(GetActorTransform(), UEngineDebug::EDebugPosType::Rect);
 
-	// 액터 기준 위치
-	if (Dir != FVector2D::ZERO)
-	{
-		UEngineDebug::CoreDebugRender(FTransform(DefualtLocation + DefualtDir * MoveLenghtOffset, GetActorScale()), UEngineDebug::EDebugPosType::Rect);
-		UEngineDebug::CoreDebugRender(FTransform(DefualtLocation + DefualtDir * MoveLenght, FVector2D(5.f, 5.f)), UEngineDebug::EDebugPosType::Circle);
-		UEngineDebug::CoreDebugRender(FTransform(DefualtLocation + -DefualtDir * MoveLenght, FVector2D(5.f, 5.f)), UEngineDebug::EDebugPosType::Circle);
-	}
+	UEngineDebug::CoreDebugRender(FTransform(DefualtLocation + DefualtDir * MoveLenghtOffset, GetActorScale()), UEngineDebug::EDebugPosType::Rect);
+	UEngineDebug::CoreDebugRender(FTransform(DefualtLocation + DefualtDir * MoveLenght, FVector2D(5.f, 5.f)), UEngineDebug::EDebugPosType::Circle);
+	UEngineDebug::CoreDebugRender(FTransform(DefualtLocation + -DefualtDir * MoveLenght, FVector2D(5.f, 5.f)), UEngineDebug::EDebugPosType::Circle);
+
 }
 
 void APistonEntity::SetEntity(const AGameWorld::RoomData::RoomEntityData& _Data)
@@ -72,4 +68,50 @@ AGameWorld::RoomData::RoomEntityData APistonEntity::GetEntityData()
 	Data.MoveLenghtOffset = MoveLenghtOffset;
 	
 	return Data;
+}
+
+void APistonEntity::AddEntityLocation(const FVector2D& _Location)
+{
+	SetActorLocation(DefualtLocation += _Location);
+	DefualtLocation = GetActorLocation();
+	SetActorLocation(DefualtLocation + (DefualtDir * MoveLenghtOffset));
+	Dir = DefualtDir;
+}
+
+void APistonEntity::AddSpeed(float _Speed)
+{
+	Speed += _Speed;
+	SetActorLocation(DefualtLocation + (DefualtDir * MoveLenghtOffset));
+}
+
+void APistonEntity::AddMoveLenght(float _Lenght)
+{
+	MoveLenght += _Lenght;
+	SetActorLocation(DefualtLocation + (DefualtDir * MoveLenghtOffset));
+	Dir = DefualtDir;
+}
+
+void APistonEntity::AddMoveLenghtOffset(float _Offset)
+{
+	MoveLenghtOffset += _Offset;
+	SetActorLocation(DefualtLocation + (DefualtDir * MoveLenghtOffset));
+	Dir = DefualtDir;
+}
+
+void APistonEntity::AddDir(const FVector2D& _Dir)
+{
+	DefualtDir += _Dir;
+	if (DefualtDir != FVector2D::ZERO)
+		DefualtDir.Nomalize();
+	Dir = DefualtDir;
+	SetActorLocation(DefualtLocation + (DefualtDir * MoveLenghtOffset));
+}
+
+void APistonEntity::SetDir(const FVector2D& _Dir)
+{
+	DefualtDir = _Dir;
+	if (DefualtDir != FVector2D::ZERO)
+		DefualtDir.Nomalize();
+	Dir = DefualtDir;
+	SetActorLocation(DefualtLocation + (DefualtDir * MoveLenghtOffset));
 }

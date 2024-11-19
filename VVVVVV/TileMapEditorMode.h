@@ -19,7 +19,7 @@ public:
 private:
 	std::vector<AGameWorld::RoomData::RoomTileData> TileDatas[static_cast<int>(ETileType::Last)] = {};
 	ETileType CurTileType = ETileType::Last;
-	int CurTileListIndex = 0;
+	int CurTileIndex = 0;
 
 	std::vector<AGameWorld::RoomData::RoomBackGroundData> BackGroundDatas[static_cast<int>(EBackGroundType::Last)] = {};
 	EBackGroundType CurBackGroundType = EBackGroundType::Last;
@@ -41,10 +41,12 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
 
+
 private:
 	int GetCheckAroundTileIndex(std::string_view _Name, const FIntPoint& _Index) const;
 	bool IsSameTileName(std::string_view _Name, const FIntPoint& _Index) const;
 
+	void PickUpTile();
 	void ChangeTile(bool _AroundTileChange, FIntPoint _Index);
 	void DeleteTile(bool _AroundTileChange, FIntPoint _Index);
 
@@ -52,22 +54,23 @@ private:
 	void DeleteEntity();
 
 	void MoveRoom(FIntPoint _Index);
+
 	void SwitchLoopRoom();
 
 	void SetTileType(ETileType _Type);
 	void AddTileList(int _Value);
+	void AddTileSpriteIndex(int _Value);
 
-	void PrevBackGroundImage();
-	void NextBackGroundImage();
+	void SetBackGroundType(EBackGroundType _Type);
+	void AddBackGroundList(int _Value);
 
-	void PrevEntityList();
-	void NextEntityList();
-	void PrevEntityType(int _AddIndex);
-	void NextEntityType(int _AddIndex);
+	void SetEntityType(EEntityType _Type);
+	void AddEntityList(int _Value);
 
 	void PrevSelectEntity();
 	void NextSelectEntity();
 
+	// TODO. Think Delete
 	void AddEntityLocation(const FVector2D& _AddPos);
 	void AddEntitySpeed(float _Speed);
 	void AddEntityMoveLenght(float _Lenght);
@@ -75,15 +78,9 @@ private:
 	void AddEntityDir(const FVector2D& _Dir);
 	void SetEntityDir(const FVector2D& _Dir);
 
-	void PickUpTile();
-
 	void LoadResourceList();
-
 	void EditorKeyCheck();
 	void DebugText();
-
-	bool IsOutScreen(const FVector2D& _Location) const;
-	bool IsOutTileIndex(const FIntPoint& _Index) const;
 
 public:
 	AGameWorld* GetGameWorld() const

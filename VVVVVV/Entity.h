@@ -23,6 +23,8 @@ private:
 protected:
 
 public:
+	virtual void Tick() override;
+
 	virtual void SetEntity(const AGameWorld::RoomData::RoomEntityData& _Data) = 0;
 	virtual AGameWorld::RoomData::RoomEntityData GetEntityData() = 0;
 
@@ -33,9 +35,9 @@ public:
 	{
 		return EntityType;
 	}
-	USpriteRenderer* GetSpriteRenderer()
+	std::string_view GetSpriteName()
 	{
-		return Sprite;
+		return Sprite->GetCurSpriteName();
 	}
 	U2DCollision* GetCollision()
 	{
@@ -48,6 +50,10 @@ public:
 	ARoom* GetRoom()
 	{
 		return Room;
+	}
+	virtual void AddEntityLocation(const FVector2D& _Location)
+	{
+		AddActorLocation(_Location);
 	}
 
 };

@@ -9,6 +9,14 @@ AEntity::~AEntity()
 {
 }
 
+void AEntity::Tick()
+{
+	Super::Tick();
+
+	// Debug
+	UEngineDebug::CoreDebugRender(GetActorTransform(), UEngineDebug::EDebugPosType::Rect);
+}
+
 void AEntity::SetEntity(const AGameWorld::RoomData::RoomEntityData& _Data)
 {
 	Sprite = CreateDefaultSubObject<USpriteRenderer>();
