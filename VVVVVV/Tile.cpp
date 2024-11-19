@@ -15,14 +15,14 @@ void ATile::BeginPlay()
 	Super::BeginPlay();
 
 	Sprite = CreateDefaultSubObject<USpriteRenderer>();
-	Sprite->SetSprite("Debug Tile", 0);
+	Sprite->SetSprite("NoneTiles::None", 0);
 	Sprite->SetSpriteScale(1.f, 0);
 	Sprite->SetOrder(ERenderOrder::TILE);
 
 	AnimationTileSetup();
 }
 
-void ATile::SetTile(const AGameWorld::RoomData::RoomTileData& _Data)
+void ATile::SetTile(const RoomTileData& _Data)
 {
 	Sprite->SetSprite(_Data.Name, _Data.CurIndex);
 	TileType = _Data.TileType;
@@ -49,9 +49,9 @@ void ATile::SetTile(const AGameWorld::RoomData::RoomTileData& _Data)
 	MSGASSERT(nullptr, "Unknown Tile Type");
 }
 
-AGameWorld::RoomData::RoomTileData ATile::GetTileData()
+RoomTileData ATile::GetTileData()
 {
-	AGameWorld::RoomData::RoomTileData TileData = {};
+	RoomTileData TileData = {};
 	TileData.Name = Sprite->GetCurSpriteName();
 	TileData.CurIndex = Sprite->GetCurIndex();
 	TileData.TileType = TileType;

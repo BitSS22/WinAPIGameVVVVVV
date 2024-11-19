@@ -63,7 +63,7 @@ public:
 		ActorType* NewActor = new ActorType();
 
 		AActor* ActorPtr = dynamic_cast<AActor*>(NewActor);
-		ActorPtr->GameWorld = this;
+		ActorPtr->World = this;
 
 		BeginPlayList.push_back(ActorPtr);
 		return NewActor;
@@ -95,8 +95,8 @@ private:
 		GameMode = new GameModeType();
 		MainPawn = new MainPawnType();
 
-		MainPawn->GameWorld = this;
-		GameMode->GameWorld = this;
+		MainPawn->World = this;
+		GameMode->World = this;
 
 		BeginPlayList.push_back(GameMode);
 		BeginPlayList.push_back(MainPawn);

@@ -24,8 +24,8 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
 
-	virtual void SetEntity(const AGameWorld::RoomData::RoomEntityData& _Data) override;
-	AGameWorld::RoomData::RoomEntityData GetEntityData() override;
+	virtual void SetEntity(const RoomEntityData& _Data) override;
+	RoomEntityData GetEntityData() override;
 	
 private:
 

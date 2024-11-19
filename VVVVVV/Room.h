@@ -1,10 +1,11 @@
 #pragma once
 #include <EnginePlatform/EngineWindowImage.h>
-#include "GameWorld.h"
-#include "Tile.h"
-#include "BackGround.h"
-#include "Entity.h"
 #include <vector>
+#include "GameWorld.h"
+
+class AEntity;
+class ABackGround;
+class ATile;
 
 class ARoom : public AActor
 {
@@ -33,13 +34,13 @@ public:
 
 	void MoveRoom(FIntPoint _Index);
 	
-	void SetRoom(FIntPoint _Index);
-	void SetRoom(const AGameWorld::RoomData& _Data);
-	AGameWorld::RoomData GetRoomData();
+	void SetRoom(const FIntPoint& _Index);
+	void SetRoom(const RoomData& _Data);
+	RoomData GetRoomData();
 
 	static FIntPoint GetOnTileIndex(FVector2D _Pos);
-	ETileType GetTileType(FVector2D _Location) const;
-	ETileType GetTileType(FIntPoint _Index) const;
+	ETileType GetTileType(const FVector2D& _Location) const;
+	ETileType GetTileType(const FIntPoint& _Index) const;
 
 	static bool IsOutScreen(const FVector2D& _Location);
 	static bool IsOutTileIndex(const FIntPoint& _Index);

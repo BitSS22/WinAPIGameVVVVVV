@@ -11,8 +11,20 @@ enum class EEffectType
 class ABackGround : public AActor
 {
 private:
-	INNER_CLASS struct StarEffect;
-	INNER_CLASS struct RectEffect;
+	struct StarEffect
+	{
+	public:
+		USpriteRenderer* Sprite = nullptr;
+		float Speed = 0.f;
+		FVector2D Dir = {};
+	};
+	struct RectEffect
+	{
+	public:
+		USpriteRenderer* Sprite = nullptr;
+		float Speed = 0.f;
+		FVector2D Dir = {};
+	};
 public:
 	ABackGround();
 	~ABackGround();
@@ -24,7 +36,7 @@ public:
 
 private:
 	USpriteRenderer* Sprite = nullptr;
-	EBackGroundType BackGroundType = EBackGroundType::Last;
+	EBackGroundType BackGroundType = EBackGroundType::Space;
 	float AnimationSpeed = 320.f;
 	std::vector<StarEffect> StarEffects = {};
 	std::vector<RectEffect> RectEffects = {};
@@ -36,8 +48,8 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
 
-	void SetBackGround(const AGameWorld::RoomData::RoomBackGroundData& _Data);
-	AGameWorld::RoomData::RoomBackGroundData GetBackGroundData();
+	void SetBackGround(const RoomBackGroundData& _Data);
+	RoomBackGroundData GetBackGroundData();
 
 private:
 	void PlayHorizontalAnimation();
@@ -51,20 +63,5 @@ private:
 
 public:
 
-private:
-	INNER_CLASS struct StarEffect
-	{
-	public:
-		USpriteRenderer* Sprite = nullptr;
-		float Speed = 0.f;
-		FVector2D Dir = {};
-	};
-	INNER_CLASS struct RectEffect
-	{
-	public:
-		USpriteRenderer* Sprite = nullptr;
-		float Speed = 0.f;
-		FVector2D Dir = {};
-	};
 };
 

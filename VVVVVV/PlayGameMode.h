@@ -1,8 +1,7 @@
 #pragma once
 #include <EngineCore/GameMode.h>
+#include "GameWorld.h"
 
-class AGameWorld;
-// Ό³Έν :
 class APlayGameMode : public AGameMode
 {
 public:

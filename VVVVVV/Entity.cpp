@@ -17,7 +17,7 @@ void AEntity::Tick()
 	UEngineDebug::CoreDebugRender(GetActorTransform(), UEngineDebug::EDebugPosType::Rect);
 }
 
-void AEntity::SetEntity(const AGameWorld::RoomData::RoomEntityData& _Data)
+void AEntity::SetEntity(const RoomEntityData& _Data)
 {
 	Sprite = CreateDefaultSubObject<USpriteRenderer>();
 	Sprite->SetSprite(_Data.Name, 0);
@@ -42,9 +42,9 @@ void AEntity::SetEntity(const AGameWorld::RoomData::RoomEntityData& _Data)
 	Collider->SetComponentScale(GetActorScale());
 }
 
-AGameWorld::RoomData::RoomEntityData AEntity::GetEntityData()
+RoomEntityData AEntity::GetEntityData()
 {
-	AGameWorld::RoomData::RoomEntityData Data = {};
+	RoomEntityData Data = {};
 
 	Data.Name = Sprite->GetCurSpriteName();
 	Data.EntityType = EntityType;

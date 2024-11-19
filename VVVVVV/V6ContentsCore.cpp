@@ -46,8 +46,8 @@ void V6ContentsCore::BeginPlay()
 	ResourceLoad();
 
 	// First Level Open
-	UEngineAPICore::GetCore()->OpenLevel("Play");
-	//UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
+	//UEngineAPICore::GetCore()->OpenLevel("Play");
+	UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
 }
 
 void V6ContentsCore::Tick()
@@ -79,13 +79,15 @@ void V6ContentsCore::SpriteLoad()
 void V6ContentsCore::SoundLoad()
 {
 	// TODO. Sound Resource Load Code, and Function
-	UEngineDirectory Dir = {};
-	Dir.MoveParentToDirectory("Resources");
-	Dir.Append("Sound");
-	vector<UEngineFile> SoundFiles = Dir.GetAllFile();
 
-	for (const auto& Sound : SoundFiles)
-		UImageManager::GetInst().Load(Sound.GetPathToString());
+
+	//UEngineDirectory Dir = {};
+	//Dir.MoveParentToDirectory("Resources");
+	//Dir.Append("Sound");
+	//vector<UEngineFile> SoundFiles = Dir.GetAllFile();
+
+	//for (const auto& Sound : SoundFiles)
+	//	UImageManager::GetInst().Load(Sound.GetPathToString());
 
 
 }

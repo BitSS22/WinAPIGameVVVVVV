@@ -9,6 +9,7 @@
 #include "Platform.h"
 #include "CheckPoint.h"
 #include "Teleport.h"
+#include "Tile.h"
 
 ARoom::ARoom()
 {
@@ -26,7 +27,7 @@ void ARoom::BeginPlay()
 	Tiles.resize(EGameConst::TileCount.Y);
 	for (int y = 0; y < EGameConst::TileCount.Y; ++y)
 	{
-		Tiles[y].reserve(EGameConst::TileCount.X);
+		Tiles[y].resize(EGameConst::TileCount.X);
 		for (int x = 0; x < EGameConst::TileCount.X; ++x)
 		{
 			Tiles[y][x] = GetWorld()->SpawnActor<ATile>();
@@ -51,13 +52,13 @@ void ARoom::MoveRoom(FIntPoint _Index)
 	CurRoomIndex = _Index;
 }
 
-void ARoom::SetRoom(FIntPoint _Index)
+void ARoom::SetRoom(const FIntPoint& _Index)
 {
-	const AGameWorld::RoomData& Data = GetGameWorld()->GetRoomDatasRef(_Index);
+	const RoomData& Data = GetGameWorld()->GetRoomDatasRef(_Index);
 	SetRoom(Data);
 }
 
-void ARoom::SetRoom(const AGameWorld::RoomData& _Data)
+void ARoom::SetRoom(const RoomData& _Data)
 {
 	for (int y = 0; y < EGameConst::TileCount.Y; ++y)
 	{
@@ -108,9 +109,9 @@ void ARoom::SetRoom(const AGameWorld::RoomData& _Data)
 	}
 }
 
-AGameWorld::RoomData ARoom::GetRoomData()
+RoomData ARoom::GetRoomData()
 {
-	AGameWorld::RoomData Data = {};
+	RoomData Data = {};
 
 	Data.BackGroundData = BackGround->GetBackGroundData();
 	Data.LoopRoom = LoopRoom;
@@ -139,12 +140,12 @@ FIntPoint ARoom::GetOnTileIndex(FVector2D _Pos)
 	return FIntPoint(_Pos.X / EGameConst::TileScale.X, _Pos.Y / EGameConst::TileScale.Y);
 }
 
-ETileType ARoom::GetTileType(FVector2D _Location) const
+ETileType ARoom::GetTileType(const FVector2D& _Location) const
 {
 	return GetTileType(GetOnTileIndex(_Location));
 }
 
-ETileType ARoom::GetTileType(FIntPoint _Index) const
+ETileType ARoom::GetTileType(const FIntPoint& _Index) const
 {
 	if (_Index.X < 0 || _Index.X >= EGameConst::TileCount.X || _Index.Y < 0 || _Index.Y >= EGameConst::TileCount.Y)
 		return ETileType::None;

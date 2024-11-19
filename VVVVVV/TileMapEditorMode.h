@@ -17,16 +17,16 @@ public:
 	ATileMapEditorMode& operator=(ATileMapEditorMode&& _Other) noexcept = delete;
 
 private:
-	std::vector<AGameWorld::RoomData::RoomTileData> TileDatas[static_cast<int>(ETileType::Last)] = {};
-	ETileType CurTileType = ETileType::Last;
+	std::vector<RoomTileData> TileDatas[static_cast<int>(ETileType::Last)] = {};
+	ETileType CurTileType = ETileType::Collision;
 	int CurTileIndex = 0;
 
-	std::vector<AGameWorld::RoomData::RoomBackGroundData> BackGroundDatas[static_cast<int>(EBackGroundType::Last)] = {};
-	EBackGroundType CurBackGroundType = EBackGroundType::Last;
+	std::vector<RoomBackGroundData> BackGroundDatas[static_cast<int>(EBackGroundType::Last)] = {};
+	EBackGroundType CurBackGroundType = EBackGroundType::Space;
 	int CurBackGroundIndex = 0;
 
-	std::vector<AGameWorld::RoomData::RoomEntityData> EntityDatas[static_cast<int>(EEntityType::Last)] = {};
-	EEntityType CurEntityType = EEntityType::Last;
+	std::vector<RoomEntityData> EntityDatas[static_cast<int>(EEntityType::Last)] = {};
+	EEntityType CurEntityType = EEntityType::Enermy;
 	int CurEntityIndex = 0;
 
 	USpriteRenderer* CurSelectTile = nullptr;

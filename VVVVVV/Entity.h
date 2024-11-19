@@ -2,6 +2,9 @@
 #include "Enums.h"
 #include "EngineCore/Actor.h"
 #include "GameWorld.h"
+#include "Room.h"
+#include <EngineCore/EngineSprite.h>
+#include <EngineCore/2DCollision.h>
 
 class AEntity : public AActor
 {
@@ -25,21 +28,21 @@ protected:
 public:
 	virtual void Tick() override;
 
-	virtual void SetEntity(const AGameWorld::RoomData::RoomEntityData& _Data) = 0;
-	virtual AGameWorld::RoomData::RoomEntityData GetEntityData() = 0;
+	virtual void SetEntity(const RoomEntityData& _Data);
+	virtual RoomEntityData GetEntityData();
 
 private:
 
 public:
-	EEntityType GetEntityType()
+	EEntityType GetEntityType() const
 	{
 		return EntityType;
 	}
-	std::string_view GetSpriteName()
+	std::string GetSpriteName() const
 	{
 		return Sprite->GetCurSpriteName();
 	}
-	U2DCollision* GetCollision()
+	U2DCollision* GetCollision() const
 	{
 		return Collider;
 	}
@@ -47,7 +50,7 @@ public:
 	{
 		Room = _Room;
 	}
-	ARoom* GetRoom()
+	ARoom* GetRoom() const
 	{
 		return Room;
 	}

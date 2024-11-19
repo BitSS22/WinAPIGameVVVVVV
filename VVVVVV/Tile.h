@@ -16,13 +16,13 @@ public:
 
 private:
 	USpriteRenderer* Sprite = nullptr;
-	ETileType TileType = ETileType::Last;
+	ETileType TileType = ETileType::None;
 
 public:	
 	virtual void BeginPlay() override;
 
-	void SetTile(const AGameWorld::RoomData::RoomTileData& _Data);
-	AGameWorld::RoomData::RoomTileData GetTileData();
+	void SetTile(const RoomTileData& _Data);
+	RoomTileData GetTileData();
 
 private:
 	void AnimationTileSetup();
@@ -32,7 +32,7 @@ public:
 	{
 		return TileType;
 	}
-	std::string_view GetSpriteName()
+	std::string GetSpriteName()
 	{
 		return Sprite->GetCurSpriteName();
 	}

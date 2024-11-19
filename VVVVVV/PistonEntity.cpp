@@ -42,7 +42,7 @@ void APistonEntity::Tick()
 
 }
 
-void APistonEntity::SetEntity(const AGameWorld::RoomData::RoomEntityData& _Data)
+void APistonEntity::SetEntity(const RoomEntityData& _Data)
 {
 	AEntity::SetEntity(_Data);
 
@@ -57,9 +57,9 @@ void APistonEntity::SetEntity(const AGameWorld::RoomData::RoomEntityData& _Data)
 	AddActorLocation(Dir * MoveLenghtOffset);
 }
 
-AGameWorld::RoomData::RoomEntityData APistonEntity::GetEntityData()
+RoomEntityData APistonEntity::GetEntityData()
 {
-	AGameWorld::RoomData::RoomEntityData Data = AEntity::GetEntityData();
+	RoomEntityData Data = AEntity::GetEntityData();
 
 	Data.DefualtLocation = DefualtLocation;
 	Data.DefualtDir = DefualtDir;

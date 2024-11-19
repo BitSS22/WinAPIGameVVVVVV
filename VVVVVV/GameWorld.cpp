@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GameWorld.h"
 #include "Room.h"
+#include "Tile.h"
 #include "BackGround.h"
 #include "Entity.h"
 #include "PistonEntity.h"
@@ -30,7 +31,7 @@ void AGameWorld::BeginPlay()
 void AGameWorld::SaveRoomData()
 {
 	FIntPoint CurRoomIndex = Room->GetCurRoomIndex();
-	AGameWorld::RoomData& Data = RoomDatas[CurRoomIndex.Y][CurRoomIndex.X];
+	RoomData& Data = RoomDatas[CurRoomIndex.Y][CurRoomIndex.X];
 
 	for (size_t y = 0; y < EGameConst::TileCount.Y; ++y)
 	{
@@ -77,4 +78,36 @@ void AGameWorld::LoadFile()
 	NewFile.Read(Ser);
 
 	Ser >> RoomDatas;
+}
+
+void RoomEntityData::Serialize(UEngineSerializer& _Class)
+{
+}
+
+void RoomEntityData::DeSerialize(UEngineSerializer& _Class)
+{
+}
+
+void RoomTileData::Serialize(UEngineSerializer& _Class)
+{
+}
+
+void RoomTileData::DeSerialize(UEngineSerializer& _Class)
+{
+}
+
+void RoomBackGroundData::Serialize(UEngineSerializer& _Class)
+{
+}
+
+void RoomBackGroundData::DeSerialize(UEngineSerializer& _Class)
+{
+}
+
+void RoomData::Serialize(UEngineSerializer& _Class)
+{
+}
+
+void RoomData::DeSerialize(UEngineSerializer& _Class)
+{
 }

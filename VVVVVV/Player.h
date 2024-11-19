@@ -52,36 +52,36 @@ public:
 	APlayer(APlayer&& _Other) noexcept = delete;
 	APlayer& operator=(const APlayer& _Other) = delete;
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
-
-private:
-	bool IsFlip = false;
-	bool OnGround = false;
-	float Speed = 500.f;
-	float GravitySpeed = 600.f;
-	FVector2D PointsY[static_cast<int>(PixelPointY::LAST)] = {};
-	FVector2D PointsX[static_cast<int>(PixelPointX::LAST)] = {};
-	FVector2D MoveValue = {};
-	FVector2D LastKey = FVector2D::RIGHT;
-	FIntPoint SaveWorldIndex = {};
-	FVector2D SaveLocation = {};
-	U2DCollision* Collider = nullptr;
-	float DeathTime = 2.f;
-	bool IsDeath = false;
-
-public:
-	void BeginPlay() override;
-	void Tick() override;
-
-private:
-	void Move();
-	void Flip();
-	void MoveRoom();
-	void SetCollisionPoint();
-	void Reset();
-
-	void CollisionPlatform();
-	void CollisionEnermy();
-	void CollisionSave();
+//
+//private:
+//	bool IsFlip = false;
+//	bool OnGround = false;
+//	float Speed = 500.f;
+//	float GravitySpeed = 600.f;
+//	FVector2D PointsY[static_cast<int>(PixelPointY::LAST)] = {};
+//	FVector2D PointsX[static_cast<int>(PixelPointX::LAST)] = {};
+//	FVector2D MoveValue = {};
+//	FVector2D LastKey = FVector2D::RIGHT;
+//	FIntPoint SaveWorldIndex = {};
+//	FVector2D SaveLocation = {};
+//	U2DCollision* Collider = nullptr;
+//	float DeathTime = 2.f;
+//	bool IsDeath = false;
+//
+//public:
+//	void BeginPlay() override;
+//	void Tick() override;
+//
+//private:
+//	void Move();
+//	void Flip();
+//	void MoveRoom();
+//	void SetCollisionPoint();
+//	void Reset();
+//
+//	void CollisionPlatform();
+//	void CollisionEnermy();
+//	void CollisionSave();
 
 };
 
