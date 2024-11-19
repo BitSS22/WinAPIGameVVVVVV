@@ -28,10 +28,36 @@ private:
 	void AnimationTileSetup();
 
 public:
-
-	ETileType GetTileType()
+	ETileType GetType()
 	{
 		return TileType;
+	}
+	std::string_view GetSpriteName()
+	{
+		return Sprite->GetCurSpriteName();
+	}
+	int GetSpriteMaxIndex()
+	{
+		return Sprite->GetMaxIndex();
+	}
+	int GetSpriteCurIndex()
+	{
+		return Sprite->GetCurIndex();
+	}
+	void AddSpriteIndex(int _Index)
+	{
+		int Index = Sprite->GetCurIndex();
+		Index += _Index;
+		if (Index < 0)
+			Index = 0;
+		else if (Index >= Sprite->GetMaxIndex())
+			Index %= Sprite->GetMaxIndex();
+
+		Sprite->SetSprite(Sprite->GetCurSpriteName(), Index);
+	}
+	void SetSpriteOrder(ERenderOrder _Type)
+	{
+		Sprite->SetOrder(_Type);
 	}
 
 };

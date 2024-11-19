@@ -143,5 +143,5 @@ ETileType ARoom::GetTileType(FIntPoint _Index) const
 	if (_Index.X < 0 || _Index.X >= EGameConst::TileCount.X || _Index.Y < 0 || _Index.Y >= EGameConst::TileCount.Y)
 		return ETileType::None;
 	else
-		return Tiles[_Index.Y][_Index.X]->GetTileType();
+		return Tiles[_Index.Y][_Index.X]->GetType();
 }

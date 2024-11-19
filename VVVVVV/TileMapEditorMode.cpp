@@ -33,7 +33,6 @@ void ATileMapEditorMode::BeginPlay()
 	FVector2D SpriteSize = UImageManager::GetInst().FindSprite("Enemies::001 Stop Cyan")->GetSpriteData(0).Transform.Scale;
 	CurSelectEntity->SetComponentScale(SpriteSize);
 	CurSelectEntity->SetComponentLocation(UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half());
-	CurSelectEntity->SetOrder(ERenderOrder::EDITOR_CURSOR);
 	CurSelectEntity->SetActive(false);
 
 	// Set Debug
@@ -55,7 +54,7 @@ void ATileMapEditorMode::Tick()
 	DebugText();
 }
 
-int ATileMapEditorMode::GetCheckAroundTileIndex(string_view _Name, int _X, int _Y) const
+int ATileMapEditorMode::GetCheckAroundTileIndex(string_view _Name, const FIntPoint& _Index) const
 {
 	uint8_t Bools = 0;
 
@@ -63,7 +62,7 @@ int ATileMapEditorMode::GetCheckAroundTileIndex(string_view _Name, int _X, int _
 	{
 		for (int x = -1; x <= 1; ++x)
 		{
-			if (IsSameTileName(_Name, _X + x, _Y + y) == true)
+			if (IsSameTileName(_Name, FIntPoint(_Index.X + x, _Index.Y + y)) == true)
 			{
 				if (x == 0 && y == 0)
 					continue;
@@ -273,11 +272,11 @@ int ATileMapEditorMode::GetCheckAroundTileIndex(string_view _Name, int _X, int _
 	return Result;
 }
 
-bool ATileMapEditorMode::IsSameTileName(string_view _Name, int _x, int _y) const
+bool ATileMapEditorMode::IsSameTileName(string_view _Name, const FIntPoint& _Index) const
 {
-	if (_x < 0 || _y < 0 || _x >= EGameConst::TileCount.X || _y >= EGameConst::TileCount.Y)
+	if (IsOutTileIndex(_Index) == true)
 		return true;
-	else if (GetGameWorld()->GetRoom()->GetTilesCRef()[_y][_x]->GetTileData().Name == _Name)
+	else if (GetGameWorld()->GetRoom()->GetTilesCRef()[_Index.Y][_Index.X]->GetSpriteName() == _Name)
 		return true;
 
 	return false;
@@ -286,15 +285,13 @@ bool ATileMapEditorMode::IsSameTileName(string_view _Name, int _x, int _y) const
 void ATileMapEditorMode::ChangeTile(bool _AroundTileChange, FIntPoint _Index)
 {
 	// Over Index Check
-	FIntPoint CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
-	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
-	if (CursorPos.X < 0 || CursorPos.Y < 0 || CursorPos.X >= WindowSize.X || CursorPos.Y >= WindowSize.Y)
+	if (IsOutTileIndex(_Index) == true)
 		return;
 
 	// Create Tile Data
 	AGameWorld::RoomData::RoomTileData TileData = {};
 	TileData.Name = CurSelectTile->GetCurSpriteName();
-	TileData.Index = CurSelectTile->GetCurIndex();
+	TileData.CurIndex = CurSelectTile->GetCurIndex();
 	TileData.TileType = CurTileType;
 
 	// Index Tile Change
@@ -302,17 +299,17 @@ void ATileMapEditorMode::ChangeTile(bool _AroundTileChange, FIntPoint _Index)
 	Tiles[_Index.Y][_Index.X]->SetTile(TileData);
 
 	// Around Tile Change
-	if ((_AroundTileChange || CurSelectTile->GetCurIndex() == 45) && CurSelectTile->GetMaxIndex() >= 47)
+	if ((_AroundTileChange || TileData.CurIndex == 45) && CurSelectTile->GetMaxIndex() >= 47)
 	{
 		for (int y = _Index.Y - 1; y <= _Index.Y + 1; ++y)
 		{
 			for (int x = _Index.X - 1; x <= _Index.X + 1; ++x)
 			{
-				if (IsSameTileName(TileData.Name, x, y))
+				if (IsSameTileName(TileData.Name, FIntPoint(x, y)))
 				{
 					if (x < 0 || y < 0 || x >= EGameConst::TileCount.X || y >= EGameConst::TileCount.Y)
 						continue;
-					TileData.Index = GetCheckAroundTileIndex(TileData.Name, x, y);
+					TileData.CurIndex = GetCheckAroundTileIndex(TileData.Name, FIntPoint(x, y));
 					Tiles[y][x]->SetTile(TileData);
 				}
 			}
@@ -323,15 +320,13 @@ void ATileMapEditorMode::ChangeTile(bool _AroundTileChange, FIntPoint _Index)
 void ATileMapEditorMode::DeleteTile(bool _AroundTileChange, FIntPoint _Index)
 {
 	// Over Index Check
-	FIntPoint CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
-	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
-	if (CursorPos.X < 0 || CursorPos.Y < 0 || CursorPos.X >= WindowSize.X || CursorPos.Y >= WindowSize.Y)
+	if (IsOutTileIndex(_Index) == true)
 		return;
 
 	// Create Tile Data
 	AGameWorld::RoomData::RoomTileData TileData = {};
 	TileData.Name = "None Tile";
-	TileData.Index = 0;
+	TileData.CurIndex = 0;
 	TileData.TileType = ETileType::None;
 
 	// Index Tile Change, Prev Tile Data Save
@@ -349,11 +344,11 @@ void ATileMapEditorMode::DeleteTile(bool _AroundTileChange, FIntPoint _Index)
 		{
 			for (int x = _Index.X - 1; x <= _Index .X + 1; ++x)
 			{
-				if (IsSameTileName(PrevSprite->GetNameView(), x, y))
+				if (IsSameTileName(PrevSprite->GetNameView(), FIntPoint(x, y)))
 				{
 					if (x < 0 || y < 0 || x >= EGameConst::TileCount.X || y >= EGameConst::TileCount.Y)
 						continue;
-					PrevTileData.Index = GetCheckAroundTileIndex(PrevSprite->GetNameView(), x, y);
+					PrevTileData.CurIndex = GetCheckAroundTileIndex(PrevSprite->GetNameView(), FIntPoint(x, y));
 					Tiles[y][x]->SetTile(PrevTileData);
 				}
 			}
@@ -371,104 +366,38 @@ void ATileMapEditorMode::MoveRoom(FIntPoint _Index)
 
 void ATileMapEditorMode::SwitchLoopRoom()
 {
-	FIntPoint Index = GameWorld->GetRoom()->GetCurRoomIndex();
-	bool& IsLoop = GameWorld->RoomDatas[Index.Y][Index.X].LoopRoom;
-	IsLoop = !IsLoop;
+	GameWorld->GetRoom()->SetIsLoop(!GameWorld->GetRoom()->GetIsLoop());
 }
 
-void ATileMapEditorMode::NextTileType()
+void ATileMapEditorMode::SetTileType(ETileType _Type)
 {
-	++CurTileType;
-	CurSelectTile->SetSprite(TileDatas[static_cast<int>(CurTileType)][0], 0);
+	CurTileType = _Type;
 	CurTileListIndex = 0;
+
+	CurSelectTile->SetSprite(TileDatas[static_cast<int>(CurTileType)][CurTileListIndex].Name, 0);
 }
 
-void ATileMapEditorMode::PrevTileType()
+void ATileMapEditorMode::AddTileList(int _Value)
 {
-	--CurTileType;
-	CurSelectTile->SetSprite(TileDatas[static_cast<int>(CurTileType)][0], 0);
-	CurTileListIndex = 0;
-}
+	CurTileListIndex += _Value;
+	
+	if (CurTileListIndex >= TileDatas[static_cast<int>(CurTileType)].size())
+		CurTileListIndex %= TileDatas[static_cast<int>(CurTileType)].size();
 
-void ATileMapEditorMode::PrevTileSet()
-{
-	--CurTileListIndex;
-	if (CurTileListIndex < 0 || CurTileListIndex >= TileDatas[static_cast<int>(CurTileType)].size())
-		CurTileListIndex = static_cast<int>(TileDatas[static_cast<int>(CurTileType)].size()) - 1;
-
-	int Curindex = CurSelectTile->GetCurIndex();
-	UEngineSprite* Sprite = UImageManager::GetInst().FindSprite(TileDatas[static_cast<int>(CurTileType)][CurTileListIndex]);
-
-	if (Curindex >= Sprite->GetSpriteCount())
-		Curindex = Sprite->GetSpriteCount() - 1;
-
-	CurSelectTile->SetSprite(TileDatas[static_cast<int>(CurTileType)][CurTileListIndex], Curindex);
-}
-
-void ATileMapEditorMode::NextTileSet()
-{
-	++CurTileListIndex;
-	if (CurTileListIndex < 0 || CurTileListIndex >= TileDatas[static_cast<int>(CurTileType)].size())
-		CurTileListIndex = 0;
-
-	int Curindex = CurSelectTile->GetCurIndex();
-	UEngineSprite* Sprite = UImageManager::GetInst().FindSprite(TileDatas[static_cast<int>(CurTileType)][CurTileListIndex]);
-
-	if (Curindex >= Sprite->GetSpriteCount())
-		Curindex = Sprite->GetSpriteCount() - 1;
-
-	CurSelectTile->SetSprite(TileDatas[static_cast<int>(CurTileType)][CurTileListIndex], Curindex);
-}
-
-void ATileMapEditorMode::PrevTileIndex()
-{
-	int index = CurSelectTile->GetCurIndex();
-	--index;
-	if (index < 0 || index >= CurSelectTile->GetMaxIndex())
-		index = CurSelectTile->GetMaxIndex() - 1;
-	CurSelectTile->SetSprite(CurSelectTile->GetCurSpriteName(), index);
-}
-
-void ATileMapEditorMode::NextTileIndex()
-{
-	int index = CurSelectTile->GetCurIndex();
-	++index;
-	if (index < 0 || index >= CurSelectTile->GetMaxIndex())
-		index = 0;
-	CurSelectTile->SetSprite(CurSelectTile->GetCurSpriteName(), index);
-}
-
-void ATileMapEditorMode::ShowTiles()
-{
-	auto& room = GameWorld->GetRoom()->Tiles;
-	for (size_t y = 0; y < room.size(); ++y)
-	{
-		for (size_t x = 0; x < room[y].size(); ++x)
-		{
-			room[y][x]->SetActive(!room[y][x]->IsActive());
-		}
-	}
-}
-
-void ATileMapEditorMode::ShowBackGroundTiles()
-{
-	auto& room = GameWorld->GetRoom()->BackGroundTiles;
-	for (size_t y = 0; y < room.size(); ++y)
-	{
-		for (size_t x = 0; x < room[y].size(); ++x)
-		{
-			room[y][x]->SetActive(!room[y][x]->IsActive());
-		}
-	}
+	CurSelectTile->SetSprite(TileDatas[static_cast<int>(CurTileType)][CurTileListIndex].Name, 0);
 }
 
 void ATileMapEditorMode::PickUpTile()
 {
-	FIntPoint TileIndex = GameWorld->GetRoom()->GetOnTileIndex(UEngineAPICore::GetCore()->GetMainWindow().GetMousePos());
-	if (TileIndex.X < 0 || TileIndex.X >= GameWorld->GetRoom()->TileCount.X || TileIndex.Y < 0 || TileIndex.Y >= GameWorld->GetRoom()->TileCount.Y)
+	POINT MousePos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
+	if (IsOutScreen(MousePos) == true)
 		return;
-	auto& SelectTileMap = GetCurSelectTileMap();
-	CurSelectTile->SetSprite(SelectTileMap[TileIndex.Y][TileIndex.X]->GetCurSpriteName(), SelectTileMap[TileIndex.Y][TileIndex.X]->GetCurIndex());
+
+	FIntPoint TileIndex = GameWorld->GetRoom()->GetOnTileIndex(MousePos);
+	ATile* Tile = GetGameWorld()->GetRoom()->GetTilesCRef()[TileIndex.Y][TileIndex.X];
+	CurTileType = Tile->GetType();
+
+	CurSelectTile->SetSprite(Tile->GetSpriteName(), Tile->GetSpriteCurIndex());
 }
 
 void ATileMapEditorMode::LoadResourceList()
@@ -476,14 +405,7 @@ void ATileMapEditorMode::LoadResourceList()
 	// 리소스 리스트 만들기
 	const auto& Sprites = UImageManager::GetInst().ViewSprites();
 
-	TileDatas[static_cast<int>(ETileType::None)].push_back();
-	TileDatas[static_cast<int>(ETileType::BackGround)].push_back();
-	TileDatas[static_cast<int>(ETileType::Collision)].push_back();
-	TileDatas[static_cast<int>(ETileType::Spike)].push_back();
-	TileDatas[static_cast<int>(ETileType::Animation)].push_back();
-	TileDatas[static_cast<int>(ETileType::Spike)].push_back();
-
-	string str = UEngineString::ToUpper("BackGroundTiles::");
+	string BackGroundTiles = UEngineString::ToUpper("BackGroundTiles::");
 	string CollisionTiles = UEngineString::ToUpper("CollisionTiles::");
 	string SpikeTiles = UEngineString::ToUpper("SpikeTiles::");
 	string AnimationTiles = UEngineString::ToUpper("AnimationTiles::");
@@ -491,31 +413,112 @@ void ATileMapEditorMode::LoadResourceList()
 
 	string BackGrounds = UEngineString::ToUpper("BackGrounds::");
 
-	string APlatform = UEngineString::ToUpper("Platforms::");
-	string Saves = UEngineString::ToUpper("Saves::");
+	string Platform = UEngineString::ToUpper("Platforms::");
+	string CheckPoints = UEngineString::ToUpper("CheckPoints::");
 	string Enemies = UEngineString::ToUpper("Enemies::");
+	string Guys = UEngineString::ToUpper("Guys::");
+	string Players = UEngineString::ToUpper("Players::");
+	string Teleports = UEngineString::ToUpper("Teleports::");
 
-	for (auto& Sprite : SpritesList)
+	for (auto& Sprite : Sprites)
 	{
-		if (std::string::npos != Sprite.first.find(BackGroundTiles))
-			TileDatas[static_cast<int>(TileList::BackGroundTileList)].push_back(Sprite.first);
-		else if (std::string::npos != Sprite.first.find(CollisionTiles))
-			TileDatas[static_cast<int>(TileList::TileList)].push_back(Sprite.first);
-		else if (std::string::npos != Sprite.first.find(SpikeTiles))
-			TileDatas[static_cast<int>(TileList::SpikeTileList)].push_back(Sprite.first);
-		else if (std::string::npos != Sprite.first.find(AnimationTiles))
-			TileDatas[static_cast<int>(TileList::AnimationTileList)].push_back(Sprite.first);
-		else if (std::string::npos != Sprite.first.find(RailTiles))
-			TileDatas[static_cast<int>(TileList::RailTileList)].push_back(Sprite.first);
-		else if (std::string::npos != Sprite.first.find(BackGrounds))
-			TileDatas[static_cast<int>(TileList::BackGroundList)].push_back(Sprite.first);
-
-		else if (std::string::npos != Sprite.first.find(APlatform))
-			EntityDatas[static_cast<int>(EntityList::Platforms)].push_back(Sprite.first);
-		else if (std::string::npos != Sprite.first.find(Saves))
-			EntityDatas[static_cast<int>(EntityList::Saves)].push_back(Sprite.first);
-		else if (std::string::npos != Sprite.first.find(Enemies))
-			EntityDatas[static_cast<int>(EntityList::Enemies)].push_back(Sprite.first);
+		// Tile
+		if (Sprite.first.find(BackGroundTiles) != std::string::npos)
+		{
+			AGameWorld::RoomData::RoomTileData TileData = {};
+			TileData.Name = Sprite.first;
+			TileData.TileType = ETileType::BackGround;
+			TileDatas[static_cast<int>(ETileType::BackGround)].push_back(TileData);
+		}
+		else if (Sprite.first.find(CollisionTiles) != std::string::npos)
+		{
+			AGameWorld::RoomData::RoomTileData TileData = {};
+			TileData.Name = Sprite.first;
+			TileData.TileType = ETileType::Collision;
+			TileDatas[static_cast<int>(ETileType::Collision)].push_back(TileData);
+		}
+		else if (Sprite.first.find(SpikeTiles) != std::string::npos)
+		{
+			AGameWorld::RoomData::RoomTileData TileData = {};
+			TileData.Name = Sprite.first;
+			TileData.TileType = ETileType::Spike;
+			TileDatas[static_cast<int>(ETileType::Spike)].push_back(TileData);
+		}
+		else if (Sprite.first.find(AnimationTiles) != std::string::npos)
+		{
+			AGameWorld::RoomData::RoomTileData TileData = {};
+			TileData.Name = Sprite.first;
+			TileData.TileType = ETileType::Animation;
+			TileDatas[static_cast<int>(ETileType::Animation)].push_back(TileData);
+		}
+		else if (Sprite.first.find(RailTiles) != std::string::npos)
+		{
+			AGameWorld::RoomData::RoomTileData TileData = {};
+			TileData.Name = Sprite.first;
+			TileData.TileType = ETileType::Rail;
+			TileDatas[static_cast<int>(ETileType::Rail)].push_back(TileData);
+		}
+		// BackGround
+		else if (Sprite.first.find(BackGrounds) != std::string::npos)
+		{
+			AGameWorld::RoomData::RoomBackGroundData BackGroundData = {};
+			BackGroundData.Name = Sprite.first;
+			if (Sprite.first.find(UEngineString::ToUpper("Space")) != std::string::npos)
+				BackGroundData.BackGroundType = EBackGroundType::Space;
+			else if (Sprite.first.find(UEngineString::ToUpper("Horizontal")) != std::string::npos)
+				BackGroundData.BackGroundType = EBackGroundType::Horizontal;
+			else if (Sprite.first.find(UEngineString::ToUpper("Vertical")) != std::string::npos)
+				BackGroundData.BackGroundType = EBackGroundType::Vertical;
+			else if (Sprite.first.find(UEngineString::ToUpper("Tower")) != std::string::npos)
+				BackGroundData.BackGroundType = EBackGroundType::Tower;
+			else if (Sprite.first.find(UEngineString::ToUpper("Engind")) != std::string::npos)
+				BackGroundData.BackGroundType = EBackGroundType::Ending;
+			
+			BackGroundDatas[static_cast<int>(ETileType::BackGround)].push_back(BackGroundData);
+		}
+		// Entity
+		else if (Sprite.first.find(Platform) != std::string::npos)
+		{
+			AGameWorld::RoomData::RoomEntityData EntityData = {};
+			EntityData.Name = Sprite.first;
+			EntityData.EntityType = EEntityType::Platform;
+			EntityDatas[static_cast<int>(EEntityType::Platform)].push_back(EntityData);
+		}
+		else if (Sprite.first.find(CheckPoints) != std::string::npos)
+		{
+			AGameWorld::RoomData::RoomEntityData EntityData = {};
+			EntityData.Name = Sprite.first;
+			EntityData.EntityType = EEntityType::CheckPoint;
+			EntityDatas[static_cast<int>(EEntityType::CheckPoint)].push_back(EntityData);
+		}
+		else if (Sprite.first.find(Enemies) != std::string::npos)
+		{
+			AGameWorld::RoomData::RoomEntityData EntityData = {};
+			EntityData.Name = Sprite.first;
+			EntityData.EntityType = EEntityType::Enermy;
+			EntityDatas[static_cast<int>(EEntityType::Enermy)].push_back(EntityData);
+		}
+		else if (Sprite.first.find(Guys) != std::string::npos)
+		{
+			AGameWorld::RoomData::RoomEntityData EntityData = {};
+			EntityData.Name = Sprite.first;
+			EntityData.EntityType = EEntityType::Guy;
+			EntityDatas[static_cast<int>(EEntityType::Guy)].push_back(EntityData);
+		}
+		else if (Sprite.first.find(Players) != std::string::npos)
+		{
+			AGameWorld::RoomData::RoomEntityData EntityData = {};
+			EntityData.Name = Sprite.first;
+			EntityData.EntityType = EEntityType::Player;
+			EntityDatas[static_cast<int>(EEntityType::Player)].push_back(EntityData);
+		}
+		else if (Sprite.first.find(Teleports) != std::string::npos)
+		{
+			AGameWorld::RoomData::RoomEntityData EntityData = {};
+			EntityData.Name = Sprite.first;
+			EntityData.EntityType = EEntityType::Teleport;
+			EntityDatas[static_cast<int>(EEntityType::Teleport)].push_back(EntityData);
+		}
 	}
 }
 
@@ -525,8 +528,8 @@ void ATileMapEditorMode::EditorKeyCheck()
 	FIntPoint CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
 
 	// 타일 크기와 사이즈
-	FIntPoint TileSize = GameWorld->GetRoom()->TileScale;
-	FIntPoint TileCount = GameWorld->GetRoom()->TileCount;
+	FIntPoint TileSize = EGameConst::TileScale;
+	FIntPoint TileCount = EGameConst::TileCount;
 
 	// 마우스 타일 격자 표시
 	FIntPoint TileCursorPos = FIntPoint(CursorPos.X - (CursorPos.X % TileSize.X) + TileSize.X / 2, CursorPos.Y - (CursorPos.Y % TileSize.Y) + TileSize.Y / 2);
@@ -586,10 +589,10 @@ void ATileMapEditorMode::EditorKeyCheck()
 	if (KEY_DOWN(VK_XBUTTON1))
 		PickUpTile();
 	if (KEY_DOWN(VK_XBUTTON2))
-		NextTileType();
+		SetTileType();
 
 	if (KEY_DOWN('1'))
-		PrevTileSet();
+		AddTileList();
 	if (KEY_DOWN('2'))
 		NextTileSet();
 
@@ -598,11 +601,6 @@ void ATileMapEditorMode::EditorKeyCheck()
 	if (KEY_DOWN('E'))
 		NextTileIndex();
 
-	if (KEY_DOWN(VK_F1))
-		ShowBackGroundTiles();
-	if (KEY_DOWN(VK_F2))
-		ShowTiles();
-
 	// 배경화면
 	if (KEY_DOWN('O'))
 		PrevBackGroundImage();
@@ -610,7 +608,7 @@ void ATileMapEditorMode::EditorKeyCheck()
 		NextBackGroundImage();
 
 	// 방 이동, 세이브
-	FIntPoint RoomIndex = GameWorld->CurRoomIndex;
+	FIntPoint RoomIndex = GameWorld->GetRoom()->GetCurRoomIndex();
 	if (KEY_DOWN('W'))
 	{
 		RoomIndex.Y -= 1;
@@ -773,13 +771,13 @@ void ATileMapEditorMode::EditorKeyCheck()
 void ATileMapEditorMode::DebugText()
 {
 	FIntPoint CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
-	FIntPoint RoomIndex = GameWorld->CurRoomIndex;
+	FIntPoint RoomIndex = GameWorld->GetRoom()->GetCurRoomIndex();
 
 	// DEBUG TEXT
 	string CurTileList = {};
 
 	string str = "Selected Entity : ";
-	str += CurSelectEntityType->GetCurSpriteName();
+	str += CurSelectEntity->GetCurSpriteName();
 	UEngineDebug::CoreOutputString(str);
 
 	str = "World Index : ";
@@ -787,10 +785,7 @@ void ATileMapEditorMode::DebugText()
 	str += ",";
 	str += std::to_string(RoomIndex.Y);
 	str += ", RoomLoop : ";
-	if (GameWorld->RoomDatas[GameWorld->CurRoomIndex.Y][GameWorld->CurRoomIndex.X].LoopRoom == true)
-		str += "True";
-	else
-		str += "False";
+	str += GameWorld->GetRoom()->GetIsLoop();
 	UEngineDebug::CoreOutputString(str);
 
 	str = "Tile Set Index : ";
@@ -804,12 +799,12 @@ void ATileMapEditorMode::DebugText()
 	UEngineDebug::CoreOutputString(str);
 
 	FIntPoint TileCursorIndex = GameWorld->GetRoom()->GetOnTileIndex(CursorPos);
-	if ((TileCursorIndex.X < 0 || TileCursorIndex.X >= GameWorld->GetRoom()->TileCount.X || TileCursorIndex.Y < 0 || TileCursorIndex.Y >= GameWorld->GetRoom()->TileCount.Y) == false)
+	if (IsOutTileIndex(TileCursorIndex) == false)
 	{
 		str = "On Tile Name : ";
-		str += GetCurSelectTileMap()[TileCursorIndex.Y][TileCursorIndex.X]->GetCurSpriteName();
+		str += GameWorld->GetRoom()->GetTilesCRef()[TileCursorIndex.Y][TileCursorIndex.X]->GetSpriteName();
 		str += ", Index : ";
-		str += std::to_string(GetCurSelectTileMap()[TileCursorIndex.Y][TileCursorIndex.X]->GetCurIndex());
+		str += std::to_string(GameWorld->GetRoom()->GetTilesCRef()[TileCursorIndex.Y][TileCursorIndex.X]->GetSpriteCurIndex());
 		UEngineDebug::CoreOutputString(str);
 	}
 	
@@ -863,6 +858,36 @@ void ATileMapEditorMode::DebugText()
 			UEngineDebug::CoreOutputString(str);
 		}
 	}
+}
+
+bool ATileMapEditorMode::IsOutScreen(const FVector2D& _Location) const
+{
+	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+
+	if (_Location.X < 0.f)
+		return true;
+	else if (_Location.Y < 0.f)
+		return true;
+	else if (_Location.X >= WindowSize.X)
+		return true;
+	else if (_Location.Y >= WindowSize.Y)
+		return true;
+
+	return false;
+}
+
+bool ATileMapEditorMode::IsOutTileIndex(const FIntPoint& _Index) const
+{
+	if (_Index.X < 0.f)
+		return true;
+	else if (_Index.Y < 0.f)
+		return true;
+	else if (_Index.X >= EGameConst::TileCount.X)
+		return true;
+	else if (_Index.Y >= EGameConst::TileCount.Y)
+		return true;
+
+	return false;
 }
 
 void ATileMapEditorMode::PrevBackGroundImage()
@@ -983,7 +1008,7 @@ void ATileMapEditorMode::NextSelectEntity()
 	CurAdjustmentEntity = GameWorld->GetRoom()->Entites[CurAdjustmentEntityIndex];
 }
 
-void ATileMapEditorMode::AddEntityLocation(FVector2D _AddPos)
+void ATileMapEditorMode::AddEntityLocation(const FVector2D& _AddPos)
 {
 	if (CurAdjustmentEntity == nullptr)
 		return;
@@ -1021,7 +1046,7 @@ void ATileMapEditorMode::AddEntityMoveOffSet(float _Offset)
 	Enermy->AddMoveLenghtOffset(_Offset);
 }
 
-void ATileMapEditorMode::AddEntityDir(FVector2D _Dir)
+void ATileMapEditorMode::AddEntityDir(const FVector2D& _Dir)
 {
 	APistonEntity* Enermy = dynamic_cast<APistonEntity*>(CurAdjustmentEntity);
 
@@ -1031,7 +1056,7 @@ void ATileMapEditorMode::AddEntityDir(FVector2D _Dir)
 	Enermy->AddDir(_Dir);
 }
 
-void ATileMapEditorMode::SetEntityDir(FVector2D _Dir)
+void ATileMapEditorMode::SetEntityDir(const FVector2D& _Dir)
 {
 	APistonEntity* Enermy = dynamic_cast<APistonEntity*>(CurAdjustmentEntity);
 

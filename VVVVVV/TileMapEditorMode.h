@@ -21,13 +21,13 @@ private:
 	ETileType CurTileType = ETileType::Last;
 	int CurTileListIndex = 0;
 
-	std::vector<AGameWorld::RoomData::RoomEntityData> EntityDatas[static_cast<int>(EEntityType::Last)] = {};
-	EEntityType CurEntityType = EEntityType::Last;
-	int CurEntityIndex = 0;
-	
 	std::vector<AGameWorld::RoomData::RoomBackGroundData> BackGroundDatas[static_cast<int>(EBackGroundType::Last)] = {};
 	EBackGroundType CurBackGroundType = EBackGroundType::Last;
 	int CurBackGroundIndex = 0;
+
+	std::vector<AGameWorld::RoomData::RoomEntityData> EntityDatas[static_cast<int>(EEntityType::Last)] = {};
+	EEntityType CurEntityType = EEntityType::Last;
+	int CurEntityIndex = 0;
 
 	USpriteRenderer* CurSelectTile = nullptr;
 	USpriteRenderer* CurSelectEntity = nullptr;
@@ -42,8 +42,8 @@ public:
 	virtual void Tick() override;
 
 private:
-	int GetCheckAroundTileIndex(std::string_view _Name, int _X, int _Y) const;
-	bool IsSameTileName(std::string_view _Name, int x, int y) const;
+	int GetCheckAroundTileIndex(std::string_view _Name, const FIntPoint& _Index) const;
+	bool IsSameTileName(std::string_view _Name, const FIntPoint& _Index) const;
 
 	void ChangeTile(bool _AroundTileChange, FIntPoint _Index);
 	void DeleteTile(bool _AroundTileChange, FIntPoint _Index);
@@ -54,12 +54,8 @@ private:
 	void MoveRoom(FIntPoint _Index);
 	void SwitchLoopRoom();
 
-	void NextTileType();
-	void PrevTileType();
-	void PrevTileSet();
-	void NextTileSet();
-	void PrevTileIndex();
-	void NextTileIndex();
+	void SetTileType(ETileType _Type);
+	void AddTileList(int _Value);
 
 	void PrevBackGroundImage();
 	void NextBackGroundImage();
@@ -72,15 +68,12 @@ private:
 	void PrevSelectEntity();
 	void NextSelectEntity();
 
-	void AddEntityLocation(FVector2D _AddPos);
+	void AddEntityLocation(const FVector2D& _AddPos);
 	void AddEntitySpeed(float _Speed);
 	void AddEntityMoveLenght(float _Lenght);
 	void AddEntityMoveOffSet(float _Offset);
-	void AddEntityDir(FVector2D _Dir);
-	void SetEntityDir(FVector2D _Dir);
-
-	void ShowTiles();
-	void ShowBackGroundTiles();
+	void AddEntityDir(const FVector2D& _Dir);
+	void SetEntityDir(const FVector2D& _Dir);
 
 	void PickUpTile();
 
@@ -88,6 +81,9 @@ private:
 
 	void EditorKeyCheck();
 	void DebugText();
+
+	bool IsOutScreen(const FVector2D& _Location) const;
+	bool IsOutTileIndex(const FIntPoint& _Index) const;
 
 public:
 	AGameWorld* GetGameWorld() const

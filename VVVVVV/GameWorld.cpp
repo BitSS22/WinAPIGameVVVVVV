@@ -43,30 +43,10 @@ void AGameWorld::SaveRoomData()
 	Data.BackGroundData = Room->GetBackGround()->GetBackGroundData();
 	Data.LoopRoom = Room->GetIsLoop();
 
-	// TODO. Entity Save Code
 	Data.EntityDatas.clear();
 
 	for (size_t i = 0; i < Room->GetEntitesCRef().size(); ++i)
-	{
-		AGameWorld::RoomEntityData EntityData = {};
-		AEntity* Entity = Entites[i];
-
-		EntityData.Name = Entity->GetRenderer()->GetCurSpriteName();
-		EntityData.DefualtLocation = Entity->GetActorLocation();
-
-		APistonEntity* MoveEntity = dynamic_cast<APistonEntity*>(Entity);
-
-		if (MoveEntity != nullptr)
-		{
-			EntityData.DefualtLocation = MoveEntity->GetEntityDefualtLocation();
-			EntityData.DefualtDir = MoveEntity->GetEntityDefualtDir();
-			EntityData.Speed = MoveEntity->GetSpeed();
-			EntityData.MoveLenght = MoveEntity->GetMoveLenght();
-			EntityData.MoveLenghtOffset = MoveEntity->GetMoveLenghtOffset();
-		}
-
-		CurRoomDatas.EntityDatas.push_back(EntityData);
-	}
+		Data.EntityDatas.push_back(Room->GetEntitesCRef()[i]->GetEntityData());
 }
 
 void AGameWorld::SaveFile()

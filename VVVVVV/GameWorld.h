@@ -50,8 +50,8 @@ public:
 			EEntityType EntityType = EEntityType::Last;
 			FVector2D DefualtLocation = FVector2D::ZERO;
 			FVector2D DefualtDir = FVector2D::ZERO;
-			float Speed = 0.f;
-			float MoveLenght = 0.f;
+			float Speed = 128.f;
+			float MoveLenght = 128.f;
 			float MoveLenghtOffset = 0.f;
 
 		public:
@@ -63,7 +63,7 @@ public:
 		{
 		public:
 			std::string Name = "Debug Tile";
-			int Index = -1;
+			int CurIndex = 0;
 			ETileType TileType = ETileType::Last;
 
 		public:
@@ -75,9 +75,9 @@ public:
 		{
 		public:
 			std::string Name = "Debug BackGround.png";
-			int Index = -1;
+			int Index = 0;
 			EBackGroundType BackGroundType = EBackGroundType::Last;
-			float AnimationSpeed = 0.f;
+			float AnimationSpeed = 320.f;
 
 		public:
 			void Serialize(UEngineSerializer& _Class) override;

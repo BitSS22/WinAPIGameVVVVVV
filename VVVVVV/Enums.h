@@ -51,3 +51,10 @@ enum class EBackGroundType
 	Ending,
 	Last
 };
+
+EEntityType& operator++(EEntityType& _Type);
+EEntityType& operator--(EEntityType& _Type);
+ETileType& operator++(ETileType& _Type);
+ETileType& operator--(ETileType& _Type);
+EBackGroundType& operator++(EBackGroundType& _Type);
+EBackGroundType& operator--(EBackGroundType& _Type);

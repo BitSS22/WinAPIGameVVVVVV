@@ -18,13 +18,13 @@ public:
 	ARoom& operator=(ARoom&& _Other) noexcept = delete;
 
 private:
+	ABackGround* BackGround = nullptr;
 	std::vector<std::vector<ATile*>> Tiles = {};
 	std::vector<AEntity*> Entites = {};
 	FIntPoint CurRoomIndex = {};
 	bool LoopRoom = false;
 
 	AGameWorld* GameWorld = nullptr;
-	ABackGround* BackGround = nullptr;
 
 public:
 	virtual void BeginPlay() override;
@@ -57,10 +57,6 @@ public:
 	{
 		return CurRoomIndex;
 	}
-	bool GetIsLoop() const
-	{
-		return LoopRoom;
-	}
 	const std::vector<std::vector<ATile*>>& GetTilesCRef() const
 	{
 		return Tiles;
@@ -68,6 +64,14 @@ public:
 	const std::vector<AEntity*>& GetEntitesCRef() const
 	{
 		return Entites;
+	}
+	bool GetIsLoop() const
+	{
+		return LoopRoom;
+	}
+	void SetIsLoop(bool _Value)
+	{
+		LoopRoom = _Value;
 	}
 
 };

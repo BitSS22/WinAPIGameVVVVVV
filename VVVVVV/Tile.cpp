@@ -24,7 +24,7 @@ void ATile::BeginPlay()
 
 void ATile::SetTile(const AGameWorld::RoomData::RoomTileData& _Data)
 {
-	Sprite->SetSprite(_Data.Name, _Data.Index);
+	Sprite->SetSprite(_Data.Name, _Data.CurIndex);
 	TileType = _Data.TileType;
 
 	if (TileType == ETileType::None)
@@ -53,7 +53,7 @@ AGameWorld::RoomData::RoomTileData ATile::GetTileData()
 {
 	AGameWorld::RoomData::RoomTileData TileData = {};
 	TileData.Name = Sprite->GetCurSpriteName();
-	TileData.Index = Sprite->GetCurIndex();
+	TileData.CurIndex = Sprite->GetCurIndex();
 	TileData.TileType = TileType;
 	
 	return TileData;
