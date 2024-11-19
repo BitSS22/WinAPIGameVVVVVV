@@ -34,6 +34,8 @@ void ARoom::BeginPlay()
 			Tiles[y][x]->SetActorLocation(FVector2D(EGameConst::TileScale.X * x + EGameConst::TileScale.X / 2, EGameConst::TileScale.Y * y + EGameConst::TileScale.Y / 2));
 		}
 	}
+
+	FileLoadInit();
 }
 
 void ARoom::MoveRoom(FIntPoint _Index)
@@ -48,14 +50,12 @@ void ARoom::MoveRoom(FIntPoint _Index)
 		_Index.Y = 0;
 
 	SetRoom(_Index);
-
-	CurRoomIndex = _Index;
+	GameWorld->SetCurRoomIndex(_Index);
 }
 
 void ARoom::SetRoom(const FIntPoint& _Index)
 {
-	const RoomData& Data = GetGameWorld()->GetRoomDatasRef(_Index);
-	SetRoom(Data);
+	SetRoom(AGameWorld::GetRoomDatasRef(_Index));
 }
 
 void ARoom::SetRoom(const RoomData& _Data)
@@ -182,5 +182,50 @@ bool ARoom::IsOutTileIndex(const FIntPoint& _Index)
 		return true;
 
 	return false;
+}
+
+void ARoom::FileLoadInit()
+{
+	FIntPoint CurRoomIndex = AGameWorld::GetCurRoomIndex();
+	LoopRoom = AGameWorld::GetRoomDatasRef(CurRoomIndex).LoopRoom;
+	const vector<RoomEntityData>& EntityDatas = AGameWorld::GetRoomDatasRef(CurRoomIndex).EntityDatas;
+
+	for (size_t i = 0; i < Entites.size(); ++i)
+		Entites[i]->Destroy();
+	Entites.clear();
+
+	for (size_t i = 0; i < EntityDatas.size(); ++i)
+	{
+		AEntity* NewEntity = nullptr;
+
+		switch (EntityDatas[i].EntityType)
+		{
+		case EEntityType::Guy:
+			NewEntity = GetWorld()->SpawnActor<AGuy>();
+			break;
+		case EEntityType::Player:
+			NewEntity = GetWorld()->SpawnActor<APlayer>();
+			break;
+		case EEntityType::Enermy:
+			NewEntity = GetWorld()->SpawnActor<AEnermy>();
+			break;
+		case EEntityType::Platform:
+			NewEntity = GetWorld()->SpawnActor<APlatform>();
+			break;
+		case EEntityType::CheckPoint:
+			NewEntity = GetWorld()->SpawnActor<ACheckPoint>();
+			break;
+		case EEntityType::Teleport:
+			NewEntity = GetWorld()->SpawnActor<ATeleport>();
+			break;
+		}
+
+		if (NewEntity == nullptr)
+			MSGASSERT(nullptr, "Spawn Entity Unknown Type.");
+
+		NewEntity->SetEntity(EntityDatas[i]);
+		NewEntity->SetRoom(this);
+		Entites.push_back(NewEntity);
+	}
 }
 

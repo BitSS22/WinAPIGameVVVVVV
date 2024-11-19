@@ -8,6 +8,9 @@
 #include "EngineBase/EngineDirectory.h"
 #include <EngineBase/EngineFile.h>
 
+FIntPoint AGameWorld::CurRoomIndex = FVector2D::ZERO;
+std::vector<std::vector<RoomData>> AGameWorld::RoomDatas = {};
+
 AGameWorld::AGameWorld()
 {
 }
@@ -26,11 +29,13 @@ void AGameWorld::BeginPlay()
 		RoomDatas[y].resize(EGameConst::WorldMaxIndex.X);
 
 	GetWorld()->SetCameraToMainPawn(false);
+
+	LoadMapFile();
 }
 
 void AGameWorld::SaveRoomData()
 {
-	FIntPoint CurRoomIndex = Room->GetCurRoomIndex();
+	FIntPoint CurRoomIndex = AGameWorld::GetCurRoomIndex();
 	RoomData& Data = RoomDatas[CurRoomIndex.Y][CurRoomIndex.X];
 
 	for (size_t y = 0; y < EGameConst::TileCount.Y; ++y)
@@ -50,7 +55,7 @@ void AGameWorld::SaveRoomData()
 		Data.EntityDatas.push_back(Room->GetEntitesCRef()[i]->GetEntityData());
 }
 
-void AGameWorld::SaveMapDataFile()
+void AGameWorld::SaveMapFile()
 {
 	SaveRoomData();
 
@@ -67,21 +72,23 @@ void AGameWorld::SaveMapDataFile()
 	NewFile.Write(Ser);
 }
 
-void AGameWorld::LoadMapDataFile()
+void AGameWorld::LoadMapFile()
 {
 	UEngineSerializer Ser = {};
 
 	UEngineDirectory Dir = {};
 	Dir.MoveParentToDirectory("Resources");
 	Dir.Append("MapData");
-	string LoadFileName = Dir.GetPathToString() + "\\MapData.data";
+	Dir.Append("MapData.data");
+	if (Dir.IsExists() == false)
+		return;
+
+	string LoadFileName = Dir.GetPathToString();
 	UEngineFile NewFile = LoadFileName;
 	NewFile.FileOpen("rb");
 	NewFile.Read(Ser);
 
 	Ser >> RoomDatas;
-
-	Room->SetRoom(Room->GetCurRoomIndex());
 }
 
 void RoomEntityData::Serialize(UEngineSerializer& _Class)

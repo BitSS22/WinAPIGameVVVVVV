@@ -61,6 +61,8 @@ private:
 
 	void SetEffect(EEffectType _Type);
 
+	void FileLoadInit();
+
 public:
 
 };

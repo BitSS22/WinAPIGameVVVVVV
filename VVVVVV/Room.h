@@ -24,7 +24,6 @@ private:
 	ABackGround* BackGround = nullptr;
 	std::vector<std::vector<ATile*>> Tiles = {};
 	std::vector<AEntity*> Entites = {};
-	FIntPoint CurRoomIndex = {};
 	bool LoopRoom = false;
 
 	AGameWorld* GameWorld = nullptr;
@@ -46,6 +45,7 @@ public:
 	static bool IsOutTileIndex(const FIntPoint& _Index);
 
 private:
+	void FileLoadInit();
 
 public:
 	void SetGameWorld(AGameWorld* _ptr)
@@ -59,10 +59,6 @@ public:
 	ABackGround* GetBackGround() const
 	{
 		return BackGround;
-	}
-	FIntPoint GetCurRoomIndex() const
-	{
-		return CurRoomIndex;
 	}
 	const std::vector<std::vector<ATile*>>& GetTilesCRef() const
 	{

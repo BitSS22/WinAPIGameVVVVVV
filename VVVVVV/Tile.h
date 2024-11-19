@@ -27,6 +27,8 @@ public:
 private:
 	void AnimationTileSetup();
 
+	void FileLoadInit();
+
 public:
 	ETileType GetType()
 	{

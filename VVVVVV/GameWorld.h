@@ -83,15 +83,16 @@ public:
 
 private:
 	ARoom* Room = nullptr;
-	std::vector<std::vector<RoomData>> RoomDatas = {};
+	static FIntPoint CurRoomIndex;
+	static std::vector<std::vector<RoomData>> RoomDatas;
 
 public:
 	virtual void BeginPlay() override;
 
 	void SaveRoomData();
 
-	void SaveMapDataFile();
-	void LoadMapDataFile();
+	void SaveMapFile();
+	void LoadMapFile();
 
 private:
 
@@ -100,9 +101,17 @@ public:
 	{
 		return Room;
 	}
-	const RoomData& GetRoomDatasRef(FIntPoint _Index) const
+	static const RoomData& GetRoomDatasRef(FIntPoint _Index)
 	{
 		return RoomDatas[_Index.Y][_Index.X];
+	}
+	static FIntPoint GetCurRoomIndex()
+	{
+		return CurRoomIndex;
+	}
+	static void SetCurRoomIndex(FIntPoint _Index)
+	{
+		CurRoomIndex = _Index;
 	}
 
 };

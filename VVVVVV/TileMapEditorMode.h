@@ -81,8 +81,7 @@ private:
 	void EditorKeyCheck();
 	void DebugText();
 
-	void SaveWorldDataFile();
-	void LoadWorldDataFile();
+	void ResetAdjustmentEntity();
 
 public:
 	AGameWorld* GetGameWorld() const

@@ -58,6 +58,8 @@ void ABackGround::BeginPlay()
 	SetEffect(EEffectType::Star);
 
 	// TODO. Create Rect Effect
+
+	FileLoadInit();
 }
 
 void ABackGround::Tick()
@@ -209,4 +211,10 @@ RoomBackGroundData ABackGround::GetBackGroundData()
 	Data.AnimationSpeed = AnimationSpeed;
 
 	return Data;
+}
+
+void ABackGround::FileLoadInit()
+{
+	FIntPoint CurRoomIndex = AGameWorld::GetCurRoomIndex();
+	SetBackGround(AGameWorld::GetRoomDatasRef(CurRoomIndex).BackGroundData);
 }

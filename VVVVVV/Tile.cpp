@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Tile.h"
 #include "GameWorld.h"
+#include "Room.h"
 
 ATile::ATile()
 {
@@ -20,6 +21,7 @@ void ATile::BeginPlay()
 	Sprite->SetOrder(ERenderOrder::TILE);
 
 	AnimationTileSetup();
+	FileLoadInit();
 }
 
 void ATile::SetTile(const RoomTileData& _Data)
@@ -83,4 +85,11 @@ void ATile::AnimationTileSetup()
 	Sprite->CreateAnimation("RailTiles::12 Rail Right Yellow", "RailTiles::12 Rail Right Yellow", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
 	Sprite->CreateAnimation("RailTiles::13 Rail Right Green", "RailTiles::13 Rail Right Green", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
 	Sprite->CreateAnimation("RailTiles::14 Rail Right Grey", "RailTiles::14 Rail Right Grey", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
+}
+
+void ATile::FileLoadInit()
+{
+	FIntPoint CurRoomIndex = AGameWorld::GetCurRoomIndex();
+	FIntPoint Index = ARoom::GetOnTileIndex(GetActorLocation());
+	SetTile(AGameWorld::GetRoomDatasRef(CurRoomIndex).TileDatas[Index.Y][Index.X]);
 }

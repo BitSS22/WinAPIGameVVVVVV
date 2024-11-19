@@ -38,7 +38,6 @@ void ATileMapEditorMode::BeginPlay()
 	CurSelectEntity->SetComponentScale(SpriteSize);
 	CurSelectEntity->SetComponentLocation(UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half());
 	CurSelectEntity->SetActive(false);
-
 	// Set Debug
 	UEngineDebug::SetIsDebug(true);
 }
@@ -363,9 +362,7 @@ void ATileMapEditorMode::DeleteTile(bool _AroundTileChange, FIntPoint _Index)
 void ATileMapEditorMode::MoveRoom(FIntPoint _Index)
 {
 	GameWorld->SaveRoomData();
-
-	CurAdjustmentEntity = nullptr;
-	CurAdjustmentEntityIndex = -1;
+	ResetAdjustmentEntity();
 
 	GameWorld->GetRoom()->MoveRoom(_Index);
 }
@@ -719,7 +716,7 @@ void ATileMapEditorMode::EditorKeyCheck()
 
 	FVector2D Dir = FVector2D::ZERO;
 	
-	FIntPoint RoomIndex = GameWorld->GetRoom()->GetCurRoomIndex();
+	FIntPoint RoomIndex = AGameWorld::GetCurRoomIndex();
 	if (KEY_DOWN('W'))
 	{
 		if (KEY_PRESS(VK_CONTROL) && KEY_PRESS(VK_SHIFT))
@@ -916,10 +913,17 @@ void ATileMapEditorMode::EditorKeyCheck()
 	}
 
 	if (KEY_DOWN(VK_F3))
-		SaveWorldDataFile();
+	{
+		GameWorld->SaveMapFile();
+	}
 
 	if (KEY_DOWN(VK_F4))
-		LoadWorldDataFile();
+	{
+		ResetAdjustmentEntity();
+		GameWorld->LoadMapFile();
+		FIntPoint CurRoomIndex = AGameWorld::GetCurRoomIndex();
+		GameWorld->GetRoom()->SetRoom(AGameWorld::GetRoomDatasRef(CurRoomIndex));
+	}
 
 	if (KEY_DOWN(VK_TAB))
 		SwitchLoopRoom();
@@ -928,7 +932,7 @@ void ATileMapEditorMode::EditorKeyCheck()
 void ATileMapEditorMode::DebugText()
 {
 	FIntPoint CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
-	FIntPoint RoomIndex = GameWorld->GetRoom()->GetCurRoomIndex();
+	FIntPoint RoomIndex = AGameWorld::GetCurRoomIndex();
 
 	// DEBUG TEXT
 
@@ -1005,17 +1009,10 @@ void ATileMapEditorMode::DebugText()
 	}
 }
 
-void ATileMapEditorMode::SaveWorldDataFile()
-{
-	GameWorld->SaveMapDataFile();
-}
-
-void ATileMapEditorMode::LoadWorldDataFile()
+void ATileMapEditorMode::ResetAdjustmentEntity()
 {
 	CurAdjustmentEntity = nullptr;
 	CurAdjustmentEntityIndex = -1;
-
-	GameWorld->LoadMapDataFile();
 }
 
 void ATileMapEditorMode::CreateEntity()
