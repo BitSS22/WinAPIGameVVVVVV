@@ -86,32 +86,68 @@ void AGameWorld::LoadMapDataFile()
 
 void RoomEntityData::Serialize(UEngineSerializer& _Class)
 {
+	_Class << Name;
+	_Class << EntityType;
+	_Class << DefualtLocation;
+	_Class << DefualtDir;
+	_Class << Speed;
+	_Class << MoveLenght;
+	_Class << MoveLenghtOffset;
 }
 
 void RoomEntityData::DeSerialize(UEngineSerializer& _Class)
 {
+	_Class >> Name;
+	_Class >> EntityType;
+	_Class >> DefualtLocation;
+	_Class >> DefualtDir;
+	_Class >> Speed;
+	_Class >> MoveLenght;
+	_Class >> MoveLenghtOffset;
 }
 
 void RoomTileData::Serialize(UEngineSerializer& _Class)
 {
+	_Class << Name;
+	_Class << CurIndex;
+	_Class << TileType;
 }
 
 void RoomTileData::DeSerialize(UEngineSerializer& _Class)
 {
+	_Class >> Name;
+	_Class >> CurIndex;
+	_Class >> TileType;
 }
 
 void RoomBackGroundData::Serialize(UEngineSerializer& _Class)
 {
+	_Class << Name;
+	_Class << Index;
+	_Class << BackGroundType;
+	_Class << AnimationSpeed;
 }
 
 void RoomBackGroundData::DeSerialize(UEngineSerializer& _Class)
 {
+	_Class >> Name;
+	_Class >> Index;
+	_Class >> BackGroundType;
+	_Class >> AnimationSpeed;
 }
 
 void RoomData::Serialize(UEngineSerializer& _Class)
 {
+	_Class << TileDatas;
+	_Class << BackGroundData;
+	_Class << EntityDatas;
+	_Class << LoopRoom;
 }
 
 void RoomData::DeSerialize(UEngineSerializer& _Class)
 {
+	_Class >> TileDatas;
+	_Class >> BackGroundData;
+	_Class >> EntityDatas;
+	_Class >> LoopRoom;
 }

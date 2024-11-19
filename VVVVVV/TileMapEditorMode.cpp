@@ -916,10 +916,10 @@ void ATileMapEditorMode::EditorKeyCheck()
 	}
 
 	if (KEY_DOWN(VK_F3))
-		GameWorld->SaveMapDataFile();
+		SaveWorldDataFile();
 
 	if (KEY_DOWN(VK_F4))
-		GameWorld->LoadMapDataFile();
+		LoadWorldDataFile();
 
 	if (KEY_DOWN(VK_TAB))
 		SwitchLoopRoom();
@@ -1003,6 +1003,19 @@ void ATileMapEditorMode::DebugText()
 			UEngineDebug::CoreOutputString(str);
 		}
 	}
+}
+
+void ATileMapEditorMode::SaveWorldDataFile()
+{
+	GameWorld->SaveMapDataFile();
+}
+
+void ATileMapEditorMode::LoadWorldDataFile()
+{
+	CurAdjustmentEntity = nullptr;
+	CurAdjustmentEntityIndex = -1;
+
+	GameWorld->LoadMapDataFile();
 }
 
 void ATileMapEditorMode::CreateEntity()

@@ -2,6 +2,9 @@
 #include <vector>
 
 class ISerializObject;
+enum class EEntityType;
+enum class ETileType;
+enum class EBackGroundType;
 // Ό³Έν :
 class UEngineSerializer
 {
@@ -16,6 +19,18 @@ public:
 
 	void operator<< (ISerializObject& _Data);
 
+	void operator<< (EEntityType& _Data)
+	{
+		Write(&_Data, sizeof(EEntityType));
+	}
+	void operator<< (ETileType& _Data)
+	{
+		Write(&_Data, sizeof(ETileType));
+	}
+	void operator<< (EBackGroundType& _Data)
+	{
+		Write(&_Data, sizeof(EBackGroundType));
+	}
 	void operator<< (int& _Data)
 	{
 		Write(&_Data, sizeof(int));
@@ -55,6 +70,18 @@ public:
 
 	void operator>> (ISerializObject& _Data);
 
+	void operator>> (EEntityType& _Data)
+	{
+		Read(&_Data, sizeof(EEntityType));
+	}
+	void operator>> (ETileType& _Data)
+	{
+		Read(&_Data, sizeof(ETileType));
+	}
+	void operator>> (EBackGroundType& _Data)
+	{
+		Read(&_Data, sizeof(EBackGroundType));
+	}
 	void operator>> (int& _Data)
 	{
 		Read(&_Data, sizeof(int));

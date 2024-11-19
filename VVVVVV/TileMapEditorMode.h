@@ -81,6 +81,9 @@ private:
 	void EditorKeyCheck();
 	void DebugText();
 
+	void SaveWorldDataFile();
+	void LoadWorldDataFile();
+
 public:
 	AGameWorld* GetGameWorld() const
 	{
