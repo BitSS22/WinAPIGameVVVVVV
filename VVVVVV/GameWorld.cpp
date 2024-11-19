@@ -18,7 +18,7 @@ AGameWorld::~AGameWorld()
 void AGameWorld::BeginPlay()
 {
 	Room = GetWorld()->SpawnActor<ARoom>();
-	Room->GameWorld = this;
+	Room->SetGameWorld(this);
 
 	RoomDatas.resize(EGameConst::WorldMaxIndex.Y);
 	for (size_t y = 0; y < RoomDatas.size(); ++y)
@@ -36,7 +36,7 @@ void AGameWorld::SaveRoomData()
 	{
 		for (size_t x = 0; x < EGameConst::TileCount.X; ++x)
 		{
-			Data.RoomTileDatas[y][x] = Room->Tiles[y][x]->GetTileData();
+			Data.TileDatas[y][x] = Room->GetTilesCRef()[y][x]->GetTileData();
 		}
 	}
 
@@ -44,9 +44,9 @@ void AGameWorld::SaveRoomData()
 	Data.LoopRoom = Room->GetIsLoop();
 
 	// TODO. Entity Save Code
-	CurRoomDatas.EntityDatas.clear();
+	Data.EntityDatas.clear();
 
-	for (size_t i = 0; i < Entites.size(); ++i)
+	for (size_t i = 0; i < Room->GetEntitesCRef().size(); ++i)
 	{
 		AGameWorld::RoomEntityData EntityData = {};
 		AEntity* Entity = Entites[i];

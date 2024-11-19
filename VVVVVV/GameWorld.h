@@ -35,7 +35,7 @@ public:
 	{
 		return Room;
 	}
-	const RoomData& GetRoomDatasRef(FIntPoint _Index)
+	const RoomData& GetRoomDatasRef(FIntPoint _Index) const
 	{
 		return RoomDatas[_Index.Y][_Index.X];
 	}
@@ -50,8 +50,8 @@ public:
 			EEntityType EntityType = EEntityType::Last;
 			FVector2D DefualtLocation = FVector2D::ZERO;
 			FVector2D DefualtDir = FVector2D::ZERO;
-			float Speed = EGameConst::DefualtSpeed;
-			float MoveLenght = EGameConst::DefualtMoveLen;
+			float Speed = 0.f;
+			float MoveLenght = 0.f;
 			float MoveLenghtOffset = 0.f;
 
 		public:
@@ -75,7 +75,7 @@ public:
 		{
 		public:
 			std::string Name = "Debug BackGround.png";
-			int Index = 0;
+			int Index = -1;
 			EBackGroundType BackGroundType = EBackGroundType::Last;
 			float AnimationSpeed = 0.f;
 
@@ -88,13 +88,13 @@ public:
 	public:
 		RoomData()
 		{
-			RoomTileDatas.resize(EGameConst::TileCount.Y);
-			for (size_t y = 0; y < RoomTileDatas.size(); ++y)
-				RoomTileDatas[y].resize(EGameConst::TileCount.X);
+			TileDatas.resize(EGameConst::TileCount.Y);
+			for (size_t y = 0; y < TileDatas.size(); ++y)
+				TileDatas[y].resize(EGameConst::TileCount.X);
 		}
 
 	public:
-		std::vector<std::vector<RoomTileData>> RoomTileDatas = {};
+		std::vector<std::vector<RoomTileData>> TileDatas = {};
 		RoomBackGroundData BackGroundData = {};
 		std::vector<RoomEntityData> EntityDatas = {};
 		bool LoopRoom = false;

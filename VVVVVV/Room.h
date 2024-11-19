@@ -3,13 +3,11 @@
 #include "GameWorld.h"
 #include "Tile.h"
 #include "BackGround.h"
+#include "Entity.h"
+#include <vector>
 
 class ARoom : public AActor
 {
-public:
-	friend class ATileMapEditorMode;
-	friend class AGameWorld;
-	friend class ABackGround;
 public:
 	ARoom();
 	~ARoom();
@@ -33,26 +31,19 @@ public:
 
 	void MoveRoom(FIntPoint _Index);
 	
-	void LoadRoomData(FIntPoint _Index);
+	void SetRoom(FIntPoint _Index);
+	void SetRoom(const AGameWorld::RoomData& _Data);
+	AGameWorld::RoomData GetRoomData();
 
+	FIntPoint GetOnTileIndex(FVector2D _Pos) const;
+	ETileType GetTileType(FIntPoint _Index) const;
+	
 private:
 
 public:
-	FIntPoint GetOnTileIndex(FVector2D _Pos) const
+	void SetGameWorld(AGameWorld* _ptr)
 	{
-		if (_Pos.X < 0)
-			_Pos.X -= EGameConst::TileScale.X;
-		if (_Pos.Y < 0)
-			_Pos.Y -= EGameConst::TileScale.Y;
-
-		return FIntPoint(_Pos.X / EGameConst::TileScale.X, _Pos.Y / EGameConst::TileScale.Y);
-	}
-	ETileType GetTileType(FIntPoint _Index) const
-	{
-		if (_Index.X < 0 || _Index.X >= EGameConst::TileCount.X || _Index.Y < 0 || _Index.Y >= EGameConst::TileCount.Y)
-			return ETileType::None;
-		else
-			return Tiles[_Index.Y][_Index.X]->GetTileType();
+		GameWorld = _ptr;
 	}
 	AGameWorld* GetGameWorld() const
 	{
@@ -69,6 +60,14 @@ public:
 	bool GetIsLoop() const
 	{
 		return LoopRoom;
+	}
+	const std::vector<std::vector<ATile*>>& GetTilesCRef() const
+	{
+		return Tiles;
+	}
+	const std::vector<AEntity*>& GetEntitesCRef() const
+	{
+		return Entites;
 	}
 
 };

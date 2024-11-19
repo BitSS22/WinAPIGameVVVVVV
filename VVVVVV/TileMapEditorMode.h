@@ -3,6 +3,7 @@
 #include "BackGround.h"
 #include "Room.h"
 #include "GameWorld.h"
+#include "Tile.h"
 
 class ATileMapEditorMode : public AGameMode
 {
@@ -16,16 +17,16 @@ public:
 	ATileMapEditorMode& operator=(ATileMapEditorMode&& _Other) noexcept = delete;
 
 private:
-	std::vector<std::string> TileLists[static_cast<int>(ETileType::Last)] = {};
-	ETileType CurTileList = ETileType::Last;
-	int CurTileSetIndex = 0;
+	std::vector<AGameWorld::RoomData::RoomTileData> TileDatas[static_cast<int>(ETileType::Last)] = {};
+	ETileType CurTileType = ETileType::Last;
+	int CurTileListIndex = 0;
 
-	std::vector<std::string> EntityLists[static_cast<int>(EEntityType::Last)] = {};
-	EEntityType CurEntityList = EEntityType::Last;
+	std::vector<AGameWorld::RoomData::RoomEntityData> EntityDatas[static_cast<int>(EEntityType::Last)] = {};
+	EEntityType CurEntityType = EEntityType::Last;
 	int CurEntityIndex = 0;
 	
-	std::vector<std::string> BackGroundLists[static_cast<int>(EBackGroundType::Last)] = {};
-	EBackGroundType CurBackGroundList = EBackGroundType::Last;
+	std::vector<AGameWorld::RoomData::RoomBackGroundData> BackGroundDatas[static_cast<int>(EBackGroundType::Last)] = {};
+	EBackGroundType CurBackGroundType = EBackGroundType::Last;
 	int CurBackGroundIndex = 0;
 
 	USpriteRenderer* CurSelectTile = nullptr;
@@ -41,39 +42,27 @@ public:
 	virtual void Tick() override;
 
 private:
-	int AroundTileChange(const string& _Name, int _X, int _Y);
-	int FindAroundTile(uint8_t _Bit) const;
-	bool IsSameTileName(const string& _Name, int x, int y) const;
-	std::vector<std::vector<ATile*>>& GetCurSelectTileMap() const
-	{
-		switch (CurTileList)
-		{
-		case ETileType::BackGround:
-			return GameWorld->GetRoom()->BackGroundTiles;
-			break;
-		default:
-			return GameWorld->GetRoom()->Tiles;
-			break;
-		}
-	}
+	int GetCheckAroundTileIndex(std::string_view _Name, int _X, int _Y) const;
+	bool IsSameTileName(std::string_view _Name, int x, int y) const;
 
 	void ChangeTile(bool _AroundTileChange, FIntPoint _Index);
 	void DeleteTile(bool _AroundTileChange, FIntPoint _Index);
 
+	void CreateEntity();
+	void DeleteEntity();
+
 	void MoveRoom(FIntPoint _Index);
 	void SwitchLoopRoom();
 
-	void NextTileList();
-	void PrevTileList();
+	void NextTileType();
+	void PrevTileType();
 	void PrevTileSet();
 	void NextTileSet();
-	void PrevTile();
-	void NextTile();
+	void PrevTileIndex();
+	void NextTileIndex();
+
 	void PrevBackGroundImage();
 	void NextBackGroundImage();
-
-	void CreateEntity();
-	void DeleteEntity();
 
 	void PrevEntityList();
 	void NextEntityList();
@@ -101,7 +90,7 @@ private:
 	void DebugText();
 
 public:
-	AGameWorld* GetGameWorld()
+	AGameWorld* GetGameWorld() const
 	{
 		return GameWorld;
 	}

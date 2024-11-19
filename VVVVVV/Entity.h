@@ -24,14 +24,11 @@ protected:
 
 public:
 	virtual void SetEntity(const AGameWorld::RoomData::RoomEntityData& _Data) = 0;
+	virtual AGameWorld::RoomData::RoomEntityData GetEntityData() = 0;
 
 private:
 
 public:
-	void SetEntityType(EEntityType _Type)
-	{
-		EntityType = _Type;
-	}
 	EEntityType GetEntityType()
 	{
 		return EntityType;
@@ -43,6 +40,10 @@ public:
 	U2DCollision* GetCollision()
 	{
 		return Collider;
+	}
+	void SetRoom(ARoom* _Room)
+	{
+		Room = _Room;
 	}
 	ARoom* GetRoom()
 	{

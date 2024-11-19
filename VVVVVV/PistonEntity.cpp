@@ -60,3 +60,16 @@ void APistonEntity::SetEntity(const AGameWorld::RoomData::RoomEntityData& _Data)
 
 	AddActorLocation(Dir * MoveLenghtOffset);
 }
+
+AGameWorld::RoomData::RoomEntityData APistonEntity::GetEntityData()
+{
+	AGameWorld::RoomData::RoomEntityData Data = AEntity::GetEntityData();
+
+	Data.DefualtLocation = DefualtLocation;
+	Data.DefualtDir = DefualtDir;
+	Data.Speed = Speed;
+	Data.MoveLenght = MoveLenght;
+	Data.MoveLenghtOffset = MoveLenghtOffset;
+	
+	return Data;
+}

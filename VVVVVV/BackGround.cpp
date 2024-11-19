@@ -161,12 +161,12 @@ void ABackGround::SetBackGround(const AGameWorld::RoomData::RoomBackGroundData& 
 {
 	EBackGroundType PrevType = BackGroundType;
 
+	AnimationSpeed = _Data.AnimationSpeed;
+	BackGroundType = _Data.BackGroundType;
+
 	Sprite->SetSprite(_Data.Name, _Data.Index);
 	UEngineSprite* SpriteImage = UImageManager::GetInst().FindSprite(_Data.Name);
 	Sprite->SetComponentScale(SpriteImage->GetSpriteData(_Data.Index).Transform.Scale);
-	
-	AnimationSpeed = _Data.AnimationSpeed;
-	BackGroundType = _Data.BackGroundType;
 
 	if (PrevType != BackGroundType)
 	{
@@ -203,6 +203,7 @@ void ABackGround::SetBackGround(const AGameWorld::RoomData::RoomBackGroundData& 
 AGameWorld::RoomData::RoomBackGroundData ABackGround::GetBackGroundData()
 {
 	AGameWorld::RoomData::RoomBackGroundData Data = {};
+
 	Data.Name = Sprite->GetCurSpriteName();
 	Data.Index = Sprite->GetCurIndex();
 	Data.BackGroundType = BackGroundType;

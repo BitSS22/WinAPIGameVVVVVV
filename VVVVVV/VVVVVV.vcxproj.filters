@@ -58,6 +58,9 @@
     <ClInclude Include="Teleport.h">
       <Filter>ContentsObject\Entity\Teleport</Filter>
     </ClInclude>
+    <ClInclude Include="Enermy.h">
+      <Filter>ContentsObject\Entity\PistonEntity\Enermy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -117,6 +120,9 @@
     <ClCompile Include="Teleport.cpp">
       <Filter>ContentsObject\Entity\Teleport</Filter>
     </ClCompile>
+    <ClCompile Include="Enermy.cpp">
+      <Filter>ContentsObject\Entity\PistonEntity\Enermy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="pch">
@@ -172,6 +178,9 @@
     </Filter>
     <Filter Include="ContentsObject\Entity\Teleport">
       <UniqueIdentifier>{18c6074f-4b77-4309-ac80-9d49fd9b9904}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Entity\PistonEntity\Enermy">
+      <UniqueIdentifier>{19cc44ec-8ae6-464c-b4a2-f08c910a9e5c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

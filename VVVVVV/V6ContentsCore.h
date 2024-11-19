@@ -24,18 +24,16 @@ private:
 
 	void ResourceLoad();
 
+	// Resource Type
 	void SpriteLoad();
+	void SoundLoad();
 
-	void TileImageLoad();
-	void BackGroundImageLoad();
-	void PlayerImageLoad();
+	// ImageResource
+	void BackGroundLoad();
+	void TileLoad();
+	void EntityLoad();
+
+	// Current Unused Data
 	void FontImageLoad();
-
-	void BackGroundObjectImageLoad();
-
-	void FlatformImageLoad();
-	void InterObjectImageLoad();
-	void EnermyImageLoad();
-
 };
 

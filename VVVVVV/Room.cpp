@@ -5,6 +5,10 @@
 #include "Entity.h"
 #include "PistonEntity.h"
 #include "Player.h"
+#include "Enermy.h"
+#include "Platform.h"
+#include "CheckPoint.h"
+#include "Teleport.h"
 
 ARoom::ARoom()
 {
@@ -42,57 +46,102 @@ void ARoom::MoveRoom(FIntPoint _Index)
 	else if (_Index.Y >= EGameConst::WorldMaxIndex.Y)
 		_Index.Y = 0;
 
-	LoadRoomData(_Index);
+	SetRoom(_Index);
 
 	CurRoomIndex = _Index;
 }
 
-void ARoom::LoadRoomData(FIntPoint _Index)
+void ARoom::SetRoom(FIntPoint _Index)
 {
-	const AGameWorld::RoomData& Data = GetGameWorld()->GetRoomDatasRef(CurRoomIndex);
+	SetRoom(GetGameWorld()->GetRoomDatasRef(_Index));
+}
 
-	for (size_t y = 0; y < EGameConst::TileCount.Y; ++y)
+void ARoom::SetRoom(const AGameWorld::RoomData& _Data)
+{
+	for (int y = 0; y < EGameConst::TileCount.Y; ++y)
 	{
-		for (size_t x = 0; x < EGameConst::TileCount.X; ++x)
+		for (int x = 0; x < EGameConst::TileCount.X; ++x)
 		{
-			Tiles[y][x]->SetTile(Data.RoomTileDatas[y][x]);
+			Tiles[y][x]->SetTile(_Data.TileDatas[y][x]);
 		}
 	}
+
+	BackGround->SetBackGround(_Data.BackGroundData);
+	LoopRoom = _Data.LoopRoom;
 
 	for (size_t i = 0; i < Entites.size(); ++i)
 		Entites[i]->Destroy();
 	Entites.clear();
 
-	GetBackGround()->SetBackGround(Data.BackGroundData);
-	LoopRoom = Data.LoopRoom;
-
-	// TODO. Entity Load Code
-	for (size_t i = 0; i < ChangeRoomDatas.EntityDatas.size(); ++i)
+	for (size_t i = 0; i < _Data.EntityDatas.size(); ++i)
 	{
-		AGameWorld::RoomEntityData Data = ChangeRoomDatas.EntityDatas[i];
+		AEntity* NewEntity = nullptr;
 
-		if (ChangeRoomDatas.EntityDatas[i].Name.find("ENEMIES::") != std::string::npos)
+		switch (_Data.EntityDatas[i].EntityType)
 		{
-			APistonEntity* NewEntity = GetWorld()->SpawnActor<APistonEntity>();
-			NewEntity->MoveEntityDefaultSetUp(Data.Name, Data.DefualtLocation, Data.DefualtDir, Data.Speed, Data.MoveLenght, Data.MoveLenghtOffset);
-			Entites.push_back(NewEntity);
-			NewEntity->SetRoom(this);
+		case EEntityType::Guy:
+			NewEntity = GetWorld()->SpawnActor<AGuy>();
+			break;
+		case EEntityType::Player:
+			NewEntity = GetWorld()->SpawnActor<APlayer>();
+			break;
+		case EEntityType::Enermy:
+			NewEntity = GetWorld()->SpawnActor<AEnermy>();
+			break;
+		case EEntityType::Platform:
+			NewEntity = GetWorld()->SpawnActor<APlatform>();
+			break;
+		case EEntityType::CheckPoint:
+			NewEntity = GetWorld()->SpawnActor<ACheckPoint>();
+			break;
+		case EEntityType::Teleport:
+			NewEntity = GetWorld()->SpawnActor<ATeleport>();
+			break;
 		}
-		else if (ChangeRoomDatas.EntityDatas[i].Name.find("PLATFORMS::") != std::string::npos)
-		{
-			APistonEntity* NewEntity = GetWorld()->SpawnActor<APistonEntity>();
-			NewEntity->MoveEntityDefaultSetUp(Data.Name, Data.DefualtLocation, Data.DefualtDir, Data.Speed, Data.MoveLenght, Data.MoveLenghtOffset);
-			Entites.push_back(NewEntity);
-			NewEntity->SetRoom(this);
-		}
-		else if (ChangeRoomDatas.EntityDatas[i].Name.find("INTEROBJECT::") != std::string::npos)
-		{
-			AEntity* NewEntity = GetWorld()->SpawnActor<AEntity>();
-			NewEntity->EntityDefaultSetUp(Data.Name, Data.DefualtLocation);
-			Entites.push_back(NewEntity);
-			NewEntity->SetRoom(this);
-		}
-		else
-			MSGASSERT(nullptr, Data.Name, "의 Entity Data를 제대로 로드하지 못했습니다.");
+
+		if (NewEntity == nullptr)
+			MSGASSERT(nullptr, "Spawn Entity Unknown Type.");
+
+		NewEntity->SetEntity(_Data.EntityDatas[i]);
+		NewEntity->SetRoom(this);
 	}
+}
+
+AGameWorld::RoomData ARoom::GetRoomData()
+{
+	AGameWorld::RoomData Data = {};
+
+	Data.BackGroundData = BackGround->GetBackGroundData();
+	Data.LoopRoom = LoopRoom;
+
+	for (int y = 0; y < EGameConst::TileCount.Y; ++y)
+	{
+		for (int x = 0; x < EGameConst::TileCount.X; ++x)
+		{
+			Data.TileDatas[y][x] = Tiles[y][x]->GetTileData();
+		}
+	}
+	
+	for (size_t i = 0; i < Entites.size(); ++i)
+		Data.EntityDatas.push_back(Entites[i]->GetEntityData());
+
+	return Data;
+}
+
+FIntPoint ARoom::GetOnTileIndex(FVector2D _Pos) const
+{
+	if (_Pos.X < 0)
+		_Pos.X -= EGameConst::TileScale.X;
+	if (_Pos.Y < 0)
+		_Pos.Y -= EGameConst::TileScale.Y;
+
+	return FIntPoint(_Pos.X / EGameConst::TileScale.X, _Pos.Y / EGameConst::TileScale.Y);
+}
+
+ETileType ARoom::GetTileType(FIntPoint _Index) const
+{
+	if (_Index.X < 0 || _Index.X >= EGameConst::TileCount.X || _Index.Y < 0 || _Index.Y >= EGameConst::TileCount.Y)
+		return ETileType::None;
+	else
+		return Tiles[_Index.Y][_Index.X]->GetTileType();
 }
