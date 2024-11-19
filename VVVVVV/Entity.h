@@ -58,6 +58,10 @@ public:
 	{
 		AddActorLocation(_Location);
 	}
+	virtual FVector2D GetEntityLocation() const
+	{
+		return GetActorLocation();
+	}
 
 };
 

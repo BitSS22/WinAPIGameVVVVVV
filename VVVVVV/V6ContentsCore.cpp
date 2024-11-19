@@ -252,6 +252,20 @@ void V6ContentsCore::EntityLoad()
 	float X = 48.f;
 	float Y = 42.f;
 
+	// Temp Resource Load
+	UImageManager::GetInst().CreateCutSprite("Player.png", "Teleports:: Cyan Right", FVector2D(X * 0, Y * 0), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
+
+	// 비리디언(Viridian) - 선장(Captain)
+	UImageManager::GetInst().CreateCutSprite("Player.png", "Players:: Cyan Right", FVector2D(X * 0, Y * 0), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
+	UImageManager::GetInst().CreateCutSprite("Player.png", "Players:: Cyan Left", FVector2D(X * 1, Y * 0), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
+	UImageManager::GetInst().CreateCutSprite("Player.png", "Players:: Cyan rRight", FVector2D(X * 2, Y * 0), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
+	UImageManager::GetInst().CreateCutSprite("Player.png", "Players:: Cyan rLeft", FVector2D(X * 3, Y * 0), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
+
+	UImageManager::GetInst().CreateCutSprite("Player.png", "Players:: Cyan Sad Right", FVector2D(X * 0, Y * 1), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
+	UImageManager::GetInst().CreateCutSprite("Player.png", "Players:: Cyan Sad Left", FVector2D(X * 1, Y * 1), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
+	UImageManager::GetInst().CreateCutSprite("Player.png", "Players:: Cyan Sad rRight", FVector2D(X * 2, Y * 1), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
+	UImageManager::GetInst().CreateCutSprite("Player.png", "Players:: Cyan Sad rLeft", FVector2D(X * 3, Y * 1), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
+
 	// 비리디언(Viridian) - 선장(Captain)
 	UImageManager::GetInst().CreateCutSprite("Player.png", "Guys:: Cyan Right", FVector2D(X * 0, Y * 0), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
 	UImageManager::GetInst().CreateCutSprite("Player.png", "Guys:: Cyan Left", FVector2D(X * 1, Y * 0), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
@@ -329,8 +343,8 @@ void V6ContentsCore::EntityLoad()
 	UImageManager::GetInst().CreateCutSprite("Player.png", "Guys:: Grey Sad rRight", FVector2D(X * 2, Y * 13), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
 	UImageManager::GetInst().CreateCutSprite("Player.png", "Guys:: Grey Sad rLeft", FVector2D(X * 3, Y * 13), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
 
-	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "CheckPoint:: CheckPoint", FVector2D(46.f, 130.f), FVector2D(32.f, 32.f), FVector2D(0.f, 0.f), 1, 1);
-	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "CheckPoint:: CheckPoint Flip", FVector2D(8.f, 130.f), FVector2D(32.f, 32.f), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "CheckPoints:: CheckPoint", FVector2D(46.f, 130.f), FVector2D(32.f, 32.f), FVector2D(0.f, 0.f), 1, 1);
+	UImageManager::GetInst().CreateCutSprite("Objects & Menu.png", "CheckPoints:: CheckPoint Flip", FVector2D(8.f, 130.f), FVector2D(32.f, 32.f), FVector2D(0.f, 0.f), 1, 1);
 
 	X = 64.f;
 	Y = 16.f;

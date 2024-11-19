@@ -49,7 +49,7 @@ public:
 	{
 		return MoveLenghtOffset;
 	}
-	FVector2D GetEntityDefualtLocation()
+	virtual FVector2D GetEntityLocation() const override
 	{
 		return DefualtLocation;
 	}

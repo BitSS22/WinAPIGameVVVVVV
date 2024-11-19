@@ -106,6 +106,7 @@ void ARoom::SetRoom(const RoomData& _Data)
 
 		NewEntity->SetEntity(_Data.EntityDatas[i]);
 		NewEntity->SetRoom(this);
+		Entites.push_back(NewEntity);
 	}
 }
 

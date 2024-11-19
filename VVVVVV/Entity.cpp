@@ -19,6 +19,8 @@ void AEntity::Tick()
 
 void AEntity::SetEntity(const RoomEntityData& _Data)
 {
+	EntityType = _Data.EntityType;
+
 	Sprite = CreateDefaultSubObject<USpriteRenderer>();
 	Sprite->SetSprite(_Data.Name, 0);
 	Sprite->SetOrder(ERenderOrder::Entity);

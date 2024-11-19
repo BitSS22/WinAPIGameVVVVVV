@@ -362,6 +362,8 @@ void ATileMapEditorMode::DeleteTile(bool _AroundTileChange, FIntPoint _Index)
 
 void ATileMapEditorMode::MoveRoom(FIntPoint _Index)
 {
+	GameWorld->SaveRoomData();
+
 	CurAdjustmentEntity = nullptr;
 	CurAdjustmentEntityIndex = -1;
 
@@ -385,10 +387,10 @@ void ATileMapEditorMode::AddTileList(int _Value)
 {
 	CurTileIndex += _Value;
 
-	if (CurTileIndex >= TileDatas[static_cast<int>(CurTileType)].size())
-		CurTileIndex = 0;
-	else if (CurTileIndex < 0)
+	if (CurTileIndex < 0)
 		CurTileIndex = TileDatas[static_cast<int>(CurTileType)].size() - 1;
+	else if (CurTileIndex >= TileDatas[static_cast<int>(CurTileType)].size())
+		CurTileIndex = 0;
 
 	CurSelectTile->SetSprite(TileDatas[static_cast<int>(CurTileType)][CurTileIndex].Name, 0);
 }
@@ -417,10 +419,10 @@ void ATileMapEditorMode::SetBackGroundType(EBackGroundType _Type)
 void ATileMapEditorMode::AddBackGroundList(int _Value)
 {
 	CurBackGroundIndex += _Value;
-	if (CurBackGroundIndex >= BackGroundDatas[static_cast<int>(CurBackGroundType)].size())
+	if (CurBackGroundIndex < 0)
+		CurBackGroundIndex = BackGroundDatas[static_cast<int>(CurBackGroundType)].size() - 1;
+	else if (CurBackGroundIndex >= BackGroundDatas[static_cast<int>(CurBackGroundType)].size())
 		CurBackGroundIndex = 0;
-	else if (CurBackGroundIndex < 0)
-		CurBackGroundIndex = BackGroundDatas[static_cast<int>(CurTileType)].size() - 1;
 
 	const RoomBackGroundData& Data = BackGroundDatas[static_cast<int>(CurBackGroundType)][CurBackGroundIndex];
 	GameWorld->GetRoom()->GetBackGround()->SetBackGround(Data);
@@ -438,10 +440,10 @@ void ATileMapEditorMode::AddEntityList(int _Value)
 {
 	CurEntityIndex += _Value;
 
-	if (CurEntityIndex >= EntityDatas[static_cast<int>(CurEntityType)].size())
-		CurEntityIndex = 0;
-	else if (CurEntityIndex < 0)
+	if (CurEntityIndex < 0)
 		CurEntityIndex = EntityDatas[static_cast<int>(CurEntityType)].size() - 1;
+	else if (CurEntityIndex >= EntityDatas[static_cast<int>(CurEntityType)].size())
+		CurEntityIndex = 0;
 
 	CurSelectEntity->SetSprite(EntityDatas[static_cast<int>(CurEntityType)][CurEntityIndex].Name, 0);
 }
@@ -488,7 +490,7 @@ void ATileMapEditorMode::LoadResourceList()
 			RoomTileData TileData = {};
 			TileData.Name = Sprite.first;
 			TileData.TileType = ETileType::None;
-			TileDatas[static_cast<int>(ETileType::BackGround)].push_back(TileData);
+			TileDatas[static_cast<int>(ETileType::None)].push_back(TileData);
 		}
 		else if (Sprite.first.find(BackGroundTiles) != std::string::npos)
 		{
@@ -874,7 +876,7 @@ void ATileMapEditorMode::DebugText()
 	str += ",";
 	str += std::to_string(RoomIndex.Y);
 	str += ", RoomLoop : ";
-	str += GameWorld->GetRoom()->GetIsLoop();
+	str += std::to_string(GameWorld->GetRoom()->GetIsLoop());
 	UEngineDebug::CoreOutputString(str);
 
 	str = "Tile Set Index : ";
@@ -913,9 +915,9 @@ void ATileMapEditorMode::DebugText()
 		if (PistonEntity != nullptr)
 		{
 			str = "Location : ";
-			str += std::to_string(PistonEntity->GetEntityDefualtLocation().X);
+			str += std::to_string(PistonEntity->GetEntityLocation().X);
 			str += ",";
-			str += std::to_string(PistonEntity->GetEntityDefualtLocation().Y);
+			str += std::to_string(PistonEntity->GetEntityLocation().Y);
 			str += ", Scale : ";
 			str += std::to_string(PistonEntity->GetActorScale().X);
 			str += ",";
@@ -937,13 +939,13 @@ void ATileMapEditorMode::DebugText()
 		else
 		{
 			str = "Location : ";
-			str += std::to_string(PistonEntity->GetEntityDefualtLocation().X);
+			str += std::to_string(CurAdjustmentEntity->GetEntityLocation().X);
 			str += ",";
-			str += std::to_string(PistonEntity->GetEntityDefualtLocation().Y);
+			str += std::to_string(CurAdjustmentEntity->GetEntityLocation().Y);
 			str += "Scale : ";
-			str += std::to_string(PistonEntity->GetActorScale().X);
+			str += std::to_string(CurAdjustmentEntity->GetActorScale().X);
 			str += ",";
-			str += std::to_string(PistonEntity->GetActorScale().Y);
+			str += std::to_string(CurAdjustmentEntity->GetActorScale().Y);
 			UEngineDebug::CoreOutputString(str);
 		}
 	}
@@ -984,8 +986,8 @@ void ATileMapEditorMode::CreateEntity()
 	NewEntity->SetEntity(Data);
 	NewEntity->SetRoom(GameWorld->GetRoom());
 	CurAdjustmentEntity = NewEntity;
-	CurAdjustmentEntityIndex = static_cast<int>(GameWorld->GetRoom()->Entites.size() - 1);
 	GameWorld->GetRoom()->Entites.push_back(NewEntity);
+	CurAdjustmentEntityIndex = static_cast<int>(GameWorld->GetRoom()->Entites.size() - 1);
 }
 
 void ATileMapEditorMode::DeleteEntity()
