@@ -4,6 +4,7 @@
 #include "GameWorld.h"
 #include "Room.h"
 #include "PistonEntity.h"
+#include "Tile.h"
 
 APlayer::APlayer()
 {
@@ -35,6 +36,9 @@ void APlayer::Tick()
 
 	// Add Gravity
 	Gravity();
+
+	// Entity
+	EntityCollisionCheck();
 
 	// Tile Collision Check
 	TileCheck();
@@ -119,12 +123,87 @@ void APlayer::Death()
 	}
 }
 
+void APlayer::EntityCollisionCheck()
+{
+}
+
 void APlayer::TileCheck()
 {
-	for (int i = 0; i < PointCount; ++i)
+	FVector2D Location = GetActorLocation() + Points[static_cast<int>(EPlayerPoint::Bottom)][2];
+	FIntPoint Index = AGameWorld::GetRoom()->GetOnTileIndex(Location);
+	const ATile* Tile = AGameWorld::GetRoom()->GetTile(Index);
+
+	if (Tile == nullptr)
+		return;
+
+	if (Tile->GetType() == ETileType::RailLeft)
+		Tile->TileCollision(this, MoveValue);
+	else if (Tile->GetType() == ETileType::RailRight)
+		Tile->TileCollision(this, MoveValue);
+	else if (Tile->GetType() == ETileType::Collision)
+		Tile->TileCollision(this, MoveValue);
+	else if (Tile->GetType() == ETileType::Animation)
+		Tile->TileCollision(this, MoveValue);
+	else if (Tile->GetType() == ETileType::Spike)
+		Tile->TileCollision(this, MoveValue);
+	
+	// TODO. Tile Collision Code Create
+	APlayer* Player = dynamic_cast<APlayer*>(_Actor);
+
+	switch (TileType)
 	{
-		// TODO. Tile Collision Code Create
+	case ETileType::Collision:
+		Push(_Actor, _MoveValue);
+		if (Player != nullptr)
+			Player->SetGround(true);
+		break;
+	case ETileType::Spike:
+	{
+		if (Player != nullptr)
+			Player->SetDeath(true);
 	}
+	break;
+	case ETileType::Animation:
+		Push(_Actor, _MoveValue);
+		if (Player != nullptr)
+			Player->SetGround(true);
+		break;
+	case ETileType::RailLeft:
+		_MoveValue.X -= EGameConst::RailSpeed * GET_DELTA;
+		Push(_Actor, _MoveValue);
+		if (Player != nullptr)
+			Player->SetGround(true);
+		break;
+	case ETileType::RailRight:
+		_MoveValue.X += EGameConst::RailSpeed * GET_DELTA;
+		Push(_Actor, _MoveValue);
+		if (Player != nullptr)
+			Player->SetGround(true);
+		break;
+	}
+
+	FTransform ActorTransform = _Actor->GetActorTransform();
+	FTransform ActorNextTransform = FTransform(ActorTransform.Location + _MoveValue, ActorTransform.Scale);
+	FTransform Transform = GetActorTransform();
+	FVector2D PushDir = ActorTransform.Location - ActorNextTransform.Location;
+
+	FVector2D Offset = FVector2D::ZERO;
+	if (PushDir.X < 0.f)
+		Offset.X = Transform.CenterLeft() - ActorNextTransform.CenterRight() + 1.f;
+	else if (PushDir.X > 0.f)
+		Offset.X = Transform.CenterRight() - ActorNextTransform.CenterLeft() - 1.f;
+
+	if (PushDir.Y < 0.f)
+		Offset.Y = Transform.CenterTop() - ActorNextTransform.CenterBottom() - 1.f;
+	else if (PushDir.Y > 0.f)
+		Offset.Y = Transform.CenterBottom() - ActorNextTransform.CenterTop() + 1.f;
+
+	//if (abs(Offset.X) > abs(Offset.Y))
+	//	Offset.X = 0.f;
+	//else
+	//	Offset.Y = 0.f;
+
+	_MoveValue += Offset;
 }
 
 void APlayer::MoveRoomCheck()

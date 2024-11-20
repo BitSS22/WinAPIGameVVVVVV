@@ -130,6 +130,9 @@ RoomData ARoom::GetRoomData()
 
 const ATile* ARoom::GetTile(const FIntPoint& _Index) const
 {
+	if (IsOutTileIndex(_Index) == true)
+		return nullptr;
+
 	return Tiles[_Index.Y][_Index.X];
 }
 

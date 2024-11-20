@@ -52,6 +52,7 @@ private:
 	void AnimationChange();
 	void Gravity();
 	void Death();
+	void EntityCollisionCheck();
 	void TileCheck();
 	void MoveRoomCheck();
 	void ReSpawn();
@@ -62,9 +63,21 @@ private:
 	void Debug();
 
 public:
-	void SetDeath()
+	void SetDeath(bool _Value)
 	{
-		IsDeath = true;
+		IsDeath = _Value;
+	}
+	void SetGround(bool _Value)
+	{
+		IsGround = _Value;
+	}
+	void SetFlip(bool _Value)
+	{
+		IsFlip = _Value;
+	}
+	void SetSad(bool _Value)
+	{
+		IsSad = _Value;
 	}
 
 };

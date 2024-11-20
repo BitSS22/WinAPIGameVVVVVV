@@ -23,32 +23,31 @@ public:
 	virtual void BeginPlay() override;
 
 	void SetTile(const RoomTileData& _Data);
-	RoomTileData GetTileData();
+	RoomTileData GetTileData() const;
 
 private:
 	void AnimationTileSetup();
-	void Collision(const APlayer& _Player, FVector2D& _MoveValue) const;
 
 	void FileLoadInit();
 
 public:
-	ETileType GetType()
+	ETileType GetType() const
 	{
 		return TileType;
 	}
-	std::string GetSpriteName()
+	std::string GetSpriteName() const
 	{
 		return Sprite->GetCurSpriteName();
 	}
-	int GetSpriteMaxIndex()
+	int GetSpriteMaxIndex() const
 	{
 		return Sprite->GetMaxIndex();
 	}
-	int GetSpriteCurIndex()
+	int GetSpriteCurIndex() const
 	{
 		return Sprite->GetCurIndex();
 	}
-	void AddSpriteIndex(int _Index)
+	void AddSpriteIndex(int _Index) const
 	{
 		int Index = Sprite->GetCurIndex();
 		Index += _Index;
@@ -59,7 +58,7 @@ public:
 
 		Sprite->SetSprite(Sprite->GetCurSpriteName(), Index);
 	}
-	void SetSpriteOrder(ERenderOrder _Type)
+	void SetSpriteOrder(ERenderOrder _Type) const
 	{
 		Sprite->SetOrder(_Type);
 	}
