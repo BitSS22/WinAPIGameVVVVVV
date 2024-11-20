@@ -121,67 +121,12 @@ void APlayer::Death()
 
 void APlayer::TileCheck()
 {
-	for (int i = 0; i < static_cast<int>(EPlayerPoint::Last); ++i)
+	for (int i = 0; i < PointCount; ++i)
 	{
-		EPlayerPoint Dir = static_cast<EPlayerPoint>(i);
-
-		if (MoveValue.X > 0.f && Dir == EPlayerPoint::Left)
-			continue;
-
-		if (MoveValue.X < 0.f && Dir == EPlayerPoint::Right)
-			continue;
-
-		if (MoveValue.Y > 0.f && Dir == EPlayerPoint::Top)
-			continue;
-
-		if (MoveValue.Y < 0.f && Dir == EPlayerPoint::Bottom)
-			continue;
-
-		for (int j = 0; j < APlayer::PointCount; ++j)
-		{
-			FVector2D PointLocation = GetActorLocation() + Points[static_cast<int>(EPlayerPoint::Left)][j];
-			FIntPoint TileIndex = AGameWorld::GetRoom()->GetOnTileIndex(PointLocation);
-			ETileType TileType = AGameWorld::GetRoom()->GetTileType(TileIndex);
-			FTransform TileTransform = AGameWorld::GetRoom()->GetTileTransform(TileIndex);
-
-			switch (TileType)
-			{
-			case ETileType::None:
-			case ETileType::BackGround:
-				continue;
-			case ETileType::Spike:
-				SetDeath();
-				continue;
-			case ETileType::RailLeft:
-				if ((Dir == EPlayerPoint::Bottom && IsFlip == false) || (Dir == EPlayerPoint::Top && IsFlip == true))
-					MoveValue.X -= 300.f * GET_DELTA;
-				continue;
-			case ETileType::RailRight:
-				if ((Dir == EPlayerPoint::Bottom && IsFlip == false) || (Dir == EPlayerPoint::Top && IsFlip == true))
-					MoveValue.X += 300.f * GET_DELTA;
-				continue;
-			case ETileType::Collision:
-			case ETileType::Animation:
-				switch (Dir)
-				{
-				case EPlayerPoint::Left:
-					SetActorLocation(FVector2D(TileTransform.CenterRight() + GetActorScale().HalfX(), GetActorLocation().Y));
-					break;
-				case EPlayerPoint::Right:
-					SetActorLocation(FVector2D(TileTransform.CenterLeft() - GetActorScale().HalfX(), GetActorLocation().Y));
-					break;
-				case EPlayerPoint::Top:
-					SetActorLocation(FVector2D(GetActorLocation().X, TileTransform.CenterBottom() + GetActorScale().HalfY()));
-					break;
-				case EPlayerPoint::Bottom:
-					SetActorLocation(FVector2D(GetActorLocation().X, TileTransform.CenterTop() - GetActorScale().HalfY()));
-					break;
-				}
-				return;
-			}
-
-			MSGASSERT(nullptr, "On TileType Error.");
-		}
+		FVector2D PointLocation = GetActorLocation() + Points[static_cast<int>(EPlayerPoint::Left)][i];
+		FIntPoint TileIndex = AGameWorld::GetRoom()->GetOnTileIndex(PointLocation);
+		ETileType TileType = AGameWorld::GetRoom()->GetTileType(TileIndex);
+		FTransform TileTransform = AGameWorld::GetRoom()->GetTileTransform(TileIndex);
 	}
 }
 
