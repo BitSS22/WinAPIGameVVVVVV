@@ -31,20 +31,21 @@ public:
 
 	void MoveRoom(FIntPoint _Index);
 	
-	void SetRoom(const FIntPoint& _Index);
-	void SetRoom(const RoomData& _Data);
 	RoomData GetRoomData();
 
-	static FIntPoint GetOnTileIndex(FVector2D _Pos);
+	FIntPoint GetOnTileIndex(const FVector2D& _Pos) const;
 	ETileType GetTileType(const FVector2D& _Location) const;
 	ETileType GetTileType(const FIntPoint& _Index) const;
 	
 	// Return Out Dir, Not Out is Return ZERO Dir.
-	static FVector2D IsOutScreen(const FTransform& Transform);
-	static FVector2D IsOutScreen(const FVector2D& _Location);
-	static bool IsOutTileIndex(const FIntPoint& _Index);
+	FVector2D IsOutScreen(const FTransform& Transform) const;
+	FVector2D IsOutScreen(const FVector2D& _Location) const;
+	bool IsOutTileIndex(const FIntPoint& _Index) const;
 
 private:
+	void SetRoom(const FIntPoint& _RoomIndex);
+	void SetRoom(const RoomData& _Data);
+
 	void FileLoadInit();
 
 public:

@@ -48,13 +48,6 @@ void APlayer::BeginPlay()
 	SetActorLocation(FVector2D(320.f, 350.f));
 	SetActorScale(Sprite->GetComponentScale());
 
-	// Create FSM
-	FSM.CreateState(EPlayerState::Idle, bind(&APlayer::Idle, this));
-	FSM.CreateState(EPlayerState::Move, bind(&APlayer::Move, this));
-	FSM.CreateState(EPlayerState::Death, bind(&APlayer::Death, this));
-
-	FSM.ChangeState(EPlayerState::Idle);
-
 	// Debug
 	UEngineDebug::SetIsDebug(true);
 }
@@ -63,9 +56,127 @@ void APlayer::Tick()
 {
 	Super::Tick();
 
-	FSM.Update();
+	// Key Input Check
+	Input();
+	// Animation Change
+	AnimationChange();
+	// Add Gravity
+	Gravity();
+
+	// Death Check
+	if (IsDeath == true)
+	{
+		Death();
+	}
+	// Move
+	else
+	{
+		AddActorLocation(MoveValue);
+		MoveRoomCheck();
+	}
+
+	// Reset Data
+	ResetData();
 
 	//DEBUG
+	Debug();
+}
+
+void APlayer::Input()
+{
+	if (KEY_PRESS(VK_LEFT) && IsDeath == false)
+	{
+		MoveValue += FVector2D::LEFT * Speed * GET_DELTA;
+		AnimationName += "Move ";
+		LastDir = FVector2D::LEFT;
+	}
+	else if (KEY_PRESS(VK_RIGHT) && IsDeath == false)
+	{
+		MoveValue += FVector2D::RIGHT * Speed * GET_DELTA;
+		AnimationName += "Move ";
+		LastDir = FVector2D::RIGHT;
+	}
+	else
+		AnimationName += "Idle ";
+
+	if (KEY_DOWN(VK_SPACE) && OnGround == true)
+	{
+		IsFlip = !IsFlip;
+		OnGround = false;
+	}
+}
+
+void APlayer::AnimationChange()
+{
+	if (IsSad == true || IsDeath == true)
+		AnimationName += "Sad";
+
+	if (LastDir == FVector2D::LEFT)
+		AnimationName += "Left";
+	else if (LastDir == FVector2D::RIGHT)
+		AnimationName += "Right";
+
+	if (IsFlip == true)
+		AnimationName += "Flip";
+
+	Sprite->ChangeAnimation(AnimationName, false);
+}
+
+void APlayer::Gravity()
+{
+	if (OnGround == false)
+	{
+		if (IsFlip == false)
+			MoveValue.Y += GravityForce * GET_DELTA;
+		else
+			MoveValue.Y -= GravityForce * GET_DELTA;
+	}
+}
+
+void APlayer::Death()
+{
+	CurDeathTime += GET_DELTA;
+
+	if (CurDeathTime >= DeathTime)
+	{
+		CurDeathTime = 0.f;
+		IsDeath = false;
+		ReSpawn();
+	}
+}
+
+void APlayer::TileCheck()
+{
+	FIntPoint Index = AGameWorld::GetRoom()->GetOnTileIndex(GetActorLocation());
+
+
+}
+
+void APlayer::MoveRoomCheck()
+{
+	FTransform Transform = GetActorTransform();
+	FVector2D OutDir = AGameWorld::GetRoom()->IsOutScreen(Transform);
+
+	if (OutDir == FVector2D::ZERO)
+		return;
+
+	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+	FIntPoint CurRoomIndex = AGameWorld::GetCurRoomIndex();
+	AGameWorld::GetRoom()->MoveRoom(CurRoomIndex + OutDir);
+	FVector2D MoveLen = WindowSize + Transform.Scale;
+	MoveLen.X *= OutDir.X;
+	MoveLen.Y *= OutDir.Y;
+	AddActorLocation(-MoveLen);
+}
+
+void APlayer::ResetData()
+{
+	AnimationName.clear();
+	MoveValue = FVector2D::ZERO;
+}
+
+void APlayer::Debug()
+{
 	if (KEY_DOWN(VK_F1))
 		UEngineDebug::SwitchIsDebug();
 
@@ -83,141 +194,8 @@ void APlayer::Tick()
 	UEngineDebug::CoreOutputString(str);
 }
 
-void APlayer::Idle()
+void APlayer::ReSpawn()
 {
-	SetAnimation();
-	Gravity();
-	FlipCheck();
-	TileCheck();
-	KeyCheck();
-	MoveRoomCheck();
-	DeathCheck();
-	Reset();
-
-	AddActorLocation(MoveValue);
-	MoveValue = FVector2D::ZERO;
-
-	if (IsDeath == true)
-		FSM.ChangeState(EPlayerState::Death);
-
-	if ((KEY_PRESS(VK_LEFT) || KEY_PRESS(VK_RIGHT)))
-		FSM.ChangeState(EPlayerState::Move);
-}
-
-void APlayer::Move()
-{
-	SetAnimation();
-	Gravity();
-	FlipCheck();
-	TileCheck();
-	KeyCheck();
-	MoveRoomCheck();
-	DeathCheck();
-	Reset();
-
-	AddActorLocation(MoveValue);
-	MoveValue = FVector2D::ZERO;
-
-	if (KEY_FREE(VK_LEFT) && KEY_FREE(VK_RIGHT))
-		FSM.ChangeState(EPlayerState::Idle);
-}
-
-void APlayer::Death()
-{
-	CurDeathTime += GET_DELTA;
-
-	if (CurDeathTime >= DeathTime)
-	{
-		CurDeathTime = 0.f;
-		IsDeath = false;
-		FSM.ChangeState(EPlayerState::Idle);
-	}
-}
-
-void APlayer::SetAnimation()
-{
-	AnimationName.clear();
-
-	if (KEY_PRESS(VK_LEFT))
-	{
-		AnimationName += "Move ";
-		LastDir = FVector2D::LEFT;
-	}
-	else if (KEY_PRESS(VK_RIGHT))
-	{
-		AnimationName += "Move ";
-		LastDir = FVector2D::RIGHT;
-	}
-	else
-		AnimationName += "Idle ";
-
-	if (IsSad == true)
-		AnimationName += "Sad";
-
-	if (LastDir == FVector2D::LEFT)
-		AnimationName += "Left";
-	else if (LastDir == FVector2D::RIGHT)
-		AnimationName += "Right";
-
-	if (IsFlip == true)
-		AnimationName += "Flip";
-
-	Sprite->ChangeAnimation(AnimationName, false);
-}
-
-void APlayer::Gravity()
-{
-	if (OnGround == true)
-		return;
-
-	if (IsFlip == false)
-		MoveValue.Y += GravityForce * GET_DELTA;
-	else
-		MoveValue.Y -= GravityForce * GET_DELTA;
-}
-
-void APlayer::FlipCheck()
-{
-	if (KEY_DOWN(VK_SPACE))
-	{
-		IsFlip = !IsFlip;
-		OnGround = false;
-	}
-}
-
-void APlayer::TileCheck()
-{
-}
-
-void APlayer::KeyCheck()
-{
-	if (KEY_PRESS(VK_LEFT))
-		MoveValue += FVector2D::LEFT * Speed * GET_DELTA;
-	else if (KEY_PRESS(VK_RIGHT))
-		MoveValue += FVector2D::RIGHT * Speed * GET_DELTA;
-}
-
-void APlayer::MoveRoomCheck()
-{
-	FTransform Transform = GetActorTransform();
-	FVector2D OutDir = ARoom::IsOutScreen(Transform);
-
-	if (OutDir == FVector2D::ZERO)
-		return;
-
-	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
-	FIntPoint CurRoomIndex = AGameWorld::GetCurRoomIndex();
-	AGameWorld::GetRoom()->MoveRoom(CurRoomIndex + OutDir);
-	FVector2D MoveLen = WindowSize + Transform.Scale;
-	MoveLen.X *= OutDir.X;
-	MoveLen.Y *= OutDir.Y;
-	AddActorLocation(-MoveLen);
-}
-
-void APlayer::DeathCheck()
-{
-}
-
-void APlayer::Reset()
-{
+	AGameWorld::GetRoom()->MoveRoom(SaveWorldIndex);
+	SetActorLocation(SaveLocation);
 }

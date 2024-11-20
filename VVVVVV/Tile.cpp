@@ -91,6 +91,6 @@ void ATile::AnimationTileSetup()
 void ATile::FileLoadInit()
 {
 	FIntPoint CurRoomIndex = AGameWorld::GetCurRoomIndex();
-	FIntPoint Index = ARoom::GetOnTileIndex(GetActorLocation());
+	FIntPoint Index = AGameWorld::GetRoom()->GetOnTileIndex(GetActorLocation());
 	SetTile(AGameWorld::GetRoomDatasRef(CurRoomIndex).TileDatas[Index.Y][Index.X]);
 }

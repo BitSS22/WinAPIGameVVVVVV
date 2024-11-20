@@ -4,14 +4,6 @@
 #include <EngineCore/2DCollision.h>
 #include "Guy.h"
 
-enum class EPlayerState
-{
-	Idle,
-	Move,
-	Death,
-	LAST
-};
-
 class APlayer : public AActor
 {
 public:
@@ -26,7 +18,6 @@ public:
 private:
 	USpriteRenderer* Sprite = nullptr;
 	U2DCollision* Collider = nullptr;
-	UFSMStateManager FSM = {};
 	std::string AnimationName = {};
 	FVector2D LastDir = FVector2D::RIGHT;
 	FVector2D MoveValue = FVector2D::ZERO;
@@ -38,24 +29,30 @@ private:
 	const float GravityForce = 600.f;
 	const float DeathTime = 1.f;
 	float CurDeathTime = 0.f;
+	FVector2D SaveWorldIndex = FVector2D::ZERO;
+	FVector2D SaveLocation = FVector2D::ZERO;
 
 public:
 	void BeginPlay() override;
 	void Tick() override;
 
 private:
-	void Idle();
-	void Move();
-	void Death();
-
-	void SetAnimation();
+	void Input();
+	void AnimationChange();
 	void Gravity();
-	void FlipCheck();
+	void Death();
 	void TileCheck();
-	void KeyCheck();
 	void MoveRoomCheck();
-	void DeathCheck();
-	void Reset();
+	void ReSpawn();
+	void ResetData();
+
+	void Debug();
+
+public:
+	void SetDeath()
+	{
+		IsDeath = true;
+	}
 
 };
 

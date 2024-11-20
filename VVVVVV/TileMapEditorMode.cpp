@@ -277,7 +277,7 @@ int ATileMapEditorMode::GetCheckAroundTileIndex(string_view _Name, const FIntPoi
 
 bool ATileMapEditorMode::IsSameTileName(string_view _Name, const FIntPoint& _Index) const
 {
-	if (ARoom::IsOutTileIndex(_Index) == true)
+	if (AGameWorld::GetRoom()->IsOutTileIndex(_Index) == true)
 		return true;
 	else if (GetGameWorld()->GetRoom()->GetTilesCRef()[_Index.Y][_Index.X]->GetSpriteName() == _Name)
 		return true;
@@ -288,7 +288,7 @@ bool ATileMapEditorMode::IsSameTileName(string_view _Name, const FIntPoint& _Ind
 void ATileMapEditorMode::ChangeTile(bool _AroundTileChange, FIntPoint _Index)
 {
 	// Over Index Check
-	if (ARoom::IsOutTileIndex(_Index) == true)
+	if (AGameWorld::GetRoom()->IsOutTileIndex(_Index) == true)
 		return;
 
 	// Create Tile Data
@@ -323,7 +323,7 @@ void ATileMapEditorMode::ChangeTile(bool _AroundTileChange, FIntPoint _Index)
 void ATileMapEditorMode::DeleteTile(bool _AroundTileChange, FIntPoint _Index)
 {
 	// Over Index Check
-	if (ARoom::IsOutTileIndex(_Index) == true)
+	if (AGameWorld::GetRoom()->IsOutTileIndex(_Index) == true)
 		return;
 
 	// Create Tile Data
@@ -448,7 +448,7 @@ void ATileMapEditorMode::AddEntityList(int _Value)
 void ATileMapEditorMode::PickUpTile()
 {
 	POINT MousePos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
-	if (ARoom::IsOutScreen(MousePos) != FVector2D::ZERO)
+	if (AGameWorld::GetRoom()->IsOutScreen(MousePos) != FVector2D::ZERO)
 		return;
 
 	FIntPoint TileIndex = GameWorld->GetRoom()->GetOnTileIndex(MousePos);

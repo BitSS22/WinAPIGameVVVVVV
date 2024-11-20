@@ -53,9 +53,9 @@ void ARoom::MoveRoom(FIntPoint _Index)
 	AGameWorld::SetCurRoomIndex(_Index);
 }
 
-void ARoom::SetRoom(const FIntPoint& _Index)
+void ARoom::SetRoom(const FIntPoint& _RoomIndex)
 {
-	SetRoom(AGameWorld::GetRoomDatasRef(_Index));
+	SetRoom(AGameWorld::GetRoomDatasRef(_RoomIndex));
 }
 
 void ARoom::SetRoom(const RoomData& _Data)
@@ -128,14 +128,16 @@ RoomData ARoom::GetRoomData()
 	return Data;
 }
 
-FIntPoint ARoom::GetOnTileIndex(FVector2D _Pos)
+FIntPoint ARoom::GetOnTileIndex(const FVector2D& _Pos) const
 {
-	if (_Pos.X < 0)
-		_Pos.X -= EGameConst::TileScale.X;
-	if (_Pos.Y < 0)
-		_Pos.Y -= EGameConst::TileScale.Y;
+	FVector2D Pos = _Pos;
 
-	return FIntPoint(_Pos.X / EGameConst::TileScale.X, _Pos.Y / EGameConst::TileScale.Y);
+	if (Pos.X < 0)
+		Pos.X -= EGameConst::TileScale.X;
+	if (Pos.Y < 0)
+		Pos.Y -= EGameConst::TileScale.Y;
+
+	return FIntPoint(Pos.X / EGameConst::TileScale.X, Pos.Y / EGameConst::TileScale.Y);
 }
 
 ETileType ARoom::GetTileType(const FVector2D& _Location) const
@@ -151,28 +153,28 @@ ETileType ARoom::GetTileType(const FIntPoint& _Index) const
 		return Tiles[_Index.Y][_Index.X]->GetType();
 }
 
-FVector2D ARoom::IsOutScreen(const FTransform& Transform)
+FVector2D ARoom::IsOutScreen(const FTransform& Transform) const
 {
 	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 
-	if (Transform.Location.X < -Transform.Scale.X)
+	if (Transform.Location.X < -Transform.Scale.HalfX())
 		return FVector2D::LEFT;
-	else if (Transform.Location.X > WindowSize.X + Transform.Scale.X)
+	else if (Transform.Location.X > WindowSize.X + Transform.Scale.HalfX())
 		return FVector2D::RIGHT;
-	else if (Transform.Location.Y < -Transform.Scale.Y)
+	else if (Transform.Location.Y < -Transform.Scale.HalfY())
 		return FVector2D::UP;
-	else if (Transform.Location.Y > WindowSize.Y + Transform.Scale.Y)
+	else if (Transform.Location.Y > WindowSize.Y + Transform.Scale.HalfY())
 		return FVector2D::DOWN;
 
 	return FVector2D::ZERO;
 }
 
-FVector2D ARoom::IsOutScreen(const FVector2D& _Location)
+FVector2D ARoom::IsOutScreen(const FVector2D& _Location) const
 {
 	return IsOutScreen(FTransform(_Location, FVector2D::ZERO));
 }
 
-bool ARoom::IsOutTileIndex(const FIntPoint& _Index)
+bool ARoom::IsOutTileIndex(const FIntPoint& _Index) const
 {
 	if (_Index.X < 0.f)
 		return true;
