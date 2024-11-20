@@ -34,7 +34,7 @@ private:
 	FVector2D Points[static_cast<int>(EPlayerPoint::Last)][APlayer::PointCount] = {};
 	bool IsSad = false;
 	bool IsFlip = false;
-	bool OnGround = false;
+	bool IsGround = false;
 	bool IsDeath = false;
 	const float Speed = 500.f;
 	const float GravityForce = 100.f;//600.f;

@@ -2,6 +2,7 @@
 #include "Tile.h"
 #include "GameWorld.h"
 #include "Room.h"
+#include "Player.h"
 
 ATile::ATile()
 {
@@ -86,6 +87,11 @@ void ATile::AnimationTileSetup()
 	Sprite->CreateAnimation("RailTiles::12 Rail Right Yellow", "RailTiles::12 Rail Right Yellow", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
 	Sprite->CreateAnimation("RailTiles::13 Rail Right Green", "RailTiles::13 Rail Right Green", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
 	Sprite->CreateAnimation("RailTiles::14 Rail Right Grey", "RailTiles::14 Rail Right Grey", { 0, 1, 2, 3 }, EGameConst::AnimationTime, true);
+}
+
+void ATile::Collision(const APlayer& _Player, FVector2D& _MoveValue) const
+{
+	// TODO. Tile Collision Code Create
 }
 
 void ATile::FileLoadInit()

@@ -73,10 +73,10 @@ void APlayer::Input()
 	else
 		AnimationName += "Idle ";
 
-	if (KEY_DOWN(VK_SPACE) && OnGround == true)
+	if (KEY_DOWN(VK_SPACE) && IsGround == true && IsDeath == false)
 	{
 		IsFlip = !IsFlip;
-		OnGround = false;
+		IsGround = false;
 	}
 }
 
@@ -98,7 +98,7 @@ void APlayer::AnimationChange()
 
 void APlayer::Gravity()
 {
-	if (OnGround == false)
+	if (IsGround == false)
 	{
 		if (IsFlip == false)
 			MoveValue.Y += GravityForce * GET_DELTA;
@@ -123,10 +123,7 @@ void APlayer::TileCheck()
 {
 	for (int i = 0; i < PointCount; ++i)
 	{
-		FVector2D PointLocation = GetActorLocation() + Points[static_cast<int>(EPlayerPoint::Left)][i];
-		FIntPoint TileIndex = AGameWorld::GetRoom()->GetOnTileIndex(PointLocation);
-		ETileType TileType = AGameWorld::GetRoom()->GetTileType(TileIndex);
-		FTransform TileTransform = AGameWorld::GetRoom()->GetTileTransform(TileIndex);
+		// TODO. Tile Collision Code Create
 	}
 }
 

@@ -2,7 +2,8 @@
 #include <EngineCore/SpriteRenderer.h>
 #include "GameWorld.h"
 
-// Ό³Έν :
+class APlayer;
+
 class ATile : public AActor
 {
 public:
@@ -26,6 +27,7 @@ public:
 
 private:
 	void AnimationTileSetup();
+	void Collision(const APlayer& _Player, FVector2D& _MoveValue) const;
 
 	void FileLoadInit();
 
