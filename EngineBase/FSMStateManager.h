@@ -27,11 +27,11 @@ public:
 	}
 
 	template<typename EnumType>
-	void CreatState(EnumType _Key, std::function<void()> _UpdateFunction, std::function<void()> _Start = nullptr)
+	void CreateState(EnumType _Key, std::function<void()> _UpdateFunction, std::function<void()> _Start = nullptr)
 	{
 		CreateState(static_cast<int>(_Key), _UpdateFunction, _Start);
 	}
-	void CreatState(int _Key, std::function<void()> _UpdateFunction, std::function<void()> _Start = nullptr)
+	void CreateState(int _Key, std::function<void()> _UpdateFunction, std::function<void()> _Start = nullptr)
 	{
 		if (States.contains(_Key) == true)
 			MSGASSERT(nullptr, "이 FSMState는 이미 존재합니다.");

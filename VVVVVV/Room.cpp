@@ -50,7 +50,7 @@ void ARoom::MoveRoom(FIntPoint _Index)
 		_Index.Y = 0;
 
 	SetRoom(_Index);
-	GameWorld->SetCurRoomIndex(_Index);
+	AGameWorld::SetCurRoomIndex(_Index);
 }
 
 void ARoom::SetRoom(const FIntPoint& _Index)
@@ -83,9 +83,6 @@ void ARoom::SetRoom(const RoomData& _Data)
 		{
 		case EEntityType::Guy:
 			NewEntity = GetWorld()->SpawnActor<AGuy>();
-			break;
-		case EEntityType::Player:
-			NewEntity = GetWorld()->SpawnActor<APlayer>();
 			break;
 		case EEntityType::Enermy:
 			NewEntity = GetWorld()->SpawnActor<AEnermy>();
@@ -154,20 +151,25 @@ ETileType ARoom::GetTileType(const FIntPoint& _Index) const
 		return Tiles[_Index.Y][_Index.X]->GetType();
 }
 
-bool ARoom::IsOutScreen(const FVector2D& _Location)
+FVector2D ARoom::IsOutScreen(const FTransform& Transform)
 {
 	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 
-	if (_Location.X < 0.f)
-		return true;
-	else if (_Location.Y < 0.f)
-		return true;
-	else if (_Location.X >= WindowSize.X)
-		return true;
-	else if (_Location.Y >= WindowSize.Y)
-		return true;
+	if (Transform.Location.X < -Transform.Scale.X)
+		return FVector2D::LEFT;
+	else if (Transform.Location.X > WindowSize.X + Transform.Scale.X)
+		return FVector2D::RIGHT;
+	else if (Transform.Location.Y < -Transform.Scale.Y)
+		return FVector2D::UP;
+	else if (Transform.Location.Y > WindowSize.Y + Transform.Scale.Y)
+		return FVector2D::DOWN;
 
-	return false;
+	return FVector2D::ZERO;
+}
+
+FVector2D ARoom::IsOutScreen(const FVector2D& _Location)
+{
+	return IsOutScreen(FTransform(_Location, FVector2D::ZERO));
 }
 
 bool ARoom::IsOutTileIndex(const FIntPoint& _Index)
@@ -202,9 +204,6 @@ void ARoom::FileLoadInit()
 		{
 		case EEntityType::Guy:
 			NewEntity = GetWorld()->SpawnActor<AGuy>();
-			break;
-		case EEntityType::Player:
-			NewEntity = GetWorld()->SpawnActor<APlayer>();
 			break;
 		case EEntityType::Enermy:
 			NewEntity = GetWorld()->SpawnActor<AEnermy>();

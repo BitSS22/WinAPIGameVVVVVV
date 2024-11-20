@@ -448,7 +448,7 @@ void ATileMapEditorMode::AddEntityList(int _Value)
 void ATileMapEditorMode::PickUpTile()
 {
 	POINT MousePos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
-	if (GameWorld->GetRoom()->IsOutScreen(MousePos) == true)
+	if (ARoom::IsOutScreen(MousePos) != FVector2D::ZERO)
 		return;
 
 	FIntPoint TileIndex = GameWorld->GetRoom()->GetOnTileIndex(MousePos);
@@ -476,7 +476,6 @@ void ATileMapEditorMode::LoadResourceList()
 	string CheckPoints = UEngineString::ToUpper("CheckPoints::");
 	string Enemies = UEngineString::ToUpper("Enemies::");
 	string Guys = UEngineString::ToUpper("Guys::");
-	string Players = UEngineString::ToUpper("Players::");
 	string Teleports = UEngineString::ToUpper("Teleports::");
 
 	for (auto& Sprite : Sprites)
@@ -521,8 +520,16 @@ void ATileMapEditorMode::LoadResourceList()
 		{
 			RoomTileData TileData = {};
 			TileData.Name = Sprite.first;
-			TileData.TileType = ETileType::Rail;
-			TileDatas[static_cast<int>(ETileType::Rail)].push_back(TileData);
+			if (Sprite.first.find(UEngineString::ToUpper("Left")) != std::string::npos)
+			{
+				TileData.TileType = ETileType::RailLeft;
+				TileDatas[static_cast<int>(ETileType::RailLeft)].push_back(TileData);
+			}
+			else if (Sprite.first.find(UEngineString::ToUpper("Right")) != std::string::npos)
+			{
+				TileData.TileType = ETileType::RailRight;
+				TileDatas[static_cast<int>(ETileType::RailRight)].push_back(TileData);
+			}
 		}
 		// BackGround
 		else if (Sprite.first.find(BackGrounds) != std::string::npos)
@@ -584,13 +591,6 @@ void ATileMapEditorMode::LoadResourceList()
 			EntityData.Name = Sprite.first;
 			EntityData.EntityType = EEntityType::Guy;
 			EntityDatas[static_cast<int>(EEntityType::Guy)].push_back(EntityData);
-		}
-		else if (Sprite.first.find(Players) != std::string::npos)
-		{
-			RoomEntityData EntityData = {};
-			EntityData.Name = Sprite.first;
-			EntityData.EntityType = EEntityType::Player;
-			EntityDatas[static_cast<int>(EEntityType::Player)].push_back(EntityData);
 		}
 		else if (Sprite.first.find(Teleports) != std::string::npos)
 		{
@@ -1023,9 +1023,6 @@ void ATileMapEditorMode::CreateEntity()
 	{
 	case EEntityType::Guy:
 		NewEntity = GetWorld()->SpawnActor<AGuy>();
-		break;
-	case EEntityType::Player:
-		NewEntity = GetWorld()->SpawnActor<APlayer>();
 		break;
 	case EEntityType::Enermy:
 		NewEntity = GetWorld()->SpawnActor<AEnermy>();

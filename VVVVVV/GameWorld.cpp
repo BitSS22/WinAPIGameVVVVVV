@@ -8,6 +8,7 @@
 #include "EngineBase/EngineDirectory.h"
 #include <EngineBase/EngineFile.h>
 
+ARoom* AGameWorld::Room = nullptr;
 FIntPoint AGameWorld::CurRoomIndex = FVector2D::ZERO;
 std::vector<std::vector<RoomData>> AGameWorld::RoomDatas = {};
 
@@ -22,7 +23,6 @@ AGameWorld::~AGameWorld()
 void AGameWorld::BeginPlay()
 {
 	Room = GetWorld()->SpawnActor<ARoom>();
-	Room->SetGameWorld(this);
 
 	RoomDatas.resize(EGameConst::WorldMaxIndex.Y);
 	for (size_t y = 0; y < RoomDatas.size(); ++y)

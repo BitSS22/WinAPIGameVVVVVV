@@ -39,15 +39,15 @@ void V6ContentsCore::BeginPlay()
 
 	// Create Level
 	UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title");
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, AActor>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
 	UEngineAPICore::GetCore()->CreateLevel<AEndingGameMode, AActor>("End");
 	UEngineAPICore::GetCore()->CreateLevel<ATileMapEditorMode, AActor>("TileMapEditor");
 
 	ResourceLoad();
 
 	// First Level Open
-	//UEngineAPICore::GetCore()->OpenLevel("Play");
-	UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
+	UEngineAPICore::GetCore()->OpenLevel("Play");
+	//UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
 }
 
 void V6ContentsCore::Tick()
@@ -254,17 +254,6 @@ void V6ContentsCore::EntityLoad()
 
 	// Temp Resource Load
 	UImageManager::GetInst().CreateCutSprite("Player.png", "Teleports:: Cyan Right", FVector2D(X * 0, Y * 0), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
-
-	// 비리디언(Viridian) - 선장(Captain)
-	UImageManager::GetInst().CreateCutSprite("Player.png", "Players:: Cyan Right", FVector2D(X * 0, Y * 0), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
-	UImageManager::GetInst().CreateCutSprite("Player.png", "Players:: Cyan Left", FVector2D(X * 1, Y * 0), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
-	UImageManager::GetInst().CreateCutSprite("Player.png", "Players:: Cyan rRight", FVector2D(X * 2, Y * 0), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
-	UImageManager::GetInst().CreateCutSprite("Player.png", "Players:: Cyan rLeft", FVector2D(X * 3, Y * 0), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
-
-	UImageManager::GetInst().CreateCutSprite("Player.png", "Players:: Cyan Sad Right", FVector2D(X * 0, Y * 1), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
-	UImageManager::GetInst().CreateCutSprite("Player.png", "Players:: Cyan Sad Left", FVector2D(X * 1, Y * 1), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
-	UImageManager::GetInst().CreateCutSprite("Player.png", "Players:: Cyan Sad rRight", FVector2D(X * 2, Y * 1), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
-	UImageManager::GetInst().CreateCutSprite("Player.png", "Players:: Cyan Sad rLeft", FVector2D(X * 3, Y * 1), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
 
 	// 비리디언(Viridian) - 선장(Captain)
 	UImageManager::GetInst().CreateCutSprite("Player.png", "Guys:: Cyan Right", FVector2D(X * 0, Y * 0), FVector2D(24.f, 42.f), FVector2D(0.f, 0.f), 2, 2);
@@ -563,7 +552,7 @@ void V6ContentsCore::EntityLoad()
 	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::105 TV Reverse Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
 	StartPosX = 862.f;
-	StartPosY = 160.f;
+	StartPosY = 140.f;
 	CuttingSize = FVector2D(88.f, 20.f);
 	UnitXCount = 1;
 	UnitTotalCount = 1;

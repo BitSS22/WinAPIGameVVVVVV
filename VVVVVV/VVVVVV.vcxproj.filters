@@ -41,7 +41,7 @@
       <Filter>ContentsObject\Entity\Guy</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>ContentsObject\Entity\Guy\Player</Filter>
+      <Filter>ContentsObject\Player</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>ContentsObject\Map\GameWorld\Room\Tile</Filter>
@@ -103,7 +103,7 @@
       <Filter>ContentsObject\Entity\Guy</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>ContentsObject\Entity\Guy\Player</Filter>
+      <Filter>ContentsObject\Player</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>ContentsObject\Map\GameWorld\Room\Tile</Filter>
@@ -167,9 +167,6 @@
     <Filter Include="ContentsObject\Entity\CheckPoint">
       <UniqueIdentifier>{7b97b20e-e3c5-4e36-b9db-4963a864f78a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Entity\Guy\Player">
-      <UniqueIdentifier>{278c257d-048b-4beb-99bb-3d1657f2ea14}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\Entity\PistonEntity">
       <UniqueIdentifier>{2d273734-dd48-4a7f-96db-95239822e905}</UniqueIdentifier>
     </Filter>
@@ -181,6 +178,9 @@
     </Filter>
     <Filter Include="ContentsObject\Entity\PistonEntity\Enermy">
       <UniqueIdentifier>{19cc44ec-8ae6-464c-b4a2-f08c910a9e5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Player">
+      <UniqueIdentifier>{278c257d-048b-4beb-99bb-3d1657f2ea14}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

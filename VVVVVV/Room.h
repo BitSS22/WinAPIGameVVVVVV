@@ -26,8 +26,6 @@ private:
 	std::vector<AEntity*> Entites = {};
 	bool LoopRoom = false;
 
-	AGameWorld* GameWorld = nullptr;
-
 public:
 	virtual void BeginPlay() override;
 
@@ -40,22 +38,16 @@ public:
 	static FIntPoint GetOnTileIndex(FVector2D _Pos);
 	ETileType GetTileType(const FVector2D& _Location) const;
 	ETileType GetTileType(const FIntPoint& _Index) const;
-
-	static bool IsOutScreen(const FVector2D& _Location);
+	
+	// Return Out Dir, Not Out is Return ZERO Dir.
+	static FVector2D IsOutScreen(const FTransform& Transform);
+	static FVector2D IsOutScreen(const FVector2D& _Location);
 	static bool IsOutTileIndex(const FIntPoint& _Index);
 
 private:
 	void FileLoadInit();
 
 public:
-	void SetGameWorld(AGameWorld* _ptr)
-	{
-		GameWorld = _ptr;
-	}
-	AGameWorld* GetGameWorld() const
-	{
-		return GameWorld;
-	}
 	ABackGround* GetBackGround() const
 	{
 		return BackGround;

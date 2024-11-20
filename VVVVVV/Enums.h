@@ -23,7 +23,6 @@ enum class ECollisionGroup
 enum class EEntityType
 {
 	Guy,
-	Player,
 	Enermy,
 	Platform,
 	CheckPoint,
@@ -38,7 +37,8 @@ enum class ETileType
 	Collision,
 	Spike,
 	Animation,
-	Rail,
+	RailLeft,
+	RailRight,
 	Last
 };
 

@@ -43,7 +43,8 @@ void ATile::SetTile(const RoomTileData& _Data)
 		Sprite->OffAnimation();
 		return;
 	case ETileType::Animation:
-	case ETileType::Rail:
+	case ETileType::RailLeft:
+	case ETileType::RailRight:
 		Sprite->ChangeAnimation(_Data.Name, false);
 		return;
 	}

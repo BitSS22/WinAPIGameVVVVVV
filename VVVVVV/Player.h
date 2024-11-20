@@ -4,45 +4,15 @@
 #include <EngineCore/2DCollision.h>
 #include "Guy.h"
 
-enum class State
+enum class EPlayerState
 {
-	WalkLeft,
-	WalkRight,
-	FlipWalkLeft,
-	FlipWalkRight,
-	IdleLeft,
-	IdleRight,
-	FlipIdleLeft,
-	FlipIdleRight,
+	Idle,
+	Move,
+	Death,
 	LAST
 };
 
-enum class PixelPointY
-{
-	LeftBottom,
-	Bottom,
-	RightBottom,
-	LeftTop,
-	Top,
-	RightTop,
-	LAST
-};
-
-enum class PixelPointX
-{
-	Left1,
-	Left2,
-	Left3,
-	Left4,
-	AND,
-	Right1,
-	Right2,
-	Right3,
-	Right4,
-	LAST
-};
-
-class APlayer : public AGuy
+class APlayer : public AActor
 {
 public:
 	APlayer();
@@ -52,36 +22,40 @@ public:
 	APlayer(APlayer&& _Other) noexcept = delete;
 	APlayer& operator=(const APlayer& _Other) = delete;
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
-//
-//private:
-//	bool IsFlip = false;
-//	bool OnGround = false;
-//	float Speed = 500.f;
-//	float GravitySpeed = 600.f;
-//	FVector2D PointsY[static_cast<int>(PixelPointY::LAST)] = {};
-//	FVector2D PointsX[static_cast<int>(PixelPointX::LAST)] = {};
-//	FVector2D MoveValue = {};
-//	FVector2D LastKey = FVector2D::RIGHT;
-//	FIntPoint SaveWorldIndex = {};
-//	FVector2D SaveLocation = {};
-//	U2DCollision* Collider = nullptr;
-//	float DeathTime = 2.f;
-//	bool IsDeath = false;
-//
-//public:
-//	void BeginPlay() override;
-//	void Tick() override;
-//
-//private:
-//	void Move();
-//	void Flip();
-//	void MoveRoom();
-//	void SetCollisionPoint();
-//	void Reset();
-//
-//	void CollisionPlatform();
-//	void CollisionEnermy();
-//	void CollisionSave();
+
+private:
+	USpriteRenderer* Sprite = nullptr;
+	U2DCollision* Collider = nullptr;
+	UFSMStateManager FSM = {};
+	std::string AnimationName = {};
+	FVector2D LastDir = FVector2D::RIGHT;
+	FVector2D MoveValue = FVector2D::ZERO;
+	bool IsSad = false;
+	bool IsFlip = false;
+	bool OnGround = false;
+	bool IsDeath = false;
+	const float Speed = 500.f;
+	const float GravityForce = 600.f;
+	const float DeathTime = 1.f;
+	float CurDeathTime = 0.f;
+
+public:
+	void BeginPlay() override;
+	void Tick() override;
+
+private:
+	void Idle();
+	void Move();
+	void Death();
+
+	void SetAnimation();
+	void Gravity();
+	void FlipCheck();
+	void TileCheck();
+	void KeyCheck();
+	void MoveRoomCheck();
+	void DeathCheck();
+	void Reset();
 
 };
 

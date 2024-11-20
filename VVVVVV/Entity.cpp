@@ -26,7 +26,7 @@ void AEntity::SetEntity(const RoomEntityData& _Data)
 	Sprite->SetOrder(ERenderOrder::Entity);
 
 	UEngineSprite* NewSprite = UImageManager::GetInst().FindSprite(_Data.Name);
-	if (NewSprite->GetSpriteCount() > 2)
+	if (NewSprite->GetSpriteCount() > 1)
 	{
 		Sprite->CreateAnimation(NewSprite->GetNameView(), NewSprite->GetNameView(), 0, NewSprite->GetSpriteCount() - 1, EGameConst::AnimationTime, true);
 		Sprite->ChangeAnimation(NewSprite->GetNameView());

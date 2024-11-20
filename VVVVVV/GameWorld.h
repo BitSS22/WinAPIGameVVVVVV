@@ -82,7 +82,7 @@ public:
 	AGameWorld& operator=(AGameWorld&& _Other) noexcept = delete;
 
 private:
-	ARoom* Room = nullptr;
+	static ARoom* Room;
 	static FIntPoint CurRoomIndex;
 	static std::vector<std::vector<RoomData>> RoomDatas;
 
@@ -97,7 +97,7 @@ public:
 private:
 
 public:
-	ARoom* GetRoom() const
+	static ARoom* GetRoom()
 	{
 		return Room;
 	}
