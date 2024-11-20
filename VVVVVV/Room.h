@@ -34,6 +34,7 @@ public:
 	RoomData GetRoomData();
 
 	FIntPoint GetOnTileIndex(const FVector2D& _Pos) const;
+	FTransform GetTileTransform(const FIntPoint& _Index) const;
 	ETileType GetTileType(const FVector2D& _Location) const;
 	ETileType GetTileType(const FIntPoint& _Index) const;
 	

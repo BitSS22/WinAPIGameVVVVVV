@@ -140,6 +140,16 @@ FIntPoint ARoom::GetOnTileIndex(const FVector2D& _Pos) const
 	return FIntPoint(Pos.X / EGameConst::TileScale.X, Pos.Y / EGameConst::TileScale.Y);
 }
 
+FTransform ARoom::GetTileTransform(const FIntPoint& _Index) const
+{
+	FTransform Transform = {};
+	FVector2D TileScale = EGameConst::TileScale;
+	Transform.Location.X = _Index.X * TileScale.X + TileScale.HalfX();
+	Transform.Location.Y = _Index.Y * TileScale.Y + TileScale.HalfY();
+	Transform.Scale = TileScale;
+	return Transform;
+}
+
 ETileType ARoom::GetTileType(const FVector2D& _Location) const
 {
 	return GetTileType(GetOnTileIndex(_Location));
