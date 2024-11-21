@@ -20,6 +20,7 @@ public:
 private:
 	ECollisionType CollisionType = ECollisionType::Circle;
 	int CollisionGroup = -1;
+	bool IsCameraEffect = true;
 
 	std::set<U2DCollision*> CollisionCheckSet = {};
 	std::function<void(AActor*)> Enter = {};
@@ -31,6 +32,10 @@ public:
 	virtual void ComponentTick() override;
 
 	bool Collision(int _OtherCollisionGroup, std::vector<AActor*>& _Result, FVector2D _NextPos, UINT _Limit);
+
+	void SetCollisionEnter(std::function<void(AActor*)> _Function);
+	void SetCollisionStay(std::function<void(AActor*)> _Function);
+	void SetCollisionEnd(std::function<void(AActor*)> _Function);
 	
 	template<typename EnumType>
 	AActor* CollisionOnce(EnumType _OtherCollisionGroup, FVector2D _NextPos = FVector2D::ZERO)
@@ -84,10 +89,10 @@ public:
 	{
 		return CollisionType;
 	}
-
-	void SetCollisionEnter(std::function<void(AActor*)> _Function);
-	void SetCollisionStay(std::function<void(AActor*)> _Function);
-	void SetCollisionEnd(std::function<void(AActor*)> _Function);
+	void SetCameraEffect(bool _IsCameraEffect)
+	{
+		IsCameraEffect = _IsCameraEffect;
+	}
 
 };
 

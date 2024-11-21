@@ -8,8 +8,10 @@
 enum class PivotType
 {
 	Center,
-	Bot,
-	Top
+	Left,
+	LeftTop,
+	Top,
+	Botttom
 };
 
 // Ό³Έν :
@@ -30,7 +32,7 @@ private:
 	UEngineSprite* Sprite = nullptr;
 	int CurIndex = 0;
 	int Order = 0;
-	FVector2D Pivot = FVector2D::ZERO;
+	FVector2D Pivot = FVector2D(0.5f, 0.5f);
 	bool IsCameraEffect = true;
 	float CameraEffectScale = 1.f;
 	std::map<std::string, FrameAnimation> FrameAnimations = {};
@@ -81,10 +83,7 @@ public:
 	void SetCameraEffectScale(float _Effect);
 	void SetSprite(std::string_view _Name, int _CurIndex);
 	void SetSpriteScale(float _Ratio, int _CurIndex);
-	void SetPivot(FVector2D _Pivot)
-	{
-		Pivot = _Pivot;
-	}
+	void SetPivotValue(FVector2D _Pivot);
 	void SetPivotType(PivotType _Type);
 	void SetAlphaChar(unsigned char _Value)
 	{
@@ -129,6 +128,7 @@ public:
 		{
 			CurIndex = 0;
 			CurTime = 0.f;
+			IsEnd = false;
 		}
 
 	};

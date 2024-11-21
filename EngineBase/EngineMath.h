@@ -39,6 +39,11 @@ public:
 		else
 			return _Value;
 	}
+	template <typename DataType>
+	static DataType Lerp(DataType _A, DataType _B, DataType _Alpha)
+	{
+		return _A * (1 - _Alpha) + B * _Alpha;
+	}
 };
 
 struct FVector2D
@@ -160,6 +165,14 @@ public:
 	float Dot(FVector2D _Other) const
 	{
 		return X * _Other.X + Y * _Other.Y;
+	}
+	static FVector2D Lerp(const FVector2D& _A, FVector2D _B, float _Alpha)
+	{
+		FVector2D Result = {};
+		_Alpha = UEngineMath::Clamp(_Alpha, 0.f, 1.f);
+		Result.X = UEngineMath::Lerp(_A.X, _B.X, _Alpha);
+		Result.Y = UEngineMath::Lerp(_A.Y, _B.Y, _Alpha);
+		return Result;
 	}
 	std::string ToString() const
 	{

@@ -23,7 +23,12 @@ void USpriteRenderer::Render()
 	if (IsCameraEffect == true)
 		Trans.Location = Trans.Location - Level->CameraPos * CameraEffectScale;
 
-	Trans.Location += Pivot;
+	FVector2D PivotRealScale = {};
+
+	PivotRealScale.X = std::floorf((0.5f - Pivot.X) * Trans.Scale.X);
+	PivotRealScale.Y = std::floorf((0.5f - Pivot.Y) * Trans.Scale.Y);
+
+	Trans.Location += PivotRealScale;
 
 	if (Alpha == 255)
 		CurData.Image->CopyToTrans(UEngineAPICore::GetCore()->GetMainWindow().GetBackBufferImage(), Trans, CurData.Transform);
@@ -44,6 +49,7 @@ void USpriteRenderer::ComponentTick()
 
 	if (CurAnimation != nullptr)
 	{
+		CurAnimation->IsEnd = false;
 		vector<int>& Indexs = CurAnimation->FrameIndex;
 		vector<float>& Times = CurAnimation->FrameTime;
 
@@ -112,6 +118,11 @@ void USpriteRenderer::SetSpriteScale(float _Ratio, int _CurIndex)
 	SetComponentScale(Scale);
 }
 
+void USpriteRenderer::SetPivotValue(FVector2D _Pivot)
+{
+	Pivot = _Pivot;
+}
+
 void USpriteRenderer::SetPivotType(PivotType _Type)
 {
 	if (PivotType::Center == _Type)
@@ -123,17 +134,27 @@ void USpriteRenderer::SetPivotType(PivotType _Type)
 	if (Sprite == nullptr)
 		MSGASSERT(nullptr, "Image가 없어 Pivot 설정이 불가능합니다.");
 
-	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
-
 	switch (_Type)
 	{
-	case PivotType::Bot:
+	case PivotType::Center:
+		Pivot.X = 0.5f;
+		Pivot.Y = 0.5f;
+		break;
+	case PivotType::Left:
 		Pivot.X = 0.f;
-		Pivot.Y -= CurData.Transform.Scale.Y * 0.5f;
+		Pivot.Y = 0.5f;
+		break;
+	case PivotType::LeftTop:
+		Pivot.X = 0.f;
+		Pivot.Y = 0.f;
 		break;
 	case PivotType::Top:
-		Pivot.X = 0.f;
-		Pivot.Y += CurData.Transform.Scale.Y * 0.5f;
+		Pivot.X = 0.5f;
+		Pivot.Y = 0.f;
+		break;
+	case PivotType::Botttom:
+		Pivot.X = 0.5f;
+		Pivot.Y = 1.f;
 		break;
 	default:
 		break;

@@ -81,11 +81,29 @@ public:
 
 		for (size_t i = 0; i < CollisionLink.size(); ++i)
 		{
-			if (CollisionLink[i].Key == _Right)
+			if (CollisionLink[i].Key == Data.Key)
 				return;
 		}
 
 		CollisionLink.push_back(Data);
+	}
+
+	template<typename ActorType>
+	std::list<ActorType*> GetActorsFromClass()
+	{
+		std::list<ActorType*> Result;
+
+		for (AActor* Actor : AllActors)
+		{
+			ActorType* ConvertActor = dynamic_cast<ActorType*>(Actor);
+
+			if (ConvertActor == nullptr)
+				continue;
+
+			Result.push_back(ConvertActor);
+		}
+
+		return Result;
 	}
 
 private:

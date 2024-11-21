@@ -29,11 +29,25 @@ public:
 	}
 	int GetRandomInt(int _Min, int _Max)
 	{
+		if (_Max < _Min)
+		{
+			int Temp = _Min;
+			_Min = _Max;
+			_Max = Temp;
+		}
+
 		std::uniform_int_distribution<int> Number(_Min, _Max);
 		return Number(Gen);
 	}
 	float GetRandomFloat(float _Min, float _Max)
 	{
+		if (_Max < _Min)
+		{
+			float Temp = _Min;
+			_Min = _Max;
+			_Max = Temp;
+		}
+
 		std::uniform_real_distribution<float> Number(_Min, _Max);
 		return Number(Gen);
 	}
