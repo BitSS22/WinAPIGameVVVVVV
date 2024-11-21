@@ -4,10 +4,6 @@
 #include "PistonEntity.h"
 #include "Entity.h"
 #include "GameWorld.h"
-#include "Enermy.h"
-#include "Platform.h"
-#include "Teleport.h"
-#include "CheckPoint.h"
 
 ATileMapEditorMode::ATileMapEditorMode()
 {
@@ -1022,19 +1018,13 @@ void ATileMapEditorMode::CreateEntity()
 	switch (CurEntityType)
 	{
 	case EEntityType::Guy:
-		NewEntity = GetWorld()->SpawnActor<AGuy>();
+	case EEntityType::CheckPoint:
+	case EEntityType::Teleport:
+		NewEntity = GetWorld()->SpawnActor<AEntity>();
 		break;
 	case EEntityType::Enermy:
-		NewEntity = GetWorld()->SpawnActor<AEnermy>();
-		break;
 	case EEntityType::Platform:
-		NewEntity = GetWorld()->SpawnActor<APlatform>();
-		break;
-	case EEntityType::CheckPoint:
-		NewEntity = GetWorld()->SpawnActor<ACheckPoint>();
-		break;
-	case EEntityType::Teleport:
-		NewEntity = GetWorld()->SpawnActor<ATeleport>();
+		NewEntity = GetWorld()->SpawnActor<APistonEntity>();
 		break;
 	}
 

@@ -77,6 +77,7 @@ public:
 	{
 		LoopRoom = _Value;
 	}
+	void SetEntityMove(bool _Value);
 
 };
 

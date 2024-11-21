@@ -49,18 +49,6 @@
     <ClInclude Include="GameWorld.h">
       <Filter>ContentsObject\Map\GameWorld</Filter>
     </ClInclude>
-    <ClInclude Include="Platform.h">
-      <Filter>ContentsObject\Entity\PistonEntity\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="CheckPoint.h">
-      <Filter>ContentsObject\Entity\CheckPoint</Filter>
-    </ClInclude>
-    <ClInclude Include="Teleport.h">
-      <Filter>ContentsObject\Entity\Teleport</Filter>
-    </ClInclude>
-    <ClInclude Include="Enermy.h">
-      <Filter>ContentsObject\Entity\PistonEntity\Enermy</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -111,18 +99,6 @@
     <ClCompile Include="GameWorld.cpp">
       <Filter>ContentsObject\Map\GameWorld</Filter>
     </ClCompile>
-    <ClCompile Include="Platform.cpp">
-      <Filter>ContentsObject\Entity\PistonEntity\Platform</Filter>
-    </ClCompile>
-    <ClCompile Include="CheckPoint.cpp">
-      <Filter>ContentsObject\Entity\CheckPoint</Filter>
-    </ClCompile>
-    <ClCompile Include="Teleport.cpp">
-      <Filter>ContentsObject\Entity\Teleport</Filter>
-    </ClCompile>
-    <ClCompile Include="Enermy.cpp">
-      <Filter>ContentsObject\Entity\PistonEntity\Enermy</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="pch">
@@ -164,20 +140,8 @@
     <Filter Include="ContentsObject\Map\GameWorld\Room\Tile">
       <UniqueIdentifier>{738c236f-b7ee-4bcc-87ca-78b7b56b1086}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Entity\CheckPoint">
-      <UniqueIdentifier>{7b97b20e-e3c5-4e36-b9db-4963a864f78a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\Entity\PistonEntity">
       <UniqueIdentifier>{2d273734-dd48-4a7f-96db-95239822e905}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContentsObject\Entity\PistonEntity\Platform">
-      <UniqueIdentifier>{affa1a28-ad83-46c9-a2d1-66f19a0db784}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContentsObject\Entity\Teleport">
-      <UniqueIdentifier>{18c6074f-4b77-4309-ac80-9d49fd9b9904}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContentsObject\Entity\PistonEntity\Enermy">
-      <UniqueIdentifier>{19cc44ec-8ae6-464c-b4a2-f08c910a9e5c}</UniqueIdentifier>
     </Filter>
     <Filter Include="ContentsObject\Player">
       <UniqueIdentifier>{278c257d-048b-4beb-99bb-3d1657f2ea14}</UniqueIdentifier>

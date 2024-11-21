@@ -20,7 +20,7 @@ void APistonEntity::Tick()
 {
 	Super::Tick();
 
-	if (DefualtDir != FVector2D::ZERO)
+	if (DefualtDir != FVector2D::ZERO && GetIsMove() == true)
 	{
 		AddActorLocation(Dir * Speed * GET_DELTA);
 
@@ -39,7 +39,6 @@ void APistonEntity::Tick()
 	UEngineDebug::CoreDebugRender(FTransform(DefualtLocation + DefualtDir * MoveLenghtOffset, GetActorScale()), UEngineDebug::EDebugPosType::Rect);
 	UEngineDebug::CoreDebugRender(FTransform(DefualtLocation + DefualtDir * MoveLenght, FVector2D(5.f, 5.f)), UEngineDebug::EDebugPosType::Circle);
 	UEngineDebug::CoreDebugRender(FTransform(DefualtLocation + -DefualtDir * MoveLenght, FVector2D(5.f, 5.f)), UEngineDebug::EDebugPosType::Circle);
-
 }
 
 void APistonEntity::SetEntity(const RoomEntityData& _Data)

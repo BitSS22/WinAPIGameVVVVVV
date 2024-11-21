@@ -5,10 +5,6 @@
 #include "Entity.h"
 #include "PistonEntity.h"
 #include "Player.h"
-#include "Enermy.h"
-#include "Platform.h"
-#include "CheckPoint.h"
-#include "Teleport.h"
 #include "Tile.h"
 
 ARoom::ARoom()
@@ -82,19 +78,13 @@ void ARoom::SetRoom(const RoomData& _Data)
 		switch (_Data.EntityDatas[i].EntityType)
 		{
 		case EEntityType::Guy:
-			NewEntity = GetWorld()->SpawnActor<AGuy>();
+		case EEntityType::CheckPoint:
+		case EEntityType::Teleport:
+			NewEntity = GetWorld()->SpawnActor<AEntity>();
 			break;
 		case EEntityType::Enermy:
-			NewEntity = GetWorld()->SpawnActor<AEnermy>();
-			break;
 		case EEntityType::Platform:
-			NewEntity = GetWorld()->SpawnActor<APlatform>();
-			break;
-		case EEntityType::CheckPoint:
-			NewEntity = GetWorld()->SpawnActor<ACheckPoint>();
-			break;
-		case EEntityType::Teleport:
-			NewEntity = GetWorld()->SpawnActor<ATeleport>();
+			NewEntity = GetWorld()->SpawnActor<APistonEntity>();
 			break;
 		}
 
@@ -263,19 +253,13 @@ void ARoom::FileLoadInit()
 		switch (EntityDatas[i].EntityType)
 		{
 		case EEntityType::Guy:
-			NewEntity = GetWorld()->SpawnActor<AGuy>();
+		case EEntityType::CheckPoint:
+		case EEntityType::Teleport:
+			NewEntity = GetWorld()->SpawnActor<AEntity>();
 			break;
 		case EEntityType::Enermy:
-			NewEntity = GetWorld()->SpawnActor<AEnermy>();
-			break;
 		case EEntityType::Platform:
-			NewEntity = GetWorld()->SpawnActor<APlatform>();
-			break;
-		case EEntityType::CheckPoint:
-			NewEntity = GetWorld()->SpawnActor<ACheckPoint>();
-			break;
-		case EEntityType::Teleport:
-			NewEntity = GetWorld()->SpawnActor<ATeleport>();
+			NewEntity = GetWorld()->SpawnActor<APistonEntity>();
 			break;
 		}
 
@@ -286,5 +270,11 @@ void ARoom::FileLoadInit()
 		NewEntity->SetRoom(this);
 		Entites.push_back(NewEntity);
 	}
+}
+
+void ARoom::SetEntityMove(bool _Value)
+{
+	for (size_t i = 0; i < Entites.size(); ++i)
+		Entites[i]->SetIsMove(_Value);
 }
 

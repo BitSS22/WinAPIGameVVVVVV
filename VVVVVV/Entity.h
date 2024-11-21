@@ -6,6 +6,8 @@
 #include <EngineCore/EngineSprite.h>
 #include <EngineCore/2DCollision.h>
 
+class APlayer;
+
 class AEntity : public AActor
 {
 public:
@@ -22,11 +24,15 @@ private:
 	U2DCollision* Collider = nullptr;
 	EEntityType EntityType = EEntityType::Last;
 	ARoom* Room = nullptr;
+	bool IsMove = true;
 
 protected:
 
 public:
 	virtual void Tick() override;
+
+	void Collision();
+	void CollisionCheckPoint(APlayer* _Player);
 
 	virtual void SetEntity(const RoomEntityData& _Data);
 	virtual RoomEntityData GetEntityData();
@@ -61,6 +67,14 @@ public:
 	virtual FVector2D GetEntityLocation() const
 	{
 		return GetActorLocation();
+	}
+	void SetIsMove(bool _Value)
+	{
+		IsMove = _Value;
+	}
+	bool GetIsMove() const
+	{
+		return IsMove;
 	}
 
 };

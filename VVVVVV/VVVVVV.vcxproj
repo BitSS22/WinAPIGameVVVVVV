@@ -151,19 +151,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Enermy.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="Teleport.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="BackGround.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="CheckPoint.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -186,10 +174,6 @@
     </ClInclude>
     <ClInclude Include="Guy.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Platform.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
@@ -221,19 +205,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Enermy.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Teleport.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="BackGround.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="CheckPoint.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -258,10 +230,6 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Platform.cpp">
-      <SubType>
-      </SubType>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <SubType>

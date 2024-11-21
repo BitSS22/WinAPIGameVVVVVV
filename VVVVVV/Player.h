@@ -32,16 +32,20 @@ private:
 	FVector2D MoveValue = FVector2D::ZERO;
 	static constexpr int PointCount = 5;
 	FVector2D Points[static_cast<int>(EPlayerPoint::Last)][APlayer::PointCount] = {};
+
 	bool IsSad = false;
 	bool IsFlip = false;
 	bool IsGround = false;
 	bool IsDeath = false;
+
 	const float Speed = 500.f;
-	const float GravityForce = 600.f;//600.f;
+	const float GravityForce = 600.f;
 	const float DeathTime = 1.f;
 	float CurDeathTime = 0.f;
+
 	FIntPoint SaveWorldIndex = FVector2D::ZERO;
 	FVector2D SaveLocation = FVector2D(320.f, 240.f);
+	bool SaveFlip = false;
 
 public:
 	void BeginPlay() override;
@@ -66,6 +70,7 @@ private:
 public:
 	void SetDeath(bool _Value)
 	{
+		AGameWorld::GetRoom()->SetEntityMove(!_Value);
 		IsDeath = _Value;
 	}
 	void SetGround(bool _Value)
@@ -79,6 +84,12 @@ public:
 	void SetSad(bool _Value)
 	{
 		IsSad = _Value;
+	}
+	void SetCheckPoint(const FVector2D& _Location, bool _Flip)
+	{
+		SaveWorldIndex = AGameWorld::GetCurRoomIndex();
+		SaveLocation = _Location;
+		SaveFlip = _Flip;
 	}
 
 };

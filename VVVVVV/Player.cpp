@@ -38,8 +38,8 @@ void APlayer::Tick()
 		Input();
 		Gravity();
 		MoveRoomCheck();
-		EntityCollisionCheck();
 		TileCheck();
+		EntityCollisionCheck();
 		AddActorLocation(MoveValue);
 		DeathCheck();
 		if (KEY_DOWN('A'))
@@ -116,6 +116,17 @@ void APlayer::Death()
 
 void APlayer::EntityCollisionCheck()
 {
+	vector<AActor*> Actors = Collider->CollisionAll(ECollisionGroup::Entity, MoveValue);
+
+	for (size_t i = 0; i < Actors.size(); ++i)
+	{
+		AEntity* Entity = dynamic_cast<AEntity*>(Actors[i]);
+
+		if (Entity == nullptr)
+			continue;
+
+		Entity->Collision();
+	}
 }
 
 void APlayer::TileCheck()
@@ -376,4 +387,5 @@ void APlayer::ReSpawn()
 	if (AGameWorld::GetCurRoomIndex() != SaveWorldIndex)
 		AGameWorld::GetRoom()->MoveRoom(SaveWorldIndex);
 	SetActorLocation(SaveLocation);
+	IsFlip = SaveFlip;
 }

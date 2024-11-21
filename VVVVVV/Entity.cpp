@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Entity.h"
+#include "Player.h"
 
 AEntity::AEntity()
 {
@@ -15,6 +16,53 @@ void AEntity::Tick()
 
 	// Debug
 	UEngineDebug::CoreDebugRender(GetActorTransform(), UEngineDebug::EDebugPosType::Rect);
+}
+
+void AEntity::Collision()
+{
+	AActor* Actor = Collider->CollisionOnce(ECollisionGroup::Player);
+	APlayer* Player = dynamic_cast<APlayer*>(Actor);
+
+	if (Player == nullptr)
+		return;
+
+ 	switch (EntityType)
+	{
+	case EEntityType::Guy:
+		return;
+	case EEntityType::Enermy:
+		Player->SetDeath(true);
+		return;
+	case EEntityType::Platform:
+		return;
+	case EEntityType::CheckPoint:
+		CollisionCheckPoint(Player);
+		return;
+	case EEntityType::Teleport:
+		return;
+	}
+
+	MSGASSERT(nullptr, "Not Find Entity Type.");
+
+	// TODO. Entity Collision Code Create
+}
+
+void AEntity::CollisionCheckPoint(APlayer* _Player)
+{
+	FVector2D PlayerScale = _Player->GetActorScale();
+	FVector2D SaveLocation = GetActorLocation();
+	string Flip = UEngineString::ToUpper("Flip");
+
+	if (Sprite->GetCurSpriteName().find(Flip) == std::string::npos)
+	{
+		SaveLocation.Y = GetActorTransform().CenterBottom() - PlayerScale.HalfY();
+		_Player->SetCheckPoint(SaveLocation, false);
+	}
+	else
+	{
+		SaveLocation.Y = GetActorTransform().CenterTop() + PlayerScale.HalfY();
+		_Player->SetCheckPoint(SaveLocation, true);
+	}
 }
 
 void AEntity::SetEntity(const RoomEntityData& _Data)

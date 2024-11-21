@@ -24,6 +24,10 @@ void UEngineTimer::TimeCheck()
 
 	double Tick = static_cast<double>(CurTime.QuadPart - PrevTime.QuadPart);
 	DeltaTime = Tick / TimeCounter;
+
+	if (DeltaTime > 1. / 60.)
+		DeltaTime = 1. / 60.;
+
 	fDeltaTime = static_cast<float>(DeltaTime);
 	PrevTime.QuadPart = CurTime.QuadPart;
 
