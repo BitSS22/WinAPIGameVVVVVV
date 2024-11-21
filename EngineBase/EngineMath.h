@@ -42,7 +42,7 @@ public:
 	template <typename DataType>
 	static DataType Lerp(DataType _A, DataType _B, DataType _Alpha)
 	{
-		return _A * (1 - _Alpha) + B * _Alpha;
+		return _A * (1 - _Alpha) + _B * _Alpha;
 	}
 };
 
