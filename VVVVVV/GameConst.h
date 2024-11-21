@@ -17,7 +17,7 @@ private:
 
 public:
 	static const FIntPoint WorldMaxIndex;
-	static const FIntPoint TileScale;
+	static const FVector2D TileScale;
 	static const FIntPoint TileCount;
 
 	static const float AnimationTime;

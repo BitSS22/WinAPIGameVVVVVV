@@ -31,7 +31,7 @@ void ARoom::BeginPlay()
 		for (int x = 0; x < EGameConst::TileCount.X; ++x)
 		{
 			Tiles[y][x] = GetWorld()->SpawnActor<ATile>();
-			Tiles[y][x]->SetActorLocation(FVector2D(EGameConst::TileScale.X * x + EGameConst::TileScale.X / 2, EGameConst::TileScale.Y * y + EGameConst::TileScale.Y / 2));
+			Tiles[y][x]->SetActorLocation(FVector2D(EGameConst::TileScale.X * x + EGameConst::TileScale.X / 2.f, EGameConst::TileScale.Y * y + EGameConst::TileScale.Y / 2.f));
 		}
 	}
 
@@ -140,12 +140,62 @@ FIntPoint ARoom::GetOnTileIndex(const FVector2D& _Pos) const
 {
 	FVector2D Pos = _Pos;
 
-	if (Pos.X < 0)
+	if (Pos.X < 0.f)
 		Pos.X -= EGameConst::TileScale.X;
-	if (Pos.Y < 0)
+	if (Pos.Y < 0.f)
 		Pos.Y -= EGameConst::TileScale.Y;
 
 	return FIntPoint(Pos.X / EGameConst::TileScale.X, Pos.Y / EGameConst::TileScale.Y);
+}
+
+int ARoom::GetOnTileXIndex(float _X) const
+{
+	float line = _X;
+
+	if (line < 0.f)
+		line -= EGameConst::TileScale.X;
+
+	return static_cast<int>(line / EGameConst::TileScale.X);
+}
+
+int ARoom::GetOnTileYIndex(float _Y) const
+{
+	float line = _Y;
+
+	if (line < 0.f)
+		line -= EGameConst::TileScale.Y;
+
+	return static_cast<int>(line / EGameConst::TileScale.Y);
+}
+
+FTransform ARoom::GetTileTransform(const FIntPoint& _TileIndex) const
+{
+	FVector2D TileSize = EGameConst::TileScale;
+	return FTransform(FVector2D(_TileIndex.X * TileSize.X + TileSize.HalfX(), _TileIndex.Y * TileSize.Y + TileSize.HalfY()), FVector2D(TileSize));
+}
+
+float ARoom::GetTileTopLine(int _YIndex)
+{
+	FVector2D TileSize = EGameConst::TileScale;
+	return static_cast<float>(_YIndex) * TileSize.Y;
+}
+
+float ARoom::GetTileBottomLine(int _YIndex)
+{
+	FVector2D TileSize = EGameConst::TileScale;
+	return static_cast<float>(_YIndex + 1.f) * TileSize.Y;
+}
+
+float ARoom::GetTileLeftLine(int _XIndex)
+{
+	FVector2D TileSize = EGameConst::TileScale;
+	return static_cast<float>(_XIndex) * TileSize.X;
+}
+
+float ARoom::GetTileRightLine(int _XIndex)
+{
+	FVector2D TileSize = EGameConst::TileScale;
+	return static_cast<float>(_XIndex + 1.f) * TileSize.X;
 }
 
 ETileType ARoom::GetTileType(const FVector2D& _Location) const

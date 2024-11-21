@@ -32,12 +32,12 @@ private:
 	FVector2D MoveValue = FVector2D::ZERO;
 	static constexpr int PointCount = 5;
 	FVector2D Points[static_cast<int>(EPlayerPoint::Last)][APlayer::PointCount] = {};
-	bool IsSad = false;
+	bool IsSad = true;
 	bool IsFlip = false;
 	bool IsGround = false;
 	bool IsDeath = false;
 	const float Speed = 500.f;
-	const float GravityForce = 100.f;//600.f;
+	const float GravityForce = 600.f;//600.f;
 	const float DeathTime = 1.f;
 	float CurDeathTime = 0.f;
 	FVector2D SaveWorldIndex = FVector2D::ZERO;

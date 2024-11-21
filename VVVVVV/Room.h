@@ -35,6 +35,13 @@ public:
 
 	const ATile* GetTile(const FIntPoint& _Index) const;
 	FIntPoint GetOnTileIndex(const FVector2D& _Pos) const;
+	int GetOnTileXIndex(float _X) const;
+	int GetOnTileYIndex(float _Y) const;
+	FTransform GetTileTransform(const FIntPoint& _TileIndex) const;
+	float GetTileTopLine(int _YIndex);
+	float GetTileBottomLine(int _YIndex);
+	float GetTileLeftLine(int _XIndex);
+	float GetTileRightLine(int _XIndex);
 	ETileType GetTileType(const FVector2D& _Location) const;
 	ETileType GetTileType(const FIntPoint& _Index) const;
 	
