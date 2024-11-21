@@ -143,8 +143,8 @@ void APlayer::TileCheck()
 		int TileIndexXLine = AGameWorld::GetRoom()->GetOnTileXIndex(PlayerNextLine);
 		float TileXLine = AGameWorld::GetRoom()->GetTileRightLine(TileIndexXLine);
 
-		if (PlayerLine >= TileXLine)
-			MoveValue.X += TileXLine - PlayerNextLine;
+		SetActorLocation(FVector2D(TileXLine + GetActorScale().HalfX(), GetActorLocation().Y));
+		MoveValue.X = 0.f;
 	}
 
 	bool CollisionRight = false;
@@ -174,8 +174,8 @@ void APlayer::TileCheck()
 		int TileIndexXLine = AGameWorld::GetRoom()->GetOnTileXIndex(PlayerNextLine);
 		float TileXLine = AGameWorld::GetRoom()->GetTileLeftLine(TileIndexXLine);
 
-		if (PlayerLine <= TileXLine)
-			MoveValue.X += TileXLine - PlayerNextLine;
+		SetActorLocation(FVector2D(TileXLine - GetActorScale().HalfX(), GetActorLocation().Y));
+		MoveValue.X = 0.f;
 	}
 
 
@@ -230,8 +230,8 @@ void APlayer::TileCheck()
 			int TileIndexYLine = AGameWorld::GetRoom()->GetOnTileYIndex(PlayerNextLine);
 			float TileYLine = AGameWorld::GetRoom()->GetTileTopLine(TileIndexYLine);
 
-			if (PlayerLine >= TileYLine)
-				MoveValue.Y += TileYLine - PlayerNextLine;
+			SetActorLocation(FVector2D(GetActorLocation().X, TileYLine - GetActorScale().HalfY()));
+			MoveValue.Y = 0.f;
 		}
 		else
 		{
@@ -245,8 +245,8 @@ void APlayer::TileCheck()
 			int TileIndexYLine = AGameWorld::GetRoom()->GetOnTileYIndex(PlayerNextLine);
 			float TileYLine = AGameWorld::GetRoom()->GetTileBottomLine(TileIndexYLine);
 
-			if (PlayerLine <= TileYLine)
-				MoveValue.Y += TileYLine - PlayerNextLine;
+			SetActorLocation(FVector2D(GetActorLocation().X, TileYLine + GetActorScale().HalfY()));
+			MoveValue.Y = 0.f;
 		}
 
 		SetGround(true);
@@ -259,6 +259,7 @@ void APlayer::TileCheck()
 void APlayer::MoveRoomCheck()
 {
 	FTransform Transform = GetActorTransform();
+	Transform.Scale = Transform.Scale.Half();
 	FVector2D OutDir = AGameWorld::GetRoom()->IsOutScreen(Transform);
 
 	if (OutDir == FVector2D::ZERO)
@@ -314,13 +315,13 @@ void APlayer::PlayerDefualtSetup()
 
 	// PixelPointInit
 	FVector2D StartPoint = GetActorScale();
-	StartPoint.X = -StartPoint.HalfX();
-	StartPoint.Y = -StartPoint.HalfY();
+	StartPoint.X = -StartPoint.HalfX() + 1.f;
+	StartPoint.Y = -StartPoint.HalfY() + 1.f;
 
 	for (int i = 0; i < PointCount; ++i)
 	{
-		float OffsetX = (GetActorScale().X) / (PointCount - 1);
-		float OffsetY = (GetActorScale().Y) / (PointCount - 1);
+		float OffsetX = (GetActorScale().X - 2.f) / (PointCount - 1);
+		float OffsetY = (GetActorScale().Y - 2.f) / (PointCount - 1);
 
 		Points[static_cast<int>(EPlayerPoint::Left)][i] = FVector2D(-GetActorScale().HalfX(), StartPoint.Y + OffsetY * i);
 		Points[static_cast<int>(EPlayerPoint::Right)][i] = FVector2D(GetActorScale().HalfX(), StartPoint.Y + OffsetY * i);

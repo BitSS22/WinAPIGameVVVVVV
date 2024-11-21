@@ -45,7 +45,7 @@ public:
 	ETileType GetTileType(const FVector2D& _Location) const;
 	ETileType GetTileType(const FIntPoint& _Index) const;
 	
-	// Return Out Dir, Not Out is Return ZERO Dir.
+	// Return Out Dir, Not Out To Return ZERO Dir.
 	FVector2D IsOutScreen(const FTransform& Transform) const;
 	FVector2D IsOutScreen(const FVector2D& _Location) const;
 	bool IsOutTileIndex(const FIntPoint& _Index) const;
