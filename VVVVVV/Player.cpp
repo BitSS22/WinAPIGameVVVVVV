@@ -115,11 +115,78 @@ void APlayer::EntityCollisionCheck()
 
 void APlayer::TileCheck()
 {
-	bool Collision = false;
+	// Player Left, Right CollisionTile Check
+	bool CollisionLeft = false;
+
+	for (int i = 0; i < APlayer::PointCount; ++i)
+	{
+		FVector2D PlayerPoint = GetActorLocation() + Points[static_cast<int>(EPlayerPoint::Left)][i];
+		FVector2D PlayerNextPoint = FVector2D(PlayerPoint.X + MoveValue.X, PlayerPoint.Y);
+		FIntPoint TileIndex = AGameWorld::GetRoom()->GetOnTileIndex(PlayerNextPoint);
+		ETileType TileType = AGameWorld::GetRoom()->GetTileType(TileIndex);
+
+		switch (TileType)
+		{
+		case ETileType::Collision:
+		case ETileType::Animation:
+		case ETileType::RailLeft:
+		case ETileType::RailRight:
+			CollisionLeft = true;
+			break;
+		}
+	}
+
+	if (CollisionLeft == true)
+	{
+		float PlayerLine = GetActorTransform().CenterLeft();
+		float PlayerNextLine = PlayerLine + MoveValue.X;
+		int TileIndexXLine = AGameWorld::GetRoom()->GetOnTileXIndex(PlayerNextLine);
+		float TileXLine = AGameWorld::GetRoom()->GetTileRightLine(TileIndexXLine);
+
+		if (PlayerLine >= TileXLine)
+			MoveValue.X += TileXLine - PlayerNextLine;
+	}
+
+	bool CollisionRight = false;
+
+	for (int i = 0; i < APlayer::PointCount; ++i)
+	{
+		FVector2D PlayerPoint = GetActorLocation() + Points[static_cast<int>(EPlayerPoint::Right)][i];
+		FVector2D PlayerNextPoint = FVector2D(PlayerPoint.X + MoveValue.X, PlayerPoint.Y);
+		FIntPoint TileIndex = AGameWorld::GetRoom()->GetOnTileIndex(PlayerNextPoint);
+		ETileType TileType = AGameWorld::GetRoom()->GetTileType(TileIndex);
+
+		switch (TileType)
+		{
+		case ETileType::Collision:
+		case ETileType::Animation:
+		case ETileType::RailLeft:
+		case ETileType::RailRight:
+			CollisionRight = true;
+			break;
+		}
+	}
+
+	if (CollisionRight == true)
+	{
+		float PlayerLine = GetActorTransform().CenterRight();
+		float PlayerNextLine = PlayerLine + MoveValue.X;
+		int TileIndexXLine = AGameWorld::GetRoom()->GetOnTileXIndex(PlayerNextLine);
+		float TileXLine = AGameWorld::GetRoom()->GetTileLeftLine(TileIndexXLine);
+
+		if (PlayerLine <= TileXLine)
+			MoveValue.X += TileXLine - PlayerNextLine;
+	}
+
+
+
+	// Player Up, Down CollisionTile Check
+	bool CollisionTopBottm = false;
 	bool RailLeft = false;
 	bool RailRight = false;
 
 	FVector2D(*Line)[APlayer::PointCount] = nullptr;
+
 	if (IsFlip == false)
 		Line = &Points[static_cast<int>(EPlayerPoint::Bottom)];
 	else
@@ -128,7 +195,7 @@ void APlayer::TileCheck()
 	for (int i = 0; i < APlayer::PointCount; ++i)
 	{
 		FVector2D PlayerPoint = GetActorLocation() + (*Line)[i];
-		FVector2D PlayerNextPoint = PlayerPoint + MoveValue;
+		FVector2D PlayerNextPoint = FVector2D(PlayerPoint.X, PlayerPoint.Y + MoveValue.Y);
 		FIntPoint TileIndex = AGameWorld::GetRoom()->GetOnTileIndex(PlayerNextPoint);
 		ETileType TileType = AGameWorld::GetRoom()->GetTileType(TileIndex);
 
@@ -136,49 +203,57 @@ void APlayer::TileCheck()
 		{
 		case ETileType::Collision:
 		case ETileType::Animation:
-			Collision = true;
+			CollisionTopBottm = true;
 			break;
 		case ETileType::RailLeft:
-			Collision = true;
+			CollisionTopBottm = true;
 			RailLeft = true;
 			break;
 		case ETileType::RailRight:
-			Collision = true;
+			CollisionTopBottm = true;
 			RailRight = true;
 			break;
 		}
 	}
 
-	if (Collision == true)
+	if (CollisionTopBottm == true)
 	{
-		if (RailLeft == true)
-			MoveValue.X -= EGameConst::RailSpeed * GET_DELTA;
-		if (RailRight == true)
-			MoveValue.X += EGameConst::RailSpeed * GET_DELTA;
-
 		if (IsFlip == false)
 		{
+			if (RailLeft == true)
+				MoveValue.X -= EGameConst::RailSpeed * GET_DELTA;
+			if (RailRight == true)
+				MoveValue.X += EGameConst::RailSpeed * GET_DELTA;
+
 			float PlayerLine = GetActorTransform().CenterBottom();
 			float PlayerNextLine = PlayerLine + MoveValue.Y;
 			int TileIndexYLine = AGameWorld::GetRoom()->GetOnTileYIndex(PlayerNextLine);
 			float TileYLine = AGameWorld::GetRoom()->GetTileTopLine(TileIndexYLine);
 
-			MoveValue.Y += TileYLine - PlayerNextLine;
+			if (PlayerLine >= TileYLine)
+				MoveValue.Y += TileYLine - PlayerNextLine;
 		}
 		else
 		{
+			if (RailLeft == true)
+				MoveValue.X -= EGameConst::RailSpeed * GET_DELTA;
+			if (RailRight == true)
+				MoveValue.X += EGameConst::RailSpeed * GET_DELTA;
+
 			float PlayerLine = GetActorTransform().CenterTop();
 			float PlayerNextLine = PlayerLine + MoveValue.Y;
 			int TileIndexYLine = AGameWorld::GetRoom()->GetOnTileYIndex(PlayerNextLine);
 			float TileYLine = AGameWorld::GetRoom()->GetTileBottomLine(TileIndexYLine);
 
-			MoveValue.Y += TileYLine - PlayerNextLine;
+			if (PlayerLine <= TileYLine)
+				MoveValue.Y += TileYLine - PlayerNextLine;
 		}
 
 		SetGround(true);
 	}
 	else
 		SetGround(false);
+
 }
 
 void APlayer::MoveRoomCheck()
