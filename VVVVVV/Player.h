@@ -32,7 +32,7 @@ private:
 	FVector2D MoveValue = FVector2D::ZERO;
 	static constexpr int PointCount = 5;
 	FVector2D Points[static_cast<int>(EPlayerPoint::Last)][APlayer::PointCount] = {};
-	bool IsSad = true;
+	bool IsSad = false;
 	bool IsFlip = false;
 	bool IsGround = false;
 	bool IsDeath = false;
@@ -40,8 +40,8 @@ private:
 	const float GravityForce = 600.f;//600.f;
 	const float DeathTime = 1.f;
 	float CurDeathTime = 0.f;
-	FVector2D SaveWorldIndex = FVector2D::ZERO;
-	FVector2D SaveLocation = FVector2D::ZERO;
+	FIntPoint SaveWorldIndex = FVector2D::ZERO;
+	FVector2D SaveLocation = FVector2D(320.f, 240.f);
 
 public:
 	void BeginPlay() override;
@@ -55,6 +55,7 @@ private:
 	void EntityCollisionCheck();
 	void TileCheck();
 	void MoveRoomCheck();
+	void DeathCheck();
 	void ReSpawn();
 	void ResetData();
 

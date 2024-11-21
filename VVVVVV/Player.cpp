@@ -28,6 +28,7 @@ void APlayer::Tick()
 {
 	Super::Tick();
 
+
 	if (IsDeath == true)
 	{
 		Death();
@@ -35,12 +36,15 @@ void APlayer::Tick()
 	else
 	{
 		Input();
-		AnimationChange();
 		Gravity();
 		MoveRoomCheck();
 		EntityCollisionCheck();
 		TileCheck();
 		AddActorLocation(MoveValue);
+		DeathCheck();
+		if (KEY_DOWN('A'))
+			SetDeath(true);
+		AnimationChange();
 	}
 
 	ResetData();
@@ -51,20 +55,16 @@ void APlayer::Tick()
 
 void APlayer::Input()
 {
-	if (KEY_PRESS(VK_LEFT) && IsDeath == false)
+	if (KEY_PRESS(VK_LEFT))
 	{
 		MoveValue += FVector2D::LEFT * Speed * GET_DELTA;
-		AnimationName += "Move ";
 		LastDir = FVector2D::LEFT;
 	}
-	else if (KEY_PRESS(VK_RIGHT) && IsDeath == false)
+	else if (KEY_PRESS(VK_RIGHT))
 	{
 		MoveValue += FVector2D::RIGHT * Speed * GET_DELTA;
-		AnimationName += "Move ";
 		LastDir = FVector2D::RIGHT;
 	}
-	else
-		AnimationName += "Idle ";
 
 	if (KEY_DOWN(VK_SPACE) && IsGround == true && IsDeath == false)
 	{
@@ -75,9 +75,14 @@ void APlayer::Input()
 
 void APlayer::AnimationChange()
 {
+	if (IsDeath == true || IsGround == false || (KEY_FREE(VK_LEFT) && KEY_FREE(VK_RIGHT)))
+		AnimationName += "Idle ";
+	else
+		AnimationName += "Move ";
+
 	if (IsSad == true || IsDeath == true)
 		AnimationName += "Sad";
-
+	
 	if (LastDir == FVector2D::LEFT)
 		AnimationName += "Left";
 	else if (LastDir == FVector2D::RIGHT)
@@ -104,7 +109,7 @@ void APlayer::Death()
 	if (CurDeathTime >= DeathTime)
 	{
 		CurDeathTime = 0.f;
-		IsDeath = false;
+		SetDeath(false);
 		ReSpawn();
 	}
 }
@@ -115,71 +120,6 @@ void APlayer::EntityCollisionCheck()
 
 void APlayer::TileCheck()
 {
-	// Player Left, Right CollisionTile Check
-	bool CollisionLeft = false;
-
-	for (int i = 0; i < APlayer::PointCount; ++i)
-	{
-		FVector2D PlayerPoint = GetActorLocation() + Points[static_cast<int>(EPlayerPoint::Left)][i];
-		FVector2D PlayerNextPoint = FVector2D(PlayerPoint.X + MoveValue.X, PlayerPoint.Y);
-		FIntPoint TileIndex = AGameWorld::GetRoom()->GetOnTileIndex(PlayerNextPoint);
-		ETileType TileType = AGameWorld::GetRoom()->GetTileType(TileIndex);
-
-		switch (TileType)
-		{
-		case ETileType::Collision:
-		case ETileType::Animation:
-		case ETileType::RailLeft:
-		case ETileType::RailRight:
-			CollisionLeft = true;
-			break;
-		}
-	}
-
-	if (CollisionLeft == true)
-	{
-		float PlayerLine = GetActorTransform().CenterLeft();
-		float PlayerNextLine = PlayerLine + MoveValue.X;
-		int TileIndexXLine = AGameWorld::GetRoom()->GetOnTileXIndex(PlayerNextLine);
-		float TileXLine = AGameWorld::GetRoom()->GetTileRightLine(TileIndexXLine);
-
-		SetActorLocation(FVector2D(TileXLine + GetActorScale().HalfX(), GetActorLocation().Y));
-		MoveValue.X = 0.f;
-	}
-
-	bool CollisionRight = false;
-
-	for (int i = 0; i < APlayer::PointCount; ++i)
-	{
-		FVector2D PlayerPoint = GetActorLocation() + Points[static_cast<int>(EPlayerPoint::Right)][i];
-		FVector2D PlayerNextPoint = FVector2D(PlayerPoint.X + MoveValue.X, PlayerPoint.Y);
-		FIntPoint TileIndex = AGameWorld::GetRoom()->GetOnTileIndex(PlayerNextPoint);
-		ETileType TileType = AGameWorld::GetRoom()->GetTileType(TileIndex);
-
-		switch (TileType)
-		{
-		case ETileType::Collision:
-		case ETileType::Animation:
-		case ETileType::RailLeft:
-		case ETileType::RailRight:
-			CollisionRight = true;
-			break;
-		}
-	}
-
-	if (CollisionRight == true)
-	{
-		float PlayerLine = GetActorTransform().CenterRight();
-		float PlayerNextLine = PlayerLine + MoveValue.X;
-		int TileIndexXLine = AGameWorld::GetRoom()->GetOnTileXIndex(PlayerNextLine);
-		float TileXLine = AGameWorld::GetRoom()->GetTileLeftLine(TileIndexXLine);
-
-		SetActorLocation(FVector2D(TileXLine - GetActorScale().HalfX(), GetActorLocation().Y));
-		MoveValue.X = 0.f;
-	}
-
-
-
 	// Player Up, Down CollisionTile Check
 	bool CollisionTopBottm = false;
 	bool RailLeft = false;
@@ -254,6 +194,70 @@ void APlayer::TileCheck()
 	else
 		SetGround(false);
 
+
+
+	// Player Left, Right CollisionTile Check
+	bool CollisionLeft = false;
+
+	for (int i = 0; i < APlayer::PointCount; ++i)
+	{
+		FVector2D PlayerPoint = GetActorLocation() + Points[static_cast<int>(EPlayerPoint::Left)][i];
+		FVector2D PlayerNextPoint = FVector2D(PlayerPoint.X + MoveValue.X, PlayerPoint.Y);
+		FIntPoint TileIndex = AGameWorld::GetRoom()->GetOnTileIndex(PlayerNextPoint);
+		ETileType TileType = AGameWorld::GetRoom()->GetTileType(TileIndex);
+
+		switch (TileType)
+		{
+		case ETileType::Collision:
+		case ETileType::Animation:
+		case ETileType::RailLeft:
+		case ETileType::RailRight:
+			CollisionLeft = true;
+			break;
+		}
+	}
+
+	if (CollisionLeft == true)
+	{
+		float PlayerLine = GetActorTransform().CenterLeft();
+		float PlayerNextLine = PlayerLine + MoveValue.X;
+		int TileIndexXLine = AGameWorld::GetRoom()->GetOnTileXIndex(PlayerNextLine);
+		float TileXLine = AGameWorld::GetRoom()->GetTileRightLine(TileIndexXLine);
+
+		SetActorLocation(FVector2D(TileXLine + GetActorScale().HalfX(), GetActorLocation().Y));
+		MoveValue.X = 0.f;
+	}
+
+	bool CollisionRight = false;
+
+	for (int i = 0; i < APlayer::PointCount; ++i)
+	{
+		FVector2D PlayerPoint = GetActorLocation() + Points[static_cast<int>(EPlayerPoint::Right)][i];
+		FVector2D PlayerNextPoint = FVector2D(PlayerPoint.X + MoveValue.X, PlayerPoint.Y);
+		FIntPoint TileIndex = AGameWorld::GetRoom()->GetOnTileIndex(PlayerNextPoint);
+		ETileType TileType = AGameWorld::GetRoom()->GetTileType(TileIndex);
+
+		switch (TileType)
+		{
+		case ETileType::Collision:
+		case ETileType::Animation:
+		case ETileType::RailLeft:
+		case ETileType::RailRight:
+			CollisionRight = true;
+			break;
+		}
+	}
+
+	if (CollisionRight == true)
+	{
+		float PlayerLine = GetActorTransform().CenterRight();
+		float PlayerNextLine = PlayerLine + MoveValue.X;
+		int TileIndexXLine = AGameWorld::GetRoom()->GetOnTileXIndex(PlayerNextLine);
+		float TileXLine = AGameWorld::GetRoom()->GetTileLeftLine(TileIndexXLine);
+
+		SetActorLocation(FVector2D(TileXLine - GetActorScale().HalfX(), GetActorLocation().Y));
+		MoveValue.X = 0.f;
+	}
 }
 
 void APlayer::MoveRoomCheck()
@@ -272,6 +276,24 @@ void APlayer::MoveRoomCheck()
 	MoveLen.X *= OutDir.X;
 	MoveLen.Y *= OutDir.Y;
 	AddActorLocation(-MoveLen);
+}
+
+void APlayer::DeathCheck()
+{
+	for (int i = 0; i < static_cast<int>(EPlayerPoint::Last); ++i)
+	{
+		for (int j = 0; j < APlayer::PointCount; ++j)
+		{
+			FVector2D Location = GetActorLocation() + Points[i][j];
+			ETileType Type = AGameWorld::GetRoom()->GetTileType(Location);
+
+			if (Type == ETileType::Spike)
+			{
+				SetDeath(true);
+				return;
+			}
+		}
+	}
 }
 
 void APlayer::ResetData()
@@ -351,6 +373,7 @@ void APlayer::Debug()
 
 void APlayer::ReSpawn()
 {
-	AGameWorld::GetRoom()->MoveRoom(SaveWorldIndex);
+	if (AGameWorld::GetCurRoomIndex() != SaveWorldIndex)
+		AGameWorld::GetRoom()->MoveRoom(SaveWorldIndex);
 	SetActorLocation(SaveLocation);
 }
