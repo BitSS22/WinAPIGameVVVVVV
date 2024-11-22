@@ -38,7 +38,7 @@ private:
 	bool IsGround = false;
 	bool IsDeath = false;
 
-	const float Speed = 200.f;
+	const float Speed = 500.f;
 	const float GravityForce = 600.f;
 	const float DeathTime = 1.f;
 	float CurDeathTime = 0.f;
