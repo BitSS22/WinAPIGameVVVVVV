@@ -31,7 +31,7 @@ protected:
 public:
 	virtual void Tick() override;
 
-	void Collision();
+	virtual void Collision(APlayer* _Player);
 	void CollisionCheckPoint(APlayer* _Player);
 
 	virtual void SetEntity(const RoomEntityData& _Data);

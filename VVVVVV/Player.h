@@ -96,6 +96,14 @@ public:
 		SaveLocation = _Location;
 		SaveFlip = _Flip;
 	}
+	FVector2D GetMoveValue() const
+	{
+		return MoveValue;
+	}
+	void SetMoveValue(const FVector2D& _Value)
+	{
+		MoveValue = _Value;
+	}
 
 };
 

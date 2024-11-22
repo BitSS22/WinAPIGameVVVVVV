@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "PistonEntity.h"
 #include "Room.h"
+#include "Player.h"
 
 APistonEntity::APistonEntity()
 {
@@ -75,6 +76,43 @@ RoomEntityData APistonEntity::GetEntityData()
 	Data.MoveLenghtOffset = MoveLenghtOffset;
 	
 	return Data;
+}
+
+void APistonEntity::Collision(APlayer* _Player)
+{
+	FTransform PlayerTransform = _Player->GetActorTransform();
+	PlayerTransform.Location += _Player->GetMoveValue();
+	FTransform Transform = GetActorTransform();
+	Transform.Location += GetMoveValue();
+
+	if (FTransform::Collision(ECollisionType::Rect, PlayerTransform, ECollisionType::Rect, Transform) == false)
+		return;
+
+	switch (GetEntityType())
+	{
+	case EEntityType::Guy:
+		return;
+	case EEntityType::Enermy:
+		CollisionEnermy(_Player);
+		return;
+	case EEntityType::Platform:
+		CollisionPlatform(_Player);
+		return;
+	case EEntityType::FlipLine:
+		return;
+	}
+
+	MSGASSERT(nullptr, "Not Find Entity Type.");
+}
+
+void APistonEntity::CollisionEnermy(APlayer* _Player)
+{
+	_Player->SetDeath(true);
+}
+
+void APistonEntity::CollisionPlatform(APlayer* _Player)
+{
+
 }
 
 void APistonEntity::AddEntityLocation(const FVector2D& _Location)

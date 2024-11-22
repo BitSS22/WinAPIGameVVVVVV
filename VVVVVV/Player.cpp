@@ -132,18 +132,31 @@ void APlayer::Death()
 
 void APlayer::EntityCollisionCheck()
 {
-	vector<AActor*> Actors = Collider->CollisionAll(ECollisionGroup::Entity, MoveValue);
+	const vector<AEntity*>& Entites = AGameWorld::GetRoom()->GetEntitesCRef();
+
+	for (size_t i = 0; i < Entites.size(); ++i)
+		Entites[i]->Collision(this);
+
+
+
+
+
+
+
+
+
+
+
+
+	/*vector<AActor*> Actors = Collider->CollisionAll(ECollisionGroup::Entity, MoveValue);
 
 	FTransform Transform = GetActorTransform();
 	FTransform NextTransform = FTransform(Transform.Location + MoveValue, Transform.Scale);
 
-	float EntityTop = FLT_MIN;
-	float EntityBottom = FLT_MAX;
-	float EntityLeft = FLT_MIN;
-	float EntityRight = FLT_MAX;
-
-	if (Actors.size() > 1)
-		int a = 0;
+	float StandLineBottom = FLT_MAX;
+	float StandLineTop = FLT_MIN;
+	float StandLineLeft = FLT_MIN;
+	float StandLineRight = FLT_MAX;
 
 	for (size_t i = 0; i < Actors.size(); ++i)
 	{
@@ -155,43 +168,42 @@ void APlayer::EntityCollisionCheck()
 		if (Entity->GetEntityType() == EEntityType::Platform)
 		{
 			APistonEntity* PistonEntity = dynamic_cast<APistonEntity*>(Entity);
-
 			FTransform EntityTransform = PistonEntity->GetActorTransform();
+			FTransform PistonEntityNextTransform = FTransform(EntityTransform.Location + PistonEntity->GetMoveValue(), EntityTransform.Scale);
 
-			if (Transform.CenterTop() <= EntityTransform.CenterBottom() && EntityBottom > EntityTransform.CenterBottom() && IsFlip == false)
-				EntityBottom = EntityTransform.CenterTop();
-			if (Transform.CenterBottom() >= EntityTransform.CenterTop() && EntityTop < EntityTransform.CenterTop() && IsFlip == true)
-				EntityTop = EntityTransform.CenterBottom();
-			if (Transform.CenterLeft() <= EntityTransform.CenterRight() && EntityRight > EntityTransform.CenterRight())
-				EntityRight = EntityTransform.CenterLeft();
-			if (Transform.CenterRight() >= EntityTransform.CenterLeft() && EntityLeft < EntityTransform.CenterLeft())
-				EntityLeft = EntityTransform.CenterRight();
+			if (Transform.CenterBottom() <= EntityTransform.CenterTop() && StandLineBottom > PistonEntityNextTransform.CenterTop())
+				StandLineBottom = PistonEntityNextTransform.CenterTop();
+			if (Transform.CenterTop() >= EntityTransform.CenterBottom() && StandLineTop < PistonEntityNextTransform.CenterBottom())
+				StandLineTop = PistonEntityNextTransform.CenterBottom();
+			if (Transform.CenterLeft() >= EntityTransform.CenterRight() && StandLineLeft < PistonEntityNextTransform.CenterRight())
+				StandLineLeft = PistonEntityNextTransform.CenterRight();
+			if (Transform.CenterRight() <= EntityTransform.CenterLeft() && StandLineRight > PistonEntityNextTransform.CenterLeft())
+				StandLineRight = PistonEntityNextTransform.CenterLeft();
 		} 
 		else
 			Entity->Collision();
 	}
 
-	if (EntityTop != FLT_MIN)
+	if (NextTransform.CenterBottom() >= StandLineBottom)
 	{
-		SetActorLocation(FVector2D(Transform.Location.X, EntityTop + Transform.Scale.HalfY()));
+		SetActorLocation(FVector2D(Transform.Location.X, StandLineBottom - Transform.Scale.HalfY()));
 		MoveValue.Y = 0.f;
 	}
-	if (EntityBottom != FLT_MAX)
+	if (NextTransform.CenterTop() <= StandLineTop)
 	{
-		SetActorLocation(FVector2D(Transform.Location.X, EntityBottom - Transform.Scale.HalfY()));
+		SetActorLocation(FVector2D(Transform.Location.X, StandLineTop + Transform.Scale.HalfY()));
 		MoveValue.Y = 0.f;
 	}
-	/*if (EntityLeft != FLT_MIN)
+	if (NextTransform.CenterLeft() <= StandLineLeft)
 	{
-		SetActorLocation(FVector2D(EntityLeft - Transform.Scale.HalfX(), Transform.Location.Y));
+		SetActorLocation(FVector2D(StandLineLeft + Transform.Scale.HalfX(), Transform.Location.Y));
 		MoveValue.X = 0.f;
 	}
-	if (EntityRight!= FLT_MAX)
+	if (NextTransform.CenterRight() >= StandLineRight)
 	{
-		SetActorLocation(FVector2D(EntityRight + Transform.Scale.HalfX(), Transform.Location.Y));
+		SetActorLocation(FVector2D(StandLineRight - Transform.Scale.HalfX(), Transform.Location.Y));
 		MoveValue.X = 0.f;
 	}*/
-
 }
 
 void APlayer::TileCheck()

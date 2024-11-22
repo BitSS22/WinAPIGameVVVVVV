@@ -18,31 +18,20 @@ void AEntity::Tick()
 	UEngineDebug::CoreDebugRender(GetActorTransform(), UEngineDebug::EDebugPosType::Rect);
 }
 
-void AEntity::Collision()
+void AEntity::Collision(APlayer* _Player)
 {
-	AActor* Actor = Collider->CollisionOnce(ECollisionGroup::Player);
-	APlayer* Player = dynamic_cast<APlayer*>(Actor);
+	FTransform PlayerTransform = _Player->GetActorTransform();
+	PlayerTransform.Location += _Player->GetMoveValue();
 
-	// TODO. Entity Collision Code Create
-
-	if (Player == nullptr)
+	if (FTransform::Collision(ECollisionType::Rect, PlayerTransform, ECollisionType::Rect, GetActorTransform()) == false)
 		return;
 
- 	switch (EntityType)
+	switch (EntityType)
 	{
-	case EEntityType::Guy:
-		return;
-	case EEntityType::Enermy:
-		Player->SetDeath(true);
-		return;
-	case EEntityType::Platform:
-		return;
 	case EEntityType::CheckPoint:
-		CollisionCheckPoint(Player);
+		CollisionCheckPoint(_Player);
 		return;
 	case EEntityType::Teleport:
-		return;
-	case EEntityType::FlipLine:
 		return;
 	}
 
