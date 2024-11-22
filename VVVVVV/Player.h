@@ -47,6 +47,10 @@ private:
 	FVector2D SaveLocation = FVector2D(320.f, 240.f);
 	bool SaveFlip = false;
 
+	bool TestTrigger = false;
+	DWORD TestPrevCount = 0;
+	DWORD TestCount = 0;
+
 public:
 	void BeginPlay() override;
 	void Tick() override;
