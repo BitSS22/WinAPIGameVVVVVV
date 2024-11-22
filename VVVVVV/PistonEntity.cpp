@@ -22,15 +22,18 @@ void APistonEntity::Tick()
 
 	if (DefualtDir != FVector2D::ZERO && GetIsMove() == true)
 	{
-		AddActorLocation(Dir * Speed * GET_DELTA);
-
-		float Diff = (DefualtLocation - GetActorLocation()).Length();
+		MoveValue = Dir * Speed * GET_DELTA;
+		FVector2D NextLocation = GetActorLocation() + MoveValue;
+		
+		float Diff = (DefualtLocation - NextLocation).Length();
 
 		if (MoveLenght < Diff)
 		{
 			Dir = -Dir;
-			AddActorLocation(Dir * abs(Diff - MoveLenght) * 2);
+			MoveValue += Dir * abs(Diff - MoveLenght) * 2;
 		}
+
+		AddActorLocation(MoveValue);
 	}
 
 	// Debug

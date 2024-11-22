@@ -27,6 +27,7 @@ enum class EEntityType
 	Platform,
 	CheckPoint,
 	Teleport,
+	FlipLine,
 	Last
 };
 

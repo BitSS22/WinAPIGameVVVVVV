@@ -23,6 +23,8 @@ void AEntity::Collision()
 	AActor* Actor = Collider->CollisionOnce(ECollisionGroup::Player);
 	APlayer* Player = dynamic_cast<APlayer*>(Actor);
 
+	// TODO. Entity Collision Code Create
+
 	if (Player == nullptr)
 		return;
 
@@ -40,11 +42,11 @@ void AEntity::Collision()
 		return;
 	case EEntityType::Teleport:
 		return;
+	case EEntityType::FlipLine:
+		return;
 	}
 
 	MSGASSERT(nullptr, "Not Find Entity Type.");
-
-	// TODO. Entity Collision Code Create
 }
 
 void AEntity::CollisionCheckPoint(APlayer* _Player)

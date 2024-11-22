@@ -19,6 +19,7 @@ private:
 	float Speed = EGameConst::DefualtSpeed;
 	float MoveLenght = 0.f;
 	float MoveLenghtOffset = 0.f;
+	FVector2D MoveValue = FVector2D::ZERO;
 
 public:
 	virtual void BeginPlay() override;
@@ -37,15 +38,15 @@ public:
 	void AddDir(const FVector2D& _Dir);
 	void SetDir(const FVector2D& _Dir);
 
-	float GetSpeed()
+	float GetSpeed() const
 	{
 		return Speed;
 	}
-	float GetMoveLenght()
+	float GetMoveLenght() const
 	{
 		return MoveLenght;
 	}
-	float GetMoveLenghtOffset()
+	float GetMoveLenghtOffset() const
 	{
 		return MoveLenghtOffset;
 	}
@@ -53,13 +54,17 @@ public:
 	{
 		return DefualtLocation;
 	}
-	FVector2D GetEntityDefualtDir()
+	FVector2D GetEntityDefualtDir() const
 	{
 		return DefualtDir;
 	}
-	FVector2D GetEntityDir()
+	FVector2D GetEntityDir() const
 	{
 		return Dir;
+	}
+	FVector2D GetMoveValue() const
+	{
+		return Dir * Speed * GET_DELTA;
 	}
 
 };

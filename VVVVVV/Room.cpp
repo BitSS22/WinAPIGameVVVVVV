@@ -84,6 +84,7 @@ void ARoom::SetRoom(const RoomData& _Data)
 			break;
 		case EEntityType::Enermy:
 		case EEntityType::Platform:
+		case EEntityType::FlipLine:
 			NewEntity = GetWorld()->SpawnActor<APistonEntity>();
 			break;
 		}

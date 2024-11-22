@@ -473,6 +473,7 @@ void ATileMapEditorMode::LoadResourceList()
 	string Enemies = UEngineString::ToUpper("Enemies::");
 	string Guys = UEngineString::ToUpper("Guys::");
 	string Teleports = UEngineString::ToUpper("Teleports::");
+	string FlipLines = UEngineString::ToUpper("FlipLines::");
 
 	for (auto& Sprite : Sprites)
 	{
@@ -594,6 +595,13 @@ void ATileMapEditorMode::LoadResourceList()
 			EntityData.Name = Sprite.first;
 			EntityData.EntityType = EEntityType::Teleport;
 			EntityDatas[static_cast<int>(EEntityType::Teleport)].push_back(EntityData);
+		}
+		else if (Sprite.first.find(FlipLines) != std::string::npos)
+		{
+			RoomEntityData EntityData = {};
+			EntityData.Name = Sprite.first;
+			EntityData.EntityType = EEntityType::FlipLine;
+			EntityDatas[static_cast<int>(EEntityType::FlipLine)].push_back(EntityData);
 		}
 	}
 }
@@ -1024,6 +1032,7 @@ void ATileMapEditorMode::CreateEntity()
 		break;
 	case EEntityType::Enermy:
 	case EEntityType::Platform:
+	case EEntityType::FlipLine:
 		NewEntity = GetWorld()->SpawnActor<APistonEntity>();
 		break;
 	}
