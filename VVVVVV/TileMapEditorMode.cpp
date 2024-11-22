@@ -931,6 +931,9 @@ void ATileMapEditorMode::EditorKeyCheck()
 
 	if (KEY_DOWN(VK_TAB))
 		SwitchLoopRoom();
+
+	if (KEY_PRESS(VK_CONTROL) && KEY_PRESS(VK_SHIFT) && KEY_PRESS(VK_MENU) && KEY_DOWN(VK_SPACE))
+		UEngineAPICore::GetCore()->OpenLevel("Play");
 }
 
 void ATileMapEditorMode::DebugText()

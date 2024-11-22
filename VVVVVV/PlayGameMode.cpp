@@ -26,8 +26,10 @@ void APlayGameMode::Tick()
 {
 	Super::Tick();
 
-	UINT frame = UEngineAPICore::GetCore()->GetFrame();
+	if (KEY_PRESS(VK_CONTROL) && KEY_PRESS(VK_SHIFT) && KEY_PRESS(VK_MENU) && KEY_DOWN(VK_SPACE))
+		UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
 
+	UINT frame = UEngineAPICore::GetCore()->GetFrame();
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("VVVVVV / FPS : " + std::to_string(frame));
 }
 

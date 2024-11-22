@@ -64,7 +64,7 @@ public:
 	}
 	FVector2D GetMoveValue() const
 	{
-		return Dir * Speed * GET_DELTA;
+		return MoveValue;
 	}
 
 };

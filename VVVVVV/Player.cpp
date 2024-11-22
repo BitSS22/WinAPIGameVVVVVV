@@ -122,21 +122,12 @@ void APlayer::EntityCollisionCheck()
 	FTransform Transform = GetActorTransform();
 	FTransform NextTransform = FTransform(Transform.Location + MoveValue, Transform.Scale);
 
-	// float PushLineTop = FLT_MIN;
-	// float PushLineBottom = FLT_MAX;
-	// float PushLineLeft = FLT_MIN;
-	// float PushLineRight = FLT_MAX;
-
-	float PushLineTop = -3000.f;
-	float PushLineBottom = 3000.f;
-	float PushLineLeft = -3000.f;
-	float PushLineRight = 3000.f;
+	float PushLineTop = FLT_MIN;
+	float PushLineBottom = FLT_MAX;
+	float PushLineLeft = FLT_MIN;
+	float PushLineRight = FLT_MAX;
 
 	FVector2D AddMoveValue = FVector2D::ZERO;
-
-	// Test Code
-	if (Actors.size() > 2)
-		int a = 0;
 
 	for (size_t i = 0; i < Actors.size(); ++i)
 	{
@@ -144,45 +135,49 @@ void APlayer::EntityCollisionCheck()
 
 		if (Entity == nullptr)
 			continue;
-
+		
 		if (Entity->GetEntityType() == EEntityType::Platform)
 		{
-			FTransform EntityTransform = Entity->GetActorTransform();
 			APistonEntity* PistonEntity = dynamic_cast<APistonEntity*>(Entity);
 
-			if (Transform.CenterBottom() <= EntityTransform.CenterTop() && PushLineBottom > EntityTransform.CenterTop())
-			{
-				PushLineBottom = EntityTransform.CenterTop();
-				if (IsFlip == false)
-					AddMoveValue += PistonEntity->GetMoveValue();
-			}
-			if (Transform.CenterTop() >= EntityTransform.CenterBottom() && PushLineTop < EntityTransform.CenterBottom())
-			{
-				PushLineTop = EntityTransform.CenterBottom();
-				if (IsFlip == true)
-					AddMoveValue += PistonEntity->GetMoveValue();
-			}
-			if (Transform.CenterLeft() <= EntityTransform.CenterRight() && PushLineLeft > EntityTransform.CenterRight())
-				PushLineLeft = EntityTransform.CenterRight();
-			if (Transform.CenterRight() >= EntityTransform.CenterLeft() && PushLineRight < EntityTransform.CenterLeft())
-				PushLineRight = EntityTransform.CenterLeft();
-		}
+			FTransform EntityTransform = PistonEntity->GetActorTransform();
+			FVector2D EntityMoveValue = PistonEntity->GetMoveValue();
+			FTransform EntityNextTransform = FTransform(EntityTransform.Location + EntityMoveValue, EntityTransform.Scale);
+
+			if (Transform.CenterBottom() >= EntityTransform.CenterTop() && PushLineBottom > EntityNextTransform.CenterTop())
+				PushLineTop = EntityNextTransform.CenterTop();
+			if (Transform.CenterTop() <= EntityTransform.CenterBottom() && PushLineTop < EntityNextTransform.CenterBottom())
+				PushLineBottom = EntityNextTransform.CenterBottom();
+			if (Transform.CenterLeft() <= EntityTransform.CenterRight() && PushLineLeft < EntityNextTransform.CenterRight())
+				PushLineRight = EntityNextTransform.CenterRight();
+			if (Transform.CenterRight() >= EntityTransform.CenterLeft() && PushLineRight > EntityNextTransform.CenterLeft())
+				PushLineLeft = EntityNextTransform.CenterLeft();
+		} 
 		else
 			Entity->Collision();
 	}
 
-	if (PushLineBottom <= NextTransform.CenterBottom() && IsFlip == false)
+	//if (PushLineBottom <= NextTransform.CenterBottom() && IsFlip == false)
+	//{
+	//	SetActorLocation(FVector2D(Transform.Location.X, PushLineBottom - Transform.Scale.HalfY()));
+	//	MoveValue.Y = 0.f;
+	//}
+	//if (PushLineTop >= NextTransform.CenterTop() && IsFlip == true)
+	//{
+	//	SetActorLocation(FVector2D(Transform.Location.X, PushLineTop + Transform.Scale.HalfY()));
+	//	MoveValue.Y = 0.f;
+	//}
+	if (PushLineLeft >= NextTransform.CenterLeft() && PushLineLeft != FLT_MIN)
 	{
-		SetActorLocation(FVector2D(Transform.Location.X, PushLineBottom - Transform.Scale.HalfY()));
-		MoveValue.Y = 0.f;
-		MoveValue += AddMoveValue;
+		SetActorLocation(FVector2D(PushLineLeft - Transform.Scale.HalfX(), Transform.Location.Y));
+		MoveValue.X = 0.f;
 	}
-	if (PushLineTop >= NextTransform.CenterTop() && IsFlip == true)
+	if (PushLineRight <= NextTransform.CenterRight() && PushLineRight!= FLT_MAX)
 	{
-		SetActorLocation(FVector2D(Transform.Location.X, PushLineTop + Transform.Scale.HalfY()));
-		MoveValue.Y = 0.f;
-		MoveValue += AddMoveValue;
+		SetActorLocation(FVector2D(PushLineRight + Transform.Scale.HalfX(), Transform.Location.Y));
+		MoveValue.X = 0.f;
 	}
+
 }
 
 void APlayer::TileCheck()
