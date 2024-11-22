@@ -20,9 +20,6 @@ void APistonEntity::Tick()
 {
 	Super::Tick();
 
-	if (GetIsMove() == true)
-		AddActorLocation(MoveValue);
-
 	if (DefualtDir != FVector2D::ZERO)
 	{
 		MoveValue = Dir * Speed * GET_DELTA;
@@ -36,6 +33,9 @@ void APistonEntity::Tick()
 			MoveValue += Dir * abs(Diff - MoveLenght) * 2;
 		}
 	}
+
+	if (GetIsMove() == true)
+		AddActorLocation(MoveValue);
 
 	// Debug
 	UEngineDebug::CoreDebugRender(GetActorTransform(), UEngineDebug::EDebugPosType::Rect);

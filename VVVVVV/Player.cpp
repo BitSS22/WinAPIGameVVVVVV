@@ -122,10 +122,10 @@ void APlayer::EntityCollisionCheck()
 	FTransform Transform = GetActorTransform();
 	FTransform NextTransform = FTransform(Transform.Location + MoveValue, Transform.Scale);
 
-	float PushLineTop = FLT_MIN;
-	float PushLineBottom = FLT_MAX;
-	float PushLineLeft = FLT_MIN;
-	float PushLineRight = FLT_MAX;
+	float EntityTop = FLT_MIN;
+	float EntityBottom = FLT_MAX;
+	float EntityLeft = FLT_MIN;
+	float EntityRight = FLT_MAX;
 
 	FVector2D AddMoveValue = FVector2D::ZERO;
 
@@ -141,40 +141,38 @@ void APlayer::EntityCollisionCheck()
 			APistonEntity* PistonEntity = dynamic_cast<APistonEntity*>(Entity);
 
 			FTransform EntityTransform = PistonEntity->GetActorTransform();
-			FVector2D EntityMoveValue = PistonEntity->GetMoveValue();
-			FTransform EntityNextTransform = FTransform(EntityTransform.Location + EntityMoveValue, EntityTransform.Scale);
 
-			if (Transform.CenterBottom() >= EntityTransform.CenterTop() && PushLineBottom > EntityNextTransform.CenterTop())
-				PushLineTop = EntityNextTransform.CenterTop();
-			if (Transform.CenterTop() <= EntityTransform.CenterBottom() && PushLineTop < EntityNextTransform.CenterBottom())
-				PushLineBottom = EntityNextTransform.CenterBottom();
-			if (Transform.CenterLeft() <= EntityTransform.CenterRight() && PushLineLeft < EntityNextTransform.CenterRight())
-				PushLineRight = EntityNextTransform.CenterRight();
-			if (Transform.CenterRight() >= EntityTransform.CenterLeft() && PushLineRight > EntityNextTransform.CenterLeft())
-				PushLineLeft = EntityNextTransform.CenterLeft();
+			if (Transform.CenterTop() <= EntityTransform.CenterBottom() && EntityBottom > EntityTransform.CenterBottom())
+				EntityBottom = EntityTransform.CenterBottom();
+			if (Transform.CenterBottom() >= EntityTransform.CenterTop() && EntityTop < EntityTransform.CenterTop())
+				EntityTop = EntityTransform.CenterTop();
+			if (Transform.CenterLeft() <= EntityTransform.CenterRight() && EntityRight > EntityTransform.CenterLeft())
+				EntityRight = EntityTransform.CenterRight();
+			if (Transform.CenterRight() >= EntityTransform.CenterLeft() && EntityLeft < EntityTransform.CenterRight())
+				EntityLeft = EntityTransform.CenterLeft();
 		} 
 		else
 			Entity->Collision();
 	}
 
-	//if (PushLineBottom <= NextTransform.CenterBottom() && IsFlip == false)
-	//{
-	//	SetActorLocation(FVector2D(Transform.Location.X, PushLineBottom - Transform.Scale.HalfY()));
-	//	MoveValue.Y = 0.f;
-	//}
-	//if (PushLineTop >= NextTransform.CenterTop() && IsFlip == true)
-	//{
-	//	SetActorLocation(FVector2D(Transform.Location.X, PushLineTop + Transform.Scale.HalfY()));
-	//	MoveValue.Y = 0.f;
-	//}
-	if (PushLineLeft >= NextTransform.CenterLeft() && PushLineLeft != FLT_MIN)
+	if (EntityTop != FLT_MIN)
 	{
-		SetActorLocation(FVector2D(PushLineLeft - Transform.Scale.HalfX(), Transform.Location.Y));
+		SetActorLocation(FVector2D(Transform.Location.X, EntityTop - Transform.Scale.HalfY()));
+		MoveValue.Y = 0.f;
+	}
+	if (EntityRight != FLT_MAX)
+	{
+		SetActorLocation(FVector2D(Transform.Location.X, EntityBottom + Transform.Scale.HalfY()));
+		MoveValue.Y = 0.f;
+	}
+	if (EntityLeft != FLT_MIN)
+	{
+		SetActorLocation(FVector2D(EntityLeft - Transform.Scale.HalfX(), Transform.Location.Y));
 		MoveValue.X = 0.f;
 	}
-	if (PushLineRight <= NextTransform.CenterRight() && PushLineRight!= FLT_MAX)
+	if (EntityRight!= FLT_MAX)
 	{
-		SetActorLocation(FVector2D(PushLineRight + Transform.Scale.HalfX(), Transform.Location.Y));
+		SetActorLocation(FVector2D(EntityRight + Transform.Scale.HalfX(), Transform.Location.Y));
 		MoveValue.X = 0.f;
 	}
 
@@ -183,7 +181,7 @@ void APlayer::EntityCollisionCheck()
 void APlayer::TileCheck()
 {
 	// Player Up, Down CollisionTile Check
-	bool CollisionTopBottm = false;
+	bool CollisionTopBottom = false;
 	bool RailLeft = false;
 	bool RailRight = false;
 
@@ -205,20 +203,20 @@ void APlayer::TileCheck()
 		{
 		case ETileType::Collision:
 		case ETileType::Animation:
-			CollisionTopBottm = true;
+			CollisionTopBottom = true;
 			break;
 		case ETileType::RailLeft:
-			CollisionTopBottm = true;
+			CollisionTopBottom = true;
 			RailLeft = true;
 			break;
 		case ETileType::RailRight:
-			CollisionTopBottm = true;
+			CollisionTopBottom = true;
 			RailRight = true;
 			break;
 		}
 	}
 
-	if (CollisionTopBottm == true)
+	if (CollisionTopBottom == true)
 	{
 		if (IsFlip == false)
 		{
