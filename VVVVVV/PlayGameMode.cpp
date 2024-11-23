@@ -30,11 +30,9 @@ void APlayGameMode::Tick()
 		UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
 
 	UINT frame = UEngineAPICore::GetCore()->GetFrame();
-	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("VVVVVV / FPS : " + std::to_string(frame));
+	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("VVVVVV / FPS : " + std::to_string(frame) + "DT : " + std::to_string(GET_DELTA));
 }
 
 void APlayGameMode::LevelChangeStart()
 {
 }
-
-

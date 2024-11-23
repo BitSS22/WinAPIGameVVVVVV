@@ -44,10 +44,10 @@ void APlayer::Tick()
 		}
 	}
 
+	ResetData();
+
 	if (IsDeath == true)
-	{
 		Death();
-	}
 	else
 	{
 		Input();
@@ -55,15 +55,10 @@ void APlayer::Tick()
 		MoveRoomCheck();
 		EntityCollisionCheck();
 		TileCheck();
-		GroundCheck();
-		AddActorLocation(MoveValue);
+		Move();
 		DeathCheck();
-		if (KEY_DOWN('A'))
-			SetDeath(true);
 		AnimationChange();
 	}
-
-	ResetData();
 
 	//DEBUG
 	Debug();
@@ -83,10 +78,7 @@ void APlayer::Input()
 	}
 
 	if (KEY_DOWN(VK_SPACE) && IsGround == true && IsDeath == false)
-	{
 		IsFlip = !IsFlip;
-		IsGround = false;
-	}
 }
 
 void APlayer::AnimationChange()
@@ -116,6 +108,8 @@ void APlayer::Gravity()
 		MoveValue.Y += GravityForce * GET_DELTA;
 	else
 		MoveValue.Y -= GravityForce * GET_DELTA;
+
+	SetGround(false);
 }
 
 void APlayer::Death()
@@ -137,73 +131,99 @@ void APlayer::EntityCollisionCheck()
 	for (size_t i = 0; i < Entites.size(); ++i)
 		Entites[i]->Collision(this);
 
+	//FTransform Transform = GetActorTransform();
+	//FTransform NextTransform = FTransform(Transform.Location + MoveValue, Transform.Scale);
+
+	//float Top = FLT_MIN;
+	//float Bottom = FLT_MAX;
+	//float Left = FLT_MIN;
+	//float Right = FLT_MAX;
+
+	//for (size_t i = 0; i < Entites.size(); ++i)
+	//{
+	//	if (Entites[i]->GetEntityType() == EEntityType::Platform)
+	//	{
+	//		APistonEntity* PEntity = dynamic_cast<APistonEntity*>(Entites[i]);
+	//		FTransform EntityTransform = PEntity->GetActorTransform();
+	//		FVector2D EntityMoveValue = PEntity->GetMoveValue();
+	//		FTransform NextEntityTransform = FTransform(EntityTransform.Location + EntityMoveValue, EntityTransform.Scale);
+
+	//		if (FTransform::Collision(ECollisionType::Rect, NextTransform, ECollisionType::Rect, NextEntityTransform) == false)
+	//			continue;
 
 
 
+	//		//if (Transform.CenterTop() >= EntityTransform.CenterBottom() && NextTransform.CenterTop() <= NextEntityTransform.CenterBottom())
+	//		if (NextTransform.CenterTop() <= NextEntityTransform.CenterBottom() &&
+	//			(NextTransform.CenterLeft() < NextEntityTransform.CenterRight() || NextTransform.CenterRight() > NextEntityTransform.CenterLeft()))
+	//		{
+	//			if (Top < NextEntityTransform.CenterBottom() + Transform.Scale.HalfY())
+	//			{
+	//				Top = NextEntityTransform.CenterBottom() + Transform.Scale.HalfY();
+	//				MoveValue += EntityMoveValue;
+	//			}
+	//		}
 
+	//		//if (Transform.CenterBottom() <= EntityTransform.CenterTop() && NextTransform.CenterBottom() >= NextEntityTransform.CenterTop())
+	//		if (NextTransform.CenterBottom() >= NextEntityTransform.CenterTop() &&
+	//			(NextTransform.CenterLeft() < NextEntityTransform.CenterRight() || NextTransform.CenterRight() > NextEntityTransform.CenterLeft()))
+	//		{
+	//			if (Bottom > NextEntityTransform.CenterTop() - Transform.Scale.HalfY())
+	//			{
+	//				Bottom = NextEntityTransform.CenterTop() - Transform.Scale.HalfY();
+	//				MoveValue += EntityMoveValue;
+	//			}
+	//		}
 
+	//		//if (Transform.CenterLeft() >= EntityTransform.CenterRight() && NextTransform.CenterLeft() <= NextEntityTransform.CenterRight() &&
+	//		//	(!(Transform.CenterBottom() <= EntityTransform.CenterTop()) || !(Transform.CenterTop() >= EntityTransform.CenterBottom())))
+	//		if (NextTransform.CenterLeft() <= NextEntityTransform.CenterRight() &&
+	//			(NextTransform.CenterTop() < NextEntityTransform.CenterBottom() || NextTransform.CenterBottom() > NextEntityTransform.CenterTop()))
+	//		{
+	//			if (Left < NextEntityTransform.CenterRight() + Transform.Scale.HalfX())
+	//			{
+	//				Left = NextEntityTransform.CenterRight() + Transform.Scale.HalfX();
+	//			}
+	//		}
 
+	//		/*if (Transform.CenterRight() <= EntityTransform.CenterLeft() && NextTransform.CenterRight() >= NextEntityTransform.CenterLeft() && 
+	//			(!(Transform.CenterBottom() <= EntityTransform.CenterTop()) || !(Transform.CenterTop() >= EntityTransform.CenterBottom())))*/
+	//		if (NextTransform.CenterRight() >= NextEntityTransform.CenterLeft() &&
+	//			(NextTransform.CenterTop() < NextEntityTransform.CenterBottom() || NextTransform.CenterBottom() > NextEntityTransform.CenterTop()))
+	//		{
+	//			if (Right > NextEntityTransform.CenterLeft() - Transform.Scale.HalfX())
+	//			{
+	//				Right = NextEntityTransform.CenterLeft() - Transform.Scale.HalfX();
+	//			}
+	//		}
+	//	}
+	//	else
+	//		Entites[i]->Collision(this);
+	//}
 
-
-
-
-
-	/*vector<AActor*> Actors = Collider->CollisionAll(ECollisionGroup::Entity, MoveValue);
-
-	FTransform Transform = GetActorTransform();
-	FTransform NextTransform = FTransform(Transform.Location + MoveValue, Transform.Scale);
-
-	float StandLineBottom = FLT_MAX;
-	float StandLineTop = FLT_MIN;
-	float StandLineLeft = FLT_MIN;
-	float StandLineRight = FLT_MAX;
-
-	for (size_t i = 0; i < Actors.size(); ++i)
-	{
-		AEntity* Entity = dynamic_cast<AEntity*>(Actors[i]);
-
-		if (Entity == nullptr)
-			continue;
-		
-		if (Entity->GetEntityType() == EEntityType::Platform)
-		{
-			APistonEntity* PistonEntity = dynamic_cast<APistonEntity*>(Entity);
-			FTransform EntityTransform = PistonEntity->GetActorTransform();
-			FTransform PistonEntityNextTransform = FTransform(EntityTransform.Location + PistonEntity->GetMoveValue(), EntityTransform.Scale);
-
-			if (Transform.CenterBottom() <= EntityTransform.CenterTop() && StandLineBottom > PistonEntityNextTransform.CenterTop())
-				StandLineBottom = PistonEntityNextTransform.CenterTop();
-			if (Transform.CenterTop() >= EntityTransform.CenterBottom() && StandLineTop < PistonEntityNextTransform.CenterBottom())
-				StandLineTop = PistonEntityNextTransform.CenterBottom();
-			if (Transform.CenterLeft() >= EntityTransform.CenterRight() && StandLineLeft < PistonEntityNextTransform.CenterRight())
-				StandLineLeft = PistonEntityNextTransform.CenterRight();
-			if (Transform.CenterRight() <= EntityTransform.CenterLeft() && StandLineRight > PistonEntityNextTransform.CenterLeft())
-				StandLineRight = PistonEntityNextTransform.CenterLeft();
-		} 
-		else
-			Entity->Collision();
-	}
-
-	if (NextTransform.CenterBottom() >= StandLineBottom)
-	{
-		SetActorLocation(FVector2D(Transform.Location.X, StandLineBottom - Transform.Scale.HalfY()));
-		MoveValue.Y = 0.f;
-	}
-	if (NextTransform.CenterTop() <= StandLineTop)
-	{
-		SetActorLocation(FVector2D(Transform.Location.X, StandLineTop + Transform.Scale.HalfY()));
-		MoveValue.Y = 0.f;
-	}
-	if (NextTransform.CenterLeft() <= StandLineLeft)
-	{
-		SetActorLocation(FVector2D(StandLineLeft + Transform.Scale.HalfX(), Transform.Location.Y));
-		MoveValue.X = 0.f;
-	}
-	if (NextTransform.CenterRight() >= StandLineRight)
-	{
-		SetActorLocation(FVector2D(StandLineRight - Transform.Scale.HalfX(), Transform.Location.Y));
-		MoveValue.X = 0.f;
-	}*/
+	//if (Top != FLT_MIN)
+	//{
+	//	SetActorLocation(FVector2D(Transform.Location.X, Top + 0.001f));
+	//	MoveValue.Y = 0.f;
+	//	SetGround(true);
+	//}
+	//if (Bottom != FLT_MAX)
+	//{
+	//	SetActorLocation(FVector2D(Transform.Location.X, Bottom - 0.001f));
+	//	MoveValue.Y = 0.f;
+	//	SetGround(true);
+	//}
+	//if (Left != FLT_MIN)
+	//{
+	//	SetActorLocation(FVector2D(Left + 0.001f, Transform.Location.Y));
+	//	MoveValue.X = 0.f;
+	//}
+	//if (Right != FLT_MAX)
+	//{
+	//	SetActorLocation(FVector2D(Right - 0.001f, Transform.Location.Y));
+	//	MoveValue.X = 0.f;
+	//}
+	
 }
 
 void APlayer::TileCheck()
@@ -259,7 +279,7 @@ void APlayer::TileCheck()
 			float TileYLine = AGameWorld::GetRoom()->GetTileTopLine(TileIndexYLine);
 
 			SetActorLocation(FVector2D(GetActorLocation().X, TileYLine - GetActorScale().HalfY()));
-			MoveValue.Y = 0.f;
+			SetGround(true);
 		}
 		else
 		{
@@ -274,7 +294,7 @@ void APlayer::TileCheck()
 			float TileYLine = AGameWorld::GetRoom()->GetTileBottomLine(TileIndexYLine);
 
 			SetActorLocation(FVector2D(GetActorLocation().X, TileYLine + GetActorScale().HalfY()));
-			MoveValue.Y = 0.f;
+			SetGround(true);
 		}
 	}
 
@@ -342,14 +362,6 @@ void APlayer::TileCheck()
 	}
 }
 
-void APlayer::GroundCheck()
-{
-	if (MoveValue.Y != 0.f)
-		SetGround(false);
-	else
-		SetGround(true);
-}
-
 void APlayer::MoveRoomCheck()
 {
 	FTransform Transform = GetActorTransform();
@@ -384,6 +396,14 @@ void APlayer::DeathCheck()
 			}
 		}
 	}
+}
+
+void APlayer::Move()
+{
+	if (IsGround == true)
+		MoveValue.Y = 0.f;
+
+	AddActorLocation(MoveValue);
 }
 
 void APlayer::ResetData()
@@ -453,6 +473,28 @@ void APlayer::Debug()
 	str += ",";
 	str += std::to_string(GetActorLocation().Y);
 	UEngineDebug::CoreOutputString(str);
+
+	str = "Left:";
+	str += std::to_string(GetActorTransform().CenterLeft());
+	str += " Right:";
+	str += std::to_string(GetActorTransform().CenterRight());
+	str += " Top:";
+	str += std::to_string(GetActorTransform().CenterTop());
+	str += " Bottom:";
+	str += std::to_string(GetActorTransform().CenterBottom());
+	UEngineDebug::CoreOutputString(str);
+
+	str = "Ground : ";
+	if (IsGround == true)
+		str += "true";
+	else
+		str += "false";
+	str += ", MoveValue : ";
+	str += std::to_string(MoveValue.X);
+	str += ",";
+	str += std::to_string(MoveValue.Y);
+	UEngineDebug::CoreOutputString(str);
+
 
 	str = "World Index : ";
 	str += std::to_string(AGameWorld::GetCurRoomIndex().X);

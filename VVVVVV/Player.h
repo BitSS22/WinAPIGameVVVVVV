@@ -38,8 +38,8 @@ private:
 	bool IsGround = false;
 	bool IsDeath = false;
 
-	const float Speed = 500.f;
-	const float GravityForce = 600.f;
+	const float Speed = 400.f;
+	const float GravityForce = 400.f;
 	const float DeathTime = 1.f;
 	float CurDeathTime = 0.f;
 
@@ -62,9 +62,9 @@ private:
 	void Death();
 	void EntityCollisionCheck();
 	void TileCheck();
-	void GroundCheck();
 	void MoveRoomCheck();
 	void DeathCheck();
+	void Move();
 	void ReSpawn();
 	void ResetData();
 
@@ -78,13 +78,9 @@ public:
 		AGameWorld::GetRoom()->SetEntityMove(!_Value);
 		IsDeath = _Value;
 	}
-	void SetGround(bool _Value)
+	bool GetDeath()
 	{
-		IsGround = _Value;
-	}
-	void SetFlip(bool _Value)
-	{
-		IsFlip = _Value;
+		return IsDeath;
 	}
 	void SetSad(bool _Value)
 	{
@@ -104,6 +100,19 @@ public:
 	{
 		MoveValue = _Value;
 	}
+	bool GetFlip() const
+	{
+		return IsFlip;
+	}
+	void SetFlip(bool _Value)
+	{
+		IsFlip = _Value;
+	}
+	void SetGround(bool _Value)
+	{
+		IsGround = _Value;
+	}
+
 
 };
 
