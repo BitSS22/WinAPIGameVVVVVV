@@ -28,6 +28,7 @@ public:
 	virtual void Collision(APlayer* _Player) override;
 	void CollisionEnermy(APlayer* _Player);
 	void CollisionPlatform(APlayer* _Player);
+	void CollisionFlipLine(APlayer* _Player);
 
 	virtual void SetEntity(const RoomEntityData& _Data) override;
 	RoomEntityData GetEntityData() override;

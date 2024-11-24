@@ -95,6 +95,7 @@ void APistonEntity::Collision(APlayer* _Player)
 		CollisionPlatform(_Player);
 		return;
 	case EEntityType::FlipLine:
+		CollisionFlipLine(_Player);
 		return;
 	}
 
@@ -152,7 +153,10 @@ void APistonEntity::CollisionPlatform(APlayer* _Player)
 		_Player->SetActorLocation(FVector2D(NextTransform.CenterRight() + PlayerTransform.Scale.HalfX(), PlayerTransform.Location.Y));
 		_Player->SetMoveValue(FVector2D(0.f, _Player->GetMoveValue().Y));
 	}
+}
 
+void APistonEntity::CollisionFlipLine(APlayer* _Player)
+{
 
 
 
@@ -160,194 +164,6 @@ void APistonEntity::CollisionPlatform(APlayer* _Player)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	//FTransform PlayerTransform = _Player->GetActorTransform();
-	//FTransform NextPlayerTransform = FTransform(PlayerTransform.Location + _Player->GetMoveValue(), PlayerTransform.Scale);
-	//FTransform AddPlatformPlayerTransform = FTransform(PlayerTransform.Location + MoveValue, NextPlayerTransform.Scale);
-	//FTransform Transform = GetActorTransform();
-	//FTransform NextTransform = FTransform(Transform.Location + MoveValue, Transform.Scale);
-
-	//if (NextPlayerTransform.CenterBottom() >= NextTransform.CenterTop() && NextPlayerTransform.CenterTop() <= NextTransform.CenterTop() && (NextPlayerTransform.CenterRight() > NextTransform.CenterLeft() || NextPlayerTransform.CenterLeft() > NextTransform.CenterRight()) && _Player->GetFlip() == false)
-	//{
-	//	_Player->SetActorLocation(FVector2D(PlayerTransform.Location.X + MoveValue.X, NextTransform.CenterTop() - PlayerTransform.Scale.HalfY()));
-	//	_Player->SetGround(true);
-	//}
-
-	//if (NextPlayerTransform.CenterTop() <= NextTransform.CenterBottom() && NextPlayerTransform.CenterBottom() >= NextTransform.CenterBottom() && (NextPlayerTransform.CenterRight() > NextTransform.CenterLeft() || NextPlayerTransform.CenterLeft() > NextTransform.CenterRight()) && _Player->GetFlip() == true)
-	//{
-	//	_Player->SetActorLocation(FVector2D(PlayerTransform.Location.X + MoveValue.X, NextTransform.CenterBottom() + PlayerTransform.Scale.HalfY()));
-	//	_Player->SetGround(true);
-	//}
-
-	//// Left, Right Check
-	//if (NextPlayerTransform.CenterLeft() <= NextTransform.CenterRight() && NextPlayerTransform.CenterRight() >= NextTransform.CenterRight() && (NextPlayerTransform.CenterBottom() > NextTransform.CenterTop() || NextPlayerTransform.CenterTop() > NextTransform.CenterBottom()))
-	//{
-	//	_Player->SetActorLocation(FVector2D(NextTransform.CenterRight() + PlayerTransform.Scale.HalfX(), PlayerTransform.Location.Y));
-	//}
-
-	//if (NextPlayerTransform.CenterRight() >= NextTransform.CenterLeft() && NextPlayerTransform.CenterLeft() <= NextTransform.CenterLeft() && (NextPlayerTransform.CenterBottom() > NextTransform.CenterTop() || NextPlayerTransform.CenterTop() > NextTransform.CenterBottom()))
-	//{
-	//	_Player->SetActorLocation(FVector2D(NextTransform.CenterLeft() - PlayerTransform.Scale.HalfX(), PlayerTransform.Location.Y));
-	//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	//// Top, Bottom Check
-	//	if (NextPlayerTransform.CenterBottom() >= NextTransform.CenterTop() && NextPlayerTransform.CenterTop() <= NextTransform.CenterTop() && (NextPlayerTransform.CenterRight() > NextTransform.CenterLeft() || NextPlayerTransform.CenterLeft() > NextTransform.CenterRight()))
-	//	{
-	//		_Player->SetActorLocation(FVector2D(PlayerTransform.Location.X + MoveValue.X, NextTransform.CenterTop() - PlayerTransform.Scale.HalfY()));
-	//		_Player->SetGround(true);
-	//	}
-
-	//	if (NextPlayerTransform.CenterTop() <= NextTransform.CenterBottom() && NextPlayerTransform.CenterBottom() >= NextTransform.CenterBottom() && (NextPlayerTransform.CenterRight() > NextTransform.CenterLeft() || NextPlayerTransform.CenterLeft() > NextTransform.CenterRight()))
-	//	{
-	//		_Player->SetActorLocation(FVector2D(PlayerTransform.Location.X + MoveValue.X, NextTransform.CenterBottom() + PlayerTransform.Scale.HalfY()));
-	//		_Player->SetGround(true);
-	//	}
-
-	//// Left, Right Check
-	//if (NextPlayerTransform.CenterLeft() <= NextTransform.CenterRight() && NextPlayerTransform.CenterRight() >= NextTransform.CenterRight() && (NextPlayerTransform.CenterBottom() > NextTransform.CenterTop() || NextPlayerTransform.CenterTop() > NextTransform.CenterBottom()))
-	//{
-	//	_Player->SetActorLocation(FVector2D(NextTransform.CenterRight() + PlayerTransform.Scale.HalfX(), PlayerTransform.Location.Y));
-	//}
-
-	//if (NextPlayerTransform.CenterRight() >= NextTransform.CenterLeft() && NextPlayerTransform.CenterLeft() <= NextTransform.CenterLeft() && (NextPlayerTransform.CenterBottom() > NextTransform.CenterTop() || NextPlayerTransform.CenterTop() > NextTransform.CenterBottom()))
-	//{
-	//	_Player->SetActorLocation(FVector2D(NextTransform.CenterLeft() - PlayerTransform.Scale.HalfX(), PlayerTransform.Location.Y));
-	//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	/*FTransform PlayerTransform = _Player->GetActorTransform();
-	FTransform NextPlayerTransform = FTransform(PlayerTransform.Location + _Player->GetMoveValue(), PlayerTransform.Scale);
-	FTransform Transform = GetActorTransform();
-	FTransform NextTransform = FTransform(Transform.Location + MoveValue, Transform.Scale);
-
-	FVector2D PlayerPoint = NextPlayerTransform.Location;
-
-	if (NextPlayerTransform.Location.Y >= NextTransform.Location.Y)
-		PlayerPoint.Y = NextPlayerTransform.CenterTop();
-	else
-		PlayerPoint.Y = NextPlayerTransform.CenterBottom();
-	if (NextPlayerTransform.Location.X >= NextTransform.Location.X)
-		PlayerPoint.X = NextPlayerTransform.CenterLeft();
-	else
-		PlayerPoint.X = NextPlayerTransform.CenterRight();
-
-	FVector2D BaseDir = PlayerPoint - NextTransform.Location;
-	BaseDir.X /= NextTransform.Scale.X;
-	BaseDir.Y /= NextTransform.Scale.Y;
-
-	if (_Player->GetFlip() == false)
-	{
-		if (NextPlayerTransform.CenterLeft() <= NextTransform.CenterRight() && NextPlayerTransform.Location.X >= NextTransform.CenterRight() && NextPlayerTransform.CenterBottom() > NextTransform.CenterTop())
-		{
-			_Player->SetActorLocation(FVector2D(NextTransform.CenterRight() + PlayerTransform.Scale.HalfX(), PlayerTransform.Location.Y));
-			_Player->SetMoveValue(FVector2D(0.f, _Player->GetMoveValue().Y));
-		}
-
-		if (NextPlayerTransform.CenterRight() >= NextTransform.CenterLeft() && NextPlayerTransform.Location.X <= NextTransform.CenterLeft() && NextPlayerTransform.CenterBottom() > NextTransform.CenterTop())
-		{
-			_Player->SetActorLocation(FVector2D(NextTransform.CenterLeft() - PlayerTransform.Scale.HalfX(), PlayerTransform.Location.Y));
-			_Player->SetMoveValue(FVector2D(0.f, _Player->GetMoveValue().Y));
-		}
-
-		if (NextPlayerTransform.CenterBottom() >= NextTransform.CenterTop())
-		{
-			_Player->SetActorLocation(FVector2D(PlayerTransform.Location.X + MoveValue.X, NextTransform.CenterTop() - PlayerTransform.Scale.HalfY()));
-			_Player->SetGround(true);
-		}
-
-		
-	}*/
 
 }
 

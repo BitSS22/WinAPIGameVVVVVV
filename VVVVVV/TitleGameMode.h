@@ -1,5 +1,6 @@
 #pragma once
 
+class USpriteRenderer;
 // Ό³Έν :
 class ATitleGameMode : public AGameMode
 {
@@ -13,6 +14,8 @@ public:
 	ATitleGameMode& operator=(ATitleGameMode&& _Other) noexcept = delete;
 
 private:
+	USpriteRenderer* Sprite = nullptr;
+	USpriteRenderer* Logo[6] = {};
 
 public:
 	virtual void BeginPlay() override;

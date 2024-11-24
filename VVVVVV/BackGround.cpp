@@ -89,7 +89,10 @@ void ABackGround::PlayVerticalAnimation()
 
 void ABackGround::PlayTowerAnimation()
 {
-	// TODO. After Code
+	// 640 2400
+	Sprite->AddComponentLocation(FVector2D::UP * AnimationSpeed * GET_DELTA);
+	if (Sprite->GetComponentLocation().Y < UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half().Y - 960.f)
+		Sprite->AddComponentLocation(FVector2D(0.f, 1920.f));
 }
 
 void ABackGround::PlayStarEffect()
@@ -160,6 +163,9 @@ void ABackGround::SetEffect(EEffectType _Type)
 
 void ABackGround::SetBackGround(const RoomBackGroundData& _Data)
 {
+	if (Sprite == nullptr)
+		Sprite = CreateDefaultSubObject<USpriteRenderer>();
+
 	EBackGroundType PrevType = BackGroundType;
 
 	AnimationSpeed = _Data.AnimationSpeed;

@@ -37,16 +37,17 @@ void V6ContentsCore::BeginPlay()
 	DeleteObject(OldBrush);
 	DeleteObject(OldPen);
 
+	ResourceLoad();
+
 	// Create Level
 	UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title");
 	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
 	UEngineAPICore::GetCore()->CreateLevel<AEndingGameMode, AActor>("End");
 	UEngineAPICore::GetCore()->CreateLevel<ATileMapEditorMode, AActor>("TileMapEditor");
 
-	ResourceLoad();
-
-	// First Level Open
-	UEngineAPICore::GetCore()->OpenLevel("Play");
+		// First Level Open
+	UEngineAPICore::GetCore()->OpenLevel("Title");
+	//UEngineAPICore::GetCore()->OpenLevel("Play");
 	//UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
 }
 
