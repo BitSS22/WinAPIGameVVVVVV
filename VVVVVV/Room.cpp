@@ -6,6 +6,7 @@
 #include "PistonEntity.h"
 #include "Player.h"
 #include "Tile.h"
+#include <EnginePlatform/EngineSound.h>
 
 ARoom::ARoom()
 {

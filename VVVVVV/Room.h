@@ -6,6 +6,7 @@
 class AEntity;
 class ABackGround;
 class ATile;
+class UEngineSound;
 
 class ARoom : public AActor
 {
@@ -25,6 +26,7 @@ private:
 	std::vector<std::vector<ATile*>> Tiles = {};
 	std::vector<AEntity*> Entites = {};
 	bool LoopRoom = false;
+	UEngineSound* BGM = nullptr;
 
 public:
 	virtual void BeginPlay() override;
