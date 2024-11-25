@@ -990,7 +990,7 @@ void ATileMapEditorMode::DebugText()
 	if (CurAdjustmentEntity != nullptr)
 	{
 		FTransform Trans = CurAdjustmentEntity->GetActorTransform();
-		Trans.Scale = FVector2D(Trans.Scale.X * 2, Trans.Scale.X * 2);
+		Trans.Scale = FVector2D((Trans.Scale.X + Trans.Scale.Y) / 1.3f, (Trans.Scale.X + Trans.Scale.Y) / 1.3f);
 		UEngineDebug::CoreDebugRender(Trans, UEngineDebug::EDebugPosType::Circle);
 
 		str = "Selected Entity Name : ";

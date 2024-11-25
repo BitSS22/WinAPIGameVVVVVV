@@ -33,11 +33,11 @@ private:
 	void FadeOut();
 
 public:
-	bool IsFadeInEnd()
+	bool IsFadeInEnd() const
 	{
 		return FadeInEnd;
 	}
-	bool IsFadeOutEnd()
+	bool IsFadeOutEnd() const
 	{
 		return FadeOutEnd;
 	}

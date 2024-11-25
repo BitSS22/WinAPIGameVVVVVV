@@ -29,6 +29,17 @@ void APistonEntity::Tick()
 
 	if (DefualtDir != FVector2D::ZERO)
 	{
+		FTransform Transform = GetActorTransform();
+		FVector2D OutDir = AGameWorld::GetRoom()->IsOutScreen(Transform);
+		if (OutDir != FVector2D::ZERO)
+		{
+			FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+			WindowSize += Transform.Scale;
+			WindowSize.X *= -OutDir.X;
+			WindowSize.Y *= -OutDir.Y;
+			AddActorLocation(WindowSize);
+		}
+
 		MoveValue = Dir * Speed * GET_DELTA;
 		FVector2D NextLocation = GetActorLocation() + MoveValue;
 		

@@ -38,7 +38,7 @@ private:
 	bool IsDeath = false;
 
 	const float Speed = 400.f;
-	const float GravityForce = 400.f;
+	const float GravityForce = 500.f;
 	const float DeathTime = 1.f;
 	float CurDeathTime = 0.f;
 
@@ -77,7 +77,7 @@ public:
 		AGameWorld::GetRoom()->SetEntityMove(!_Value);
 		IsDeath = _Value;
 	}
-	bool GetDeath()
+	bool GetDeath() const
 	{
 		return IsDeath;
 	}

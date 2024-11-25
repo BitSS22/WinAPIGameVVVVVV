@@ -13,7 +13,7 @@ public:
 	ATitleLogo& operator=(ATitleLogo&& _Other) noexcept = delete;
 
 private:
-	USpriteRenderer* Sprite;
+	USpriteRenderer* Sprite = nullptr;
 
 public:
 	void SetLogoColor(EGameColor _Color);

@@ -4,7 +4,7 @@
 class UFSMStateManager
 {
 public:
-	INNER_CLASS struct FSMState;
+	struct FSMState;
 public:
 	UFSMStateManager() {};
 	~UFSMStateManager() {};
@@ -22,7 +22,10 @@ public:
 	void Update()
 	{
 		if (CurState == nullptr)
+		{
 			MSGASSERT(nullptr, "FSM이 없습니다.");
+			return;
+		}
 		CurState->UpdateFunction();
 	}
 
@@ -57,7 +60,7 @@ public:
 private:
 
 public:
-	INNER_CLASS struct FSMState
+	struct FSMState
 	{
 		std::function<void()> StartFunction = nullptr;
 		std::function<void()> UpdateFunction = nullptr;

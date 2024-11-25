@@ -22,7 +22,7 @@ void APlayer::BeginPlay()
 	PlayerDefualtSetup();
 
 	// Debug
-	UEngineDebug::SetIsDebug(true);
+	//UEngineDebug::SetIsDebug(true);
 }
 
 void APlayer::Tick()
@@ -284,11 +284,29 @@ void APlayer::MoveRoomCheck()
 
 	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 	FIntPoint CurRoomIndex = AGameWorld::GetCurRoomIndex();
-	AGameWorld::GetRoom()->MoveRoom(CurRoomIndex + OutDir);
 	FVector2D MoveLen = WindowSize + Transform.Scale;
-	MoveLen.X *= OutDir.X;
-	MoveLen.Y *= OutDir.Y;
-	AddActorLocation(-MoveLen);
+	MoveLen.X *= -OutDir.X;
+	MoveLen.Y *= -OutDir.Y;
+	AddActorLocation(MoveLen);
+
+	if (AGameWorld::GetRoom()->GetIsLoop() == true)
+	{
+		FIntPoint Index = AGameWorld::GetRoom()->GetOnTileIndex(GetActorLocation());
+		if (Index.X < 0)
+			Index.X = 0;
+		if (Index.X >= EGameConst::TileCount.X)
+			Index.X = EGameConst::TileCount.X - 1;
+		if (Index.Y < 0)
+			Index.Y = 0;
+		if (Index.Y >= EGameConst::TileCount.Y)
+			Index.Y = EGameConst::TileCount.Y - 1;
+
+		ETileType OppositeTileType = AGameWorld::GetRoom()->GetTileType(Index);
+		if (OppositeTileType != ETileType::None)
+			AGameWorld::GetRoom()->MoveRoom(CurRoomIndex + OutDir);
+	}
+	else
+		AGameWorld::GetRoom()->MoveRoom(CurRoomIndex + OutDir);
 }
 
 void APlayer::DeathCheck()

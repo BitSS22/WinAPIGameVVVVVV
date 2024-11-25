@@ -48,8 +48,8 @@ void V6ContentsCore::BeginPlay()
 	AGameWorld::LoadMapFile();
 
 	// First Level Open
-	//UEngineAPICore::GetCore()->OpenLevel("Title");
-	UEngineAPICore::GetCore()->OpenLevel("Play");
+	UEngineAPICore::GetCore()->OpenLevel("Title");
+	//UEngineAPICore::GetCore()->OpenLevel("Play");
 	//UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
 }
 
