@@ -45,7 +45,7 @@ UEngineWindowImage* UGameString::CreateGameString(std::string_view _String, unsi
 		return Strings[_String.data()];
 
 	int XCount = _LineMaxCount;
-	int YCount = _String.size() / XCount;
+	int YCount = static_cast<int>(_String.size()) / XCount;
 	if (_String.size() % _LineMaxCount != 0)
 		++YCount;
 
@@ -103,4 +103,6 @@ UEngineWindowImage* UGameString::CreateGameString(std::string_view _String, unsi
 			}
 		}
 	}
+
+	return nullptr;
 }

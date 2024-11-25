@@ -52,6 +52,14 @@ void APistonEntity::Tick()
 		}
 	}
 
+	if (IsHide == true)
+	{
+		AccHideTime += GET_DELTA;
+
+		if (AccHideTime >= HideTime)
+			SetActive(false);
+	}
+
 	// Debug
 	UEngineDebug::CoreDebugRender(GetActorTransform(), UEngineDebug::EDebugPosType::Rect);
 
@@ -105,11 +113,8 @@ void APistonEntity::Collision(APlayer* _Player)
 			CollisionEnermy(_Player);
 			break;
 		case EEntityType::Platform:
-			CollisionPlatform(_Player);
-			break;
 		case EEntityType::PlatformHide:
 			CollisionPlatform(_Player);
-			Hide();
 			break;
 		case EEntityType::FlipLine:
 			CollisionFlipLine(_Player);
@@ -148,19 +153,6 @@ void APistonEntity::CollisionPlatform(APlayer* _Player)
 	Dir.X /= NextTransform.Scale.X * 1.5f;
 	Dir.Y /= NextTransform.Scale.Y;
 
-	if (Dir.X < Dir.Y && -Dir.X < Dir.Y)
-	{
-		_Player->SetActorLocation(FVector2D(PlayerTransform.Location.X, NextTransform.CenterBottom() + PlayerTransform.Scale.HalfY()));
-		_Player->SetMoveValue(FVector2D(_Player->GetMoveValue().X + MoveValue.X, 0.f));
-		_Player->SetGround(true);
-	}
-	if (Dir.X > Dir.Y && -Dir.X > Dir.Y)
-	{
-		_Player->SetActorLocation(FVector2D(PlayerTransform.Location.X, NextTransform.CenterTop() - PlayerTransform.Scale.HalfY()));
-		_Player->SetMoveValue(FVector2D(_Player->GetMoveValue().X + MoveValue.X, 0.f));
-		_Player->SetGround(true);
-	}
-
 	if (Dir.X < Dir.Y && -Dir.X > Dir.Y)
 	{
 		_Player->SetActorLocation(FVector2D(NextTransform.CenterLeft() - PlayerTransform.Scale.HalfX(), PlayerTransform.Location.Y));
@@ -171,6 +163,23 @@ void APistonEntity::CollisionPlatform(APlayer* _Player)
 	{
 		_Player->SetActorLocation(FVector2D(NextTransform.CenterRight() + PlayerTransform.Scale.HalfX(), PlayerTransform.Location.Y));
 		_Player->SetMoveValue(FVector2D(0.f, _Player->GetMoveValue().Y));
+	}
+
+	if (Dir.X < Dir.Y && -Dir.X < Dir.Y)
+	{
+		_Player->SetActorLocation(FVector2D(PlayerTransform.Location.X, NextTransform.CenterBottom() + PlayerTransform.Scale.HalfY()));
+		_Player->SetMoveValue(FVector2D(_Player->GetMoveValue().X + MoveValue.X, 0.f));
+		_Player->SetGround(true);
+		if (GetEntityType() == EEntityType::PlatformHide && _Player->GetFlip() == true)
+			Hide();
+	}
+	if (Dir.X > Dir.Y && -Dir.X > Dir.Y)
+	{
+		_Player->SetActorLocation(FVector2D(PlayerTransform.Location.X, NextTransform.CenterTop() - PlayerTransform.Scale.HalfY()));
+		_Player->SetMoveValue(FVector2D(_Player->GetMoveValue().X + MoveValue.X, 0.f));
+		_Player->SetGround(true);
+		if (GetEntityType() == EEntityType::PlatformHide && _Player->GetFlip() == false)
+			Hide();
 	}
 }
 
@@ -211,7 +220,7 @@ void APistonEntity::CollisionFlipLine(APlayer* _Player)
 void APistonEntity::Hide()
 {
 	ActiveAnimation();
-	Destroy(EGameConst::HideTime);
+	IsHide = true;
 }
 
 void APistonEntity::AddEntityLocation(const FVector2D& _Location)

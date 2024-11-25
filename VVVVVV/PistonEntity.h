@@ -25,8 +25,8 @@ private:
 	static bool IsCollisionFlipLine;
 
 	bool IsHide = false;
-	bool AccHideTime = 0.f;
-	bool HideTime = 1.f;
+	float AccHideTime = 0.f;
+	float HideTime = EGameConst::HideTime;
 
 public:
 	virtual void BeginPlay() override;

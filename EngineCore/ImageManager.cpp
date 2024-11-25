@@ -216,7 +216,7 @@ void UImageManager::CreateCutSprite(string_view _SearchKeyName, string_view _New
 
 		for (UINT x = 0; x < _Xcount; ++x)
 		{
-			if (NewSprite->GetSpriteCount() >= _ImageCount)
+			if (NewSprite->GetSpriteCount() >= static_cast<int>(_ImageCount))
 				return;
 
 			CuttingPos.X = _StartPos.X + _CuttingSize.X * x + _XYOffSet.X * x;

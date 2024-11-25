@@ -67,8 +67,10 @@ void AEntity::SetEntity(const RoomEntityData& _Data)
 	UEngineSprite* NewSprite = UImageManager::GetInst().FindSprite(_Data.Name);
 	if (NewSprite->GetSpriteCount() > 1)
 	{
-		if (_Data.EntityType != EEntityType::PlatformHide)
-			Sprite->CreateAnimation(NewSprite->GetNameView(), NewSprite->GetNameView(), 0, NewSprite->GetSpriteCount() - 1, EGameConst::HideTime / (NewSprite->GetSpriteCount() - 1), true);
+		if (_Data.EntityType == EEntityType::PlatformHide)
+		{
+			Sprite->CreateAnimation(NewSprite->GetNameView(), NewSprite->GetNameView(), 0, NewSprite->GetSpriteCount() - 1, EGameConst::HideTime / static_cast<float>((NewSprite->GetSpriteCount())), true);
+		}
 		else
 		{
 			Sprite->CreateAnimation(NewSprite->GetNameView(), NewSprite->GetNameView(), 0, NewSprite->GetSpriteCount() - 1, EGameConst::AnimationTime, true);

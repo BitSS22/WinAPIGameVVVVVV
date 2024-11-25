@@ -131,7 +131,11 @@ void APlayer::EntityCollisionCheck()
 	APistonEntity::SetFlipLineCollisionStay(false);
 
 	for (size_t i = 0; i < Entites.size(); ++i)
+	{
+		if (Entites[i]->IsActive() == false)
+			continue;
 		Entites[i]->Collision(this);
+	}
 
 	if (APistonEntity::GetFlipLineCollisionStay() == false)
 		APistonEntity::SetIsCollisionFlipLine(false);
