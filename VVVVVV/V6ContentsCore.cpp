@@ -9,6 +9,7 @@
 #include "PlayGameMode.h"
 #include "EndingGameMode.h"
 #include "TileMapEditorMode.h"
+#include <EnginePlatform/EngineSound.h>
 
 #include "Player.h"
 
@@ -48,8 +49,8 @@ void V6ContentsCore::BeginPlay()
 	AGameWorld::LoadMapFile();
 
 	// First Level Open
-	//UEngineAPICore::GetCore()->OpenLevel("Title");
-	UEngineAPICore::GetCore()->OpenLevel("Play");
+	UEngineAPICore::GetCore()->OpenLevel("Title");
+	//UEngineAPICore::GetCore()->OpenLevel("Play");
 	//UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
 }
 
@@ -83,18 +84,14 @@ void V6ContentsCore::SpriteLoad()
 
 void V6ContentsCore::SoundLoad()
 {
-	// TODO. Sound Resource Load Code, and Function
+	UEngineDirectory Dir = {};
+	Dir.MoveParentToDirectory("Resources");
+	Dir.Append("Sound");
+	
+	vector<UEngineFile> SoundFiles = Dir.GetAllFile();
 
-
-	//UEngineDirectory Dir = {};
-	//Dir.MoveParentToDirectory("Resources");
-	//Dir.Append("Sound");
-	//vector<UEngineFile> SoundFiles = Dir.GetAllFile();
-
-	//for (const auto& Sound : SoundFiles)
-	//	UImageManager::GetInst().Load(Sound.GetPathToString());
-
-
+	for (const auto& Sound : SoundFiles)
+		UEngineSound::Load(Sound.GetPathToString());
 }
 
 void V6ContentsCore::TileLoad()

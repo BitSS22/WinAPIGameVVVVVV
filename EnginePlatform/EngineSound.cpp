@@ -54,7 +54,7 @@ void UEngineSound::Load(std::string_view _Name, std::string_view _Path)
 
 	UEngineSound* NewSound = new UEngineSound();
 
-	if (NewSound->ResLoad(_Path))
+	if (NewSound->ResLoad(_Path) == false)
 	{
 		delete NewSound;
 		MSGASSERT(nullptr, _Name, "Sound Load Fail.");
