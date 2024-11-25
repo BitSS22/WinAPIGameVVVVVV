@@ -128,102 +128,13 @@ void APlayer::EntityCollisionCheck()
 {
 	const vector<AEntity*>& Entites = AGameWorld::GetRoom()->GetEntitesCRef();
 
+	APistonEntity::SetFlipLineCollisionStay(false);
+
 	for (size_t i = 0; i < Entites.size(); ++i)
 		Entites[i]->Collision(this);
 
-	//FTransform Transform = GetActorTransform();
-	//FTransform NextTransform = FTransform(Transform.Location + MoveValue, Transform.Scale);
-
-	//float Top = FLT_MIN;
-	//float Bottom = FLT_MAX;
-	//float Left = FLT_MIN;
-	//float Right = FLT_MAX;
-
-	//for (size_t i = 0; i < Entites.size(); ++i)
-	//{
-	//	if (Entites[i]->GetEntityType() == EEntityType::Platform)
-	//	{
-	//		APistonEntity* PEntity = dynamic_cast<APistonEntity*>(Entites[i]);
-	//		FTransform EntityTransform = PEntity->GetActorTransform();
-	//		FVector2D EntityMoveValue = PEntity->GetMoveValue();
-	//		FTransform NextEntityTransform = FTransform(EntityTransform.Location + EntityMoveValue, EntityTransform.Scale);
-
-	//		if (FTransform::Collision(ECollisionType::Rect, NextTransform, ECollisionType::Rect, NextEntityTransform) == false)
-	//			continue;
-
-
-
-	//		//if (Transform.CenterTop() >= EntityTransform.CenterBottom() && NextTransform.CenterTop() <= NextEntityTransform.CenterBottom())
-	//		if (NextTransform.CenterTop() <= NextEntityTransform.CenterBottom() &&
-	//			(NextTransform.CenterLeft() < NextEntityTransform.CenterRight() || NextTransform.CenterRight() > NextEntityTransform.CenterLeft()))
-	//		{
-	//			if (Top < NextEntityTransform.CenterBottom() + Transform.Scale.HalfY())
-	//			{
-	//				Top = NextEntityTransform.CenterBottom() + Transform.Scale.HalfY();
-	//				MoveValue += EntityMoveValue;
-	//			}
-	//		}
-
-	//		//if (Transform.CenterBottom() <= EntityTransform.CenterTop() && NextTransform.CenterBottom() >= NextEntityTransform.CenterTop())
-	//		if (NextTransform.CenterBottom() >= NextEntityTransform.CenterTop() &&
-	//			(NextTransform.CenterLeft() < NextEntityTransform.CenterRight() || NextTransform.CenterRight() > NextEntityTransform.CenterLeft()))
-	//		{
-	//			if (Bottom > NextEntityTransform.CenterTop() - Transform.Scale.HalfY())
-	//			{
-	//				Bottom = NextEntityTransform.CenterTop() - Transform.Scale.HalfY();
-	//				MoveValue += EntityMoveValue;
-	//			}
-	//		}
-
-	//		//if (Transform.CenterLeft() >= EntityTransform.CenterRight() && NextTransform.CenterLeft() <= NextEntityTransform.CenterRight() &&
-	//		//	(!(Transform.CenterBottom() <= EntityTransform.CenterTop()) || !(Transform.CenterTop() >= EntityTransform.CenterBottom())))
-	//		if (NextTransform.CenterLeft() <= NextEntityTransform.CenterRight() &&
-	//			(NextTransform.CenterTop() < NextEntityTransform.CenterBottom() || NextTransform.CenterBottom() > NextEntityTransform.CenterTop()))
-	//		{
-	//			if (Left < NextEntityTransform.CenterRight() + Transform.Scale.HalfX())
-	//			{
-	//				Left = NextEntityTransform.CenterRight() + Transform.Scale.HalfX();
-	//			}
-	//		}
-
-	//		/*if (Transform.CenterRight() <= EntityTransform.CenterLeft() && NextTransform.CenterRight() >= NextEntityTransform.CenterLeft() && 
-	//			(!(Transform.CenterBottom() <= EntityTransform.CenterTop()) || !(Transform.CenterTop() >= EntityTransform.CenterBottom())))*/
-	//		if (NextTransform.CenterRight() >= NextEntityTransform.CenterLeft() &&
-	//			(NextTransform.CenterTop() < NextEntityTransform.CenterBottom() || NextTransform.CenterBottom() > NextEntityTransform.CenterTop()))
-	//		{
-	//			if (Right > NextEntityTransform.CenterLeft() - Transform.Scale.HalfX())
-	//			{
-	//				Right = NextEntityTransform.CenterLeft() - Transform.Scale.HalfX();
-	//			}
-	//		}
-	//	}
-	//	else
-	//		Entites[i]->Collision(this);
-	//}
-
-	//if (Top != FLT_MIN)
-	//{
-	//	SetActorLocation(FVector2D(Transform.Location.X, Top + 0.001f));
-	//	MoveValue.Y = 0.f;
-	//	SetGround(true);
-	//}
-	//if (Bottom != FLT_MAX)
-	//{
-	//	SetActorLocation(FVector2D(Transform.Location.X, Bottom - 0.001f));
-	//	MoveValue.Y = 0.f;
-	//	SetGround(true);
-	//}
-	//if (Left != FLT_MIN)
-	//{
-	//	SetActorLocation(FVector2D(Left + 0.001f, Transform.Location.Y));
-	//	MoveValue.X = 0.f;
-	//}
-	//if (Right != FLT_MAX)
-	//{
-	//	SetActorLocation(FVector2D(Right - 0.001f, Transform.Location.Y));
-	//	MoveValue.X = 0.f;
-	//}
-	
+	if (APistonEntity::GetFlipLineCollisionStay() == false)
+		APistonEntity::SetIsCollisionFlipLine(false);
 }
 
 void APlayer::TileCheck()
@@ -436,11 +347,6 @@ void APlayer::PlayerDefualtSetup()
 	Sprite->CreateAnimation("Idle SadRight", "Guys:: Cyan Sad Right", 0, 0, EGameConst::AnimationTime, true);
 	Sprite->CreateAnimation("Idle SadLeftFlip", "Guys:: Cyan Sad rLeft", 0, 0, EGameConst::AnimationTime, true);
 	Sprite->CreateAnimation("Idle SadRightFlip", "Guys:: Cyan Sad rRight", 0, 0, EGameConst::AnimationTime, true);
-
-	Collider = CreateDefaultSubObject<U2DCollision>();
-	Collider->SetCollisionGroup(ECollisionGroup::Player);
-	Collider->SetCollisionType(ECollisionType::Rect);
-	Collider->SetComponentScale(Sprite->GetComponentScale());
 
 	SetActorLocation(FVector2D(320.f, 350.f));
 	SetActorScale(Sprite->GetComponentScale());

@@ -421,6 +421,19 @@ void ATileMapEditorMode::AddBackGroundList(int _Value)
 	GameWorld->GetRoom()->GetBackGround()->SetBackGround(Data);
 }
 
+void ATileMapEditorMode::AddBackGroundIndex(int _Value)
+{
+	RoomBackGroundData Data = GameWorld->GetRoom()->GetBackGround()->GetBackGroundData();
+	UEngineSprite* Sprite = UImageManager::GetInst().FindSprite(Data.Name);
+	int MaxIndex = Sprite->GetSpriteCount();
+	Data.Index += _Value;
+	if (Data.Index < 0)
+		Data.Index = MaxIndex - 1;
+	else if (Data.Index >= MaxIndex)
+		Data.Index = 0;
+	GameWorld->GetRoom()->GetBackGround()->SetBackGround(Data);
+}
+
 void ATileMapEditorMode::SetEntityType(EEntityType _Type)
 {
 	CurEntityType = _Type;
@@ -608,8 +621,6 @@ void ATileMapEditorMode::LoadResourceList()
 
 void ATileMapEditorMode::EditorKeyCheck()
 {
-	
-
 	// 마우스 위치 추적
 	FIntPoint CursorPos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
 
@@ -708,14 +719,14 @@ void ATileMapEditorMode::EditorKeyCheck()
 		if (KEY_PRESS(VK_CONTROL))
 			SetBackGroundType(--CurBackGroundType);
 		else
-			AddBackGroundList(-1);
+			AddBackGroundIndex(-1);
 	}
 	if (KEY_DOWN('P'))
 	{
 		if (KEY_PRESS(VK_CONTROL))
 			SetBackGroundType(++CurBackGroundType);
 		else
-			AddBackGroundList(1);
+			AddBackGroundIndex(1);
 	}
 
 	FVector2D Dir = FVector2D::ZERO;

@@ -54,3 +54,21 @@ EBackGroundType& operator--(EBackGroundType& _Type)
 	_Type = static_cast<EBackGroundType>(Index);
 	return _Type;
 }
+
+EGameColor& operator++(EGameColor& _Type)
+{
+	int Index = static_cast<int>(_Type) + 1;
+	if (Index >= static_cast<int>(EGameColor::White))
+		Index = 0;
+	_Type = static_cast<EGameColor>(Index);
+	return _Type;
+}
+
+EGameColor& operator--(EGameColor& _Type)
+{
+	int Index = static_cast<int>(_Type) - 1;
+	if (Index < 0)
+		Index = static_cast<int>(EGameColor::White) - 1;
+	_Type = static_cast<EGameColor>(Index);
+	return _Type;
+}

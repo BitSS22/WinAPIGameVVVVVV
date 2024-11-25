@@ -21,7 +21,6 @@ public:
 
 private:
 	USpriteRenderer* Sprite = nullptr;
-	U2DCollision* Collider = nullptr;
 	EEntityType EntityType = EEntityType::Last;
 	ARoom* Room = nullptr;
 	bool IsMove = true;
@@ -47,10 +46,6 @@ public:
 	std::string GetSpriteName() const
 	{
 		return Sprite->GetCurSpriteName();
-	}
-	U2DCollision* GetCollision() const
-	{
-		return Collider;
 	}
 	void SetRoom(ARoom* _Room)
 	{

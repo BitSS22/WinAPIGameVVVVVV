@@ -26,7 +26,6 @@ public:
 
 private:
 	USpriteRenderer* Sprite = nullptr;
-	U2DCollision* Collider = nullptr;
 	std::string AnimationName = {};
 	FVector2D LastDir = FVector2D::RIGHT;
 	FVector2D MoveValue = FVector2D::ZERO;
@@ -112,7 +111,5 @@ public:
 	{
 		IsGround = _Value;
 	}
-
-
 };
 

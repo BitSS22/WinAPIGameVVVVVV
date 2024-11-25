@@ -89,10 +89,10 @@ private:
 public:
 	virtual void BeginPlay() override;
 
-	void SaveRoomData();
+	static void SaveRoomData();
 
-	void SaveMapFile();
-	void LoadMapFile();
+	static void SaveMapFile();
+	static void LoadMapFile();
 
 private:
 

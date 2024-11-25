@@ -21,6 +21,9 @@ private:
 	float MoveLenghtOffset = 0.f;
 	FVector2D MoveValue = FVector2D::ZERO;
 
+	static bool FlipLineCollisionStay;
+	static bool IsCollisionFlipLine;
+
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
@@ -70,6 +73,18 @@ public:
 	FVector2D GetMoveValue() const
 	{
 		return MoveValue;
+	}
+	static bool GetFlipLineCollisionStay()
+	{
+		return FlipLineCollisionStay;
+	}
+	static void SetFlipLineCollisionStay(bool _Value)
+	{
+		FlipLineCollisionStay = _Value;
+	}
+	static void SetIsCollisionFlipLine(bool _Value)
+	{
+		IsCollisionFlipLine = _Value;
 	}
 
 };

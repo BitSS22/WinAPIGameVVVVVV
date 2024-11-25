@@ -89,9 +89,8 @@ void ABackGround::PlayVerticalAnimation()
 
 void ABackGround::PlayTowerAnimation()
 {
-	// 640 2400
 	Sprite->AddComponentLocation(FVector2D::UP * AnimationSpeed * GET_DELTA);
-	if (Sprite->GetComponentLocation().Y < UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half().Y - 960.f)
+	if (Sprite->GetComponentLocation().Y < UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half().Y - 1200.f)
 		Sprite->AddComponentLocation(FVector2D(0.f, 1920.f));
 }
 
@@ -163,9 +162,6 @@ void ABackGround::SetEffect(EEffectType _Type)
 
 void ABackGround::SetBackGround(const RoomBackGroundData& _Data)
 {
-	if (Sprite == nullptr)
-		Sprite = CreateDefaultSubObject<USpriteRenderer>();
-
 	EBackGroundType PrevType = BackGroundType;
 
 	AnimationSpeed = _Data.AnimationSpeed;
@@ -223,4 +219,14 @@ void ABackGround::FileLoadInit()
 {
 	FIntPoint CurRoomIndex = AGameWorld::GetCurRoomIndex();
 	SetBackGround(AGameWorld::GetRoomDatasRef(CurRoomIndex).BackGroundData);
+}
+
+void ABackGround::AddBackGroundColor(int _AddValue)
+{
+	int CurIndex = Sprite->GetCurIndex();
+	int MaxIndex = Sprite->GetMaxIndex();
+
+	CurIndex += _AddValue;
+
+	Sprite->SetSprite(Sprite->GetCurSpriteName(), CurIndex % MaxIndex);
 }

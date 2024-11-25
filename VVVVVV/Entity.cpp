@@ -76,11 +76,6 @@ void AEntity::SetEntity(const RoomEntityData& _Data)
 	AddActorLocation(_Data.DefualtDir * _Data.MoveLenghtOffset);
 	SetActorScale(SpriteSize);
 	Sprite->SetComponentScale(SpriteSize);
-	
-	Collider = CreateDefaultSubObject<U2DCollision>();
-	Collider->SetCollisionGroup(ECollisionGroup::Entity);
-	Collider->SetCollisionType(ECollisionType::Rect);
-	Collider->SetComponentScale(GetActorScale());
 }
 
 RoomEntityData AEntity::GetEntityData()

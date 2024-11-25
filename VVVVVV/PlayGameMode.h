@@ -2,6 +2,8 @@
 #include <EngineCore/GameMode.h>
 #include "GameWorld.h"
 
+class AFade;
+
 class APlayGameMode : public AGameMode
 {
 public:
@@ -15,6 +17,7 @@ public:
 
 private:
 	AGameWorld* GameWorld = nullptr;
+	AFade* Fade = nullptr;
 
 public:
 	virtual void BeginPlay() override;

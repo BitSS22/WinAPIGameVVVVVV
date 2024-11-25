@@ -49,6 +49,12 @@
     <ClInclude Include="GameWorld.h">
       <Filter>ContentsObject\Map\GameWorld</Filter>
     </ClInclude>
+    <ClInclude Include="TitleLogo.h">
+      <Filter>ContentsObject\Map\GameWorld</Filter>
+    </ClInclude>
+    <ClInclude Include="UGameString.h" />
+    <ClInclude Include="AGameText.h" />
+    <ClInclude Include="Fade.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -99,6 +105,12 @@
     <ClCompile Include="GameWorld.cpp">
       <Filter>ContentsObject\Map\GameWorld</Filter>
     </ClCompile>
+    <ClCompile Include="TitleLogo.cpp">
+      <Filter>ContentsObject\Map\GameWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="UGameString.cpp" />
+    <ClCompile Include="AGameText.cpp" />
+    <ClCompile Include="Fade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="pch">

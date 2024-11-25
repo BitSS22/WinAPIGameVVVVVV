@@ -56,6 +56,8 @@ private:
 	void PlayVerticalAnimation();
 	void PlayTowerAnimation();
 
+	void AddBackGroundColor(int _AddValue);
+
 	void PlayStarEffect();
 	void PlayRectEffect();
 

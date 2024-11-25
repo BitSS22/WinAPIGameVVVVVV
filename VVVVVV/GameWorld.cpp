@@ -29,8 +29,6 @@ void AGameWorld::BeginPlay()
 		RoomDatas[y].resize(EGameConst::WorldMaxIndex.X);
 
 	GetWorld()->SetCameraToMainPawn(false);
-
-	LoadMapFile();
 }
 
 void AGameWorld::SaveRoomData()

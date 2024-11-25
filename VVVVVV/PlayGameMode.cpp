@@ -2,6 +2,7 @@
 #include "PlayGameMode.h"
 #include "BackGround.h"
 #include "GameWorld.h"
+#include "Fade.h"
 
 #include <EngineCore/Level.h>
 
@@ -20,6 +21,9 @@ void APlayGameMode::BeginPlay()
 	GameWorld = GetWorld()->SpawnActor<AGameWorld>();
 
 	GetWorld()->CollisionGroupLink(ECollisionGroup::Player, ECollisionGroup::Entity);
+
+	Fade = GetWorld()->SpawnActor<AFade>();
+	Fade->PlayFadeIn();
 }
 
 void APlayGameMode::Tick()

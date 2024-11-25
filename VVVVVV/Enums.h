@@ -10,6 +10,7 @@ enum class ERenderOrder
 	FRIEND,
 	PLAYER,
 	EDITOR_CURSOR,
+	Fade,
 	Last
 };
 
@@ -53,9 +54,23 @@ enum class EBackGroundType
 	Last
 };
 
+enum class EGameColor
+{
+	Cyan,
+	Pink,
+	Red,
+	Blue,
+	Yellow,
+	Green,
+	Grey,
+	White
+};
+
 EEntityType& operator++(EEntityType& _Type);
 EEntityType& operator--(EEntityType& _Type);
 ETileType& operator++(ETileType& _Type);
 ETileType& operator--(ETileType& _Type);
 EBackGroundType& operator++(EBackGroundType& _Type);
 EBackGroundType& operator--(EBackGroundType& _Type);
+EGameColor& operator++(EGameColor& _Type);
+EGameColor& operator--(EGameColor& _Type);

@@ -1,6 +1,8 @@
 #pragma once
 
+class ATitleLogo;
 class USpriteRenderer;
+class AFade;
 // Ό³Έν :
 class ATitleGameMode : public AGameMode
 {
@@ -14,12 +16,21 @@ public:
 	ATitleGameMode& operator=(ATitleGameMode&& _Other) noexcept = delete;
 
 private:
-	USpriteRenderer* Sprite = nullptr;
-	USpriteRenderer* Logo[6] = {};
+	AFade* Fade = nullptr;
+	USpriteRenderer* BackGround = nullptr;
+	static const int LogoCount = 6;
+	ATitleLogo* Logos[LogoCount] = {};
+	USpriteRenderer* Menu = nullptr;
+	float ColorAccTime = 0.f;
+	float ColorChangeTime = 2.f;
+	float BlankAccTime = 0.f;
+	float BlankTime = 0.8f;
 
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
+
+	void ChangeColor(EGameColor _Color);
 
 private:
 

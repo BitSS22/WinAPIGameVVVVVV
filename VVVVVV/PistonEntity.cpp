@@ -3,6 +3,9 @@
 #include "Room.h"
 #include "Player.h"
 
+bool APistonEntity::FlipLineCollisionStay = false;
+bool APistonEntity::IsCollisionFlipLine = false;
+
 APistonEntity::APistonEntity()
 {
 }
@@ -21,7 +24,7 @@ void APistonEntity::Tick()
 {
 	Super::Tick();
 
-	if (GetIsMove() == true)
+	if (GetIsMove() == true && DefualtDir != FVector2D::ZERO)
 		AddActorLocation(MoveValue);
 
 	if (DefualtDir != FVector2D::ZERO)
@@ -81,25 +84,26 @@ void APistonEntity::Collision(APlayer* _Player)
 	FTransform Transform = GetActorTransform();
 	Transform.Location += GetMoveValue();
 
-	if (FTransform::Collision(ECollisionType::Rect, PlayerTransform, ECollisionType::Rect, Transform) == false)
-		return;
-
-	switch (GetEntityType())
+	if (FTransform::Collision(ECollisionType::Rect, PlayerTransform, ECollisionType::Rect, Transform) == true)
 	{
-	case EEntityType::Guy:
-		return;
-	case EEntityType::Enermy:
-		CollisionEnermy(_Player);
-		return;
-	case EEntityType::Platform:
-		CollisionPlatform(_Player);
-		return;
-	case EEntityType::FlipLine:
-		CollisionFlipLine(_Player);
-		return;
+		switch (GetEntityType())
+		{
+		case EEntityType::Guy:
+			break;
+		case EEntityType::Enermy:
+			CollisionEnermy(_Player);
+			break;
+		case EEntityType::Platform:
+			CollisionPlatform(_Player);
+			break;
+		case EEntityType::FlipLine:
+			CollisionFlipLine(_Player);
+			FlipLineCollisionStay = true;
+			break;
+		default:
+			MSGASSERT(nullptr, "Not Find Entity Type.");
+		}
 	}
-
-	MSGASSERT(nullptr, "Not Find Entity Type.");
 }
 
 void APistonEntity::CollisionEnermy(APlayer* _Player)
@@ -157,14 +161,36 @@ void APistonEntity::CollisionPlatform(APlayer* _Player)
 
 void APistonEntity::CollisionFlipLine(APlayer* _Player)
 {
+	if (IsCollisionFlipLine == true)
+		return;
 
+	FVector2D Location = GetActorLocation();
+	FVector2D PlayerLocation = _Player->GetActorLocation();
+	FVector2D NextPlayerLocation = PlayerLocation + _Player->GetMoveValue();
 
+	string Name = UEngineString::ToUpper("Horizontal");
+	if (GetSpriteName().find(Name) != std::string::npos)
+	{
+		bool PrevLocation = Location.Y - PlayerLocation.Y > 0.f;
+		bool NextLocation = Location.Y - NextPlayerLocation.Y > 0.f;
 
+		if (PrevLocation != NextLocation)
+		{
+			_Player->SetFlip(!_Player->GetFlip());
+			IsCollisionFlipLine = true;
+		}
+	}
+	else
+	{
+		bool PrevLocation = Location.X - PlayerLocation.X > 0.f;
+		bool NextLocation = Location.X - NextPlayerLocation.X > 0.f;
 
-
-
-
-
+		if (PrevLocation != NextLocation)
+		{
+			_Player->SetFlip(!_Player->GetFlip());
+			IsCollisionFlipLine = true;
+		}
+	}
 }
 
 void APistonEntity::AddEntityLocation(const FVector2D& _Location)

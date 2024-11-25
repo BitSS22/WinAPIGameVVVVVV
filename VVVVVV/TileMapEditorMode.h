@@ -63,6 +63,7 @@ private:
 
 	void SetBackGroundType(EBackGroundType _Type);
 	void AddBackGroundList(int _Value);
+	void AddBackGroundIndex(int _Value);
 
 	void SetEntityType(EEntityType _Type);
 	void AddEntityList(int _Value);

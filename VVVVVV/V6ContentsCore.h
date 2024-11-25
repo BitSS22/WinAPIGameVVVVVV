@@ -29,6 +29,7 @@ private:
 	void SoundLoad();
 
 	// ImageResource
+	void TitleLoad();
 	void BackGroundLoad();
 	void TileLoad();
 	void EntityLoad();

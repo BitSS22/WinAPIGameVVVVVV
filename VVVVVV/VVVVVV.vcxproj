@@ -151,11 +151,19 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AGameText.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="BackGround.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="EndingGameMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Fade.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -195,6 +203,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="TitleLogo.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="UGameString.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="V6ContentsCore.h">
       <SubType>
       </SubType>
@@ -205,11 +221,19 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AGameText.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="BackGround.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="EndingGameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Fade.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -249,6 +273,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="TitleGameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TitleLogo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="UGameString.cpp">
       <SubType>
       </SubType>
     </ClCompile>
