@@ -24,6 +24,10 @@ private:
 	static bool FlipLineCollisionStay;
 	static bool IsCollisionFlipLine;
 
+	bool IsHide = false;
+	bool AccHideTime = 0.f;
+	bool HideTime = 1.f;
+
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
@@ -32,6 +36,8 @@ public:
 	void CollisionEnermy(APlayer* _Player);
 	void CollisionPlatform(APlayer* _Player);
 	void CollisionFlipLine(APlayer* _Player);
+	
+	void Hide();
 
 	virtual void SetEntity(const RoomEntityData& _Data) override;
 	RoomEntityData GetEntityData() override;

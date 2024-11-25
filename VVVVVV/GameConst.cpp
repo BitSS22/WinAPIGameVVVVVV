@@ -9,3 +9,4 @@ const float EGameConst::AnimationTime = 0.15f;
 const float EGameConst::DefualtSpeed = 0.f;
 const float EGameConst::DefualtMoveLen = 0.f;
 const float EGameConst::RailSpeed = 300.f;
+const float EGameConst::HideTime = 1.f;

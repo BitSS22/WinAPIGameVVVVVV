@@ -67,8 +67,13 @@ void AEntity::SetEntity(const RoomEntityData& _Data)
 	UEngineSprite* NewSprite = UImageManager::GetInst().FindSprite(_Data.Name);
 	if (NewSprite->GetSpriteCount() > 1)
 	{
-		Sprite->CreateAnimation(NewSprite->GetNameView(), NewSprite->GetNameView(), 0, NewSprite->GetSpriteCount() - 1, EGameConst::AnimationTime, true);
-		Sprite->ChangeAnimation(NewSprite->GetNameView());
+		if (_Data.EntityType != EEntityType::PlatformHide)
+			Sprite->CreateAnimation(NewSprite->GetNameView(), NewSprite->GetNameView(), 0, NewSprite->GetSpriteCount() - 1, EGameConst::HideTime / (NewSprite->GetSpriteCount() - 1), true);
+		else
+		{
+			Sprite->CreateAnimation(NewSprite->GetNameView(), NewSprite->GetNameView(), 0, NewSprite->GetSpriteCount() - 1, EGameConst::AnimationTime, true);
+			Sprite->ChangeAnimation(NewSprite->GetNameView());
+		}
 	}
 
 	FVector2D SpriteSize = NewSprite->GetSpriteData(0).Transform.Scale;

@@ -482,6 +482,7 @@ void ATileMapEditorMode::LoadResourceList()
 	string BackGrounds = UEngineString::ToUpper("BackGrounds::");
 
 	string Platform = UEngineString::ToUpper("Platforms::");
+	string PlatformsHide = UEngineString::ToUpper("PlatformsHide::");
 	string CheckPoints = UEngineString::ToUpper("CheckPoints::");
 	string Enemies = UEngineString::ToUpper("Enemies::");
 	string Guys = UEngineString::ToUpper("Guys::");
@@ -580,6 +581,13 @@ void ATileMapEditorMode::LoadResourceList()
 			EntityData.Name = Sprite.first;
 			EntityData.EntityType = EEntityType::Platform;
 			EntityDatas[static_cast<int>(EEntityType::Platform)].push_back(EntityData);
+		}
+		else if (Sprite.first.find(PlatformsHide) != std::string::npos)
+		{
+			RoomEntityData EntityData = {};
+			EntityData.Name = Sprite.first;
+			EntityData.EntityType = EEntityType::PlatformHide;
+			EntityDatas[static_cast<int>(EEntityType::PlatformHide)].push_back(EntityData);
 		}
 		else if (Sprite.first.find(CheckPoints) != std::string::npos)
 		{
@@ -1046,6 +1054,7 @@ void ATileMapEditorMode::CreateEntity()
 		break;
 	case EEntityType::Enermy:
 	case EEntityType::Platform:
+	case EEntityType::PlatformHide:
 	case EEntityType::FlipLine:
 		NewEntity = GetWorld()->SpawnActor<APistonEntity>();
 		break;

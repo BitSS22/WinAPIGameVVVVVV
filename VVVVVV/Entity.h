@@ -47,6 +47,10 @@ public:
 	{
 		return Sprite->GetCurSpriteName();
 	}
+	void ActiveAnimation()
+	{
+		Sprite->ChangeAnimation(Sprite->GetCurSpriteName());
+	}
 	void SetRoom(ARoom* _Room)
 	{
 		Room = _Room;

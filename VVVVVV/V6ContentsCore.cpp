@@ -48,8 +48,8 @@ void V6ContentsCore::BeginPlay()
 	AGameWorld::LoadMapFile();
 
 	// First Level Open
-	UEngineAPICore::GetCore()->OpenLevel("Title");
-	//UEngineAPICore::GetCore()->OpenLevel("Play");
+	//UEngineAPICore::GetCore()->OpenLevel("Title");
+	UEngineAPICore::GetCore()->OpenLevel("Play");
 	//UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
 }
 
@@ -351,13 +351,13 @@ void V6ContentsCore::EntityLoad()
 	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::06 Platforms Green", FVector2D(X * 0, Y * 5), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
 	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::07 Platforms Grey", FVector2D(X * 0, Y * 6), FVector2D(X, Y), FVector2D(0.f, 0.f), 1, 1);
 
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::08 Platforms Hide Cyan", FVector2D(X * 0, Y * 0), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::09 Platforms Hide Pink", FVector2D(X * 0, Y * 1), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::10 Platforms Hide Red", FVector2D(X * 0, Y * 2), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::11 Platforms Hide Blue", FVector2D(X * 0, Y * 3), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::12 Platforms Hide Yellow", FVector2D(X * 0, Y * 4), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::13 Platforms Hide Green", FVector2D(X * 0, Y * 5), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
-	UImageManager::GetInst().CreateCutSprite("Platforms.png", "Platforms::14 Platforms Hide Grey", FVector2D(X * 0, Y * 6), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "PlatformsHide::01 Platforms Hide Cyan", FVector2D(X * 0, Y * 0), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "PlatformsHide::02 Platforms Hide Pink", FVector2D(X * 0, Y * 1), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "PlatformsHide::03 Platforms Hide Red", FVector2D(X * 0, Y * 2), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "PlatformsHide::04 Platforms Hide Blue", FVector2D(X * 0, Y * 3), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "PlatformsHide::05 Platforms Hide Yellow", FVector2D(X * 0, Y * 4), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "PlatformsHide::06 Platforms Hide Green", FVector2D(X * 0, Y * 5), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
+	UImageManager::GetInst().CreateCutSprite("Platforms.png", "PlatformsHide::07 Platforms Hide Grey", FVector2D(X * 0, Y * 6), FVector2D(X, Y), FVector2D(0.f, 0.f), 4, 4);
 
 	float ColorOffsetY = 268.f;
 

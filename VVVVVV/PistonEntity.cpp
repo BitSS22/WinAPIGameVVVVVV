@@ -107,6 +107,10 @@ void APistonEntity::Collision(APlayer* _Player)
 		case EEntityType::Platform:
 			CollisionPlatform(_Player);
 			break;
+		case EEntityType::PlatformHide:
+			CollisionPlatform(_Player);
+			Hide();
+			break;
 		case EEntityType::FlipLine:
 			CollisionFlipLine(_Player);
 			FlipLineCollisionStay = true;
@@ -202,6 +206,12 @@ void APistonEntity::CollisionFlipLine(APlayer* _Player)
 			IsCollisionFlipLine = true;
 		}
 	}
+}
+
+void APistonEntity::Hide()
+{
+	ActiveAnimation();
+	Destroy(EGameConst::HideTime);
 }
 
 void APistonEntity::AddEntityLocation(const FVector2D& _Location)

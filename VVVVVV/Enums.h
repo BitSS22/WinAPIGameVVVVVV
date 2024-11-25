@@ -26,6 +26,7 @@ enum class EEntityType
 	Guy,
 	Enermy,
 	Platform,
+	PlatformHide,
 	CheckPoint,
 	Teleport,
 	FlipLine,
