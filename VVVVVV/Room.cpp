@@ -127,20 +127,17 @@ void ARoom::SoundUpdate()
 {
 	if (BGM.GetCurrentSoundName() == NextBGM)
 	{
-		if (Volume < 1.f)
-			SoundFadeIn();
-		if (Volume >= 1.f)
-			NextBGM = "NONE";
+		NextBGM = "NONE";
 	}
+
 	if (BGM.IsEmpty() == true && NextBGM != "NONE")
 	{
-		if (NextBGM.empty() == true)
-			BGM.Clear();
-		else
+		if (NextBGM.empty() == false)
 		{
 			BGM = UEngineSound::Play(NextBGM);
 			BGM.SetVolume(Volume);
 		}
+		
 		NextBGM = "NONE";
 	}
 
@@ -162,7 +159,7 @@ void ARoom::SoundUpdate()
 			NextBGM = "NONE";
 		}
 	}
-	else if (BGM.IsEmpty() == false && Volume < 1.f)
+	else if (BGM.IsEmpty() == false && Volume < 1.f && NextBGM == "NONE")
 		SoundFadeIn();
 }
 
