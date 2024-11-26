@@ -32,6 +32,9 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
 
+	virtual void LevelChangeStart() override;
+	virtual void LevelChangeEnd() override;
+
 	void ChangeColor(EGameColor _Color);
 
 private:

@@ -41,6 +41,8 @@ public:
 	}
 	std::string GetCurrentSoundName() const
 	{
+		if (Control == nullptr)
+			return "";
 		FMOD::Sound* Sound;
 		Control->getCurrentSound(&Sound);
 		static char Arr[100] = {};

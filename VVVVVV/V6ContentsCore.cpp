@@ -7,7 +7,7 @@
 
 #include "TitleGameMode.h"
 #include "PlayGameMode.h"
-#include "EndingGameMode.h"
+#include "GravitronGameMode.h"
 #include "TileMapEditorMode.h"
 #include <EnginePlatform/EngineSound.h>
 
@@ -43,14 +43,13 @@ void V6ContentsCore::BeginPlay()
 	// Create Level
 	UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title");
 	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
-	UEngineAPICore::GetCore()->CreateLevel<AEndingGameMode, AActor>("End");
+	UEngineAPICore::GetCore()->CreateLevel<AGravitronGameMode, AActor>("Gravitron");
 	UEngineAPICore::GetCore()->CreateLevel<ATileMapEditorMode, AActor>("TileMapEditor");
 
 	AGameWorld::LoadMapFile();
 
 	// First Level Open
 	UEngineAPICore::GetCore()->OpenLevel("Title");
-	//UEngineAPICore::GetCore()->OpenLevel("Play");
 	//UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
 }
 
@@ -898,6 +897,8 @@ void V6ContentsCore::FontImageLoad()
 	UImageManager::GetInst().CreateCutSprite("Fonts & Text.png", "TextBoxs:: Grey", FVector2D(256.f + X * 3, Y * 1), FVector2D(16.f, 16.f), FVector2D(0.f, 0.f), 3, 9);
 
 	UImageManager::GetInst().CreateCutSprite("Fonts & Text.png", "PressEnter::", FVector2D(256.f, 288.f), FVector2D(16.f * 11.f, 16.f), FVector2D(0.f, 0.f), 1, 7);
+
+	UImageManager::GetInst().CreateCutSprite("Fonts & Text.png", "GameClearTitle", FVector2D(256.f, 192.f), FVector2D(608.f, 96.f), FVector2D(0.f, 0.f), 1, 1);
 
 	UImageManager::GetInst().CreateCutSprite("Fade.png", "Fade::", FVector2D(0.f, 0.f), FVector2D(3200.f, 480.f), FVector2D(0.f, 0.f), 1, 1);
 }

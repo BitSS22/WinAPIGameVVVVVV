@@ -159,7 +159,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EndingGameMode.h">
+    <ClInclude Include="GravitronGameMode.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -229,7 +229,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="EndingGameMode.cpp">
+    <ClCompile Include="GravitronGameMode.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -44,6 +44,11 @@ void ARoom::Tick()
 	SoundUpdate();
 }
 
+void ARoom::LevelChangeStart()
+{
+	MoveRoom(EGameConst::DefualtSaveRoomIndex);
+}
+
 void ARoom::MoveRoom(FIntPoint _Index)
 {
 	if (_Index.X < 0)
@@ -125,6 +130,9 @@ void ARoom::SoundFadeOut()
 
 void ARoom::SoundUpdate()
 {
+	if (BGM.GetCurrentSoundName() == "NONE")
+		MSGASSERT(nullptr, "BGM Setting Error.");
+
 	if (BGM.GetCurrentSoundName() == NextBGM)
 	{
 		NextBGM = "NONE";

@@ -44,10 +44,6 @@ void ATitleGameMode::BeginPlay()
 
 	Fade = GetWorld()->SpawnActor<AFade>();
 
-	Fade->PlayFadeIn();
-
-	BGM = UEngineSound::Play("02 Presenting VVVVVV.mp3");
-	BGM.SetPlay(true);
 }
 
 void ATitleGameMode::Tick()
@@ -81,10 +77,21 @@ void ATitleGameMode::Tick()
 	if (Fade->IsFadeOutEnd() == true)
 	{
 		UEngineAPICore::GetCore()->OpenLevel("Play");
-		BGM.SetPlay(false);
 	}
 
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("VVVVVV / FPS : " + std::to_string(frame));
+}
+
+void ATitleGameMode::LevelChangeStart()
+{
+	Fade->PlayFadeIn();
+
+	BGM = UEngineSound::Play("02 Presenting VVVVVV.mp3");
+}
+
+void ATitleGameMode::LevelChangeEnd()
+{
+	BGM.Stop();
 }
 
 void ATitleGameMode::ChangeColor(EGameColor _Color)

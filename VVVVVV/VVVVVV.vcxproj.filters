@@ -13,7 +13,7 @@
     <ClInclude Include="TitleGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
-    <ClInclude Include="EndingGameMode.h">
+    <ClInclude Include="GravitronGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
     <ClInclude Include="TileMapEditorMode.h">
@@ -69,7 +69,7 @@
     <ClCompile Include="TitleGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
-    <ClCompile Include="EndingGameMode.cpp">
+    <ClCompile Include="GravitronGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
     <ClCompile Include="TileMapEditorMode.cpp">

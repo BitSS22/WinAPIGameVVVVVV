@@ -36,6 +36,8 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
 
+	virtual void LevelChangeStart() override;
+
 	void MoveRoom(FIntPoint _Index);
 	
 	RoomData GetRoomData();

@@ -31,6 +31,11 @@ void AGameWorld::BeginPlay()
 	GetWorld()->SetCameraToMainPawn(false);
 }
 
+void AGameWorld::LevelChangeStart()
+{
+	CurRoomIndex = EGameConst::DefualtSaveRoomIndex;
+}
+
 void AGameWorld::SaveRoomData()
 {
 	FIntPoint CurRoomIndex = AGameWorld::GetCurRoomIndex();

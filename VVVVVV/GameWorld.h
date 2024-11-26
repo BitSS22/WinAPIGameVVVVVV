@@ -90,6 +90,8 @@ private:
 public:
 	virtual void BeginPlay() override;
 
+	virtual void LevelChangeStart() override;
+
 	static void SaveRoomData();
 
 	static void SaveMapFile();

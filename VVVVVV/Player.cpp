@@ -64,6 +64,14 @@ void APlayer::Tick()
 	Debug();
 }
 
+void APlayer::LevelChangeStart()
+{
+	SaveWorldIndex = EGameConst::DefualtSaveRoomIndex;
+	SaveLocation = EGameConst::DefualtSaveLocation;
+	SaveFlip = false;
+	ReSpawn();
+}
+
 void APlayer::Input()
 {
 	if (KEY_PRESS(VK_LEFT))
@@ -78,7 +86,7 @@ void APlayer::Input()
 	}
 
 	if (KEY_DOWN(VK_SPACE) && IsGround == true && IsDeath == false)
-		IsFlip = !IsFlip;
+		SetFlip(!IsFlip);
 }
 
 void APlayer::AnimationChange()

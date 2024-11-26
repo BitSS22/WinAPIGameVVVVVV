@@ -10,6 +10,7 @@ enum class ERenderOrder
 	FRIEND,
 	PLAYER,
 	EDITOR_CURSOR,
+	EndingSprite,
 	Fade,
 	Last
 };

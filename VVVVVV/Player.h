@@ -41,8 +41,8 @@ private:
 	const float DeathTime = 1.f;
 	float CurDeathTime = 0.f;
 
-	FIntPoint SaveWorldIndex = FVector2D::ZERO;
-	FVector2D SaveLocation = FVector2D(320.f, 240.f);
+	FIntPoint SaveWorldIndex = EGameConst::DefualtSaveRoomIndex;
+	FVector2D SaveLocation = EGameConst::DefualtSaveLocation;
 	bool SaveFlip = false;
 
 	bool TestTrigger = false;
@@ -52,6 +52,8 @@ private:
 public:
 	void BeginPlay() override;
 	void Tick() override;
+
+	virtual void LevelChangeStart() override;
 
 private:
 	void Input();
@@ -116,6 +118,10 @@ public:
 	void SetFlip(bool _Value)
 	{
 		IsFlip = _Value;
+		if (IsFlip == true)
+			UEngineSound::Play("jump.wav");
+		else
+			UEngineSound::Play("jump2.wav");
 	}
 	void SetGround(bool _Value)
 	{

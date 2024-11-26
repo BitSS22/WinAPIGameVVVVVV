@@ -361,6 +361,25 @@ void ATileMapEditorMode::MoveRoom(FIntPoint _Index)
 	ResetAdjustmentEntity();
 
 	GameWorld->GetRoom()->MoveRoom(_Index);
+
+	USoundPlayer& BGMRef = AGameWorld::GetRoom()->BGM;
+	string& NextBGMRef = AGameWorld::GetRoom()->NextBGM;
+
+	if (BGMRef.GetCurrentSoundName() == NextBGMRef)
+		NextBGMRef = "NONE";
+	if (NextBGMRef.empty() == true)
+	{
+		BGMRef.Stop();
+		BGMRef.Clear();
+		NextBGMRef = "NONE";
+	}
+	else if (NextBGMRef.empty() == false && NextBGMRef != "NONE")
+	{
+		BGMRef.Stop();
+		BGMRef = UEngineSound::Play(NextBGMRef);
+		BGMRef.Loop();
+		NextBGMRef = "NONE";
+	}
 }
 
 void ATileMapEditorMode::SwitchLoopRoom()
@@ -459,7 +478,11 @@ void ATileMapEditorMode::AddBGMIndex(int _Value)
 	CurBGMIndex += _Value;
 	CurBGMIndex %= BGMDatas.size();
 
-	AGameWorld::GetRoom()->SetBGM(BGMDatas[CurBGMIndex]);
+	USoundPlayer& BGMRef = AGameWorld::GetRoom()->BGM;
+	BGMRef.Stop();
+	BGMRef = UEngineSound::Play(BGMDatas[CurBGMIndex]);
+	BGMRef.Loop();
+	BGMRef.SetVolume(1.f);
 }
 
 void ATileMapEditorMode::PickUpTile()
@@ -980,9 +1003,6 @@ void ATileMapEditorMode::EditorKeyCheck()
 
 	if (KEY_DOWN(VK_TAB))
 		SwitchLoopRoom();
-
-	if (KEY_PRESS(VK_CONTROL) && KEY_PRESS(VK_SHIFT) && KEY_PRESS(VK_MENU) && KEY_DOWN(VK_SPACE))
-		UEngineAPICore::GetCore()->OpenLevel("Play");
 }
 
 void ATileMapEditorMode::DebugText()

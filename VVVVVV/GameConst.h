@@ -20,6 +20,11 @@ public:
 	static const FVector2D TileScale;
 	static const FIntPoint TileCount;
 
+	static const FIntPoint DefualtSaveRoomIndex;
+	static const FVector2D DefualtSaveLocation;
+
+	static const FIntPoint ClearRoom;
+
 	static const float AnimationTime;
 	static const float DefualtSpeed;
 	static const float DefualtMoveLen;

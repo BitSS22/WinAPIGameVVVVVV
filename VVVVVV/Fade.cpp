@@ -59,6 +59,7 @@ void AFade::FadeIn()
 		AccTime = 0.f;
 		SetActive(false);
 		FadeInEnd = true;
+		FadeOutEnd = false;
 		Effect = nullptr;
 	}
 }
@@ -73,7 +74,9 @@ void AFade::FadeOut()
 	if (AccTime >= FadeTime)
 	{
 		AccTime = 0.f;
+		SetActorLocation(FVector2D(0.f, 0.f));
 		SetActive(true);
+		FadeInEnd = false;
 		FadeOutEnd = true;
 		Effect = nullptr;
 	}
