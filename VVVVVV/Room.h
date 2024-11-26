@@ -27,10 +27,14 @@ private:
 	std::vector<std::vector<ATile*>> Tiles = {};
 	std::vector<AEntity*> Entites = {};
 	bool LoopRoom = false;
+
 	USoundPlayer BGM = {};
+	std::string NextBGM = "NONE";
+	float Volume = 0.f;
 
 public:
 	virtual void BeginPlay() override;
+	virtual void Tick() override;
 
 	void MoveRoom(FIntPoint _Index);
 	
@@ -57,6 +61,10 @@ private:
 	void SetRoom(const FIntPoint& _RoomIndex);
 	void SetRoom(const RoomData& _Data);
 
+	void SoundFadeIn();
+	void SoundFadeOut();
+	void SoundUpdate();
+
 	void FileLoadInit();
 
 public:
@@ -81,11 +89,18 @@ public:
 		LoopRoom = _Value;
 	}
 	void SetEntityMove(bool _Value);
-	std::string GetCurrentSoundName()
+	std::string GetCurrentSoundName() const
 	{
 		return BGM.GetCurrentSoundName();
 	}
 	void SetBGM(std::string_view _Name);
-
+	bool IsPlaying() const
+	{
+		return BGM.IsPlaying();
+	}
+	bool IsBGMEmpty() const
+	{
+		return BGM.IsEmpty();
+	}
 };
 

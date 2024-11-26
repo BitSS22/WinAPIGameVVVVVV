@@ -47,11 +47,15 @@ void AEntity::CollisionCheckPoint(APlayer* _Player)
 	if (Sprite->GetCurSpriteName().find(Flip) == std::string::npos)
 	{
 		SaveLocation.Y = GetActorTransform().CenterBottom() - PlayerScale.HalfY();
+		if (SaveLocation == _Player->GetSaveLocation() && AGameWorld::GetCurRoomIndex() == _Player->GetSaveWorldIndex())
+			return;
 		_Player->SetCheckPoint(SaveLocation, false);
 	}
 	else
 	{
 		SaveLocation.Y = GetActorTransform().CenterTop() + PlayerScale.HalfY();
+		if (SaveLocation == _Player->GetSaveLocation() && AGameWorld::GetCurRoomIndex() == _Player->GetSaveWorldIndex())
+			return;
 		_Player->SetCheckPoint(SaveLocation, true);
 	}
 }

@@ -170,7 +170,7 @@ void APistonEntity::CollisionPlatform(APlayer* _Player)
 		_Player->SetActorLocation(FVector2D(PlayerTransform.Location.X, NextTransform.CenterBottom() + PlayerTransform.Scale.HalfY()));
 		_Player->SetMoveValue(FVector2D(_Player->GetMoveValue().X + MoveValue.X, 0.f));
 		_Player->SetGround(true);
-		if (GetEntityType() == EEntityType::PlatformHide && _Player->GetFlip() == true)
+		if (GetEntityType() == EEntityType::PlatformHide && _Player->GetFlip() == true && IsHide == false)
 			Hide();
 	}
 	if (Dir.X > Dir.Y && -Dir.X > Dir.Y)
@@ -178,7 +178,7 @@ void APistonEntity::CollisionPlatform(APlayer* _Player)
 		_Player->SetActorLocation(FVector2D(PlayerTransform.Location.X, NextTransform.CenterTop() - PlayerTransform.Scale.HalfY()));
 		_Player->SetMoveValue(FVector2D(_Player->GetMoveValue().X + MoveValue.X, 0.f));
 		_Player->SetGround(true);
-		if (GetEntityType() == EEntityType::PlatformHide && _Player->GetFlip() == false)
+		if (GetEntityType() == EEntityType::PlatformHide && _Player->GetFlip() == false && IsHide == false)
 			Hide();
 	}
 }
@@ -202,6 +202,7 @@ void APistonEntity::CollisionFlipLine(APlayer* _Player)
 		{
 			_Player->SetFlip(!_Player->GetFlip());
 			IsCollisionFlipLine = true;
+			UEngineSound::Play("vanish.wav");
 		}
 	}
 	else
@@ -213,14 +214,20 @@ void APistonEntity::CollisionFlipLine(APlayer* _Player)
 		{
 			_Player->SetFlip(!_Player->GetFlip());
 			IsCollisionFlipLine = true;
+			UEngineSound::Play("vanish.wav");
 		}
 	}
+
 }
 
 void APistonEntity::Hide()
 {
-	ActiveAnimation();
-	IsHide = true;
+	if (IsHide == false)
+	{
+		ActiveAnimation();
+		IsHide = true;
+		UEngineSound::Play("vanish.wav");
+	}
 }
 
 void APistonEntity::AddEntityLocation(const FVector2D& _Location)

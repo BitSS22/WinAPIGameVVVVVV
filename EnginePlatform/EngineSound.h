@@ -14,7 +14,6 @@ public:
 
 private:
 	FMOD::Channel* Control = nullptr;
-	FMOD::Sound* SoundHandle = nullptr;
 
 public:
 	void SetPlay(bool _Value)
@@ -40,13 +39,7 @@ public:
 		_Value = UEngineMath::Clamp(_Value, 0.f, 1.f);
 		Control->setVolume(_Value);
 	}
-	unsigned int LengthMs()
-	{
-		unsigned int Length = 0;
-		SoundHandle->getLength(&Length, FMOD_TIMEUNIT_MS);
-		return Length;
-	}
-	std::string GetCurrentSoundName()
+	std::string GetCurrentSoundName() const
 	{
 		FMOD::Sound* Sound;
 		Control->getCurrentSound(&Sound);
@@ -54,11 +47,21 @@ public:
 		Sound->getName(Arr, 100);
 		return std::string(Arr);
 	}
-	bool IsPlaying()
+	bool IsPlaying() const
 	{
 		static bool Value = false;
 		Control->isPlaying(&Value);
 		return Value;
+	}
+	bool IsEmpty() const
+	{
+		if (Control == nullptr)
+			return true;
+		return false;
+	}
+	void Clear()
+	{
+		Control = nullptr;
 	}
 
 };

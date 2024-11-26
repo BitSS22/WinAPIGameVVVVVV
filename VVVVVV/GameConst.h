@@ -25,6 +25,7 @@ public:
 	static const float DefualtMoveLen;
 	static const float RailSpeed;
 	static const float HideTime;
+	static const float BGMFadeTimeScale;
 
 };
 

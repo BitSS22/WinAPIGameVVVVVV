@@ -46,7 +46,10 @@ void AGameWorld::SaveRoomData()
 
 	Data.BackGroundData = Room->GetBackGround()->GetBackGroundData();
 	Data.LoopRoom = Room->GetIsLoop();
-	Data.BGMName = Room->GetCurrentSoundName();
+	if (Room->IsBGMEmpty() == false)
+		Data.BGMName = Room->GetCurrentSoundName();
+	else
+		Data.BGMName = "";
 	Data.EntityDatas.clear();
 
 	for (size_t i = 0; i < Room->GetEntitesCRef().size(); ++i)

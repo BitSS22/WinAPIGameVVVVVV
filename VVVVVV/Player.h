@@ -91,6 +91,15 @@ public:
 		SaveWorldIndex = AGameWorld::GetCurRoomIndex();
 		SaveLocation = _Location;
 		SaveFlip = _Flip;
+		UEngineSound::Play("save.wav");
+	}
+	FVector2D GetSaveLocation() const
+	{
+		return SaveLocation;
+	}
+	FIntPoint GetSaveWorldIndex() const
+	{
+		return SaveWorldIndex;
 	}
 	FVector2D GetMoveValue() const
 	{

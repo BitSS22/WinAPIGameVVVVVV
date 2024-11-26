@@ -18,6 +18,8 @@ ARoom::~ARoom()
 
 void ARoom::BeginPlay()
 {
+	Super::BeginPlay();
+
 	BackGround = GetWorld()->SpawnActor<ABackGround>();
 
 	// 타일 스프라이트
@@ -32,10 +34,14 @@ void ARoom::BeginPlay()
 		}
 	}
 
-	BGM = UEngineSound::Play("00 Potential for Anything Remixed.mp3");
-	BGM.Stop();
-
 	FileLoadInit();
+}
+
+void ARoom::Tick()
+{
+	Super::Tick();
+
+	SoundUpdate();
 }
 
 void ARoom::MoveRoom(FIntPoint _Index)
@@ -105,16 +111,71 @@ void ARoom::SetRoom(const RoomData& _Data)
 	}
 }
 
+void ARoom::SoundFadeIn()
+{
+	Volume = UEngineMath::Clamp(Volume + GET_DELTA * EGameConst::BGMFadeTimeScale, 0.f, 1.f);
+	BGM.SetVolume(Volume);
+}
+
+void ARoom::SoundFadeOut()
+{
+	Volume = UEngineMath::Clamp(Volume - GET_DELTA * EGameConst::BGMFadeTimeScale, 0.f, 1.f);
+	BGM.SetVolume(Volume);
+}
+
+void ARoom::SoundUpdate()
+{
+	if (BGM.GetCurrentSoundName() == NextBGM)
+	{
+		if (Volume < 1.f)
+			SoundFadeIn();
+		if (Volume >= 1.f)
+			NextBGM = "NONE";
+	}
+	if (BGM.IsEmpty() == true && NextBGM != "NONE")
+	{
+		if (NextBGM.empty() == true)
+			BGM.Clear();
+		else
+		{
+			BGM = UEngineSound::Play(NextBGM);
+			BGM.SetVolume(Volume);
+		}
+		NextBGM = "NONE";
+	}
+
+	if (NextBGM != "NONE" && BGM.IsEmpty() == false && Volume > 0.f)
+	{
+		SoundFadeOut();
+
+		if (Volume <= 0.f)
+		{
+			BGM.Stop();
+			if (NextBGM.empty() == true)
+				BGM.Clear();
+			else
+			{
+				BGM = UEngineSound::Play(NextBGM);
+				BGM.SetVolume(Volume);
+			}
+			
+			NextBGM = "NONE";
+		}
+	}
+	else if (BGM.IsEmpty() == false && Volume < 1.f)
+		SoundFadeIn();
+}
+
 RoomData ARoom::GetRoomData()
 {
 	RoomData Data = {};
 
 	Data.BackGroundData = BackGround->GetBackGroundData();
 	Data.LoopRoom = LoopRoom;
-	if (BGM.IsPlaying() == true)
+	if (BGM.IsEmpty() == false)
 		Data.BGMName = BGM.GetCurrentSoundName();
 	else
-		Data.BGMName.clear();
+		Data.BGMName = "";
 
 	for (int y = 0; y < EGameConst::TileCount.Y; ++y)
 	{
@@ -297,20 +358,6 @@ void ARoom::SetEntityMove(bool _Value)
 
 void ARoom::SetBGM(std::string_view _Name)
 {
-	if (_Name.empty() == true)
-	{
-		BGM.Stop();
-	}
-	else if (BGM.IsPlaying() == false)
-	{
-		BGM = UEngineSound::Play(_Name);
-		BGM.Loop();
-	}
-	else if (BGM.GetCurrentSoundName() != _Name)
-	{
-		BGM.Stop();
-		BGM = UEngineSound::Play(_Name);
-		BGM.Loop();
-	}
+	NextBGM = _Name;
 }
 

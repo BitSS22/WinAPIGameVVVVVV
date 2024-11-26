@@ -107,7 +107,8 @@ public:
 		int Size = 0;
 		*this >> Size;
 		_Data.resize(Size);
-		Read(_Data.data(), static_cast<int>(_Data.size()));
+		if (Size != 0)
+			Read(_Data.data(), static_cast<int>(_Data.size()));
 	}
 	template<typename T>
 	void operator>> (std::vector<T>& _Vec)
