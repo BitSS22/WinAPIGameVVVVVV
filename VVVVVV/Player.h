@@ -1,8 +1,7 @@
 #pragma once
 #include "Entity.h"
-#include <EngineBase/FSMStateManager.h>
-#include <EngineCore/2DCollision.h>
 #include "Guy.h"
+#include <EnginePlatform/EngineSound.h>
 
 enum class EPlayerPoint
 {
@@ -76,6 +75,8 @@ public:
 	{
 		AGameWorld::GetRoom()->SetEntityMove(!_Value);
 		IsDeath = _Value;
+		if (_Value == true)
+			UEngineSound::Play("hurt.wav");
 	}
 	bool GetDeath() const
 	{

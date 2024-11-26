@@ -3,6 +3,7 @@
 #include "BackGround.h"
 #include "TitleLogo.h"
 #include "Fade.h"
+#include <EnginePlatform/EngineSound.h>
 
 ATitleGameMode::ATitleGameMode()
 {
@@ -44,6 +45,9 @@ void ATitleGameMode::BeginPlay()
 	Fade = GetWorld()->SpawnActor<AFade>();
 
 	Fade->PlayFadeIn();
+
+	BGM = UEngineSound::Play("02 Presenting VVVVVV.mp3");
+	BGM.SetPlay(true);
 }
 
 void ATitleGameMode::Tick()
@@ -75,7 +79,10 @@ void ATitleGameMode::Tick()
 		Fade->PlayFadeOut();
 
 	if (Fade->IsFadeOutEnd() == true)
+	{
 		UEngineAPICore::GetCore()->OpenLevel("Play");
+		BGM.SetPlay(false);
+	}
 
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("VVVVVV / FPS : " + std::to_string(frame));
 }

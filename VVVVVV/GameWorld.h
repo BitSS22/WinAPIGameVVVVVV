@@ -63,6 +63,7 @@ public:
 	RoomBackGroundData BackGroundData = {};
 	std::vector<RoomEntityData> EntityDatas = {};
 	bool LoopRoom = false;
+	std::string BGMName = {};
 
 public:
 	virtual void Serialize(UEngineSerializer& _Class) override;

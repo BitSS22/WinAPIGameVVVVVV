@@ -2,6 +2,7 @@
 #include <EnginePlatform/EngineWindowImage.h>
 #include <vector>
 #include "GameWorld.h"
+#include "EnginePlatform/EngineSound.h"
 
 class AEntity;
 class ABackGround;
@@ -26,7 +27,7 @@ private:
 	std::vector<std::vector<ATile*>> Tiles = {};
 	std::vector<AEntity*> Entites = {};
 	bool LoopRoom = false;
-	UEngineSound* BGM = nullptr;
+	USoundPlayer BGM = {};
 
 public:
 	virtual void BeginPlay() override;
@@ -80,6 +81,11 @@ public:
 		LoopRoom = _Value;
 	}
 	void SetEntityMove(bool _Value);
+	std::string GetCurrentSoundName()
+	{
+		return BGM.GetCurrentSoundName();
+	}
+	void SetBGM(std::string_view _Name);
 
 };
 

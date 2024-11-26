@@ -4,6 +4,7 @@
 #include "Room.h"
 #include "GameWorld.h"
 #include "Tile.h"
+#include <EnginePlatform/EngineSound.h>
 
 class ATileMapEditorMode : public AGameMode
 {
@@ -28,6 +29,9 @@ private:
 	std::vector<RoomEntityData> EntityDatas[static_cast<int>(EEntityType::Last)] = {};
 	EEntityType CurEntityType = EEntityType::Enermy;
 	int CurEntityIndex = 0;
+
+	std::vector<std::string> BGMDatas = {};
+	int CurBGMIndex = 0;
 
 	USpriteRenderer* CurSelectTile = nullptr;
 	USpriteRenderer* CurSelectEntity = nullptr;
@@ -67,6 +71,8 @@ private:
 
 	void SetEntityType(EEntityType _Type);
 	void AddEntityList(int _Value);
+
+	void AddBGMIndex(int _Value);
 
 	void PrevSelectEntity();
 	void NextSelectEntity();

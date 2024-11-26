@@ -46,7 +46,7 @@ void AGameWorld::SaveRoomData()
 
 	Data.BackGroundData = Room->GetBackGround()->GetBackGroundData();
 	Data.LoopRoom = Room->GetIsLoop();
-
+	Data.BGMName = Room->GetCurrentSoundName();
 	Data.EntityDatas.clear();
 
 	for (size_t i = 0; i < Room->GetEntitesCRef().size(); ++i)
@@ -147,6 +147,7 @@ void RoomData::Serialize(UEngineSerializer& _Class)
 	_Class << BackGroundData;
 	_Class << EntityDatas;
 	_Class << LoopRoom;
+	_Class << BGMName;
 }
 
 void RoomData::DeSerialize(UEngineSerializer& _Class)
@@ -155,4 +156,5 @@ void RoomData::DeSerialize(UEngineSerializer& _Class)
 	_Class >> BackGroundData;
 	_Class >> EntityDatas;
 	_Class >> LoopRoom;
+	_Class >> BGMName;
 }

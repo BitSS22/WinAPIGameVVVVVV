@@ -14,11 +14,12 @@ public:
 
 private:
 	FMOD::Channel* Control = nullptr;
+	FMOD::Sound* SoundHandle = nullptr;
 
 public:
 	void SetPlay(bool _Value)
 	{
-		Control->setPaused(_Value);
+		Control->setPaused(!_Value);
 	}
 	void SwitchPlay()
 	{
@@ -29,6 +30,35 @@ public:
 	void Loop(int _Count = -1)
 	{
 		Control->setLoopCount(_Count);
+	}
+	void Stop()
+	{
+		Control->stop();
+	}
+	void SetVolume(float _Value)
+	{
+		_Value = UEngineMath::Clamp(_Value, 0.f, 1.f);
+		Control->setVolume(_Value);
+	}
+	unsigned int LengthMs()
+	{
+		unsigned int Length = 0;
+		SoundHandle->getLength(&Length, FMOD_TIMEUNIT_MS);
+		return Length;
+	}
+	std::string GetCurrentSoundName()
+	{
+		FMOD::Sound* Sound;
+		Control->getCurrentSound(&Sound);
+		static char Arr[100] = {};
+		Sound->getName(Arr, 100);
+		return std::string(Arr);
+	}
+	bool IsPlaying()
+	{
+		static bool Value = false;
+		Control->isPlaying(&Value);
+		return Value;
 	}
 
 };

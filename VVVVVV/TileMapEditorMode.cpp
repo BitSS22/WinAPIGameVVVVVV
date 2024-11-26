@@ -454,6 +454,14 @@ void ATileMapEditorMode::AddEntityList(int _Value)
 	CurSelectEntity->SetSprite(EntityDatas[static_cast<int>(CurEntityType)][CurEntityIndex].Name, 0);
 }
 
+void ATileMapEditorMode::AddBGMIndex(int _Value)
+{
+	CurBGMIndex += _Value;
+	CurBGMIndex %= BGMDatas.size();
+
+	AGameWorld::GetRoom()->SetBGM(BGMDatas[CurBGMIndex]);
+}
+
 void ATileMapEditorMode::PickUpTile()
 {
 	POINT MousePos = UEngineAPICore::GetCore()->GetMainWindow().GetMousePos();
@@ -625,6 +633,24 @@ void ATileMapEditorMode::LoadResourceList()
 			EntityDatas[static_cast<int>(EEntityType::FlipLine)].push_back(EntityData);
 		}
 	}
+
+	BGMDatas.push_back("00 Potential for Anything Remixed.mp3");
+	BGMDatas.push_back("01 Power-up.mp3");
+	BGMDatas.push_back("02 Presenting VVVVVV.mp3");
+	BGMDatas.push_back("03 Pause.mp3");
+	BGMDatas.push_back("04 Pushing Onwards.mp3");
+	BGMDatas.push_back("05 Path Complete.mp3");
+	BGMDatas.push_back("06 Passion For Exploring.mp3");
+	BGMDatas.push_back("07 Positive Force.mp3");
+	BGMDatas.push_back("08 Predestined Fate.mp3");
+	BGMDatas.push_back("09 Phear.mp3");
+	BGMDatas.push_back("10 Potential For Anything.mp3");
+	BGMDatas.push_back("11 Pressure Cooker.mp3");
+	BGMDatas.push_back("12 Plenary.mp3");
+	BGMDatas.push_back("13 Pipe Dream.mp3");
+	BGMDatas.push_back("14 Popular Potpourri.mp3");
+	BGMDatas.push_back("15 Positive Force Reversed.mp3");
+	BGMDatas.push_back("16 Waiting For VVVVVV.mp3");
 }
 
 void ATileMapEditorMode::EditorKeyCheck()
@@ -802,7 +828,11 @@ void ATileMapEditorMode::EditorKeyCheck()
 	else if (KEY_DOWN('K'))
 		Dir += FVector2D::RIGHT;
 
-	
+	// BGM
+	if (KEY_DOWN('7'))
+		AddBGMIndex(-1);
+	else if (KEY_DOWN('8'))
+		AddBGMIndex(1);
 
 	// Entity ฐüทร
 	if (KEY_DOWN(VK_RETURN))
@@ -963,6 +993,14 @@ void ATileMapEditorMode::DebugText()
 	// DEBUG TEXT
 
 	string str = "";
+
+	str = "Current BGM Name : ";
+	if (AGameWorld::GetRoom()->BGM.IsPlaying() == true)
+		str += AGameWorld::GetRoom()->BGM.GetCurrentSoundName();
+	else
+		str += "None BGM";
+	UEngineDebug::CoreOutputString(str);
+
 
 	str = "World Index : ";
 	str += std::to_string(RoomIndex.X);

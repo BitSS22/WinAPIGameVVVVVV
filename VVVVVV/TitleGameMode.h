@@ -1,4 +1,5 @@
 #pragma once
+#include <EnginePlatform/EngineSound.h>
 
 class ATitleLogo;
 class USpriteRenderer;
@@ -18,6 +19,7 @@ public:
 private:
 	AFade* Fade = nullptr;
 	USpriteRenderer* BackGround = nullptr;
+	USoundPlayer BGM = {};
 	static const int LogoCount = 6;
 	ATitleLogo* Logos[LogoCount] = {};
 	USpriteRenderer* Menu = nullptr;

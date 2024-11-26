@@ -32,6 +32,9 @@ void ARoom::BeginPlay()
 		}
 	}
 
+	BGM = UEngineSound::Play("00 Potential for Anything Remixed.mp3");
+	BGM.Stop();
+
 	FileLoadInit();
 }
 
@@ -72,6 +75,8 @@ void ARoom::SetRoom(const RoomData& _Data)
 		Entites[i]->Destroy();
 	Entites.clear();
 
+	SetBGM(_Data.BGMName);
+
 	for (size_t i = 0; i < _Data.EntityDatas.size(); ++i)
 	{
 		AEntity* NewEntity = nullptr;
@@ -106,6 +111,10 @@ RoomData ARoom::GetRoomData()
 
 	Data.BackGroundData = BackGround->GetBackGroundData();
 	Data.LoopRoom = LoopRoom;
+	if (BGM.IsPlaying() == true)
+		Data.BGMName = BGM.GetCurrentSoundName();
+	else
+		Data.BGMName.clear();
 
 	for (int y = 0; y < EGameConst::TileCount.Y; ++y)
 	{
@@ -242,12 +251,15 @@ bool ARoom::IsOutTileIndex(const FIntPoint& _Index) const
 void ARoom::FileLoadInit()
 {
 	FIntPoint CurRoomIndex = AGameWorld::GetCurRoomIndex();
-	LoopRoom = AGameWorld::GetRoomDatasRef(CurRoomIndex).LoopRoom;
-	const vector<RoomEntityData>& EntityDatas = AGameWorld::GetRoomDatasRef(CurRoomIndex).EntityDatas;
+	const RoomData& RoomData = AGameWorld::GetRoomDatasRef(CurRoomIndex);
+	LoopRoom = RoomData.LoopRoom;
+	const vector<RoomEntityData>& EntityDatas = RoomData.EntityDatas;
 
 	for (size_t i = 0; i < Entites.size(); ++i)
 		Entites[i]->Destroy();
 	Entites.clear();
+
+	SetBGM(RoomData.BGMName);
 
 	for (size_t i = 0; i < EntityDatas.size(); ++i)
 	{
@@ -281,5 +293,24 @@ void ARoom::SetEntityMove(bool _Value)
 {
 	for (size_t i = 0; i < Entites.size(); ++i)
 		Entites[i]->SetIsMove(_Value);
+}
+
+void ARoom::SetBGM(std::string_view _Name)
+{
+	if (_Name.empty() == true)
+	{
+		BGM.Stop();
+	}
+	else if (BGM.IsPlaying() == false)
+	{
+		BGM = UEngineSound::Play(_Name);
+		BGM.Loop();
+	}
+	else if (BGM.GetCurrentSoundName() != _Name)
+	{
+		BGM.Stop();
+		BGM = UEngineSound::Play(_Name);
+		BGM.Loop();
+	}
 }
 
