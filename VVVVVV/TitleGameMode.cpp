@@ -5,6 +5,8 @@
 #include "Fade.h"
 #include <EnginePlatform/EngineSound.h>
 
+bool ATitleGameMode::ClearMusic = false;
+
 ATitleGameMode::ATitleGameMode()
 {
 }
@@ -86,7 +88,16 @@ void ATitleGameMode::LevelChangeStart()
 {
 	Fade->PlayFadeIn();
 
-	BGM = UEngineSound::Play("02 Presenting VVVVVV.mp3");
+	if (ClearMusic == false)
+	{
+		BGM = UEngineSound::Play("02 Presenting VVVVVV.mp3");
+		BGM.Loop();
+	}
+	else
+	{
+		BGM = UEngineSound::Play("14 Popular Potpourri.mp3");
+		BGM.Loop();
+	}
 }
 
 void ATitleGameMode::LevelChangeEnd()

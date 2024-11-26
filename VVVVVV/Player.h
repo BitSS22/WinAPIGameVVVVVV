@@ -36,6 +36,8 @@ private:
 	bool IsGround = false;
 	bool IsDeath = false;
 
+	bool POWEROVERWHELMING = false;
+
 	const float Speed = 400.f;
 	const float GravityForce = 500.f;
 	const float DeathTime = 1.f;
@@ -75,6 +77,9 @@ private:
 public:
 	void SetDeath(bool _Value)
 	{
+		if (POWEROVERWHELMING == true && _Value == true)
+			return;
+
 		AGameWorld::GetRoom()->SetEntityMove(!_Value);
 		IsDeath = _Value;
 		if (_Value == true)

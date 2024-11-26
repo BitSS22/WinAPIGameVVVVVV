@@ -143,6 +143,7 @@ void ARoom::SoundUpdate()
 		if (NextBGM.empty() == false)
 		{
 			BGM = UEngineSound::Play(NextBGM);
+			BGM.Loop();
 			BGM.SetVolume(Volume);
 		}
 		
@@ -161,6 +162,7 @@ void ARoom::SoundUpdate()
 			else
 			{
 				BGM = UEngineSound::Play(NextBGM);
+				BGM.Loop();
 				BGM.SetVolume(Volume);
 			}
 			

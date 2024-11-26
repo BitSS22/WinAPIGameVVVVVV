@@ -29,7 +29,9 @@ void APlayer::Tick()
 {
 	Super::Tick();
 
-	if (KEY_DOWN('1'))
+
+	// Test Code
+	if (KEY_PRESS(VK_CONTROL) && KEY_PRESS(VK_SHIFT) && KEY_PRESS(VK_MENU) && KEY_DOWN('1'))
 		TestTrigger = !TestTrigger;
 
 	TestPrevCount = GetTickCount();
@@ -60,6 +62,17 @@ void APlayer::Tick()
 		AnimationChange();
 	}
 
+	if (KEY_PRESS(VK_CONTROL) && KEY_PRESS(VK_SHIFT) && KEY_PRESS(VK_MENU) && KEY_DOWN(VK_SPACE) && POWEROVERWHELMING == false)
+	{
+		POWEROVERWHELMING = true;
+		UEngineSound::Play("coin.wav");
+	}
+
+	if (KEY_DOWN(VK_ESCAPE) && POWEROVERWHELMING == true)
+	{
+		POWEROVERWHELMING = false;
+		UEngineSound::Play("crash.wav");
+	}
 	//DEBUG
 	Debug();
 }

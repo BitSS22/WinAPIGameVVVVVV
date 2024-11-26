@@ -28,6 +28,8 @@ private:
 	float BlankAccTime = 0.f;
 	float BlankTime = 0.8f;
 
+	static bool ClearMusic;
+
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
@@ -38,6 +40,12 @@ public:
 	void ChangeColor(EGameColor _Color);
 
 private:
+
+public:
+	void SetClearMusic()
+	{
+		ClearMusic = true;
+	}
 
 };
 

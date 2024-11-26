@@ -476,12 +476,21 @@ void ATileMapEditorMode::AddEntityList(int _Value)
 void ATileMapEditorMode::AddBGMIndex(int _Value)
 {
 	CurBGMIndex += _Value;
-	CurBGMIndex %= BGMDatas.size();
+
+	if (CurBGMIndex < 0)
+		CurBGMIndex = static_cast<int>(BGMDatas.size() - 1);
+	else
+		CurBGMIndex %= static_cast<int>(BGMDatas.size());
 
 	USoundPlayer& BGMRef = AGameWorld::GetRoom()->BGM;
 	BGMRef.Stop();
-	BGMRef = UEngineSound::Play(BGMDatas[CurBGMIndex]);
-	BGMRef.Loop();
+	if (CurBGMIndex != 0)
+	{
+		BGMRef = UEngineSound::Play(BGMDatas[CurBGMIndex]);
+		BGMRef.Loop();
+	}
+	else
+		BGMRef.Clear();
 	BGMRef.SetVolume(1.f);
 }
 
@@ -657,6 +666,7 @@ void ATileMapEditorMode::LoadResourceList()
 		}
 	}
 
+	BGMDatas.push_back("");
 	BGMDatas.push_back("00 Potential for Anything Remixed.mp3");
 	BGMDatas.push_back("01 Power-up.mp3");
 	BGMDatas.push_back("02 Presenting VVVVVV.mp3");
@@ -1046,9 +1056,13 @@ void ATileMapEditorMode::DebugText()
 	FIntPoint TileCursorIndex = GameWorld->GetRoom()->GetOnTileIndex(CursorPos);
 	if (GameWorld->GetRoom()->IsOutTileIndex(TileCursorIndex) == false)
 	{
-		str = "On Tile Name : ";
+		str = "CursorIndex : ";
+		str += std::to_string(TileCursorIndex.X);
+		str += ",";
+		str += std::to_string(TileCursorIndex.Y);
+		str += ", On Tile Name : ";
 		str += GameWorld->GetRoom()->GetTilesCRef()[TileCursorIndex.Y][TileCursorIndex.X]->GetSpriteName();
-		str += ", Index : ";
+		str += ", TileIndex : ";
 		str += std::to_string(GameWorld->GetRoom()->GetTilesCRef()[TileCursorIndex.Y][TileCursorIndex.X]->GetSpriteCurIndex());
 		UEngineDebug::CoreOutputString(str);
 	}
