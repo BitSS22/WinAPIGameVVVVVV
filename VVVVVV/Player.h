@@ -37,6 +37,7 @@ private:
 	bool IsDeath = false;
 
 	bool POWEROVERWHELMING = false;
+	bool FREEMOVE = false;
 
 	const float Speed = 400.f;
 	const float GravityForce = 500.f;

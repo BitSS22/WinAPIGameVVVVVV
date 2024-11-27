@@ -189,30 +189,34 @@ void APistonEntity::CollisionFlipLine(APlayer* _Player)
 		return;
 
 	FVector2D Location = GetActorLocation();
+	FVector2D NextLocation = Location + MoveValue;
 	FVector2D PlayerLocation = _Player->GetActorLocation();
-	FVector2D NextPlayerLocation = PlayerLocation + _Player->GetMoveValue();
+	FVector2D PlayerMoveValue = _Player->GetMoveValue();
+	FVector2D NextPlayerLocation = PlayerLocation + PlayerMoveValue;
 
 	string Name = UEngineString::ToUpper("Horizontal");
 	if (GetSpriteName().find(Name) != std::string::npos)
 	{
-		bool PrevLocation = Location.Y - PlayerLocation.Y > 0.f;
-		bool NextLocation = Location.Y - NextPlayerLocation.Y > 0.f;
+		bool BPrevLocation = Location.Y  - PlayerLocation.Y > 0.f;
+		bool BNextLocation = NextLocation.Y - NextPlayerLocation.Y > 0.f;
 
-		if (PrevLocation != NextLocation)
+		if (BPrevLocation != BNextLocation)
 		{
 			_Player->SetFlipNoSound(!_Player->GetFlip());
+			_Player->SetMoveValue(FVector2D(PlayerMoveValue.X, 0.f));
 			IsCollisionFlipLine = true;
 			UEngineSound::Play("vanish.wav");
 		}
 	}
 	else
 	{
-		bool PrevLocation = Location.X - PlayerLocation.X > 0.f;
-		bool NextLocation = Location.X - NextPlayerLocation.X > 0.f;
+		bool BPrevLocation = Location.X - PlayerLocation.X > 0.f;
+		bool BNextLocation = NextLocation.X - NextPlayerLocation.X > 0.f;
 
-		if (PrevLocation != NextLocation)
+		if (BPrevLocation != BNextLocation)
 		{
 			_Player->SetFlipNoSound(!_Player->GetFlip());
+			_Player->SetMoveValue(FVector2D(PlayerMoveValue.X, 0.f));
 			IsCollisionFlipLine = true;
 			UEngineSound::Play("vanish.wav");
 		}

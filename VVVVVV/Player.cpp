@@ -30,6 +30,96 @@ void APlayer::Tick()
 	Super::Tick();
 
 
+	
+
+	ResetData();
+
+	
+
+	if (FREEMOVE == false)
+	{
+		if (IsDeath == true)
+			Death();
+		else
+		{
+			Input();
+			Gravity();
+			MoveRoomCheck();
+			EntityCollisionCheck();
+			TileCheck();
+			Move();
+			DeathCheck();
+			AnimationChange();
+		}
+	}
+
+
+
+	// DEBUG
+
+	if (FREEMOVE == true)
+	{
+		MoveRoomCheck();
+		EntityCollisionCheck();
+		DeathCheck();
+		CurDeathTime = 0.f;
+		SetDeath(false);
+	}
+
+	if (FREEMOVE == true)
+	{
+		if (KEY_PRESS(VK_LEFT))
+		{
+			MoveValue += FVector2D::LEFT * Speed * GET_DELTA;
+			LastDir = FVector2D::LEFT;
+		}
+		else if (KEY_PRESS(VK_RIGHT))
+		{
+			MoveValue += FVector2D::RIGHT * Speed * GET_DELTA;
+			LastDir = FVector2D::RIGHT;
+		}
+
+		if (KEY_PRESS(VK_UP))
+		{
+			MoveValue += FVector2D::UP * Speed * GET_DELTA;
+			LastDir = FVector2D::UP;
+		}
+		else if (KEY_PRESS(VK_DOWN))
+		{
+			MoveValue += FVector2D::DOWN * Speed * GET_DELTA;
+			LastDir = FVector2D::DOWN;
+		}
+
+		AddActorLocation(MoveValue);
+	}
+
+
+	if (KEY_PRESS(VK_CONTROL) && KEY_PRESS(VK_SHIFT) && KEY_PRESS(VK_MENU) && KEY_DOWN(VK_SPACE) && POWEROVERWHELMING == false)
+	{
+		POWEROVERWHELMING = true;
+		UEngineSound::Play("coin.wav");
+	}
+
+	if (KEY_DOWN(VK_ESCAPE) && POWEROVERWHELMING == true)
+	{
+		POWEROVERWHELMING = false;
+		UEngineSound::Play("crash.wav");
+	}
+
+	if (KEY_PRESS(VK_CONTROL) && KEY_PRESS(VK_SHIFT) && KEY_PRESS(VK_MENU) && KEY_DOWN(VK_RETURN) && FREEMOVE == false)
+	{
+		FREEMOVE = true;
+		UEngineSound::Play("coin.wav");
+	}
+
+	if (KEY_DOWN(VK_ESCAPE) && FREEMOVE == true)
+	{
+		FREEMOVE = false;
+		UEngineSound::Play("crash.wav");
+	}
+
+	
+
 	// Test Code
 	if (KEY_PRESS(VK_CONTROL) && KEY_PRESS(VK_SHIFT) && KEY_PRESS(VK_MENU) && KEY_DOWN('1'))
 		TestTrigger = !TestTrigger;
@@ -46,34 +136,6 @@ void APlayer::Tick()
 		}
 	}
 
-	ResetData();
-
-	if (IsDeath == true)
-		Death();
-	else
-	{
-		Input();
-		Gravity();
-		MoveRoomCheck();
-		EntityCollisionCheck();
-		TileCheck();
-		Move();
-		DeathCheck();
-		AnimationChange();
-	}
-
-	if (KEY_PRESS(VK_CONTROL) && KEY_PRESS(VK_SHIFT) && KEY_PRESS(VK_MENU) && KEY_DOWN(VK_SPACE) && POWEROVERWHELMING == false)
-	{
-		POWEROVERWHELMING = true;
-		UEngineSound::Play("coin.wav");
-	}
-
-	if (KEY_DOWN(VK_ESCAPE) && POWEROVERWHELMING == true)
-	{
-		POWEROVERWHELMING = false;
-		UEngineSound::Play("crash.wav");
-	}
-	//DEBUG
 	Debug();
 }
 
