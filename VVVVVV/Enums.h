@@ -5,8 +5,9 @@ enum class ERenderOrder
 {
 	BACKGROUND,
 	BACKGROUND_EFFECT,
-	TILE,
+	BACKGROUND_TILE,
 	Entity,
+	TILE,
 	FRIEND,
 	PLAYER,
 	EDITOR_CURSOR,

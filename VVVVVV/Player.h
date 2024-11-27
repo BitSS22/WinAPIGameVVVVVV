@@ -128,6 +128,10 @@ public:
 		else
 			UEngineSound::Play("jump2.wav");
 	}
+	void SetFlipNoSound(bool _Value)
+	{
+		IsFlip = _Value;
+	}
 	void SetGround(bool _Value)
 	{
 		IsGround = _Value;

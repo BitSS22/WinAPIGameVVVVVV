@@ -6,6 +6,7 @@
 #include <EngineCore/SpriteRenderer.h>
 #include <EnginePlatform/EngineSound.h>
 #include "Room.h"
+#include "TitleGameMode.h"
 
 #include <EngineCore/Level.h>
 
@@ -66,7 +67,10 @@ void APlayGameMode::Tick()
 	}
 
 	if (Fade->IsFadeOutEnd() == true && Gravitron == true)
+	{
+		ATitleGameMode::SetClearMusic(true);
 		UEngineAPICore::GetCore()->OpenLevel("Title");
+	}
 
 	UINT frame = UEngineAPICore::GetCore()->GetFrame();
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("VVVVVV / FPS : " + std::to_string(frame) + "DT : " + std::to_string(GET_DELTA));

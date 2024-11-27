@@ -32,23 +32,31 @@ void ATile::SetTile(const RoomTileData& _Data)
 	Sprite->SetSprite(_Data.Name, _Data.CurIndex);
 	TileType = _Data.TileType;
 
-	if (TileType == ETileType::None)
-		SetActive(false);
-	else
-		SetActive(true);
-
 	switch (TileType)
 	{
 	case ETileType::None:
+		SetActive(false);
+		return;
 	case ETileType::BackGround:
+		if (Sprite->GetOrder() != static_cast<int>(ERenderOrder::BACKGROUND_TILE))
+			Sprite->SetOrder(ERenderOrder::BACKGROUND_TILE);
+		SetActive(true);
+		Sprite->OffAnimation();
+		return;
 	case ETileType::Collision:
 	case ETileType::Spike:
 		Sprite->OffAnimation();
+		if (Sprite->GetOrder() != static_cast<int>(ERenderOrder::TILE))
+			Sprite->SetOrder(ERenderOrder::TILE);
+		SetActive(true);
 		return;
 	case ETileType::Animation:
 	case ETileType::RailLeft:
 	case ETileType::RailRight:
 		Sprite->ChangeAnimation(_Data.Name, false);
+		if (Sprite->GetOrder() != static_cast<int>(ERenderOrder::TILE))
+			Sprite->SetOrder(ERenderOrder::TILE);
+		SetActive(true);
 		return;
 	}
 

@@ -42,9 +42,9 @@ public:
 private:
 
 public:
-	void SetClearMusic()
+	static void SetClearMusic(bool _Clear)
 	{
-		ClearMusic = true;
+		ClearMusic = _Clear;
 	}
 
 };

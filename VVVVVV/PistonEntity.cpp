@@ -200,7 +200,7 @@ void APistonEntity::CollisionFlipLine(APlayer* _Player)
 
 		if (PrevLocation != NextLocation)
 		{
-			_Player->SetFlip(!_Player->GetFlip());
+			_Player->SetFlipNoSound(!_Player->GetFlip());
 			IsCollisionFlipLine = true;
 			UEngineSound::Play("vanish.wav");
 		}
@@ -212,7 +212,7 @@ void APistonEntity::CollisionFlipLine(APlayer* _Player)
 
 		if (PrevLocation != NextLocation)
 		{
-			_Player->SetFlip(!_Player->GetFlip());
+			_Player->SetFlipNoSound(!_Player->GetFlip());
 			IsCollisionFlipLine = true;
 			UEngineSound::Play("vanish.wav");
 		}

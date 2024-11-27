@@ -340,7 +340,18 @@ void APlayer::DeathCheck()
 	{
 		for (int j = 0; j < APlayer::PointCount; ++j)
 		{
-			FVector2D Location = GetActorLocation() + Points[i][j];
+			FVector2D Offset = Points[i][j];
+
+			if (Offset.X < 0.f)
+				Offset.X += 2.f;
+			if (Offset.X > 0.f)
+				Offset.X -= 2.f;
+			if (Offset.Y < 0.f)
+				Offset.Y += 2.f;
+			if (Offset.Y > 0.f)
+				Offset.Y -= 2.f;
+
+			FVector2D Location = GetActorLocation() + Offset;
 			ETileType Type = AGameWorld::GetRoom()->GetTileType(Location);
 
 			if (Type == ETileType::Spike)
