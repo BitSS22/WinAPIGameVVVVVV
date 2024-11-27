@@ -205,3 +205,9 @@ KEY H - Entity 이동 방향 왼쪽 추가
 KEY J - Entity 이동 방향 아래쪽 추가
 KEY K - Entity 이동 방향 오른쪽 추가
 Ctrl - 방향으로 설정
+
+
+
+
+
+방 메이킹
