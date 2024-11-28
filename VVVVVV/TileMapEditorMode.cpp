@@ -749,10 +749,10 @@ void ATileMapEditorMode::EditorKeyCheck()
 	}
 
 	// Tile ฐüทร
-	if (KEY_DOWN(VK_XBUTTON1))
+	if (KEY_DOWN(VK_XBUTTON1) || KEY_DOWN('I'))
 		PickUpTile();
 
-	if (KEY_DOWN(VK_XBUTTON2))
+	if (KEY_DOWN(VK_XBUTTON2) || KEY_DOWN(VK_END))
 	{
 		if (KEY_PRESS(VK_CONTROL))
 			AddTileSpriteIndex(-1);
