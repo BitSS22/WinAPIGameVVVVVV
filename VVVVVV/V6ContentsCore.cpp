@@ -49,8 +49,8 @@ void V6ContentsCore::BeginPlay()
 	AGameWorld::LoadMapFile();
 
 	// First Level Open
-	//UEngineAPICore::GetCore()->OpenLevel("Title");
-	UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
+	UEngineAPICore::GetCore()->OpenLevel("Title");
+	//UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
 }
 
 void V6ContentsCore::Tick()
@@ -500,7 +500,7 @@ void V6ContentsCore::EntityLoad()
 	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::076 Clock Green", FVector2D(StartPosX, StartPosY + ColorOffsetY * 5), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 	UImageManager::GetInst().CreateCutSprite("Enemies.png", "Enemies::077 Clock Grey", FVector2D(StartPosX, StartPosY + ColorOffsetY * 6), CuttingSize, FVector2D(6.f, 6.f), UnitXCount, UnitTotalCount);
 
-	StartPosX = 873.f;
+	StartPosX = 874.f;
 	StartPosY = 0.f;
 	CuttingSize = FVector2D(58.f, 64.f);
 	UnitXCount = 2;
