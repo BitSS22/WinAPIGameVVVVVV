@@ -27,7 +27,7 @@ void ABackGround::BeginPlay()
 	for (size_t i = 0; i < 6; ++i)
 	{
 		USpriteRenderer* StarSprite = CreateDefaultSubObject<USpriteRenderer>();
-		StarSprite->SetSprite("Effects::Stars", 0);
+		StarSprite->SetSprite("Effects:: Stars", 0);
 		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
 		StarSprite->SetOrder(ERenderOrder::BACKGROUND_EFFECT);
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
@@ -37,7 +37,7 @@ void ABackGround::BeginPlay()
 	for (size_t i = 0; i < 10; ++i)
 	{
 		USpriteRenderer* StarSprite = CreateDefaultSubObject<USpriteRenderer>();
-		StarSprite->SetSprite("Effects::Stars", 1);
+		StarSprite->SetSprite("Effects:: Stars", 1);
 		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
 		StarSprite->SetOrder(ERenderOrder::BACKGROUND_EFFECT);
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
@@ -47,7 +47,7 @@ void ABackGround::BeginPlay()
 	for (size_t i = 0; i < 20; ++i)
 	{
 		USpriteRenderer* StarSprite = CreateDefaultSubObject<USpriteRenderer>();
-		StarSprite->SetSprite("Effects::Stars", 2);
+		StarSprite->SetSprite("Effects:: Stars", 2);
 		StarSprite->SetSpriteScale(1.f, StarSprite->GetCurIndex());
 		StarSprite->SetOrder(ERenderOrder::BACKGROUND_EFFECT);
 		StarSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
@@ -55,9 +55,28 @@ void ABackGround::BeginPlay()
 		StarEffects.push_back(StarEffect(StarSprite, RandNumber, FVector2D::RIGHT));
 	}
 
-	SetEffect(EEffectType::Star);
+	for (size_t i = 0; i < 12; ++i)
+	{
+		USpriteRenderer* RectSprite = CreateDefaultSubObject<USpriteRenderer>();
+		RectSprite->SetSprite("Effects:: Rect Horizontal", i % 6);
+		RectSprite->SetSpriteScale(1.f, RectSprite->GetCurIndex());
+		RectSprite->SetOrder(ERenderOrder::BACKGROUND_EFFECT);
+		RectSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
+		float RandNumber = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(-440.f, -360.f);
+		RectEffects[static_cast<int>(RectDir::Horizontal)].push_back(RectEffect(RectSprite, RandNumber, FVector2D::RIGHT));
+	}
+	for (size_t i = 0; i < 12; ++i)
+	{
+		USpriteRenderer* RectSprite = CreateDefaultSubObject<USpriteRenderer>();
+		RectSprite->SetSprite("Effects:: Rect Vertical", i % 6);
+		RectSprite->SetSpriteScale(1.f, RectSprite->GetCurIndex());
+		RectSprite->SetOrder(ERenderOrder::BACKGROUND_EFFECT);
+		RectSprite->SetComponentLocation(FVector2D(UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X), UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y)));
+		float RandNumber = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(-440.f, -360.f);
+		RectEffects[static_cast<int>(RectDir::Vertical)].push_back(RectEffect(RectSprite, RandNumber, FVector2D::UP));
+	}
 
-	// TODO. Create Rect Effect
+	SetEffect(EEffectType::Star);
 
 	FileLoadInit();
 }
@@ -116,18 +135,50 @@ void ABackGround::PlayRectEffect()
 {
 	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 
-	for (size_t i = 0; i < RectEffects.size(); ++i)
+	for (size_t i = 0; i < RectEffects[static_cast<int>(RectDir::Horizontal)].size(); ++i)
 	{
-		RectEffects[i].Sprite->AddComponentLocation(RectEffects[i].Dir * RectEffects[i].Speed * GET_DELTA);
-		FVector2D Pos = RectEffects[i].Sprite->GetComponentLocation();
+		RectEffects[static_cast<int>(RectDir::Horizontal)][i].Sprite->AddComponentLocation(RectEffects[static_cast<int>(RectDir::Horizontal)][i].Dir * RectEffects[static_cast<int>(RectDir::Horizontal)][i].Speed * GET_DELTA);
+		FVector2D Pos = RectEffects[static_cast<int>(RectDir::Horizontal)][i].Sprite->GetComponentLocation();
 
-		if (Pos.X < 0)
+		if (Pos.X < 0 || Pos.X > WindowSize.X)
 		{
-			Pos.X += WindowSize.X;
 			Pos.Y = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.Y);
-			RectEffects[i].Sprite->SetComponentLocation(Pos);
+			if (UEngineAPICore::GetCore()->GetRandomDevice().GetRandomInt(0, 1) == 0)
+			{
+				RectEffects[static_cast<int>(RectDir::Horizontal)][i].Dir = FVector2D::RIGHT;
+				Pos.X = WindowSize.X;
+			}
+			else
+			{
+				RectEffects[static_cast<int>(RectDir::Horizontal)][i].Dir = FVector2D::LEFT;
+				Pos.X = 0.f;
+			}
+			RectEffects[static_cast<int>(RectDir::Horizontal)][i].Sprite->SetComponentLocation(Pos);
 		}
 	}
+
+	for (size_t i = 0; i < RectEffects[static_cast<int>(RectDir::Vertical)].size(); ++i)
+	{
+		RectEffects[static_cast<int>(RectDir::Vertical)][i].Sprite->AddComponentLocation(RectEffects[static_cast<int>(RectDir::Vertical)][i].Dir * RectEffects[static_cast<int>(RectDir::Vertical)][i].Speed * GET_DELTA);
+		FVector2D Pos = RectEffects[static_cast<int>(RectDir::Vertical)][i].Sprite->GetComponentLocation();
+
+		if (Pos.Y < 0 || Pos.Y > WindowSize.Y)
+		{
+			Pos.X = UEngineAPICore::GetCore()->GetRandomDevice().GetRandomFloat(0.f, WindowSize.X);
+			if (UEngineAPICore::GetCore()->GetRandomDevice().GetRandomInt(0, 1) == 0)
+			{
+				RectEffects[static_cast<int>(RectDir::Vertical)][i].Dir = FVector2D::DOWN;
+				Pos.Y = WindowSize.Y;
+			}
+			else
+			{
+				RectEffects[static_cast<int>(RectDir::Vertical)][i].Dir = FVector2D::UP;
+				Pos.Y = 0.f;
+			}
+			RectEffects[static_cast<int>(RectDir::Vertical)][i].Sprite->SetComponentLocation(Pos);
+		}
+	}
+
 }
 
 void ABackGround::SetEffect(EEffectType _Type)
@@ -137,22 +188,25 @@ void ABackGround::SetEffect(EEffectType _Type)
 	case EEffectType::Star:
 		for (size_t i = 0; i < StarEffects.size(); ++i)
 			StarEffects[i].Sprite->SetActive(true);
-		for (size_t i = 0; i < RectEffects.size(); ++i)
-			RectEffects[i].Sprite->SetActive(false);
+		for (int z = 0; z < static_cast<int>(RectDir::None); ++z)
+			for (size_t i = 0; i < RectEffects[z].size(); ++i)
+				RectEffects[z][i].Sprite->SetActive(false);
 		CurEffect = bind(&ABackGround::PlayStarEffect, this);
 		return;
 	case EEffectType::Rect:
 		for (size_t i = 0; i < StarEffects.size(); ++i)
 			StarEffects[i].Sprite->SetActive(false);
-		for (size_t i = 0; i < RectEffects.size(); ++i)
-			RectEffects[i].Sprite->SetActive(true);
+		for (int z = 0; z < static_cast<int>(RectDir::None); ++z)
+			for (size_t i = 0; i < RectEffects[z].size(); ++i)
+				RectEffects[z][i].Sprite->SetActive(true);
 		CurEffect = bind(&ABackGround::PlayRectEffect, this);
 		return;
 	case EEffectType::None:
 		for (size_t i = 0; i < StarEffects.size(); ++i)
 			StarEffects[i].Sprite->SetActive(false);
-		for (size_t i = 0; i < RectEffects.size(); ++i)
-			RectEffects[i].Sprite->SetActive(false);
+		for (int z = 0; z < static_cast<int>(RectDir::None); ++z)
+			for (size_t i = 0; i < RectEffects[z].size(); ++i)
+				RectEffects[z][i].Sprite->SetActive(false);
 		CurEffect = nullptr;
 		return;
 	}
@@ -196,6 +250,10 @@ void ABackGround::SetBackGround(const RoomBackGroundData& _Data)
 		case EBackGroundType::Ending:
 			CurAnimation = nullptr;
 			SetEffect(EEffectType::None);
+			return;
+		case EBackGroundType::Maze:
+			CurAnimation = nullptr;
+			SetEffect(EEffectType::Rect);
 			return;
 		}
 

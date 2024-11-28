@@ -8,6 +8,13 @@ enum class EEffectType
 	None
 };
 
+enum class RectDir
+{
+	Horizontal,
+	Vertical,
+	None
+};
+
 class ABackGround : public AActor
 {
 private:
@@ -39,7 +46,7 @@ private:
 	EBackGroundType BackGroundType = EBackGroundType::Space;
 	float AnimationSpeed = 320.f;
 	std::vector<StarEffect> StarEffects = {};
-	std::vector<RectEffect> RectEffects = {};
+	std::vector<RectEffect> RectEffects[static_cast<int>(RectDir::None)] = {};
 
 	std::function<void()> CurAnimation = nullptr;
 	std::function<void()> CurEffect = nullptr;

@@ -612,6 +612,11 @@ void ATileMapEditorMode::LoadResourceList()
 				BackGroundData.BackGroundType = EBackGroundType::Ending;
 				BackGroundDatas[static_cast<int>(EBackGroundType::Ending)].push_back(BackGroundData);
 			}
+			else if (Sprite.first.find(UEngineString::ToUpper("Maze")) != std::string::npos)
+			{
+				BackGroundData.BackGroundType = EBackGroundType::Maze;
+				BackGroundDatas[static_cast<int>(EBackGroundType::Maze)].push_back(BackGroundData);
+			}
 
 		}
 		// Entity

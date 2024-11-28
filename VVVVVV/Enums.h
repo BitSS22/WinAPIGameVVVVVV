@@ -54,6 +54,7 @@ enum class EBackGroundType
 	Vertical,
 	Tower,
 	Ending,
+	Maze,
 	Last
 };
 

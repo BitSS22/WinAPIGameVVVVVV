@@ -49,8 +49,8 @@ void V6ContentsCore::BeginPlay()
 	AGameWorld::LoadMapFile();
 
 	// First Level Open
-	UEngineAPICore::GetCore()->OpenLevel("Title");
-	//UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
+	//UEngineAPICore::GetCore()->OpenLevel("Title");
+	UEngineAPICore::GetCore()->OpenLevel("TileMapEditor");
 }
 
 void V6ContentsCore::Tick()
@@ -869,8 +869,12 @@ void V6ContentsCore::BackGroundLoad()
 	// Ending Image
 	UImageManager::GetInst().CreateCutSprite("EndingScreen.png", "BackGrounds::04 Ending", FVector2D(0.f, 0.f), FVector2D(640.f, 480.f), FVector2D(0.f, 0.f), 1, 1);
 
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "BackGrounds::05 Maze", FVector2D(0.f, 3392.f), FVector2D(640.f, 480.f), FVector2D(0.f, 0.f), 1, 1);
+
 	// BackGround Effect
-	UImageManager::GetInst().CreateCutSprite("BackGround.png", "Effects::Stars", FVector2D(640.f, 3392.f), FVector2D(8.f, 8.f), FVector2D(0.f, 0.f), 3, 3);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "Effects:: Stars", FVector2D(640.f, 3392.f), FVector2D(8.f, 8.f), FVector2D(0.f, 0.f), 3, 3);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "Effects:: Rect Horizontal", FVector2D(640.f, 3424.f), FVector2D(48.f, 16.f), FVector2D(0.f, 0.f), 1, 6);
+	UImageManager::GetInst().CreateCutSprite("BackGround.png", "Effects:: Rect Vertical", FVector2D(688.f, 3392.f), FVector2D(16.f, 48.f), FVector2D(0.f, 0.f), 6, 6);
 }
 
 void V6ContentsCore::FontImageLoad()
