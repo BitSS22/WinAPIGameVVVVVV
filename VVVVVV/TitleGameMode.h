@@ -27,6 +27,7 @@ private:
 	float ColorChangeTime = 2.f;
 	float BlankAccTime = 0.f;
 	float BlankTime = 0.8f;
+	static float PrevClearTime;
 
 	static bool ClearMusic;
 
@@ -45,6 +46,10 @@ public:
 	static void SetClearMusic(bool _Clear)
 	{
 		ClearMusic = _Clear;
+	}
+	static void SetPrevClearTIme(float _Time)
+	{
+		PrevClearTime = _Time;
 	}
 
 };

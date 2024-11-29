@@ -72,8 +72,7 @@ void APlayGameMode::Tick()
 		UEngineAPICore::GetCore()->OpenLevel("Title");
 	}
 
-	UINT frame = UEngineAPICore::GetCore()->GetFrame();
-	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("VVVVVV / FPS : " + std::to_string(frame) + "DT : " + std::to_string(GET_DELTA));
+	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle(string("VVVVVV / PlayTime : " + std::to_string(PlayTime)));
 }
 
 void APlayGameMode::LevelChangeStart()
@@ -87,4 +86,5 @@ void APlayGameMode::LevelChangeStart()
 
 void APlayGameMode::LevelChangeEnd()
 {
+	ATitleGameMode::SetPrevClearTIme(PlayTime);
 }

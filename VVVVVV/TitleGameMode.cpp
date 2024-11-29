@@ -6,6 +6,7 @@
 #include <EnginePlatform/EngineSound.h>
 
 bool ATitleGameMode::ClearMusic = false;
+float ATitleGameMode::PrevClearTime = 0.f;
 
 ATitleGameMode::ATitleGameMode()
 {
@@ -80,8 +81,6 @@ void ATitleGameMode::Tick()
 	{
 		UEngineAPICore::GetCore()->OpenLevel("Play");
 	}
-
-	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("VVVVVV / FPS : " + std::to_string(frame));
 }
 
 void ATitleGameMode::LevelChangeStart()
@@ -97,6 +96,7 @@ void ATitleGameMode::LevelChangeStart()
 	{
 		BGM = UEngineSound::Play("14 Popular Potpourri.mp3");
 		BGM.Loop();
+		UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("VVVVVV // Clear Time : " + std::to_string(PrevClearTime));
 	}
 }
 

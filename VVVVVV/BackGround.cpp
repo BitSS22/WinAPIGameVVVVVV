@@ -108,8 +108,8 @@ void ABackGround::PlayVerticalAnimation()
 
 void ABackGround::PlayTowerAnimation()
 {
-	Sprite->AddComponentLocation(FVector2D::UP * AnimationSpeed * GET_DELTA);
-	if (Sprite->GetComponentLocation().Y < UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half().Y - 1200.f)
+	Sprite->AddComponentLocation(FVector2D::UP * AnimationSpeed * 0.25f * GET_DELTA);
+	if (Sprite->GetComponentLocation().Y < UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize().Half().Y - 960.f)
 		Sprite->AddComponentLocation(FVector2D(0.f, 1920.f));
 }
 

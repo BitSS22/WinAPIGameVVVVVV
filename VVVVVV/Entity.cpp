@@ -28,6 +28,8 @@ void AEntity::Collision(APlayer* _Player)
 
 	switch (EntityType)
 	{
+	case EEntityType::Guy:
+		return;
 	case EEntityType::CheckPoint:
 		CollisionCheckPoint(_Player);
 		return;
